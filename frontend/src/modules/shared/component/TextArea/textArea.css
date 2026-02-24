@@ -1,0 +1,16 @@
+.bd-text-area.MuiTextarea-root.MuiTextarea-variantOutlined {
+  @apply outline outline-primary-light outline-[0.5px];
+}
+
+.bd-text-area.MuiTextarea-root.MuiTextarea-variantOutlined:hover,
+.bd-text-area.MuiTextarea-root.MuiTextarea-variantOutlined.Mui-focused {
+  @apply outline-primary-light outline-[2px];
+}
+
+.bd-text-area.MuiTextarea-root.MuiTextarea-variantOutlined::before {
+  @apply !hidden;
+}
+
+.bd-text-area.MuiTextarea-root.MuiTextarea-variantOutlined > textarea {
+  @apply !pr-0;
+}

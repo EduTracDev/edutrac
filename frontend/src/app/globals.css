@@ -1,0 +1,178 @@
+@import "tailwindcss";
+
+/* ==========================================================================
+   Edutrac – Global CSS
+   Fonts: Inter, Source Sans Pro, Open Sans (loaded in layout.tsx)
+   ========================================================================== */
+
+:root {
+  /* Brand */
+  --color-brand: #923CF6;
+
+  /* Primary (purple) */
+  --color-primary-800: #6247AA;
+  --color-primary-700: #7251B5;
+  --color-primary-600: #815AC0;
+  --color-primary-500: #A06CD5;
+  --color-primary-400: #B185DB;
+  --color-primary-300: #C19EE0;
+  --color-primary-200: #DAC3E8;
+  --color-primary-100: #DEC9E9;
+
+  /* Neutral (black to white) */
+  --color-neutral-black: #333333;
+  --color-neutral-900: #4A4A4A;
+  --color-neutral-800: #606060;
+  --color-neutral-700: #777777;
+  --color-neutral-600: #8E8E8E;
+  --color-neutral-500: #A4A4A4;
+  --color-neutral-400: #BBBBBB;
+  --color-neutral-300: #D2D2D2;
+  --color-neutral-200: #E8E8E8;
+  --color-neutral-100: #FFFFFF;
+
+  /* Secondary */
+  --color-secondary: #FFC872;
+
+  /* Feedback */
+  --color-red-100: #FB3748;
+  --color-red-200: #D00416;
+  --color-yellow-100: #FFDB43;
+  --color-yellow-200: #DFB400;
+  --color-green-100: #84EBB4;
+  --color-green-200: #1FC16B;
+
+  /* Semantic aliases */
+  --color-success: var(--color-green-200);
+  --color-success-light: var(--color-green-100);
+  --color-error: var(--color-red-200);
+  --color-error-light: var(--color-red-100);
+  --color-warning: var(--color-yellow-200);
+  --color-warning-light: var(--color-yellow-100);
+
+  /* Pressed state for secondary / darker black */
+  --color-pressed-black: #262626;
+}
+
+@theme inline {
+  --font-sans: var(--font-inter), var(--font-source-sans), var(--font-open-sans), ui-sans-serif, system-ui, sans-serif;
+
+  /* Brand */
+  --color-brand: #923CF6;
+
+  /* Primary (purple) */
+  --color-primary-800: #6247AA;
+  --color-primary-700: #7251B5;
+  --color-primary-600: #815AC0;
+  --color-primary-500: #A06CD5;
+  --color-primary-400: #B185DB;
+  --color-primary-300: #C19EE0;
+  --color-primary-200: #DAC3E8;
+  --color-primary-100: #DEC9E9;
+
+  /* Neutral */
+  --color-neutral-black: #333333;
+  --color-neutral-900: #4A4A4A;
+  --color-neutral-800: #606060;
+  --color-neutral-700: #777777;
+  --color-neutral-600: #8E8E8E;
+  --color-neutral-500: #A4A4A4;
+  --color-neutral-400: #BBBBBB;
+  --color-neutral-300: #D2D2D2;
+  --color-neutral-200: #E8E8E8;
+  --color-neutral-100: #FFFFFF;
+
+  /* Secondary */
+  --color-secondary: #FFC872;
+
+  /* Feedback */
+  --color-red-100: #FB3748;
+  --color-red-200: #D00416;
+  --color-yellow-100: #FFDB43;
+  --color-yellow-200: #DFB400;
+  --color-green-100: #84EBB4;
+  --color-green-200: #1FC16B;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    /* Optional: adjust for dark mode later */
+  }
+}
+
+/* ==========================================================================
+   Components: Buttons & Links
+   ========================================================================== */
+
+/* Primary button: bg purple-400, text white, hover purple-300, pressed purple-800 */
+.btn-primary {
+  background-color: var(--color-primary-400);
+  color: var(--color-neutral-100);
+  transition: background-color 0.15s ease;
+}
+.btn-primary:hover {
+  background-color: var(--color-primary-300);
+}
+.btn-primary:active {
+  background-color: var(--color-primary-800);
+}
+
+/* Secondary button: transparent bg, black text, hover = black bg, pressed = darker black */
+.btn-secondary {
+  background-color: transparent;
+  color: var(--color-neutral-black);
+  transition: background-color 0.15s ease, color 0.15s ease;
+}
+.btn-secondary:hover {
+  background-color: var(--color-neutral-black);
+  color: var(--color-neutral-100);
+}
+.btn-secondary:active {
+  background-color: var(--color-pressed-black);
+  color: var(--color-neutral-100);
+}
+
+/* Text: default black */
+.text-default {
+  color: var(--color-neutral-black);
+}
+
+/* Text link: default black, hover purple-400, press purple-800 */
+.link {
+  color: var(--color-neutral-black);
+  transition: color 0.15s ease;
+}
+.link:hover {
+  color: var(--color-primary-400);
+}
+.link:active {
+  color: var(--color-primary-800);
+}
+
+/* Autofill styling */
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active {
+  -webkit-box-shadow: 0 0 0 30px transparent inset !important;
+  box-shadow: 0 0 0 30px transparent inset !important;
+  transition: background-color 5000s ease-in-out 0s;
+  color: var(--color-neutral-black) !important;
+  -webkit-text-fill-color: var(--color-neutral-black) !important;
+}
+
+.hide-scrollbar {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.hide-scrollbar::-webkit-scrollbar {
+  display: none;
+  width: 0;
+  background: transparent;
+}
+
+body {
+  background: var(--color-neutral-100);
+  color: var(--color-neutral-black);
+}

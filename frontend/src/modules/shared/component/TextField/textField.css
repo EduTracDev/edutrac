@@ -1,0 +1,22 @@
+.successIcon {
+  color: var(--success-main);
+}
+
+.dangerIcon {
+  color: var(--danger-main);
+}
+
+.bd-text-field .MuiOutlinedInput-root .MuiOutlinedInput-notchedOutline {
+  @apply !border-[1px] border-solid;
+}
+
+.bd-text-field:hover .MuiOutlinedInput-root .MuiOutlinedInput-notchedOutline,
+.bd-text-field
+  .MuiOutlinedInput-root.Mui-focused
+  .MuiOutlinedInput-notchedOutline {
+  @apply !border-[2px];
+}
+
+.bd-text-field .mui-1wc848c-MuiFormHelperText-root {
+  margin-left: 5px;
+}
