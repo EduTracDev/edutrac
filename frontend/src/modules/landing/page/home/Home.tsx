@@ -2,6 +2,10 @@
 
 import React from "react";
 import { Navbar } from "../../components/Navbar";
+import CoreValue from "../../components/CoreValue/CoreValue";
+import Testimonial from "../../components/Testimonial/Testimonial";
+import Footer from "../../components/Footer/Footer";
+import FreeTrial from "../../components/FreeTrial/FreeTrial";
 import { useState } from "react";
 import { Box } from "@mui/material";
 
@@ -26,7 +30,10 @@ export default function Home({
         buttonText={buttonText}
         buttonLink={buttonLink}
       />
-      <div>Home</div>
+      <CoreValue />
+      <Testimonial />
+      <FreeTrial />
+      <Footer />
     </Box>
   );
 }
