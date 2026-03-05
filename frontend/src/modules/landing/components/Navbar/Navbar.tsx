@@ -6,7 +6,7 @@ import Link from "next/link";
 import { Menu, X } from "lucide-react";
 import { LandingRoutes } from "@/routes/landing.routes";
 import { AuthRoutes } from "@/routes/auth.routes";
-import logo from "@/modules/shared/assets/logo.png";
+import logo from "@/modules/shared/assets/images/logo.png";
 
 export default function Navbar({
   buttonText,
