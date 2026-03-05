@@ -23,7 +23,8 @@ const openSans = Open_Sans({
 
 export const metadata: Metadata = {
   title: "Edutrac – School Learning Management System",
-  description: "Manage your school, classes, teachers, students and parents in one place.",
+  description:
+    "Manage your school, classes, teachers, students and parents in one place.",
 };
 
 export default function RootLayout({

@@ -8,11 +8,13 @@ export const metadata: Metadata = {
 
 export default function HomePage() {
   return (
-    <Home
-      title="Edutrac"
-      description="School Learning Management System"
-      buttonText="Get Started"
-      buttonLink="/auth/login"
-    />
+    <div>
+      <Home
+        title="Edutrac"
+        description="School Learning Management System"
+        buttonText="Get Started"
+        buttonLink="/auth/login"
+      />
+    </div>
   );
 }
