@@ -8,6 +8,7 @@ import Testimonial from "@/modules/landing/components/Testimonial/Testimonial";
 import FreeTrial from "@/modules/landing/components/FreeTrial/FreeTrial";
 import Footer from "@/modules/landing/components/Footer/Footer";
 import BackToTop from "./BackToTop";
+import FAQ from "@/modules/landing/components/Faq/Faq";
 
 export const metadata: Metadata = {
   title: "EduTrac",
@@ -28,11 +29,30 @@ export default function HomePage() {
       buttonText: "Sign Up",
       buttonLink: AuthRoutes.register,
     },
-    // If CoreValue or Testimonial need dynamic data, add them here:
+
     freeTrial: {
-      title: "Ready to transform your school?",
+      title: "Ready to Simplify Your School Management?",
+      description:
+        "Join thousands of schools already benefiting from EduTrac's powerful features.",
       buttonText: "Start Free Trial",
     },
+    faq: [
+      {
+        question: "What is EduTrac?",
+        answer:
+          "EduTrac is a comprehensive Learning Management System (LMS) designed to streamline school operations and enhance the learning experience for all stakeholders.",
+      },
+      {
+        question: "How does the role-based system work?",
+        answer:
+          "Our system assigns specific permissions to different users—such as administrators, teachers, students, and parents.",
+      },
+      {
+        question: "Is there a free trial available?",
+        answer:
+          "Yes! We offer a 14-day free trial so you can explore all the features of EduTrac before committing to a plan.",
+      },
+    ],
   };
 
   return (
@@ -44,13 +64,8 @@ export default function HomePage() {
       <Hero {...content.hero} />
       <CoreValue />
       <Testimonial />
-
-      {/* Example of passing props to another section */}
-      {/* <FreeTrial
-        title={content.freeTrial.title}
-        buttonText={content.freeTrial.buttonText}
-      /> */}
-
+      <FAQ items={content.faq} />
+      <FreeTrial {...content.freeTrial} />
       <Footer />
       <BackToTop />
     </Box>
