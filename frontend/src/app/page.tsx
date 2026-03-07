@@ -3,13 +3,13 @@ import { Box } from "@mui/material";
 import { AuthRoutes } from "@/routes/auth.routes";
 import Navbar from "@/modules/landing/components/Navbar/Navbar";
 import Hero from "@/modules/landing/components/Hero/Hero";
-import CoreValue from "@/modules/landing/components/CoreValue/CoreValue";
+import Pricing from "@/modules/landing/components/Pricing/Pricing";
 import Testimonial from "@/modules/landing/components/Testimonial/Testimonial";
 import FreeTrial from "@/modules/landing/components/FreeTrial/FreeTrial";
 import Footer from "@/modules/landing/components/Footer/Footer";
 import BackToTop from "./BackToTop";
 import FAQ from "@/modules/landing/components/Faq/Faq";
-import Role from "@/modules/landing/components/Role/role";
+import Role from "@/modules/landing/components/Role/Role";
 
 export const metadata: Metadata = {
   title: "EduTrac",
@@ -118,6 +118,52 @@ export default function HomePage() {
         role: "CEO at ord it",
       },
     ],
+    pricing: [
+      {
+        id: "free",
+        name: "Free",
+        description: "Have a go and test your superpowers",
+        price: "0",
+        features: [
+          "2 Users",
+          "2 Files",
+          "Public Share & Comments",
+          "Chat Support",
+          "New income apps",
+        ],
+      },
+      {
+        id: "basic",
+        name: "Basic",
+        description:
+          "For Growing Schools: Simplify Fee Management, Track Student Progress, and Communicate Efficiently with Parents.",
+        price: "8,000",
+        isPopular: true,
+        saveAmount: "Save ₦5,000 a year",
+        features: [
+          "Unlimited students",
+          "School fees management",
+          "Attendance management",
+          "Dashboard",
+          "Student progress report",
+          "Communication",
+          "Price reduces as students increase",
+        ],
+      },
+      {
+        id: "premium",
+        name: "Premium",
+        description: "Unveil new superpowers and join the Design League",
+        price: "16,000",
+        features: [
+          "All the features of pro plan",
+          "Account success Manager",
+          "Single Sign-On (SSO)",
+          "Co-conception program",
+          "Collaboration-Soon",
+        ],
+      },
+    ],
   };
 
   return (
@@ -130,6 +176,7 @@ export default function HomePage() {
       <Role items={content.role} />
       <Testimonial items={content.testimonials} />
       <FAQ items={content.faq} />
+      <Pricing items={content.pricing} />
       <FreeTrial {...content.freeTrial} />
       <Footer />
       <BackToTop />
