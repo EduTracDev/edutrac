@@ -33,7 +33,7 @@ export default function HomePage() {
     freeTrial: {
       title: "Ready to Simplify Your School Management?",
       description:
-        "Join thousands of schools already benefiting from EduTrac's powerful features.",
+        "Join thousands of Learning Platforms already benefiting from EduTrac's powerful features.",
       buttonText: "Start Free Trial",
     },
     faq: [
