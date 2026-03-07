@@ -4,7 +4,6 @@ import React from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
-// import dashboardScreenshot from "@/modules/shared/assets/svgs/DASHBOARD.svg";
 import dashboardScreenshot from "@/modules/shared/assets/images/DASHBOARD.png";
 interface HeroProps {
   title: string;
@@ -20,7 +19,7 @@ export default function Hero({
   buttonLink,
 }: HeroProps) {
   return (
-    <section className="relative min-h-[90vh] flex items-center bg-[#923CF9] overflow-hidden pt-40 pb-16 lg:pt-48 lg:pb-32">
+    <section className="relative min-h-[60vh] flex items-center bg-[#923CF9] overflow-hidden pt-40 pb-16 lg:pt-24 lg:pb-16">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
           {/* Left Side: Content */}
