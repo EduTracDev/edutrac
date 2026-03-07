@@ -175,8 +175,8 @@ export default function HomePage() {
       <Hero {...content.hero} />
       <Role items={content.role} />
       <Testimonial items={content.testimonials} />
-      <FAQ items={content.faq} />
       <Pricing items={content.pricing} />
+      <FAQ items={content.faq} />
       <FreeTrial {...content.freeTrial} />
       <Footer />
       <BackToTop />
