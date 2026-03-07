@@ -80,6 +80,44 @@ export default function HomePage() {
           "Yes! We offer a 14-day free trial so you can explore all the features of EduTrac before committing to a plan.",
       },
     ],
+    testimonials: [
+      {
+        quote:
+          "Lorem ipsum dolor sit amet, elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Orci nulla pellentesque dignissim enim. Amet consectetur adipiscing",
+        author: "Kathy Sullivan",
+        role: "CEO at ordian it",
+      },
+      {
+        quote:
+          "Lorem ipsum dolor sit amet, elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Orci nulla pellentesque dignissim enim. Amet consectetur adipiscing",
+        author: "Elsie Stroud",
+        role: "CEO at Edwards",
+      },
+      {
+        quote:
+          "Lorem ipsum dolor sit amet, elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Orci nulla pellentesque dignissim enim. Amet consectetur adipiscing",
+        author: "Kathy Sullivan",
+        role: "CEO at ordian it",
+      },
+      {
+        quote:
+          "Lorem ipsum dolor sit amet, elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Orci nulla pellentesque dignissim enim. Amet consectetur adipiscing",
+        author: "Kathy Sullivan",
+        role: "CEO at oranun it",
+      },
+      {
+        quote:
+          "Lorem ipsum dolor sit amet, elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Orci nulla pellentesque dignissim enim. Amet consectetur adipiscing",
+        author: "Kathy Sullivan",
+        role: "CEO at ian it",
+      },
+      {
+        quote:
+          "Lorem ipsum dolor sit amet, elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Orci nulla pellentesque dignissim enim. Amet consectetur adipiscing",
+        author: "Kathy Sullivan",
+        role: "CEO at ord it",
+      },
+    ],
   };
 
   return (
@@ -90,7 +128,7 @@ export default function HomePage() {
       />
       <Hero {...content.hero} />
       <Role items={content.role} />
-      <Testimonial />
+      <Testimonial items={content.testimonials} />
       <FAQ items={content.faq} />
       <FreeTrial {...content.freeTrial} />
       <Footer />

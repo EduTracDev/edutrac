@@ -22,9 +22,6 @@ export default function FreeTrial({
       className="relative w-full flex items-center justify-center overflow-hidden py-10 lg:py-16 bg-[#923CF9]"
       aria-labelledby="cta-heading"
     >
-      {/* 1. Ensure this div has a higher z-index than the section bg but lower than content 
-         2. Added 'inset-0' to make sure it fills the space
-      */}
       <div className="absolute inset-0 z-0 hidden lg:block">
         <Image
           src={backgroundImage}
