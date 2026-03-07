@@ -12,9 +12,9 @@ interface RoleProps {
 }
 
 export default function Role({ items }: RoleProps) {
-  const [activeId, setActiveId] = useState<string>("teacher");
+  const [hoveredId, setHoveredId] = useState<string | null>(null);
+  const defaultId = "teacher";
 
-  // Helper to get the correct icon for each role
   const getIcon = (id: string) => {
     switch (id) {
       case "admin":
@@ -35,6 +35,27 @@ export default function Role({ items }: RoleProps) {
       className="py-16 md:py-24 bg-[#F8F9FA]"
       aria-labelledby="role-section-title"
     >
+      {/* Adding custom keyframes for the pulse and draw effect */}
+      <style jsx>{`
+        @keyframes subtlePulse {
+          0% {
+            transform: scale(1) rotate(-2deg);
+            opacity: 0.7;
+          }
+          50% {
+            transform: scale(1.05) rotate(-1deg);
+            opacity: 1;
+          }
+          100% {
+            transform: scale(1) rotate(-2deg);
+            opacity: 0.7;
+          }
+        }
+        .animate-oval {
+          animation: subtlePulse 3s ease-in-out infinite;
+        }
+      `}</style>
+
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-12 md:mb-16">
           <span className="inline-block px-3 py-1 mb-6 text-[10px] md:text-xs font-bold uppercase tracking-widest text-[#923CF9] bg-[#923CF9]/10 rounded">
@@ -47,12 +68,11 @@ export default function Role({ items }: RoleProps) {
             Your Complete{" "}
             <span className="relative inline-block px-2">
               Learning
-              {/* Oval Ring SVG */}
               <svg
                 viewBox="0 0 100 100"
                 preserveAspectRatio="none"
-                stroke-dasharray="250"
-                className="absolute -inset-x-2 -inset-y-4 w-[110%] h-[140%] text-[#923CF9] pointer-events-none -rotate-2"
+                strokeDasharray="250"
+                className="absolute -inset-x-2 -inset-y-4 w-[110%] h-[140%] text-[#923CF9] pointer-events-none animate-oval"
               >
                 <ellipse
                   cx="50"
@@ -63,7 +83,6 @@ export default function Role({ items }: RoleProps) {
                   stroke="currentColor"
                   strokeWidth="3"
                   strokeLinecap="round"
-                  className="opacity-70"
                 />
               </svg>
             </span>{" "}
@@ -73,21 +92,25 @@ export default function Role({ items }: RoleProps) {
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8">
           {items.map((role) => {
-            const isActive = activeId === role.id;
+            const isHighlighted = hoveredId
+              ? hoveredId === role.id
+              : defaultId === role.id;
+
             return (
-              <button
+              <div
                 key={role.id}
-                onClick={() => setActiveId(role.id)}
-                aria-pressed={isActive}
-                className={`text-left relative flex flex-col p-8 rounded-4xl transition-all duration-500 ease-out outline-none focus-visible:ring-4 focus-visible:ring-purple-400 ${
-                  isActive
-                    ? "bg-[#923CF9] text-white shadow-2xl scale-105 z-20"
-                    : "bg-[#EBE4FF] text-[#0F172A] hover:bg-[#e2d9ff] z-10"
-                }`}
+                onMouseEnter={() => setHoveredId(role.id)}
+                onMouseLeave={() => setHoveredId(null)}
+                className={`text-left relative flex flex-col p-8 rounded-4xl transition-all duration-500 ease-out cursor-default 
+                  ${
+                    isHighlighted
+                      ? "bg-[#923CF9] text-white shadow-2xl scale-105 z-20 -translate-y-4"
+                      : "bg-[#EBE4FF] text-[#0F172A] z-10 translate-y-0"
+                  }`}
               >
                 <div
                   className={`flex items-center justify-center w-16 h-16 md:w-20 md:h-20 rounded-full mb-8 transition-colors duration-500 ${
-                    isActive
+                    isHighlighted
                       ? "bg-white text-[#923CF9]"
                       : "bg-[#923CF9] text-white"
                   }`}
@@ -101,7 +124,7 @@ export default function Role({ items }: RoleProps) {
                 <p className="text-sm md:text-base leading-relaxed opacity-90 font-medium">
                   {role.description}
                 </p>
-              </button>
+              </div>
             );
           })}
         </div>

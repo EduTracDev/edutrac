@@ -3,13 +3,13 @@ import { Box } from "@mui/material";
 import { AuthRoutes } from "@/routes/auth.routes";
 import Navbar from "@/modules/landing/components/Navbar/Navbar";
 import Hero from "@/modules/landing/components/Hero/Hero";
-import CoreValue from "@/modules/landing/components/CoreValue/CoreValue";
+import Pricing from "@/modules/landing/components/Pricing/Pricing";
 import Testimonial from "@/modules/landing/components/Testimonial/Testimonial";
 import FreeTrial from "@/modules/landing/components/FreeTrial/FreeTrial";
 import Footer from "@/modules/landing/components/Footer/Footer";
 import BackToTop from "./BackToTop";
 import FAQ from "@/modules/landing/components/Faq/Faq";
-import Role from "@/modules/landing/components/Role/role";
+import Role from "@/modules/landing/components/Role/Role";
 
 export const metadata: Metadata = {
   title: "EduTrac",
@@ -80,6 +80,90 @@ export default function HomePage() {
           "Yes! We offer a 14-day free trial so you can explore all the features of EduTrac before committing to a plan.",
       },
     ],
+    testimonials: [
+      {
+        quote:
+          "Lorem ipsum dolor sit amet, elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Orci nulla pellentesque dignissim enim. Amet consectetur adipiscing",
+        author: "Kathy Sullivan",
+        role: "CEO at ordian it",
+      },
+      {
+        quote:
+          "Lorem ipsum dolor sit amet, elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Orci nulla pellentesque dignissim enim. Amet consectetur adipiscing",
+        author: "Elsie Stroud",
+        role: "CEO at Edwards",
+      },
+      {
+        quote:
+          "Lorem ipsum dolor sit amet, elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Orci nulla pellentesque dignissim enim. Amet consectetur adipiscing",
+        author: "Kathy Sullivan",
+        role: "CEO at ordian it",
+      },
+      {
+        quote:
+          "Lorem ipsum dolor sit amet, elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Orci nulla pellentesque dignissim enim. Amet consectetur adipiscing",
+        author: "Kathy Sullivan",
+        role: "CEO at oranun it",
+      },
+      {
+        quote:
+          "Lorem ipsum dolor sit amet, elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Orci nulla pellentesque dignissim enim. Amet consectetur adipiscing",
+        author: "Kathy Sullivan",
+        role: "CEO at ian it",
+      },
+      {
+        quote:
+          "Lorem ipsum dolor sit amet, elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Orci nulla pellentesque dignissim enim. Amet consectetur adipiscing",
+        author: "Kathy Sullivan",
+        role: "CEO at ord it",
+      },
+    ],
+    pricing: [
+      {
+        id: "free",
+        name: "Free",
+        description: "Have a go and test your superpowers",
+        price: "0",
+        features: [
+          "2 Users",
+          "2 Files",
+          "Public Share & Comments",
+          "Chat Support",
+          "New income apps",
+        ],
+      },
+      {
+        id: "basic",
+        name: "Basic",
+        description:
+          "For Growing Schools: Simplify Fee Management, Track Student Progress, and Communicate Efficiently with Parents.",
+        price: "8,000",
+        isPopular: true,
+        saveAmount: "Save ₦5,000 a year",
+        features: [
+          "Unlimited students",
+          "School fees management",
+          "Attendance management",
+          "Dashboard",
+          "Student progress report",
+          "Communication",
+          "Price reduces as students increase",
+        ],
+      },
+      {
+        id: "premium",
+        name: "Premium",
+        description: "Unveil new superpowers and join the Design League",
+        price: "16,000",
+        features: [
+          "All the features of pro plan",
+          "Account success Manager",
+          "Single Sign-On (SSO)",
+          "Co-conception program",
+          "Collaboration-Soon",
+        ],
+      },
+    ],
   };
 
   return (
@@ -90,7 +174,8 @@ export default function HomePage() {
       />
       <Hero {...content.hero} />
       <Role items={content.role} />
-      <Testimonial />
+      <Testimonial items={content.testimonials} />
+      <Pricing items={content.pricing} />
       <FAQ items={content.faq} />
       <FreeTrial {...content.freeTrial} />
       <Footer />
