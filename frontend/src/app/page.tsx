@@ -9,6 +9,7 @@ import FreeTrial from "@/modules/landing/components/FreeTrial/FreeTrial";
 import Footer from "@/modules/landing/components/Footer/Footer";
 import BackToTop from "./BackToTop";
 import FAQ from "@/modules/landing/components/Faq/Faq";
+import Role from "@/modules/landing/components/Role/role";
 
 export const metadata: Metadata = {
   title: "EduTrac",
@@ -25,13 +26,39 @@ export default function HomePage() {
       buttonText: "Get Started",
       buttonLink: AuthRoutes.register,
     },
+    role: [
+      {
+        id: "admin",
+        title: "SCHOOL ADMIN",
+        description:
+          "Oversee daily administrative tasks, staff management, and communication.",
+      },
+      {
+        id: "teacher",
+        title: "TEACHER",
+        description:
+          "Create and manage courses, engage students, and track progress.",
+      },
+      {
+        id: "student",
+        title: "STUDENT",
+        description:
+          "Access course materials, submit assignments, and collaborate with peers.",
+      },
+      {
+        id: "parent",
+        title: "PARENT",
+        description:
+          "Monitor your child's academic performance and stay connected with teachers.",
+      },
+    ],
     navigation: {
       buttonText: "Sign Up",
       buttonLink: AuthRoutes.register,
     },
 
     freeTrial: {
-      title: "Ready to Simplify Your School Management?",
+      title: "Ready to Simplify Your Learning Management?",
       description:
         "Join thousands of Learning Platforms already benefiting from EduTrac's powerful features.",
       buttonText: "Start Free Trial",
@@ -62,7 +89,7 @@ export default function HomePage() {
         buttonLink={content.navigation.buttonLink}
       />
       <Hero {...content.hero} />
-      <CoreValue />
+      <Role items={content.role} />
       <Testimonial />
       <FAQ items={content.faq} />
       <FreeTrial {...content.freeTrial} />
