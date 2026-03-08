@@ -30,10 +30,9 @@ export default function Hero({
               </span>
             </div>
 
-            <h1 className="text-4xl text-[#ffffff] md:text-6xl font-extrabold leading-tight">
+            <h1 className="text-4xl text-neutral-100 md:text-6xl font-extrabold leading-tight">
               {title}
             </h1>
-
             <p className="text-lg md:text-xl text-purple-50 leading-relaxed opacity-90">
               {description}
             </p>

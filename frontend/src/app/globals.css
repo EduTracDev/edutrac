@@ -7,40 +7,40 @@
 
 :root {
   /* Brand */
-  --color-brand: #923CF6;
+  --color-brand: #923cf6;
 
   /* Primary (purple) */
-  --color-primary-800: #6247AA;
-  --color-primary-700: #7251B5;
-  --color-primary-600: #815AC0;
-  --color-primary-500: #A06CD5;
-  --color-primary-400: #B185DB;
-  --color-primary-300: #C19EE0;
-  --color-primary-200: #DAC3E8;
-  --color-primary-100: #DEC9E9;
+  --color-primary-800: #6247aa;
+  --color-primary-700: #7251b5;
+  --color-primary-600: #815ac0;
+  --color-primary-500: #a06cd5;
+  --color-primary-400: #b185db;
+  --color-primary-300: #c19ee0;
+  --color-primary-200: #dac3e8;
+  --color-primary-100: #dec9e9;
 
   /* Neutral (black to white) */
   --color-neutral-black: #333333;
-  --color-neutral-900: #4A4A4A;
+  --color-neutral-900: #4a4a4a;
   --color-neutral-800: #606060;
   --color-neutral-700: #777777;
-  --color-neutral-600: #8E8E8E;
-  --color-neutral-500: #A4A4A4;
-  --color-neutral-400: #BBBBBB;
-  --color-neutral-300: #D2D2D2;
-  --color-neutral-200: #E8E8E8;
-  --color-neutral-100: #FFFFFF;
+  --color-neutral-600: #8e8e8e;
+  --color-neutral-500: #a4a4a4;
+  --color-neutral-400: #bbbbbb;
+  --color-neutral-300: #d2d2d2;
+  --color-neutral-200: #e8e8e8;
+  --color-neutral-100: #ffffff;
 
   /* Secondary */
-  --color-secondary: #FFC872;
+  --color-secondary: #ffc872;
 
   /* Feedback */
-  --color-red-100: #FB3748;
-  --color-red-200: #D00416;
-  --color-yellow-100: #FFDB43;
-  --color-yellow-200: #DFB400;
-  --color-green-100: #84EBB4;
-  --color-green-200: #1FC16B;
+  --color-red-100: #fb3748;
+  --color-red-200: #d00416;
+  --color-yellow-100: #ffdb43;
+  --color-yellow-200: #dfb400;
+  --color-green-100: #84ebb4;
+  --color-green-200: #1fc16b;
 
   /* Semantic aliases */
   --color-success: var(--color-green-200);
@@ -55,43 +55,45 @@
 }
 
 @theme inline {
-  --font-sans: var(--font-inter), var(--font-source-sans), var(--font-open-sans), ui-sans-serif, system-ui, sans-serif;
+  --font-sans:
+    var(--font-inter), var(--font-source-sans), var(--font-open-sans),
+    ui-sans-serif, system-ui, sans-serif;
 
   /* Brand */
-  --color-brand: #923CF6;
+  --color-brand: #923cf6;
 
   /* Primary (purple) */
-  --color-primary-800: #6247AA;
-  --color-primary-700: #7251B5;
-  --color-primary-600: #815AC0;
-  --color-primary-500: #A06CD5;
-  --color-primary-400: #B185DB;
-  --color-primary-300: #C19EE0;
-  --color-primary-200: #DAC3E8;
-  --color-primary-100: #DEC9E9;
+  --color-primary-800: #6247aa;
+  --color-primary-700: #7251b5;
+  --color-primary-600: #815ac0;
+  --color-primary-500: #a06cd5;
+  --color-primary-400: #b185db;
+  --color-primary-300: #c19ee0;
+  --color-primary-200: #dac3e8;
+  --color-primary-100: #dec9e9;
 
   /* Neutral */
   --color-neutral-black: #333333;
-  --color-neutral-900: #4A4A4A;
+  --color-neutral-900: #4a4a4a;
   --color-neutral-800: #606060;
   --color-neutral-700: #777777;
-  --color-neutral-600: #8E8E8E;
-  --color-neutral-500: #A4A4A4;
-  --color-neutral-400: #BBBBBB;
-  --color-neutral-300: #D2D2D2;
-  --color-neutral-200: #E8E8E8;
-  --color-neutral-100: #FFFFFF;
+  --color-neutral-600: #8e8e8e;
+  --color-neutral-500: #a4a4a4;
+  --color-neutral-400: #bbbbbb;
+  --color-neutral-300: #d2d2d2;
+  --color-neutral-200: #e8e8e8;
+  --color-neutral-100: #ffffff;
 
   /* Secondary */
-  --color-secondary: #FFC872;
+  --color-secondary: #ffc872;
 
   /* Feedback */
-  --color-red-100: #FB3748;
-  --color-red-200: #D00416;
-  --color-yellow-100: #FFDB43;
-  --color-yellow-200: #DFB400;
-  --color-green-100: #84EBB4;
-  --color-green-200: #1FC16B;
+  --color-red-100: #fb3748;
+  --color-red-200: #d00416;
+  --color-yellow-100: #ffdb43;
+  --color-yellow-200: #dfb400;
+  --color-green-100: #84ebb4;
+  --color-green-200: #1fc16b;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -121,7 +123,9 @@
 .btn-secondary {
   background-color: transparent;
   color: var(--color-neutral-black);
-  transition: background-color 0.15s ease, color 0.15s ease;
+  transition:
+    background-color 0.15s ease,
+    color 0.15s ease;
 }
 .btn-secondary:hover {
   background-color: var(--color-neutral-black);

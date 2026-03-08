@@ -2,6 +2,7 @@ import { Metadata } from "next";
 import { Box } from "@mui/material";
 import { AuthRoutes } from "@/routes/auth.routes";
 import Navbar from "@/modules/landing/components/Navbar/Navbar";
+import AboutSection from "@/modules/landing/components/About/About";
 import Hero from "@/modules/landing/components/Hero/Hero";
 import Pricing from "@/modules/landing/components/Pricing/Pricing";
 import Testimonial from "@/modules/landing/components/Testimonial/Testimonial";
@@ -10,6 +11,9 @@ import Footer from "@/modules/landing/components/Footer/Footer";
 import BackToTop from "./BackToTop";
 import FAQ from "@/modules/landing/components/Faq/Faq";
 import Role from "@/modules/landing/components/Role/Role";
+import about1 from "@/modules/shared/assets/images/about-1.png";
+import about2 from "@/modules/shared/assets/images/about-2.png";
+import about3 from "@/modules/shared/assets/images/about-3.png";
 
 export const metadata: Metadata = {
   title: "EduTrac",
@@ -25,6 +29,21 @@ export default function HomePage() {
         "EduTrac was born from a vision to revolutionize education through technology.We understand the challenges schools face in managing operations, engaging students, and empowering educators. Our mission is to provide a comprehensive, user-friendly platform that streamlines school management, enhances communication, and fosters a collaborative learning environment. With EduTrac, we aim to transform the educational experience for administrators, teachers, students, and parents alike.",
       buttonText: "Get Started",
       buttonLink: AuthRoutes.register,
+    },
+    about: {
+      badge: "OUR STORY",
+      title: "Gateway To Personal And Professional Growth",
+      description: [
+        "EduTrac was born from a vision to revolutionize education through technology. Founded by a team of educators and tech enthusiasts, we recognized the need for a comprehensive platform that could streamline school operations and enhance the learning experience for students and teachers alike.",
+        "Our Journey began with a simple idea: to create a tool that empowers schools to achieve their full potential. Today, EduTrac stands as a testament to that vision, serving countless institutions and shaping the future of education.",
+      ],
+      buttonText: "Learn More",
+      buttonLink: "/about",
+      images: {
+        teacher: about1,
+        building: about2,
+        students: about3,
+      },
     },
     role: [
       {
@@ -174,6 +193,7 @@ export default function HomePage() {
       />
       <Hero {...content.hero} />
       <Role items={content.role} />
+      <AboutSection {...content.about} />
       <Testimonial items={content.testimonials} />
       <Pricing items={content.pricing} />
       <FAQ items={content.faq} />
