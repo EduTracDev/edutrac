@@ -11,8 +11,8 @@ interface AboutProps {
   badge: string;
   title: string;
   description: string[];
-  buttonText: string;
-  buttonLink: string;
+  buttonText?: string;
+  buttonLink?: string;
   images: {
     teacher: string | StaticImageData;
     building: string | StaticImageData;
@@ -69,27 +69,17 @@ export default function AboutSection({
               <p key={index}>{para}</p>
             ))}
           </div>
-
-          {/* Button with Brightness/Glow effect */}
-          <Link
-            href={buttonLink}
-            className="mt-10 inline-flex items-center gap-3 px-8 py-4 bg-[#923CF6] text-white font-bold rounded-full transition-all group min-h-[44px] relative overflow-hidden"
-          >
-            <motion.span
-              className="relative z-10"
-              whileHover={{
-                color: "#ffffff",
-                textShadow: "0px 0px 8px rgba(255,255,255,0.6)",
-              }}
+          {buttonText && buttonLink && (
+            <Link
+              href={buttonLink}
+              className="mt-10 inline-flex items-center gap-3 px-8 py-4 bg-[#923CF6] text-white font-bold rounded-full transition-all group"
             >
               {buttonText}
-            </motion.span>
-            <div className="bg-white/20 p-1 rounded-full group-hover:translate-x-1 transition-transform relative z-10">
-              <MoveRight size={20} />
-            </div>
-            {/* Subtle inner glow on hover */}
-            <div className="absolute inset-0 bg-white/10 opacity-0 group-hover:opacity-100 transition-opacity" />
-          </Link>
+              <div className="bg-white/20 p-1 rounded-full group-hover:translate-x-1 transition-transform">
+                <MoveRight size={20} />
+              </div>
+            </Link>
+          )}
         </motion.div>
 
         {/* Right Image Grid Column: Visible on all screens, but stacked */}

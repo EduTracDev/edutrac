@@ -4,6 +4,7 @@ import { AuthRoutes } from "@/routes/auth.routes";
 import Navbar from "@/modules/landing/components/Navbar/Navbar";
 import AboutSection from "@/modules/landing/components/About/About";
 import Hero from "@/modules/landing/components/Hero/Hero";
+import ImpactStats from "@/modules/landing/components/ImpactStats/ImpactStats";
 import Pricing from "@/modules/landing/components/Pricing/Pricing";
 import Testimonial from "@/modules/landing/components/Testimonial/Testimonial";
 import FreeTrial from "@/modules/landing/components/FreeTrial/FreeTrial";
@@ -29,6 +30,16 @@ export default function HomePage() {
         "EduTrac was born from a vision to revolutionize education through technology.We understand the challenges schools face in managing operations, engaging students, and empowering educators. Our mission is to provide a comprehensive, user-friendly platform that streamlines school management, enhances communication, and fosters a collaborative learning environment. With EduTrac, we aim to transform the educational experience for administrators, teachers, students, and parents alike.",
       buttonText: "Get Started",
       buttonLink: AuthRoutes.register,
+    },
+    impact: {
+      title: "Our Impact in Numbers",
+      stats: [
+        { value: "50k+", label: "Active Learners" },
+        { value: "1.2k+", label: "Institutions" },
+        { value: "95%", label: "Satisfaction Rate" },
+        { value: "24/7", label: "Expert Support" },
+        // { value: "10+", label: "African Countries" },
+      ],
     },
     about: {
       badge: "OUR STORY",
@@ -192,6 +203,7 @@ export default function HomePage() {
         buttonLink={content.navigation.buttonLink}
       />
       <Hero {...content.hero} />
+      <ImpactStats {...content.impact} />
       <Role items={content.role} />
       <AboutSection {...content.about} />
       <Testimonial items={content.testimonials} />

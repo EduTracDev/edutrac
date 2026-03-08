@@ -1,6 +1,11 @@
 import Link from "next/link";
 import { LandingRoutes } from "@/routes/landing.routes";
 import { Metadata } from "next";
+import Box from "@mui/material/Box/Box";
+import Footer from "@/modules/landing/components/Footer/Footer";
+import Navbar from "@/modules/landing/components/Navbar/Navbar";
+import FreeTrial from "@/modules/landing/components/FreeTrial/FreeTrial";
+import { AuthRoutes } from "@/routes/auth.routes";
 
 export const metadata: Metadata = {
   title: "Edutrac – Contact Us",
@@ -8,19 +13,19 @@ export const metadata: Metadata = {
 };
 
 export default function ContactPage() {
+  const content = {
+    freeTrial: {
+      title: "Ready to Simplify Your Learning Management?",
+      description:
+        "Join thousands of Learning Platforms already benefiting from EduTrac's powerful features.",
+      buttonText: "Start Free Trial",
+    },
+  };
   return (
-    <div className="min-h-screen p-8 bg-[var(--color-neutral-100)]">
-      <nav className="flex gap-4 mb-8">
-        <Link href={LandingRoutes.home} className="link underline">Home</Link>
-        <Link href={LandingRoutes.about} className="link underline">About</Link>
-        <Link href={LandingRoutes.pricing} className="link underline">Pricing</Link>
-        <Link href={LandingRoutes.product} className="link underline">Product</Link>
-        <Link href={LandingRoutes.contact} className="font-medium text-[var(--color-neutral-black)]">Contact</Link>
-      </nav>
-      <h1 className="text-3xl font-bold text-[var(--color-neutral-black)]">Contact Us</h1>
-      <p className="mt-4 text-[var(--color-neutral-700)] max-w-2xl">
-        Contact form and details can be added here. You can update this page as you go.
-      </p>
-    </div>
+    <Box>
+      <Navbar buttonText="Get Started" buttonLink={AuthRoutes.register} />
+      <FreeTrial {...content.freeTrial} />
+      <Footer />
+    </Box>
   );
 }
