@@ -4,7 +4,7 @@ import React from "react";
 import Image from "next/image";
 import { StaticImageData } from "next/image";
 import Link from "next/link";
-import { motion } from "framer-motion";
+import { motion, Variants } from "framer-motion";
 import { MoveRight } from "lucide-react";
 
 interface AboutProps {
@@ -28,15 +28,17 @@ export default function AboutSection({
   buttonLink,
   images,
 }: AboutProps) {
-  const simpleFadeUp = {
+  const simpleFadeUp: Variants = {
     hidden: { opacity: 0, y: 20 },
     visible: {
       opacity: 1,
       y: 0,
-      transition: { duration: 0.6, ease: "easeOut" },
+      transition: {
+        duration: 0.6,
+        ease: "easeOut",
+      },
     },
   };
-
   return (
     <section
       className="py-16 md:py-24 bg-white overflow-hidden"
