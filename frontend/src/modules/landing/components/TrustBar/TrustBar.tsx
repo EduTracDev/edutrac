@@ -2,11 +2,12 @@
 
 import React from "react";
 import Image from "next/image";
+import { StaticImageData } from "next/image";
 import { motion } from "framer-motion";
 
 interface Partner {
   name: string;
-  image: any;
+  image: StaticImageData;
 }
 
 export default function TrustBar({

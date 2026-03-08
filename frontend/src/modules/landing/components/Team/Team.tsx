@@ -2,6 +2,7 @@
 
 import React from "react";
 import Image from "next/image";
+import { StaticImageData } from "next/image";
 import { motion } from "framer-motion";
 import {
   FaFacebookF,
@@ -13,7 +14,7 @@ import {
 interface TeamMember {
   name: string;
   role: string;
-  image: any;
+  image: StaticImageData;
   socials: {
     facebook?: string;
     instagram?: string;
