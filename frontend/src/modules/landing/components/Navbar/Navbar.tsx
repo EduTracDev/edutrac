@@ -34,8 +34,8 @@ export default function Navbar({
   ];
 
   const linkStyle = isScrolled
-    ? "text-gray-700 hover:text-[#923CF9]"
-    : "text-white hover:text-purple-200";
+    ? "text-[16px] text-gray-700 hover:text-[#923CF9]"
+    : "text-[16px] text-white hover:text-purple-200";
 
   return (
     <nav
@@ -67,7 +67,7 @@ export default function Navbar({
               <Link
                 key={link.name}
                 href={link.href}
-                className={`font-medium transition-colors ${linkStyle}`}
+                className={`transition-colors ${linkStyle}`}
               >
                 {link.name}
               </Link>
@@ -78,7 +78,7 @@ export default function Navbar({
           <div className="hidden lg:flex items-center gap-6">
             <Link
               href={AuthRoutes.login}
-              className={`text-sm font-semibold transition-colors ${linkStyle}`}
+              className={`text-[16px] transition-colors ${linkStyle}`}
             >
               Login
             </Link>
