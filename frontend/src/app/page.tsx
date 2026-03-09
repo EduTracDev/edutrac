@@ -15,6 +15,7 @@ import Role from "@/modules/landing/components/Role/Role";
 import about1 from "@/modules/shared/assets/images/about-1.png";
 import about2 from "@/modules/shared/assets/images/about-2.png";
 import about3 from "@/modules/shared/assets/images/about-3.png";
+import FeatureHub from "@/modules/landing/components/Feature/FeatureHub";
 
 export const metadata: Metadata = {
   title:
@@ -64,6 +65,48 @@ export default function HomePage() {
       buttonText: "Get Started",
       buttonLink: AuthRoutes.register,
     },
+    featureHub: {
+      badge: "Core Features",
+      mainTitle: "Everything you need to run your school",
+      features: [
+        {
+          title: "Automated Fee Management",
+          description:
+            "Eliminate the headache of manual reconciliation. Track payments, generate receipts, and send automated reminders to parents instantly.",
+          image: "/dashboard-fees.png",
+          benefits: [
+            "Instant payment notifications",
+            "Direct bank integration",
+            "Debt tracking",
+          ],
+          isReversed: false,
+        },
+        {
+          title: "Smart Attendance & SMS",
+          description:
+            "Keep parents in the loop. Our system logs student attendance and sends an automatic SMS to guardians the moment a child is marked absent.",
+          image: "/dashboard-attendance.png",
+          benefits: [
+            "Real-time daily logs",
+            "One-click SMS alerts",
+            "Monthly summary reports",
+          ],
+          isReversed: true,
+        },
+        {
+          title: "Effortless Result Computation",
+          description:
+            "Say goodbye to calculator errors. Teachers input scores, and EduTrac automatically generates professional report cards in seconds.",
+          image: "/dashboard-results.png",
+          benefits: [
+            "Automated GPA calculation",
+            "Customizable templates",
+            "Bulk result printing",
+          ],
+          isReversed: false,
+        },
+      ],
+    },
     impact: {
       title: "Our Impact in Numbers",
       stats: [
@@ -71,7 +114,6 @@ export default function HomePage() {
         { value: "1.2k+", label: "Institutions" },
         { value: "95%", label: "Satisfaction Rate" },
         { value: "24/7", label: "Expert Support" },
-        // { value: "10+", label: "African Countries" },
       ],
     },
     about: {
@@ -236,9 +278,10 @@ export default function HomePage() {
         buttonLink={content.navigation.buttonLink}
       />
       <Hero {...content.hero} />
+      <FeatureHub {...content.featureHub} />
       <ImpactStats {...content.impact} />
-      <Role items={content.role} />
       <AboutSection {...content.about} />
+      <Role items={content.role} />
       <Testimonial items={content.testimonials} />
       <Pricing items={content.pricing} />
       <FAQ items={content.faq} />
