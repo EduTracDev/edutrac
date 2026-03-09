@@ -22,7 +22,6 @@ export default function Hero({
 }: HeroProps) {
   return (
     <section className="relative min-h-[85vh] flex items-center bg-white overflow-hidden pt-32 pb-16 lg:pt-20">
-      {/* Background Decor: Subtle radial gradient for depth */}
       <div className="absolute top-0 left-0 w-full h-full pointer-events-none">
         <div className="absolute top-[-10%] right-[-10%] w-[500px] h-[500px] bg-[#923CF9]/5 rounded-full blur-[120px]" />
         <div className="absolute bottom-[-10%] left-[-5%] w-[400px] h-[400px] bg-blue-50 rounded-full blur-[100px]" />

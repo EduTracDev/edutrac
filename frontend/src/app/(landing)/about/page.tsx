@@ -22,6 +22,16 @@ import partner3 from "@/modules/shared/assets/images/cresttech.png";
 import TrustBar from "@/modules/landing/components/TrustBar/TrustBar";
 import BackToTop from "@/app/BackToTop";
 
+export const metadata: Metadata = {
+  title: "About Us | EduTrac – Modernizing Education Management",
+  description:
+    "Discover the story behind EduTrac. We are committed to empowering educators with data-driven tools and human-centered technology to transform school administration.",
+  openGraph: {
+    title: "Our Mission – Why We Built EduTrac",
+    description:
+      "Join us on our journey to make school management seamless, equitable, and efficient for schools worldwide.",
+  },
+};
 export default function AboutPage() {
   const content = {
     about: {

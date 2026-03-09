@@ -17,15 +17,48 @@ import about2 from "@/modules/shared/assets/images/about-2.png";
 import about3 from "@/modules/shared/assets/images/about-3.png";
 
 export const metadata: Metadata = {
-  title: "EduTrac",
+  title:
+    "EduTrac | All-in-One School Management System for Modern Institutions",
   description:
-    "EduTrac is a comprehensive learning management system designed to revolutionize education through technology.",
+    "Simplify your school administration with EduTrac. From automated fee collection to student performance tracking, we provide the tools you need to run a smarter, more efficient institution.",
+  keywords: [
+    "school management software",
+    "education ERP",
+    "student information system",
+    "automated school billing",
+    "Nigeria education tech",
+    "EduTrac school portal",
+  ],
+  openGraph: {
+    title: "EduTrac – Transform How You Manage Your Learning Management",
+    description:
+      "Experience the power of data-driven education management. Join 1,200+ schools modernizing their operations with EduTrac.",
+    url: "https://edutrac-seven.vercel.app/", // Replace with your actual domain
+    siteName: "EduTrac",
+    images: [
+      {
+        url: "/og-image.png", // Ensure you have a high-quality preview image in your public folder
+        width: 1200,
+        height: 630,
+        alt: "EduTrac Dashboard Preview",
+      },
+    ],
+    locale: "en_US",
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "EduTrac | Modern Learning Management System",
+    description:
+      "Run your learning system with precision and ease. Automated attendance, billing, and reporting in one place.",
+    images: ["/og-image.png"],
+  },
 };
 
 export default function HomePage() {
   const content = {
     hero: {
-      title: "Revolutionizing Learning Management",
+      title: "Revolutionizing Learning Management Systems",
       description:
         "EduTrac was born from a vision to revolutionize education through technology.We understand the challenges schools face in managing operations, engaging students, and empowering educators. Our mission is to provide a comprehensive, user-friendly platform that streamlines school management, enhances communication, and fosters a collaborative learning environment. With EduTrac, we aim to transform the educational experience for administrators, teachers, students, and parents alike.",
       buttonText: "Get Started",
