@@ -8,8 +8,14 @@ import FreeTrial from "@/modules/landing/components/FreeTrial/FreeTrial";
 import { AuthRoutes } from "@/routes/auth.routes";
 
 export const metadata: Metadata = {
-  title: "Edutrac – Contact Us",
-  description: "Contact us for any questions or feedback.",
+  title: "Contact Us | EduTrac – Get in Touch with Our Team",
+  description:
+    "Have questions or need a demo? Reach out to the EduTrac support team. We're here to help your school transition to a smarter management system.",
+  openGraph: {
+    title: "Contact EduTrac Support – We're Here to Help",
+    description:
+      "Speak with our experts today. Whether you need technical support or a custom enterprise quote, we're just a message away.",
+  },
 };
 
 export default function ContactPage() {

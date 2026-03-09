@@ -44,7 +44,7 @@ export default function AboutSection({
       className="py-16 md:py-24 bg-white overflow-hidden"
       aria-labelledby="about-heading"
     >
-      <div className="max-w-7xl mx-auto px-6 grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-center">
+      <div className="pt-16 lg:pt-20 max-w-7xl mx-auto px-6 grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-center">
         {/* Left Content Column */}
         <motion.div
           className="order-2 lg:order-1"
