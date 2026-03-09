@@ -3,7 +3,22 @@
 import React, { useState } from "react";
 import { ChevronDown } from "lucide-react";
 
-export default function PricingFAQ({ title, subtitle, questions }: any) {
+// 1. Define what a single Question looks like
+interface FAQItem {
+  question: string;
+  answer: string;
+}
+
+interface PricingFAQProps {
+  title: string;
+  subtitle: string;
+  questions: FAQItem[];
+}
+export default function PricingFAQ({
+  title,
+  subtitle,
+  questions,
+}: PricingFAQProps) {
   const [openIndex, setOpenIndex] = useState<number | null>(null);
 
   return (
@@ -17,7 +32,7 @@ export default function PricingFAQ({ title, subtitle, questions }: any) {
         </div>
 
         <div className="space-y-4">
-          {questions.map((item: any, idx: number) => (
+          {questions.map((item: FAQItem, idx: number) => (
             <div
               key={idx}
               className="border border-gray-100 rounded-2xl overflow-hidden"

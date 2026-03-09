@@ -1,12 +1,19 @@
 "use client";
 import Link from "next/link";
 
+interface FinalCTAProps {
+  title: string;
+  subtitle: string;
+  buttonText: string;
+  buttonLink: string;
+}
+
 export default function FinalCTA({
   title,
   subtitle,
   buttonText,
   buttonLink,
-}: any) {
+}: FinalCTAProps) {
   return (
     <section className="px-6 pb-24">
       <div className="max-w-7xl mx-auto bg-[#923CF9] rounded-[40px] p-12 md:p-20 text-center text-white relative overflow-hidden shadow-2xl">

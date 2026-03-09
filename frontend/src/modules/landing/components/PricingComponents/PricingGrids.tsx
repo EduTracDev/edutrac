@@ -105,16 +105,6 @@ export default function PricingGrids({
                   </li>
                 ))}
               </ul>
-
-              {/* <button
-                className={`w-full py-4 rounded-xl font-bold transition-all ${
-                  plan.isPopular
-                    ? "bg-[#923CF9] text-white hover:bg-[#7a2dd4]"
-                    : "bg-slate-100 text-slate-900 hover:bg-slate-200"
-                }`}
-              >
-                {plan.buttonText}
-              </button> */}
               <Link
                 href={`${AuthRoutes.register}?plan=${plan.id}`}
                 className={`w-full py-4 rounded-xl font-bold transition-all text-center block ${
