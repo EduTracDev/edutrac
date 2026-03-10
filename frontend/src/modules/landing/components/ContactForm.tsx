@@ -14,7 +14,7 @@ export default function ContactForm() {
   const {
     register,
     handleSubmit,
-    formState: { errors },
+    formState: { errors, isSubmitting },
     onSubmit,
   } = useContactForm();
 
@@ -167,9 +167,10 @@ export default function ContactForm() {
 
               <button
                 type="submit"
-                className="w-full py-5 bg-[#923CF9] text-white rounded-2xl font-black text-lg hover:bg-[#7a2dd4] transition-all shadow-lg shadow-[#923CF9]/20"
+                disabled={isSubmitting}
+                className="w-full py-5 bg-[#923CF9] text-white rounded-2xl font-black"
               >
-                Submit
+                {isSubmitting ? "Sending..." : "Submit"}
               </button>
             </form>
           </section>
