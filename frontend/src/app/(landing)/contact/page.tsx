@@ -1,11 +1,11 @@
-import Link from "next/link";
-import { LandingRoutes } from "@/routes/landing.routes";
 import { Metadata } from "next";
 import Box from "@mui/material/Box/Box";
+
 import Footer from "@/modules/landing/components/Footer/Footer";
 import Navbar from "@/modules/landing/components/Navbar/Navbar";
 import FreeTrial from "@/modules/landing/components/FreeTrial/FreeTrial";
 import { AuthRoutes } from "@/routes/auth.routes";
+import ContactForm from "@/modules/landing/components/ContactForm";
 
 export const metadata: Metadata = {
   title: "Contact Us | EduTrac – Get in Touch with Our Team",
@@ -20,6 +20,10 @@ export const metadata: Metadata = {
 
 export default function ContactPage() {
   const content = {
+    navigation: {
+      buttonText: "Sign Up",
+      buttonLink: AuthRoutes.register,
+    },
     freeTrial: {
       title: "Ready to Simplify Your Learning Management?",
       description:
@@ -29,6 +33,7 @@ export default function ContactPage() {
   };
   return (
     <Box>
+      <ContactForm />
       <Navbar buttonText="Get Started" buttonLink={AuthRoutes.register} />
       <FreeTrial {...content.freeTrial} />
       <Footer />
