@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Inter, Source_Sans_3, Open_Sans } from "next/font/google";
 import "./globals.css";
 import { Providers } from "./Providers";
+import { Toaster } from "react-hot-toast";
 
 const inter = Inter({
   variable: "--font-inter",
@@ -37,6 +38,22 @@ export default function RootLayout({
       <body
         className={`${inter.variable} ${sourceSans.variable} ${openSans.variable} font-sans antialiased`}
       >
+        <Toaster
+          position="top-right"
+          toastOptions={{
+            duration: 4000,
+            success: {
+              style: {
+                border: "1px solid #4ade80",
+              },
+            },
+            error: {
+              style: {
+                border: "1px solid #f87171",
+              },
+            },
+          }}
+        />
         <Providers>{children}</Providers>
       </body>
     </html>
