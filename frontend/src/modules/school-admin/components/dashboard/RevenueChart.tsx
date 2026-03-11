@@ -2,6 +2,7 @@
 "use client";
 
 import React from "react";
+import { useRouter } from "next/navigation";
 import {
   BarChart,
   Bar,
@@ -13,17 +14,18 @@ import {
   Legend,
 } from "recharts";
 
-// Mock data - replace with Firebase/Database fetch later
-const data = [
-  { month: "Jan", revenue: 4000000, debt: 2400000 },
-  { month: "Feb", revenue: 3000000, debt: 1398000 },
-  { month: "Mar", revenue: 2000000, debt: 9800000 },
-  { month: "Apr", revenue: 2780000, debt: 3908000 },
-  { month: "May", revenue: 1890000, debt: 4800000 },
-  { month: "Jun", revenue: 2390000, debt: 3800000 },
-];
+interface RevenueDataPoint {
+  month: string;
+  revenue: number;
+  debt: number;
+}
 
-export default function RevenueChart() {
+export default function RevenueChart({ data }: { data: RevenueDataPoint[] }) {
+  const router = useRouter();
+
+  const handleBarClick = (point: RevenueDataPoint) => {
+    router.push(`/school-admin/payments?month=${point.month}`);
+  };
   return (
     <div className="h-full w-full min-h-75">
       <ResponsiveContainer width="100%" height="100%">
