@@ -89,7 +89,7 @@ export default function Navbar({
             </Link>
             <Link
               href={buttonLink}
-              className="px-6 py-2.5 bg-[#923CF9] text-white rounded-lg font-semibold transition-all hover:bg-[#7b2dd1] active:scale-95 shadow-md shadow-purple-200"
+              className="px-6 py-2.5 bg-brand text-white rounded-lg font-semibold transition-all hover:bg-[#7b2dd1] active:scale-95 shadow-md shadow-purple-200"
             >
               {buttonText}
             </Link>
@@ -98,7 +98,7 @@ export default function Navbar({
           {/* Mobile Toggle */}
           <button
             onClick={() => setIsOpen(!isOpen)}
-            className="lg:hidden p-2 text-gray-600 hover:text-[#923CF9] transition-colors"
+            className="lg:hidden p-2 text-gray-600 hover:text-brand transition-colors"
             aria-label="Toggle menu"
           >
             {isOpen ? <X size={28} /> : <Menu size={28} />}

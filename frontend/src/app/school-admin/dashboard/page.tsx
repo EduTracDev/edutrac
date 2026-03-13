@@ -19,6 +19,8 @@ import {
   UserPlus,
   PlusSquare,
   Megaphone,
+  Wallet,
+  CheckCircle2,
 } from "lucide-react";
 import { Metadata } from "next";
 
@@ -214,16 +216,30 @@ export default function Page() {
           <div className="lg:col-span-2">
             <RecentActivity activities={recentActivities} />
           </div>
+          <aside className="space-y-8">
+            {/* daily/Strategic Actions */}
+            <div>
+              <h2 className="text-sm font-bold uppercase tracking-wider text-slate-400 mb-4">
+                Daily Operations
+              </h2>
+              <div className="flex flex-col gap-3">
+                <QuickActionCard title="Post Announcement" icon={Megaphone} />
+                <QuickActionCard title="Approve Results" icon={CheckCircle2} />
+                <QuickActionCard title="Log Expense" icon={Wallet} />
+              </div>
+            </div>
 
-          <aside>
-            <h2 className="text-lg font-bold text-slate-800 mb-4">
-              Quick Management
-            </h2>
-            <div className="flex flex-col gap-3">
-              <QuickActionCard title="Add Teacher" icon={UserPlus} />
-              <QuickActionCard title="Add Student" icon={UserPlus} />
-              <QuickActionCard title="Create Class" icon={PlusSquare} />
-              <QuickActionCard title="Post Announcement" icon={Megaphone} />
+            {/* Setup/Management Actions */}
+            <div>
+              <h2 className="text-sm font-bold uppercase tracking-wider text-slate-400 mb-4">
+                School Setup
+              </h2>
+              <div className="flex flex-col gap-3">
+                <QuickActionCard title="Add Teacher" icon={UserPlus} />
+                <QuickActionCard title="Add Student" icon={UserPlus} />
+                <QuickActionCard title="Add Parent" icon={UserPlus} />
+                <QuickActionCard title="Create Class" icon={PlusSquare} />
+              </div>
             </div>
           </aside>
         </div>
