@@ -9,6 +9,7 @@ import EnrollmentChart, {
   EnrollmentDataPoint,
 } from "@/modules/school-admin/components/dashboard/EnrollmentChart";
 import GenderChart from "@/modules/school-admin/components/dashboard/GenderChart";
+import AcademicChart from "@/modules/school-admin/components/dashboard/AcademicChart";
 import {
   UserCheck,
   GraduationCap,
@@ -32,6 +33,13 @@ export const metadata: Metadata = {
   description: "School Owner Dashboard",
 };
 
+export interface AcademicDataPoint {
+  gradeLevel: string;
+  exceeding: number;
+  meeting: number;
+  below: number;
+}
+
 export default function Page() {
   // From Auth Context or Database
   const schoolData = {
@@ -52,6 +60,13 @@ export default function Page() {
     { period: "May '25", students: 980 },
     { period: "Sept '25", students: 1100 },
     { period: "Jan '26", students: 1247 },
+  ];
+
+  const academicData: AcademicDataPoint[] = [
+    { gradeLevel: "JSS 1", exceeding: 45, meeting: 30, below: 5 },
+    { gradeLevel: "JSS 2", exceeding: 38, meeting: 42, below: 10 },
+    { gradeLevel: "JSS 3", exceeding: 50, meeting: 25, below: 2 },
+    { gradeLevel: "SSS 1", exceeding: 30, meeting: 35, below: 15 },
   ];
 
   const genderData = [
@@ -119,13 +134,18 @@ export default function Page() {
         </section>
         {/* 2. TRENDS: The 4-Quadrant Grid */}
         <AnalyticsGrid>
-          <ChartCard title="Fee Collection" subtitle="Revenue vs Debt">
+          <ChartCard
+            title="Fee Collection"
+            subtitle="Revenue vs Debt"
+            isEmpty={revenueData.length === 0}
+          >
             <RevenueChart data={revenueData} />
           </ChartCard>
 
           <ChartCard
             title="Enrollment Growth"
             subtitle="Total students over the last 3 sessions"
+            isEmpty={enrollmentData.length === 0}
           >
             <EnrollmentChart data={enrollmentData} />
           </ChartCard>
@@ -133,17 +153,17 @@ export default function Page() {
           <ChartCard
             title="Gender Distribution"
             subtitle="Male vs. Female population split"
+            isEmpty={genderData.length === 0}
           >
             <GenderChart data={genderData} />
           </ChartCard>
 
           <ChartCard
             title="Academic Health"
-            subtitle="Overall Pass/Fail rate per term"
+            subtitle="Performance distribution by class"
+            isEmpty={academicData.length === 0}
           >
-            <div className="text-slate-300 italic">
-              Coming Soon: Performance Stacked Bar
-            </div>
+            <AcademicChart data={academicData} />
           </ChartCard>
         </AnalyticsGrid>
         {/* Section 2: Actions & Content split */}
