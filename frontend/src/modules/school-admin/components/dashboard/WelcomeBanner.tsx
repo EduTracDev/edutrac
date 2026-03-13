@@ -16,7 +16,7 @@ export default function WelcomeBanner({
 }: WelcomeBannerProps) {
   return (
     <section
-      className="relative w-full overflow-hidden rounded-3xl bg-gradient-to-r from-[#923CF9] to-[#AC6AFF] p-6 md:p-10 text-white shadow-lg"
+      className="relative w-full overflow-hidden rounded-3xl bg-linear-to-r from-[#923CF9] to-[#AC6AFF] p-6 md:p-10 text-white shadow-lg"
       aria-labelledby="welcome-heading"
     >
       <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-8">
@@ -68,9 +68,9 @@ export default function WelcomeBanner({
           </div>
         </div>
 
-        {/* Right Content: School ID Card */}
+        {/* Right Content */}
         <div
-          className="w-full lg:w-auto min-w-[200px] bg-white/20 backdrop-blur-md border border-white/30 rounded-2xl p-6 text-center lg:text-right"
+          className="w-full lg:w-auto min-w-50 bg-white/20 backdrop-blur-md border border-white/30 rounded-2xl p-6 text-center lg:text-right"
           role="region"
           aria-label="School Identification"
         >

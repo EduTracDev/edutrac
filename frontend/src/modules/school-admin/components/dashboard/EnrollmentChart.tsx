@@ -1,11 +1,7 @@
-// src/modules/school-admin/components/dashboard/EnrollmentChart.tsx
 "use client";
 
 import React from "react";
-import { useRouter } from "next/navigation";
 import {
-  LineChart,
-  Line,
   XAxis,
   YAxis,
   CartesianGrid,
@@ -15,29 +11,20 @@ import {
   AreaChart,
 } from "recharts";
 
-// 1. Define the shape of a single data point
+//  Define the shape of a single data point
 export interface EnrollmentDataPoint {
   period: string;
   students: number;
 }
 
-// 2. Define the shape of the component's PROPS
+//  Define the shape of the component's PROPS
 interface EnrollmentChartProps {
-  data: EnrollmentDataPoint[]; // This is an array
+  data: EnrollmentDataPoint[];
 }
 export default function EnrollmentChart({ data }: EnrollmentChartProps) {
-  const router = useRouter();
-
-  //   const handlePointClick = (point: EnrollmentDataPoint) => {
-  //     if (!point || !point.period) return;
-  //     Drill down to the student list filtered by admission date
-  //     router.push(`/school-admin/students?admitted=${point.period}`);
-  //   };
-
   return (
     <div className="h-full w-full min-h-75 cursor-pointer">
       <ResponsiveContainer width="100%" height="100%">
-        {/* AreaChart to get that nice purple glow under the line */}
         <AreaChart
           data={data}
           margin={{ top: 10, right: 10, left: 0, bottom: 0 }}
@@ -79,11 +66,6 @@ export default function EnrollmentChart({ data }: EnrollmentChartProps) {
             strokeWidth={3}
             fillOpacity={1}
             fill="url(#colorStudents)"
-            activeDot={{
-              r: 6,
-              strokeWidth: 0,
-              onClick: (_, event: any) => handlePointClick(event.payload),
-            }}
           />
         </AreaChart>
       </ResponsiveContainer>

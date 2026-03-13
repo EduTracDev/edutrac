@@ -29,7 +29,7 @@ type SidebarLink = {
 export default function AdminSidebar({ sidebarOpen, setSidebarOpen }: Props) {
   const pathname = usePathname();
   const links: SidebarLink[] = [
-    { name: "Dashboard", href: "/school-admin/dashboard", icon: Home },
+    { name: "Dashboard", href: SchoolAdminRoutes.dashboard, icon: Home },
     { name: "Teachers", href: SchoolAdminRoutes.teachers, icon: Users },
     { name: "Parents", href: SchoolAdminRoutes.parents, icon: Users },
     { name: "Students", href: SchoolAdminRoutes.students, icon: Users },

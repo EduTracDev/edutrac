@@ -1,5 +1,5 @@
 export enum SchoolAdminRoutes {
-  root = "/school-owner",
+  root = "/school-admin",
   dashboard = `${root}/dashboard`,
   teachers = `${root}/teachers`,
   students = `${root}/students`,

@@ -1,4 +1,4 @@
-import { LucideIcon, PlusCircle } from "lucide-react";
+import { PlusCircle } from "lucide-react";
 
 interface ChartCardProps {
   title: string;
