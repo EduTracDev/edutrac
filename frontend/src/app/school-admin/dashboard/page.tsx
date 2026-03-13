@@ -10,6 +10,7 @@ import EnrollmentChart, {
 } from "@/modules/school-admin/components/dashboard/EnrollmentChart";
 import GenderChart from "@/modules/school-admin/components/dashboard/GenderChart";
 import AcademicChart from "@/modules/school-admin/components/dashboard/AcademicChart";
+import RecentActivity from "@/modules/school-admin/components/dashboard/RecentActivity";
 import {
   UserCheck,
   GraduationCap,
@@ -38,6 +39,14 @@ export interface AcademicDataPoint {
   exceeding: number;
   meeting: number;
   below: number;
+}
+
+export interface ActivityItem {
+  id: string;
+  type: "payment" | "admission" | "academic";
+  title: string;
+  subtitle: string;
+  time: string;
 }
 
 export default function Page() {
@@ -72,6 +81,30 @@ export default function Page() {
   const genderData = [
     { name: "Boys", value: 740, fill: "#923CF9" },
     { name: "Girls", value: 507, fill: "#FF64D4" },
+  ];
+
+  const recentActivities: ActivityItem[] = [
+    {
+      id: "1",
+      type: "payment",
+      title: "Fee Payment: Adebayo Samuel",
+      subtitle: "Paid ₦150,000 for 2nd Term Tuition",
+      time: "2 mins ago",
+    },
+    {
+      id: "2",
+      type: "admission",
+      title: "New Student Enrolled",
+      subtitle: "Chinedu Okoro joined Basic 4 Silver",
+      time: "45 mins ago",
+    },
+    {
+      id: "3",
+      type: "academic",
+      title: "Results Published",
+      subtitle: "JSS 3 Mathematics midterm scores uploaded",
+      time: "2 hours ago",
+    },
   ];
   // const [activeModal, setActiveModal] = useState<ModalType>(null);
 
@@ -168,10 +201,8 @@ export default function Page() {
         </AnalyticsGrid>
         {/* Section 2: Actions & Content split */}
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-          <div className="lg:col-span-2 space-y-6">
-            <div className="bg-white border rounded-3xl p-8 min-h-75 flex items-center justify-center text-slate-400 italic">
-              Revenue Chart / Enrollment Analytics coming soon...
-            </div>
+          <div className="lg:col-span-2">
+            <RecentActivity activities={recentActivities} />
           </div>
 
           <aside>
