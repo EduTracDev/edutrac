@@ -30,8 +30,18 @@ import { Metadata } from "next";
 //   | null;
 
 export const metadata: Metadata = {
-  title: "Edutrac - School Owner Dashboard",
-  description: "School Owner Dashboard",
+  title: "School Overview | EduTrac Proprietor",
+  description:
+    "Monitor your school's financial health, student enrollment, and academic progress in real-time.",
+  robots: {
+    index: false,
+    follow: false,
+  },
+  openGraph: {
+    title: "EduTrac Proprietor Portal",
+    description: "Your school's vital signs at a glance.",
+    type: "website",
+  },
 };
 
 export interface AcademicDataPoint {
