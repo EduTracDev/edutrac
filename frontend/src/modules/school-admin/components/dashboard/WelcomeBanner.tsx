@@ -82,8 +82,6 @@ export default function WelcomeBanner({
           </span>
         </div>
       </div>
-
-      {/* Decorative Blur (Optional for that "SaaS" feel) */}
       <div className="absolute -top-24 -right-24 w-64 h-64 bg-white/10 rounded-full blur-3xl pointer-events-none" />
     </section>
   );
