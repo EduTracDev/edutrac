@@ -2,6 +2,8 @@
 
 import React, { useState } from "react";
 import { ChevronDown } from "lucide-react";
+import Image from "next/image";
+import backgroundMap from "@/modules/shared/assets/images/BackgroundMap.jpeg";
 
 interface FAQProps {
   items: {
@@ -18,7 +20,18 @@ export default function FAQ({ items }: FAQProps) {
   };
 
   return (
-    <section className="py-20 bg-white" aria-labelledby="faq-heading">
+    <section className="relative py-10" aria-labelledby="faq-heading">
+      {/* Background */}
+      <div className="absolute inset-0 -z-10 hidden lg:block">
+        <Image
+          src={backgroundMap}
+          alt=""
+          fill
+          priority
+          className="object-cover"
+          aria-hidden="true"
+        />
+      </div>
       <div className="max-w-4xl mx-auto px-6">
         <div className="text-center mb-12">
           <span className="inline-block px-4 py-1 mb-4 text-xs font-bold uppercase tracking-widest text-purple-600 bg-purple-100 rounded-md">

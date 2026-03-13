@@ -27,7 +27,7 @@ export default function FreeTrial({
           src={backgroundImage}
           alt=""
           fill
-          priority // Added priority to ensure it loads immediately on desktop
+          priority
           className="object-cover"
           aria-hidden="true"
         />
