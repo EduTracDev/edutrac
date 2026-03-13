@@ -8,9 +8,7 @@ import RevenueChart from "@/modules/school-admin/components/dashboard/RevenueCha
 import EnrollmentChart, {
   EnrollmentDataPoint,
 } from "@/modules/school-admin/components/dashboard/EnrollmentChart";
-import GenderChart, {
-  GenderDataPoint,
-} from "@/modules/school-admin/components/dashboard/GenderChart";
+import GenderChart from "@/modules/school-admin/components/dashboard/GenderChart";
 import {
   UserCheck,
   GraduationCap,

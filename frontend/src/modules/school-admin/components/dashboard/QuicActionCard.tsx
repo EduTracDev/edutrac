@@ -1,4 +1,3 @@
-// src/modules/school-admin/components/QuickActionCard.tsx
 import { LucideIcon, Plus } from "lucide-react";
 
 interface QuickActionProps {

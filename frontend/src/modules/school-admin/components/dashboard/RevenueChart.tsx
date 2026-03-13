@@ -1,8 +1,6 @@
-// src/modules/school-admin/components/dashboard/RevenueChart.tsx
 "use client";
 
 import React from "react";
-import { useRouter } from "next/navigation";
 import {
   BarChart,
   Bar,
@@ -21,11 +19,6 @@ interface RevenueDataPoint {
 }
 
 export default function RevenueChart({ data }: { data: RevenueDataPoint[] }) {
-  const router = useRouter();
-
-  const handleBarClick = (point: RevenueDataPoint) => {
-    router.push(`/school-admin/payments?month=${point.month}`);
-  };
   return (
     <div className="h-full w-full min-h-75">
       <ResponsiveContainer width="100%" height="100%">
