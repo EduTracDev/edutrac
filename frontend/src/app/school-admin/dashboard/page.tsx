@@ -5,6 +5,12 @@ import QuickActionCard from "@/modules/school-admin/components/dashboard/QuicAct
 import AnalyticsGrid from "@/modules/school-admin/components/dashboard/AnalyticsGrid";
 import { ChartCard } from "@/modules/school-admin/components/dashboard/ChartCard";
 import RevenueChart from "@/modules/school-admin/components/dashboard/RevenueChart";
+import EnrollmentChart, {
+  EnrollmentDataPoint,
+} from "@/modules/school-admin/components/dashboard/EnrollmentChart";
+import GenderChart, {
+  GenderDataPoint,
+} from "@/modules/school-admin/components/dashboard/GenderChart";
 import {
   UserCheck,
   GraduationCap,
@@ -36,6 +42,24 @@ export default function Page() {
     date: "March 11, 2026",
     plan: "Premium plan",
   };
+  const revenueData = [
+    { month: "Jan", revenue: 4500000, debt: 1200000 },
+    { month: "Feb", revenue: 5200000, debt: 800000 },
+    { month: "Mar", revenue: 4800000, debt: 1500000 },
+  ];
+
+  const enrollmentData: EnrollmentDataPoint[] = [
+    { period: "Sept '24", students: 800 },
+    { period: "Jan '25", students: 950 },
+    { period: "May '25", students: 980 },
+    { period: "Sept '25", students: 1100 },
+    { period: "Jan '26", students: 1247 },
+  ];
+
+  const genderData = [
+    { name: "Boys", value: 740, fill: "#923CF9" },
+    { name: "Girls", value: 507, fill: "#FF64D4" },
+  ];
   // const [activeModal, setActiveModal] = useState<ModalType>(null);
 
   // const openModal = (type: ModalType) => {
@@ -97,33 +121,22 @@ export default function Page() {
         </section>
         {/* 2. TRENDS: The 4-Quadrant Grid */}
         <AnalyticsGrid>
-          <ChartCard
-            title="Fee Collection Overview"
-            subtitle="Revenue vs. Outstanding Debt"
-            // loading={isFinancialsLoading}
-            // isEmpty={revenueData.length === 0}
-            // emptyActionText="Record a payment"
-            // onEmptyAction={() => openModal("add-payment")}
-          >
-            <RevenueChart />
+          <ChartCard title="Fee Collection" subtitle="Revenue vs Debt">
+            <RevenueChart data={revenueData} />
           </ChartCard>
 
           <ChartCard
             title="Enrollment Growth"
-            subtitle="Student population over last 3 terms"
+            subtitle="Total students over the last 3 sessions"
           >
-            <div className="text-slate-300 italic">
-              Coming Next: Enrollment Line Chart
-            </div>
+            <EnrollmentChart data={enrollmentData} />
           </ChartCard>
 
           <ChartCard
             title="Gender Distribution"
             subtitle="Male vs. Female population split"
           >
-            <div className="text-slate-300 italic">
-              Coming Soon: Gender Pie Chart
-            </div>
+            <GenderChart data={genderData} />
           </ChartCard>
 
           <ChartCard
@@ -138,7 +151,6 @@ export default function Page() {
         {/* Section 2: Actions & Content split */}
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
           <div className="lg:col-span-2 space-y-6">
-            {/* You could put a Recent Activity table or Chart here */}
             <div className="bg-white border rounded-3xl p-8 min-h-75 flex items-center justify-center text-slate-400 italic">
               Revenue Chart / Enrollment Analytics coming soon...
             </div>
