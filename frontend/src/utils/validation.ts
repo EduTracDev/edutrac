@@ -97,6 +97,20 @@ export const classSchema = yup.object().shape({
   category: yup.string().required("Please select a category"),
 });
 
+export const expenseSchema = yup.object().shape({
+  amount: yup
+    .number()
+    .typeError("Amount must be a number")
+    .required("How much was spent?")
+    .positive("Amount must be greater than zero"),
+  category: yup.string().required("Please select an expense category"),
+  description: yup
+    .string()
+    .required("What was this expense for?")
+    .min(3, "Too short")
+    .max(100, "Keep descriptions brief"),
+});
+
 // Types for your components
 export type ContactFormData = yup.InferType<typeof contactSchema>;
 export type RegisterFormData = yup.InferType<typeof registerSchema>;

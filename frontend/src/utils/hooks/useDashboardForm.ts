@@ -1,10 +1,15 @@
 import { useState } from "react";
 import { toast } from "react-hot-toast";
 import * as Yup from "yup";
-import { announcementSchema, classSchema } from "@/utils/validation";
+import {
+  announcementSchema,
+  classSchema,
+  expenseSchema,
+} from "@/utils/validation";
 import {
   AnnouncementFormElement,
   ClassFormElement,
+  ExpenseFormElement,
 } from "@/modules/types/forms";
 import { ActiveModal } from "@/modules/types/dashboard";
 
@@ -79,6 +84,34 @@ export const useDashboardForms = () => {
       setIsSubmitting(false);
     }
   };
+  // -- Expenses Logic ---
+  const handleExpenseSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    const form = e.currentTarget as ExpenseFormElement;
+    const { amount, category, description } = form.elements;
+
+    const data = {
+      amount: Number(amount.value),
+      category: category.value,
+      description: description.value,
+    };
+
+    try {
+      await expenseSchema.validate(data, { abortEarly: false });
+      setIsSubmitting(true);
+      const loading = toast.loading("Logging expense...");
+
+      // Firebase logic would go here:
+      // await addDoc(collection(db, "expenses"), { ...data, date: new Date() });
+
+      toast.success("Expense logged successfully!", { id: loading });
+      closeModal();
+    } catch (err) {
+      handleValidationError(err);
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
 
   return {
     activeModal,
@@ -88,5 +121,6 @@ export const useDashboardForms = () => {
     isSubmitting,
     handleAnnouncementSubmit,
     handleClassSubmit,
+    handleExpenseSubmit,
   };
 };

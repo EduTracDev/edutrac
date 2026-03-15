@@ -17,9 +17,12 @@ import {
   recentActivities,
 } from "@/modules/constants/dashboard";
 import { useDashboardForms } from "@/utils/hooks/useDashboardForm";
+import AnnouncementModal from "@/modules/school-admin/components/dashboard/modals/AnnouncementModal";
+import ExpensesModal from "@/modules/school-admin/components/dashboard/modals/ExpensesModal";
 import GenderChart from "@/modules/school-admin/components/dashboard/GenderChart";
 import AcademicChart from "@/modules/school-admin/components/dashboard/AcademicChart";
 import RecentActivity from "@/modules/school-admin/components/dashboard/RecentActivity";
+import { ExpenseSummaryCard } from "@/modules/school-admin/components/dashboard/ExpenseSummaryCard";
 import Modal from "@/modules/school-admin/components/dashboard/Modal";
 import {
   UserCheck,
@@ -27,12 +30,14 @@ import {
   Users,
   Layout,
   UserPlus,
+  Wallet,
   PlusSquare,
   Megaphone,
   CheckCircle2,
 } from "lucide-react";
 import { Metadata } from "next";
 import { toast } from "react-hot-toast";
+import CreateClassModal from "@/modules/school-admin/components/dashboard/modals/CreateClassModal";
 
 // export const metadata: Metadata = {
 //   title: "School Overview | EduTrac Proprietor",
@@ -57,6 +62,7 @@ export default function Page() {
     formErrors,
     handleAnnouncementSubmit,
     handleClassSubmit,
+    handleExpenseSubmit,
     isSubmitting,
   } = useDashboardForms();
 
@@ -145,6 +151,11 @@ export default function Page() {
           >
             <AcademicChart data={academicData} />
           </ChartCard>
+          <ExpenseSummaryCard
+            total={1250000}
+            budget={2000000}
+            month="March 2026"
+          />
         </AnalyticsGrid>
         {/* Section 2: Actions & Content split */}
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
@@ -170,6 +181,11 @@ export default function Page() {
                     toast.loading("Loading result portal...");
                     router.push("/school-admin/results/approve");
                   }}
+                />
+                <QuickActionCard
+                  title="Expenses"
+                  icon={Wallet}
+                  onClick={() => setActiveModal("expenses")}
                 />
               </div>
             </div>
@@ -206,150 +222,31 @@ export default function Page() {
         </div>
       </div>
       {activeModal === "announcement" && (
-        <Modal title="Announcement" onClose={closeModal} isOpen={true}>
-          <form className="space-y-5" onSubmit={handleAnnouncementSubmit}>
-            {/* Message Title */}
-            <div>
-              <label className="text-sm font-semibold text-slate-700 block mb-2">
-                Announcement Title
-              </label>
-              <input
-                name="title"
-                placeholder="e.g. Mid-term Break Notice"
-                className={`w-full p-3 bg-slate-50 border ${
-                  formErrors.title ? "border-red-500" : "border-slate-200"
-                } rounded-2xl outline-none focus:ring-2 focus:ring-[#923CF9]/20 transition-all text-slate-800 placeholder:text-slate-400`}
-              />
-              {formErrors.title && (
-                <p className="text-red-500 text-[11px] mt-1 font-medium">
-                  {formErrors.title}
-                </p>
-              )}
-            </div>
-
-            {/* Content Area */}
-            <div>
-              <label className="text-sm font-semibold text-slate-700 block mb-2">
-                Detailed Message
-              </label>
-              <textarea
-                name="content"
-                placeholder="Type your message to parents and staff here..."
-                rows={5}
-                className={`w-full p-3 bg-slate-50 border ${
-                  formErrors.content ? "border-red-500" : "border-slate-200"
-                } rounded-2xl outline-none focus:ring-2 focus:ring-[#923CF9]/20 transition-all text-slate-800 placeholder:text-slate-400 resize-none`}
-              />
-              {formErrors.content && (
-                <p className="text-red-500 text-[11px] mt-1 font-medium">
-                  {formErrors.content}
-                </p>
-              )}
-            </div>
-
-            {/* Action Buttons */}
-            <div className="flex gap-3 pt-2">
-              <button
-                type="button"
-                onClick={closeModal}
-                className="flex-1 py-4 bg-slate-100 text-slate-600 font-bold rounded-2xl hover:bg-slate-200 transition-all"
-              >
-                Cancel
-              </button>
-              <button
-                type="submit"
-                disabled={isSubmitting}
-                className="flex-[2] py-4 bg-[#923CF9] text-white font-bold rounded-2xl shadow-lg shadow-purple-100 hover:bg-[#7c28e0] active:scale-[0.95] transition-all disabled:opacity-70"
-              >
-                {isSubmitting ? "Sending..." : "Send Broadcast"}
-              </button>
-            </div>
-          </form>
-        </Modal>
+        <AnnouncementModal
+          isOpen={true}
+          onClose={closeModal}
+          onSubmit={handleAnnouncementSubmit}
+          errors={formErrors}
+          isSubmitting={isSubmitting}
+        />
+      )}
+      {activeModal === "expenses" && (
+        <ExpensesModal
+          isOpen={true}
+          onClose={closeModal}
+          onSubmit={handleExpenseSubmit}
+          errors={formErrors}
+          isSubmitting={isSubmitting}
+        />
       )}
       {activeModal === "class" && (
-        <Modal title="Create Class" onClose={closeModal} isOpen={true}>
-          <form className="space-y-5" onSubmit={handleClassSubmit}>
-            {/* Class Name Input */}
-            <div>
-              <label className="text-sm font-semibold text-slate-700 block mb-2">
-                Class Name
-              </label>
-              <input
-                name="className"
-                type="text"
-                placeholder="e.g. SSS 3 Emerald"
-                className={`w-full p-3 bg-slate-50 border ${
-                  formErrors.className ? "border-red-500" : "border-slate-100"
-                } rounded-2xl outline-none focus:ring-2 focus:ring-[#923CF9]/20 transition-all`}
-              />
-              {formErrors.className && (
-                <p className="text-red-500 text-[11px] mt-1 font-medium italic">
-                  {formErrors.className}
-                </p>
-              )}
-            </div>
-
-            {/* Category Selection */}
-            <div>
-              <label className="text-sm font-semibold text-slate-700 block mb-2">
-                Section / Category
-              </label>
-              <div className="relative">
-                <select
-                  name="category"
-                  className={`w-full p-3 bg-slate-50 border ${
-                    formErrors.category ? "border-red-500" : "border-slate-100"
-                  } rounded-2xl outline-none appearance-none focus:ring-2 focus:ring-[#923CF9]/20 transition-all`}
-                >
-                  <option value="">Select a section</option>
-                  <option value="nursery">Nursery / Primary</option>
-                  <option value="junior">Junior Secondary (JSS)</option>
-                  <option value="senior">Senior Secondary (SSS)</option>
-                </select>
-                {/* Custom Chevron for the Select */}
-                <div className="absolute inset-y-0 right-4 flex items-center pointer-events-none">
-                  <svg
-                    className="w-4 h-4 text-slate-400"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth="2"
-                      d="M19 9l-7 7-7-7"
-                    />
-                  </svg>
-                </div>
-              </div>
-              {formErrors.category && (
-                <p className="text-red-500 text-[11px] mt-1 font-medium italic">
-                  {formErrors.category}
-                </p>
-              )}
-            </div>
-
-            {/* Action Buttons */}
-            <div className="flex gap-3 pt-4">
-              <button
-                type="button"
-                onClick={closeModal}
-                className="flex-1 py-4 bg-slate-100 text-slate-600 font-bold rounded-2xl hover:bg-slate-200 transition-all"
-              >
-                Cancel
-              </button>
-              <button
-                type="submit"
-                disabled={isSubmitting}
-                className="flex-[2] py-4 bg-[#923CF9] text-white font-bold rounded-2xl shadow-lg shadow-purple-100 hover:bg-[#7c28e0] active:scale-[0.98] transition-all disabled:opacity-70 disabled:cursor-not-allowed"
-              >
-                {isSubmitting ? "Creating..." : "Create Class"}
-              </button>
-            </div>
-          </form>
-        </Modal>
+        <CreateClassModal
+          isOpen={true}
+          onClose={closeModal}
+          onSubmit={handleClassSubmit}
+          errors={formErrors}
+          isSubmitting={isSubmitting}
+        />
       )}
     </AdminLayout>
   );
