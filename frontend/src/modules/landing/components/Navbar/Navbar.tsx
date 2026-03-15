@@ -1,8 +1,10 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
+import { motion } from "framer-motion";
 import { Menu, X } from "lucide-react";
 import { LandingRoutes } from "@/routes/landing.routes";
 import { AuthRoutes } from "@/routes/auth.routes";
@@ -16,108 +18,136 @@ export default function Navbar({
   buttonLink: string;
 }) {
   const [isOpen, setIsOpen] = useState(false);
-  const [isScrolled, setIsScrolled] = useState(false);
-
-  useEffect(() => {
-    const handleScroll = () => {
-      setIsScrolled(window.scrollY > 20);
-    };
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
+  const pathname = usePathname();
 
   const navLinks = [
+    { name: "Home", href: LandingRoutes.home },
     { name: "About", href: LandingRoutes.about },
     { name: "Pricing", href: LandingRoutes.pricing },
-    { name: "Product", href: LandingRoutes.product },
+    // { name: "Product", href: LandingRoutes.product },
     { name: "Contact", href: LandingRoutes.contact },
   ];
 
-  const linkStyle = isScrolled
-    ? "text-gray-700 hover:text-[#923CF9]"
-    : "text-white hover:text-purple-200";
-
   return (
-    <nav
-      className={`fixed top-0 z-50 w-full transition-all duration-300 ${
-        isScrolled
-          ? "bg-white/90 backdrop-blur-md py-3 shadow-md"
-          : "bg-transparent py-6"
-      }`}
-    >
+    <nav className="fixed top-0 z-50 w-full bg-white/80 backdrop-blur-md py-4 shadow-sm border-b border-gray-100">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between">
-          {/* Logo with Visibility Fix */}
-          <Link href="/" className="transition-transform hover:scale-105">
+          {/* Logo */}
+          <Link
+            href="/"
+            className="transition-transform hover:scale-105 shrink-0"
+          >
             <Image
               src={logo}
-              alt="Logo"
+              alt="EduTrac Logo"
               width={140}
               height={40}
               priority
-              className={`transition-all duration-300 ${
-                !isScrolled ? "brightness-0 invert" : ""
-              }`}
             />
           </Link>
 
           {/* Desktop Nav Links */}
           <div className="hidden lg:flex items-center space-x-8">
-            {navLinks.map((link) => (
-              <Link
-                key={link.name}
-                href={link.href}
-                className={`font-medium transition-colors ${linkStyle}`}
-              >
-                {link.name}
-              </Link>
-            ))}
+            {navLinks.map((link) => {
+              const isActive = pathname === link.href;
+              return (
+                <Link
+                  key={link.name}
+                  href={link.href}
+                  className={`relative text-[16px] font-medium transition-colors duration-200 py-1 ${
+                    isActive
+                      ? "text-[#923CF9]"
+                      : "text-gray-600 hover:text-[#923CF9]"
+                  }`}
+                >
+                  {link.name}
+
+                  {/* Active Underline */}
+                  {isActive && (
+                    <motion.div
+                      layoutId="nav-underline"
+                      className="absolute -bottom-1 left-0 right-0 h-[2px] bg-[#923CF9] rounded-full"
+                      transition={{
+                        type: "spring",
+                        stiffness: 380,
+                        damping: 30,
+                      }}
+                    />
+                  )}
+                </Link>
+              );
+            })}
           </div>
 
           {/* Desktop Auth */}
           <div className="hidden lg:flex items-center gap-6">
             <Link
               href={AuthRoutes.login}
-              className={`text-sm font-semibold transition-colors ${linkStyle}`}
+              className="text-[16px] font-medium text-gray-600 hover:text-[#923CF9] transition-colors"
             >
               Login
             </Link>
             <Link
               href={buttonLink}
-              className={`px-6 py-2.5 rounded-lg font-medium transition-all active:scale-95 shadow-lg ${
-                isScrolled
-                  ? "bg-[#923CF9] text-white hover:bg-[#7b2dd1]"
-                  : "bg-white text-[#923CF9] hover:bg-purple-50"
-              }`}
+              className="px-6 py-2.5 bg-brand text-white rounded-lg font-semibold transition-all hover:bg-[#7b2dd1] active:scale-95 shadow-md shadow-purple-200"
             >
               {buttonText}
             </Link>
           </div>
 
-          {/* Mobile Toggle (Hamburger) */}
+          {/* Mobile Toggle */}
           <button
             onClick={() => setIsOpen(!isOpen)}
-            className={`lg:hidden p-2 ${isScrolled ? "text-gray-900" : "text-white"}`}
+            className="lg:hidden p-2 text-gray-600 hover:text-brand transition-colors"
+            aria-label="Toggle menu"
           >
             {isOpen ? <X size={28} /> : <Menu size={28} />}
           </button>
         </div>
       </div>
-      <div
-        className={`lg:hidden bg-white transition-all duration-300 overflow-hidden ${isOpen ? "max-h-screen border-t" : "max-h-0"}`}
+
+      {/* Mobile Menu Dropdown */}
+      <motion.div
+        initial={false}
+        animate={
+          isOpen ? { height: "auto", opacity: 1 } : { height: 0, opacity: 0 }
+        }
+        className="lg:hidden bg-white overflow-hidden border-t border-gray-100"
       >
         <div className="p-6 space-y-4">
-          {navLinks.map((link) => (
+          {navLinks.map((link) => {
+            const isActive = pathname === link.href;
+            return (
+              <Link
+                key={link.name}
+                href={link.href}
+                onClick={() => setIsOpen(false)}
+                className={`block text-[18px] font-semibold ${
+                  isActive
+                    ? "text-[#923CF9]"
+                    : "text-gray-800 hover:text-[#923CF9]"
+                }`}
+              >
+                {link.name}
+              </Link>
+            );
+          })}
+          <div className="pt-4 border-t border-gray-100 flex flex-col gap-4">
             <Link
-              key={link.name}
-              href={link.href}
-              className="block text-gray-800 font-medium"
+              href={AuthRoutes.login}
+              className="text-center font-medium text-gray-600 py-2"
             >
-              {link.name}
+              Login
             </Link>
-          ))}
+            <Link
+              href={buttonLink}
+              className="block w-full text-center bg-[#923CF9] text-white py-3 rounded-xl font-bold shadow-lg"
+            >
+              {buttonText}
+            </Link>
+          </div>
         </div>
-      </div>
+      </motion.div>
     </nav>
   );
 }
