@@ -10,17 +10,7 @@ import {
   Area,
   AreaChart,
 } from "recharts";
-
-//  Define the shape of a single data point
-export interface EnrollmentDataPoint {
-  period: string;
-  students: number;
-}
-
-//  Define the shape of the component's PROPS
-interface EnrollmentChartProps {
-  data: EnrollmentDataPoint[];
-}
+import { EnrollmentChartProps } from "@/modules/types/dashboard";
 export default function EnrollmentChart({ data }: EnrollmentChartProps) {
   return (
     <div className="h-full w-full min-h-75 cursor-pointer">

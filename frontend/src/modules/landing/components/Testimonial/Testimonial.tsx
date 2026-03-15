@@ -5,7 +5,8 @@ import Image from "next/image";
 import useEmblaCarousel from "embla-carousel-react";
 import Autoplay from "embla-carousel-autoplay";
 import { Quote, ChevronLeft, ChevronRight } from "lucide-react";
-// import backgroundMap from "@/modules/shared/assets/images/Background_Map.png";
+
+import backgroundMap from "@/modules/shared/assets/images/BackgroundMap.jpeg";
 
 interface TestimonialProps {
   items: {
@@ -39,19 +40,20 @@ export default function Testimonial({ items }: TestimonialProps) {
 
   return (
     <section
-      className="relative py-20 overflow-hidden bg-[#F8F9FA]"
+      className="relative py-20 overflow-hidden"
       aria-labelledby="testimonial-heading"
     >
-      {/* <div className="absolute inset-0 opacity-5 -z-10">
+      {/* Background */}
+      <div className="absolute inset-0 -z-10 hidden lg:block">
         <Image
           src={backgroundMap}
           alt=""
           fill
-          className="object-contain"
+          priority
+          className="object-cover"
           aria-hidden="true"
         />
-      </div> */}
-
+      </div>
       <div className="max-w-7xl mx-auto px-6">
         {/* Header Section */}
         <div className="text-center mb-16">
