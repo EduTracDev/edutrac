@@ -80,6 +80,23 @@ export const bulkStudentSchema = yup.object().shape({
     .min(1, "At least one student is required"),
 });
 
+export const announcementSchema = yup.object().shape({
+  title: yup
+    .string()
+    .required("Please provide a heading")
+    .max(60, "Max 60 characters"),
+  content: yup
+    .string()
+    .required("Body is required")
+    .min(10, "Min 10 characters")
+    .max(500, "Max 500 characters"),
+});
+
+export const classSchema = yup.object().shape({
+  className: yup.string().required("Class name is required"),
+  category: yup.string().required("Please select a category"),
+});
+
 // Types for your components
 export type ContactFormData = yup.InferType<typeof contactSchema>;
 export type RegisterFormData = yup.InferType<typeof registerSchema>;

@@ -1,3 +1,5 @@
+"use client";
+import { useRouter } from "next/navigation";
 import AdminLayout from "@/modules/school-admin/layout/AdminLayout";
 import WelcomeBanner from "@/modules/school-admin/components/dashboard/WelcomeBanner";
 import StatCard from "@/modules/school-admin/components/dashboard/StatCard";
@@ -5,12 +7,20 @@ import QuickActionCard from "@/modules/school-admin/components/dashboard/QuicAct
 import AnalyticsGrid from "@/modules/school-admin/components/dashboard/AnalyticsGrid";
 import { ChartCard } from "@/modules/school-admin/components/dashboard/ChartCard";
 import RevenueChart from "@/modules/school-admin/components/dashboard/RevenueChart";
-import EnrollmentChart, {
-  EnrollmentDataPoint,
-} from "@/modules/school-admin/components/dashboard/EnrollmentChart";
+import EnrollmentChart from "@/modules/school-admin/components/dashboard/EnrollmentChart";
+import {
+  schoolData,
+  revenueData,
+  enrollmentData,
+  genderData,
+  academicData,
+  recentActivities,
+} from "@/modules/constants/dashboard";
+import { useDashboardForms } from "@/utils/hooks/useDashboardForm";
 import GenderChart from "@/modules/school-admin/components/dashboard/GenderChart";
 import AcademicChart from "@/modules/school-admin/components/dashboard/AcademicChart";
 import RecentActivity from "@/modules/school-admin/components/dashboard/RecentActivity";
+import Modal from "@/modules/school-admin/components/dashboard/Modal";
 import {
   UserCheck,
   GraduationCap,
@@ -19,113 +29,38 @@ import {
   UserPlus,
   PlusSquare,
   Megaphone,
-  Wallet,
   CheckCircle2,
 } from "lucide-react";
 import { Metadata } from "next";
+import { toast } from "react-hot-toast";
 
-// type ModalType =
-//   | "add-teacher"
-//   | "add-student"
-//   | "add-parent"
-//   | "create-class"
-//   | null;
-
-export const metadata: Metadata = {
-  title: "School Overview | EduTrac Proprietor",
-  description:
-    "Monitor your school's financial health, student enrollment, and academic progress in real-time.",
-  robots: {
-    index: false,
-    follow: false,
-  },
-  openGraph: {
-    title: "EduTrac Proprietor Portal",
-    description: "Your school's vital signs at a glance.",
-    type: "website",
-  },
-};
-
-export interface AcademicDataPoint {
-  gradeLevel: string;
-  exceeding: number;
-  meeting: number;
-  below: number;
-}
-
-export interface ActivityItem {
-  id: string;
-  type: "payment" | "admission" | "academic";
-  title: string;
-  subtitle: string;
-  time: string;
-}
+// export const metadata: Metadata = {
+//   title: "School Overview | EduTrac Proprietor",
+//   description:
+//     "Monitor your school's financial health, student enrollment, and academic progress in real-time.",
+//   robots: {
+//     index: false,
+//     follow: false,
+//   },
+//   openGraph: {
+//     title: "EduTrac Proprietor Portal",
+//     description: "Your school's vital signs at a glance.",
+//     type: "website",
+//   },
+// };
 
 export default function Page() {
-  // From Auth Context or Database
-  const schoolData = {
-    name: "Lincoln High School",
-    id: "LHS-2025",
-    date: "March 11, 2026",
-    plan: "Premium plan",
-  };
-  const revenueData = [
-    { month: "Jan", revenue: 4500000, debt: 1200000 },
-    { month: "Feb", revenue: 5200000, debt: 800000 },
-    { month: "Mar", revenue: 4800000, debt: 1500000 },
-  ];
+  const {
+    activeModal,
+    setActiveModal,
+    closeModal,
+    formErrors,
+    handleAnnouncementSubmit,
+    handleClassSubmit,
+    isSubmitting,
+  } = useDashboardForms();
 
-  const enrollmentData: EnrollmentDataPoint[] = [
-    { period: "Sept '24", students: 800 },
-    { period: "Jan '25", students: 950 },
-    { period: "May '25", students: 980 },
-    { period: "Sept '25", students: 1100 },
-    { period: "Jan '26", students: 1247 },
-  ];
-
-  const academicData: AcademicDataPoint[] = [
-    { gradeLevel: "JSS 1", exceeding: 45, meeting: 30, below: 5 },
-    { gradeLevel: "JSS 2", exceeding: 38, meeting: 42, below: 10 },
-    { gradeLevel: "JSS 3", exceeding: 50, meeting: 25, below: 2 },
-    { gradeLevel: "SSS 1", exceeding: 30, meeting: 35, below: 15 },
-  ];
-
-  const genderData = [
-    { name: "Boys", value: 740, fill: "#923CF9" },
-    { name: "Girls", value: 507, fill: "#FF64D4" },
-  ];
-
-  const recentActivities: ActivityItem[] = [
-    {
-      id: "1",
-      type: "payment",
-      title: "Fee Payment: Adebayo Samuel",
-      subtitle: "Paid ₦150,000 for 2nd Term Tuition",
-      time: "2 mins ago",
-    },
-    {
-      id: "2",
-      type: "admission",
-      title: "New Student Enrolled",
-      subtitle: "Chinedu Okoro joined Basic 4 Silver",
-      time: "45 mins ago",
-    },
-    {
-      id: "3",
-      type: "academic",
-      title: "Results Published",
-      subtitle: "JSS 3 Mathematics midterm scores uploaded",
-      time: "2 hours ago",
-    },
-  ];
-  // const [activeModal, setActiveModal] = useState<ModalType>(null);
-
-  // const openModal = (type: ModalType) => {
-  //   setActiveModal(type);
-  //   console.log(`Opening modal: ${type}`);
-  // };
-
-  // const closeModal = () => setActiveModal(null);
+  const router = useRouter();
 
   return (
     <AdminLayout>
@@ -223,9 +158,19 @@ export default function Page() {
                 Daily Operations
               </h2>
               <div className="flex flex-col gap-3">
-                <QuickActionCard title="Post Announcement" icon={Megaphone} />
-                <QuickActionCard title="Approve Results" icon={CheckCircle2} />
-                <QuickActionCard title="Log Expense" icon={Wallet} />
+                <QuickActionCard
+                  title="Post Announcement"
+                  icon={Megaphone}
+                  onClick={() => setActiveModal("announcement")}
+                />
+                <QuickActionCard
+                  title="Approve Results"
+                  icon={CheckCircle2}
+                  onClick={() => {
+                    toast.loading("Loading result portal...");
+                    router.push("/school-admin/results/approve");
+                  }}
+                />
               </div>
             </div>
 
@@ -235,15 +180,177 @@ export default function Page() {
                 School Setup
               </h2>
               <div className="flex flex-col gap-3">
-                <QuickActionCard title="Add Teacher" icon={UserPlus} />
-                <QuickActionCard title="Add Student" icon={UserPlus} />
-                <QuickActionCard title="Add Parent" icon={UserPlus} />
-                <QuickActionCard title="Create Class" icon={PlusSquare} />
+                <QuickActionCard
+                  title="Add Teacher"
+                  icon={UserPlus}
+                  onClick={() => router.push("/school-admin/teachers/add")}
+                />
+                <QuickActionCard
+                  title="Add Student"
+                  icon={UserPlus}
+                  onClick={() => router.push("/school-admin/students/add")}
+                />
+                <QuickActionCard
+                  title="Add Parent"
+                  icon={UserPlus}
+                  onClick={() => router.push("/school-admin/parents/add")}
+                />
+                <QuickActionCard
+                  title="Create Class"
+                  icon={PlusSquare}
+                  onClick={() => setActiveModal("class")}
+                />
               </div>
             </div>
           </aside>
         </div>
       </div>
+      {activeModal === "announcement" && (
+        <Modal title="Announcement" onClose={closeModal} isOpen={true}>
+          <form className="space-y-5" onSubmit={handleAnnouncementSubmit}>
+            {/* Message Title */}
+            <div>
+              <label className="text-sm font-semibold text-slate-700 block mb-2">
+                Announcement Title
+              </label>
+              <input
+                name="title"
+                placeholder="e.g. Mid-term Break Notice"
+                className={`w-full p-3 bg-slate-50 border ${
+                  formErrors.title ? "border-red-500" : "border-slate-200"
+                } rounded-2xl outline-none focus:ring-2 focus:ring-[#923CF9]/20 transition-all text-slate-800 placeholder:text-slate-400`}
+              />
+              {formErrors.title && (
+                <p className="text-red-500 text-[11px] mt-1 font-medium">
+                  {formErrors.title}
+                </p>
+              )}
+            </div>
+
+            {/* Content Area */}
+            <div>
+              <label className="text-sm font-semibold text-slate-700 block mb-2">
+                Detailed Message
+              </label>
+              <textarea
+                name="content"
+                placeholder="Type your message to parents and staff here..."
+                rows={5}
+                className={`w-full p-3 bg-slate-50 border ${
+                  formErrors.content ? "border-red-500" : "border-slate-200"
+                } rounded-2xl outline-none focus:ring-2 focus:ring-[#923CF9]/20 transition-all text-slate-800 placeholder:text-slate-400 resize-none`}
+              />
+              {formErrors.content && (
+                <p className="text-red-500 text-[11px] mt-1 font-medium">
+                  {formErrors.content}
+                </p>
+              )}
+            </div>
+
+            {/* Action Buttons */}
+            <div className="flex gap-3 pt-2">
+              <button
+                type="button"
+                onClick={closeModal}
+                className="flex-1 py-4 bg-slate-100 text-slate-600 font-bold rounded-2xl hover:bg-slate-200 transition-all"
+              >
+                Cancel
+              </button>
+              <button
+                type="submit"
+                disabled={isSubmitting}
+                className="flex-[2] py-4 bg-[#923CF9] text-white font-bold rounded-2xl shadow-lg shadow-purple-100 hover:bg-[#7c28e0] active:scale-[0.95] transition-all disabled:opacity-70"
+              >
+                {isSubmitting ? "Sending..." : "Send Broadcast"}
+              </button>
+            </div>
+          </form>
+        </Modal>
+      )}
+      {activeModal === "class" && (
+        <Modal title="Create Class" onClose={closeModal} isOpen={true}>
+          <form className="space-y-5" onSubmit={handleClassSubmit}>
+            {/* Class Name Input */}
+            <div>
+              <label className="text-sm font-semibold text-slate-700 block mb-2">
+                Class Name
+              </label>
+              <input
+                name="className"
+                type="text"
+                placeholder="e.g. SSS 3 Emerald"
+                className={`w-full p-3 bg-slate-50 border ${
+                  formErrors.className ? "border-red-500" : "border-slate-100"
+                } rounded-2xl outline-none focus:ring-2 focus:ring-[#923CF9]/20 transition-all`}
+              />
+              {formErrors.className && (
+                <p className="text-red-500 text-[11px] mt-1 font-medium italic">
+                  {formErrors.className}
+                </p>
+              )}
+            </div>
+
+            {/* Category Selection */}
+            <div>
+              <label className="text-sm font-semibold text-slate-700 block mb-2">
+                Section / Category
+              </label>
+              <div className="relative">
+                <select
+                  name="category"
+                  className={`w-full p-3 bg-slate-50 border ${
+                    formErrors.category ? "border-red-500" : "border-slate-100"
+                  } rounded-2xl outline-none appearance-none focus:ring-2 focus:ring-[#923CF9]/20 transition-all`}
+                >
+                  <option value="">Select a section</option>
+                  <option value="nursery">Nursery / Primary</option>
+                  <option value="junior">Junior Secondary (JSS)</option>
+                  <option value="senior">Senior Secondary (SSS)</option>
+                </select>
+                {/* Custom Chevron for the Select */}
+                <div className="absolute inset-y-0 right-4 flex items-center pointer-events-none">
+                  <svg
+                    className="w-4 h-4 text-slate-400"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth="2"
+                      d="M19 9l-7 7-7-7"
+                    />
+                  </svg>
+                </div>
+              </div>
+              {formErrors.category && (
+                <p className="text-red-500 text-[11px] mt-1 font-medium italic">
+                  {formErrors.category}
+                </p>
+              )}
+            </div>
+
+            {/* Action Buttons */}
+            <div className="flex gap-3 pt-4">
+              <button
+                type="button"
+                onClick={closeModal}
+                className="flex-1 py-4 bg-slate-100 text-slate-600 font-bold rounded-2xl hover:bg-slate-200 transition-all"
+              >
+                Cancel
+              </button>
+              <button
+                type="submit"
+                disabled={isSubmitting}
+                className="flex-[2] py-4 bg-[#923CF9] text-white font-bold rounded-2xl shadow-lg shadow-purple-100 hover:bg-[#7c28e0] active:scale-[0.98] transition-all disabled:opacity-70 disabled:cursor-not-allowed"
+              >
+                {isSubmitting ? "Creating..." : "Create Class"}
+              </button>
+            </div>
+          </form>
+        </Modal>
+      )}
     </AdminLayout>
   );
 }
