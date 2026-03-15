@@ -13,3 +13,14 @@ export interface ClassFormElements extends HTMLFormControlsCollection {
 export interface ClassFormElement extends HTMLFormElement {
   readonly elements: ClassFormElements;
 }
+
+// Expense Form
+export interface ExpenseFormElements extends HTMLFormControlsCollection {
+  amount: HTMLInputElement;
+  category: HTMLSelectElement;
+  description: HTMLTextAreaElement;
+}
+
+export interface ExpenseFormElement extends HTMLFormElement {
+  readonly elements: ExpenseFormElements;
+}

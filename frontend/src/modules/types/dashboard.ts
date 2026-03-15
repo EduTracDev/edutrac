@@ -30,10 +30,6 @@ export interface GenderDataPoint {
   fill: string;
 }
 
-interface GenderChartProps {
-  data: GenderDataPoint[];
-}
-
 // Define the types of actions that can trigger a modal
 export type ActiveModal =
   | "announcement"
@@ -43,4 +39,5 @@ export type ActiveModal =
   | "student"
   | "parent"
   | "result"
+  | "expenses"
   | null;
