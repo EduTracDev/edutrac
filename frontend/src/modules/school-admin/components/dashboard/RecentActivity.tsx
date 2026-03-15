@@ -1,6 +1,6 @@
 import React from "react";
 import { CreditCard, UserPlus, BookOpen } from "lucide-react";
-import { ActivityItem } from "@/app/school-admin/dashboard/page";
+import { ActivityItem } from "@/modules/types/dashboard";
 
 const iconMap = {
   payment: { icon: CreditCard, color: "bg-emerald-100 text-emerald-600" },

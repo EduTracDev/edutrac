@@ -11,7 +11,7 @@ import {
   ResponsiveContainer,
   Legend,
 } from "recharts";
-import { AcademicDataPoint } from "@/app/school-admin/dashboard/page";
+import { AcademicDataPoint } from "@/modules/types/dashboard";
 
 interface AcademicChartProps {
   data: AcademicDataPoint[];

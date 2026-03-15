@@ -24,6 +24,16 @@ export interface EnrollmentChartProps {
   data: EnrollmentDataPoint[];
 }
 
+export interface GenderDataPoint {
+  name: string;
+  value: number;
+  fill: string;
+}
+
+interface GenderChartProps {
+  data: GenderDataPoint[];
+}
+
 // Define the types of actions that can trigger a modal
 export type ActiveModal =
   | "announcement"

@@ -7,17 +7,10 @@ import {
   Tooltip,
   Legend,
 } from "recharts";
-
-export interface GenderDataPoint {
-  name: string;
-  value: number;
-  fill: string;
-}
-
+import { GenderDataPoint } from "@/modules/types/dashboard";
 interface GenderChartProps {
   data: GenderDataPoint[];
 }
-
 export default function GenderChart({ data }: GenderChartProps) {
   return (
     <div className="h-full w-full min-h-75">
