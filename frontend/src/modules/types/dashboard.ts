@@ -40,4 +40,7 @@ export type ActiveModal =
   | "parent"
   | "result"
   | "expenses"
+  | "fee-reminder-preview"
+  | "schedule-pta"
+  | "bulk-sms"
   | null;
