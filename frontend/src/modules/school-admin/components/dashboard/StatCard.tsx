@@ -17,9 +17,7 @@ export default function StatCard({
   return (
     <div className="bg-white border border-slate-100 rounded-2xl p-6 shadow-sm hover:shadow-md transition-shadow">
       <div className="flex items-center justify-between mb-4">
-        <div
-          className={`p-3 rounded-xl bg-opacity-10 ${color.replace("text", "bg")}`}
-        >
+        <div className="color.text">
           <Icon className={color} size={24} />
         </div>
       </div>
