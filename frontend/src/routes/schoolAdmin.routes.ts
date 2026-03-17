@@ -1,5 +1,5 @@
-export enum SchoolOwnerRoutes {
-  root = "/school-owner",
+export enum SchoolAdminRoutes {
+  root = "/school-admin",
   dashboard = `${root}/dashboard`,
   teachers = `${root}/teachers`,
   students = `${root}/students`,
@@ -7,4 +7,7 @@ export enum SchoolOwnerRoutes {
   classes = `${root}/classes`,
   settings = `${root}/settings`,
   profile = `${root}/profile`,
+  attendance = `${root}/attendance`,
+  announcements = `${root}/announcements`,
+  assignments = `${root}/assignments`,
 }
