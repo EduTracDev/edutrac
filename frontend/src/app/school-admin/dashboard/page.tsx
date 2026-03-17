@@ -116,7 +116,49 @@ export default function Page() {
           registeredDate={schoolData.date}
           planName={schoolData.plan}
         />
+
         <SmartActions onAction={handleSmartAction} />
+        {/* School Population (Desktop Only) */}
+        <div className="hidden lg:block space-y-4">
+          <h2 className="text-sm font-bold uppercase tracking-wider text-slate-400">
+            Population Status
+          </h2>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
+            <StatCard
+              title="Teachers"
+              value="87"
+              icon={UserCheck}
+              color="text-blue-600"
+            />
+            <StatCard
+              title="Students"
+              value="1,247"
+              icon={GraduationCap}
+              color="text-purple-600"
+            />
+            <StatCard
+              title="Parents"
+              value="980"
+              icon={Users}
+              color="text-orange-600"
+            />
+          </div>
+        </div>
+        {/* Expense + Insights + Health */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 ;g:gap-6">
+          <ExpenseSummaryCard
+            total={1250000}
+            budget={2000000}
+            month="March 2026"
+          />
+          <InsightCard />
+          <SchoolHealthCard
+            finance={65}
+            attendance={92}
+            academic={78}
+            admissions={45}
+          />
+        </div>
 
         {/* Section 1: Mobile-Only Quick Actions */}
         <section className="lg:hidden">
@@ -141,18 +183,18 @@ export default function Page() {
             />
           </div>
         </section>
-
         {/* Section 2: Key Metrics Grid */}
         <section>
-          <div className="flex justify-between items-center mb-4">
-            <h2 className="text-lg font-bold text-slate-800">
+          <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-4">
+            <h2 className="text-base sm:text-lg lg:text-xl font-bold text-slate-800">
               School Overview
             </h2>
-            <span className="text-xs text-slate-400 font-medium italic">
+            <span className="text-xs sm:text-sm text-slate-400 font-medium italic mt-2 sm:mt-0">
               Refreshed 12:19 PM
             </span>
           </div>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 lg:gap-6">
             <FinancialStatCard
               title="Unpaid Fees"
               amount="₦4.25M"
@@ -162,89 +204,39 @@ export default function Page() {
             />
             <AttendanceStatCard present={1185} total={1247} />
             <AdmissionsStatCard pending={12} interviews={8} target={50} />
-            <ExpenseSummaryCard
-              total={1250000}
-              budget={2000000}
-              month="March 2026"
-            />
           </div>
         </section>
-
-        {/* Section 3: Main Content & Sidebar Split */}
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-          {/* LEFT COLUMN: Deep Data */}
-          <div className="lg:col-span-2 space-y-8">
-            <AnalyticsGrid>
-              <ChartCard title="Fee Collection" subtitle="Revenue vs Debt">
-                <RevenueChart data={revenueData} />
-              </ChartCard>
-              <ChartCard title="Enrollment Growth" subtitle="Last 3 sessions">
-                <EnrollmentChart data={enrollmentData} />
-              </ChartCard>
-              <ChartCard
-                title="Gender Distribution"
-                subtitle="Male vs. Female population split"
-                isEmpty={genderData.length === 0}
-              >
-                <GenderChart data={genderData} />
-              </ChartCard>
-
-              <ChartCard
-                title="Academic Health"
-                subtitle="Performance distribution by class"
-                isEmpty={academicData.length === 0}
-              >
-                <AcademicChart data={academicData} />
-              </ChartCard>
-            </AnalyticsGrid>
-
-            <RecentActivity activities={recentActivities} />
-          </div>
-
-          {/* RIGHT COLUMN: Command Center & Population */}
-          <aside className="space-y-8">
-            {/* THE COMMAND CENTER (NEW) */}
-            <InsightCard />
-            <SchoolHealthCard
-              finance={65}
-              attendance={92}
-              academic={78}
-              admissions={45}
-            />
-
-            {/* School Population (Desktop Only) */}
-            <div className="hidden lg:block space-y-4">
-              <h2 className="text-sm font-bold uppercase tracking-wider text-slate-400">
-                Population Status
-              </h2>
-              <div className="grid grid-cols-1 gap-3">
-                <StatCard
-                  title="Teachers"
-                  value="87"
-                  icon={UserCheck}
-                  color="text-blue-600"
-                />
-                <StatCard
-                  title="Students"
-                  value="1,247"
-                  icon={GraduationCap}
-                  color="text-purple-600"
-                />
-                <StatCard
-                  title="Parents"
-                  value="980"
-                  icon={Users}
-                  color="text-orange-600"
-                />
-              </div>
-            </div>
-
-            {/* Daily Operations (Desktop Only) */}
-            <div className="hidden lg:block space-y-4">
+        <div className="grid grid-cols-1 gap-8">
+          <AnalyticsGrid>
+            <ChartCard title="Fee Collection" subtitle="Revenue vs Debt">
+              <RevenueChart data={revenueData} />
+            </ChartCard>
+            <ChartCard title="Enrollment Growth" subtitle="Last 3 sessions">
+              <EnrollmentChart data={enrollmentData} />
+            </ChartCard>
+            <ChartCard
+              title="Gender Distribution"
+              subtitle="Male vs. Female population split"
+              isEmpty={genderData.length === 0}
+            >
+              <GenderChart data={genderData} />
+            </ChartCard>
+            <ChartCard
+              title="Academic Health"
+              subtitle="Performance distribution by class"
+              isEmpty={academicData.length === 0}
+            >
+              <AcademicChart data={academicData} />
+            </ChartCard>
+          </AnalyticsGrid>
+        </div>
+        <aside className="flex flex-col md:flex-row gap-6">
+          <div className="hidden lg:flex justify-between">
+            <div>
               <h2 className="text-sm font-bold uppercase tracking-wider text-slate-400">
                 Daily Operations
               </h2>
-              <div className="flex flex-col gap-3">
+              <div className="mt-4 flex flex-row gap-3">
                 <QuickActionCard
                   title="Post Announcement"
                   icon={Megaphone}
@@ -264,38 +256,39 @@ export default function Page() {
                   }}
                 />
               </div>
-            </div>
-
-            {/* Management (Visible All Sizes) */}
-            <div className="space-y-4">
-              <h2 className="text-sm font-bold uppercase tracking-wider text-slate-400">
-                School Management
-              </h2>
-              <div className="flex flex-col gap-3">
-                <QuickActionCard
-                  title="Add Teacher"
-                  icon={UserPlus}
-                  onClick={() => router.push("/school-admin/teachers/add")}
-                />
-                <QuickActionCard
-                  title="Add Student"
-                  icon={UserPlus}
-                  onClick={() => router.push("/school-admin/students/add")}
-                />
-                <QuickActionCard
-                  title="Add Parent"
-                  icon={UserPlus}
-                  onClick={() => router.push("/school-admin/parents/add")}
-                />
-                <QuickActionCard
-                  title="Create Class"
-                  icon={PlusSquare}
-                  onClick={() => setActiveModal("class")}
-                />
+              <div className="mt-8">
+                <RecentActivity activities={recentActivities} />
               </div>
             </div>
-          </aside>
-        </div>
+          </div>
+          <div className="w-full">
+            <h2 className="text-sm font-bold uppercase tracking-wider text-slate-400">
+              School Management
+            </h2>
+            <div className="mt-4 flex flex-col gap-3">
+              <QuickActionCard
+                title="Add Teacher"
+                icon={UserPlus}
+                onClick={() => router.push("/school-admin/teachers/add")}
+              />
+              <QuickActionCard
+                title="Add Student"
+                icon={UserPlus}
+                onClick={() => router.push("/school-admin/students/add")}
+              />
+              <QuickActionCard
+                title="Add Parent"
+                icon={UserPlus}
+                onClick={() => router.push("/school-admin/parents/add")}
+              />
+              <QuickActionCard
+                title="Create Class"
+                icon={PlusSquare}
+                onClick={() => setActiveModal("class")}
+              />
+            </div>
+          </div>
+        </aside>
       </div>
 
       {/* MODAL REGISTRY */}
