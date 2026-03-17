@@ -111,9 +111,29 @@ export const expenseSchema = yup.object().shape({
     .max(100, "Keep descriptions brief"),
 });
 
+export const teacherSchema = yup.object().shape({
+  name: yup
+    .string()
+    .min(3, "Name is too short")
+    .required("Full name is required"),
+  email: yup
+    .string()
+    .email("Invalid email address")
+    .required("Email is required"),
+  role: yup
+    .string()
+    .oneOf(
+      ["Subject Teacher", "Class Teacher", "HOD (Dept Head)", "VP Academic"],
+      "Please select a valid role",
+    )
+    .required("Role assignment is required"),
+  assignedClass: yup.string().required("Please specify a class (e.g., JSS 3)"),
+});
+
 // Types for your components
 export type ContactFormData = yup.InferType<typeof contactSchema>;
 export type RegisterFormData = yup.InferType<typeof registerSchema>;
 export type LoginFormData = yup.InferType<typeof loginSchema>;
 export type StudentFormData = yup.InferType<typeof studentBaseSchema>;
 export type BulkStudentFormData = yup.InferType<typeof bulkStudentSchema>;
+export type TeacherFormData = yup.InferType<typeof teacherSchema>;

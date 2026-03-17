@@ -5,6 +5,7 @@ import {
   announcementSchema,
   classSchema,
   expenseSchema,
+  teacherSchema,
 } from "@/utils/validation";
 import {
   AnnouncementFormElement,
@@ -113,6 +114,40 @@ export const useDashboardForms = () => {
     }
   };
 
+  //Teacher Schema
+  const handleTeacherSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+
+    // Extract data from the form
+    const formData = new FormData(e.currentTarget);
+    const data = {
+      name: formData.get("name") as string,
+      email: formData.get("email") as string,
+      role: formData.get("role") as string,
+      assignedClass: formData.get("assignedClass") as string,
+    };
+
+    try {
+      // 1. Validate using Yup
+      await teacherSchema.validate(data, { abortEarly: false });
+
+      setIsSubmitting(true);
+      const loading = toast.loading("Sending professional invite...");
+
+      // 2. Simulated API/Firebase Call
+      // await addDoc(collection(db, "invites"), { ...data, status: "pending", createdAt: new Date() });
+      await new Promise((resolve) => setTimeout(resolve, 1500));
+
+      toast.success(`Invite sent to ${data.name}!`, { id: loading });
+      closeModal();
+    } catch (err) {
+      // This now handles the "err" properly and updates formErrors state
+      handleValidationError(err);
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
   return {
     activeModal,
     setActiveModal,
@@ -122,5 +157,6 @@ export const useDashboardForms = () => {
     handleAnnouncementSubmit,
     handleClassSubmit,
     handleExpenseSubmit,
+    handleTeacherSubmit,
   };
 };

@@ -1,4 +1,5 @@
 "use client";
+import { useState } from "react";
 import { useRouter } from "next/navigation";
 import AdminLayout from "@/modules/school-admin/layout/AdminLayout";
 import WelcomeBanner from "@/modules/school-admin/components/dashboard/WelcomeBanner";
@@ -31,11 +32,11 @@ import { ExpenseSummaryCard } from "@/modules/school-admin/components/dashboard/
 import { FinancialStatCard } from "@/modules/school-admin/components/dashboard/FinancialStatCard";
 import { AttendanceStatCard } from "@/modules/school-admin/components/dashboard/AttendanceStatCard";
 import { AdmissionsStatCard } from "@/modules/school-admin/components/dashboard/AdmissionsStatCard";
+import { AddTeacherModal } from "@/modules/school-admin/components/dashboard/modals/AddTeacherModal";
 import {
   UserCheck,
   GraduationCap,
   Users,
-  Layout,
   UserPlus,
   Wallet,
   PlusSquare,
@@ -102,6 +103,7 @@ export default function Page() {
     handleAnnouncementSubmit,
     handleClassSubmit,
     handleExpenseSubmit,
+    handleTeacherSubmit,
     isSubmitting,
   } = useDashboardForms();
 
@@ -269,7 +271,7 @@ export default function Page() {
               <QuickActionCard
                 title="Add Teacher"
                 icon={UserPlus}
-                onClick={() => router.push("/school-admin/teachers/add")}
+                onClick={() => setActiveModal("teacher")}
               />
               <QuickActionCard
                 title="Add Student"
@@ -365,6 +367,16 @@ export default function Page() {
           isSubmitting={isSubmitting}
         />
       )}
+      {activeModal === "teacher" && (
+        <AddTeacherModal
+          isOpen={activeModal === "teacher"}
+          onClose={closeModal}
+          onSubmit={handleTeacherSubmit}
+          errors={formErrors}
+          isSubmitting={isSubmitting}
+        />
+      )}
+      <BackToTop />
     </AdminLayout>
   );
 }
