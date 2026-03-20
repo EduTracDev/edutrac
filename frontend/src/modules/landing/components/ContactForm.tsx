@@ -5,6 +5,7 @@ import {
   FaXTwitter,
   FaInstagram,
   FaPhone,
+  FaTiktok,
 } from "react-icons/fa6";
 import { MdOutlineMail } from "react-icons/md";
 import { useContactForm } from "@/utils/hooks/useContactForm";
@@ -200,7 +201,7 @@ export default function ContactForm() {
 
             <div className="space-y-4">
               <h3 className="font-bold text-lg">Follow Our Socials</h3>
-              <div className="flex gap-4">
+              <div className="flex gap-1">
                 <Link
                   href="#"
                   aria-label="Facebook"
@@ -228,6 +229,13 @@ export default function ContactForm() {
                   className="p-4 border border-gray-100 rounded-2xl hover:bg-[#923CF9] hover:text-white transition-all"
                 >
                   <FaLinkedin size={20} />
+                </Link>
+                <Link
+                  href="#"
+                  aria-label="TikTok"
+                  className="p-4 border border-gray-100 rounded-2xl hover:bg-[#923CF9] hover:text-white transition-all"
+                >
+                  <FaTiktok size={20} />
                 </Link>
               </div>
             </div>

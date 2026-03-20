@@ -3,41 +3,39 @@
 import React, { useState } from "react";
 import Modal from "../Modal";
 import { UserPlus, Users } from "lucide-react";
-import { SingleTeacherInviteForm } from "./SingleTeacherInviteForm";
-import { BulkTeacherUploadForm } from "./BulkTeacherUploadForm";
+import { SingleStudentUploadForm } from "./SingleStudentUploadForm";
+import { BulkStudentUploadForm } from "./BulkStudentUploadForm";
 import { CSVError } from "@/modules/types/dashboard";
+type EntryMethod = "single" | "bulk";
 
-type InviteMethod = "single" | "bulk";
-
-interface AddTeacherModalProps {
+interface AddStudentModalProps {
   isOpen: boolean;
   onClose: () => void;
   onSubmit: (e: React.FormEvent<HTMLFormElement>) => Promise<void>;
   onBulkSubmit: (file: File) => Promise<void>;
   errors: { [key: string]: string };
   isSubmitting: boolean;
-  teacherBulkErrors: CSVError[];
+  studentBulkErrors: CSVError[];
   clearErrors: () => void;
 }
 
-export const AddTeacherModal = ({
+export const AddStudentModal = ({
   isOpen,
   onClose,
   errors,
   onSubmit,
   onBulkSubmit,
   isSubmitting,
-  teacherBulkErrors,
+  studentBulkErrors,
   clearErrors,
-}: AddTeacherModalProps) => {
-  const [method, setMethod] = useState<InviteMethod>("single");
+}: AddStudentModalProps) => {
+  const [method, setMethod] = useState<EntryMethod>("single");
 
   return (
-    <Modal isOpen={isOpen} onClose={onClose} title="Add New Teacher">
+    <Modal isOpen={isOpen} onClose={onClose} title="Add New Students">
       <div className="space-y-6">
-        {/* Only show tabs if we haven't succeeded yet */}
+        {/* Tab Switcher */}
         <div className="space-y-6">
-          {/* Tab Switcher  */}
           <div className="flex p-1.5 bg-slate-50 rounded-2xl border border-slate-100">
             <button
               onClick={() => setMethod("single")}
@@ -47,7 +45,7 @@ export const AddTeacherModal = ({
                   : "text-slate-400"
               }`}
             >
-              <UserPlus size={16} /> SINGLE INVITE
+              <UserPlus size={16} /> SINGLE ENTRY
             </button>
             <button
               onClick={() => setMethod("bulk")}
@@ -62,18 +60,18 @@ export const AddTeacherModal = ({
           </div>
         </div>
 
+        {/* Conditional Form Rendering */}
         {method === "single" ? (
-          <SingleTeacherInviteForm
-            onSuccess={onClose}
+          <SingleStudentUploadForm
             isSubmitting={isSubmitting}
             formErrors={errors}
-            onSubmit={onSubmit}
+            onStudentSubmit={onSubmit}
           />
         ) : (
-          <BulkTeacherUploadForm
+          <BulkStudentUploadForm
             isSubmitting={isSubmitting}
             onBulkSubmit={onBulkSubmit}
-            bulkErrors={teacherBulkErrors}
+            bulkErrors={studentBulkErrors}
             onClearErrors={clearErrors}
           />
         )}

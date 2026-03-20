@@ -20,7 +20,7 @@ export function ChartCard({
   onEmptyAction,
 }: ChartCardProps) {
   return (
-    <div className="bg-white border border-slate-100 rounded-[32px] p-6 lg:p-8 shadow-sm flex flex-col min-h-[400px]">
+    <div className="bg-white border border-slate-100 rounded-4xl p-6 lg:p-8 shadow-sm flex flex-col min-h-100">
       <div className="mb-6">
         <h3 className="text-lg font-bold text-slate-900 leading-tight">
           {title}

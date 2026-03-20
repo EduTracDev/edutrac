@@ -1,5 +1,5 @@
 import React from "react";
-import { Bell, Calendar, Send, ShieldAlert } from "lucide-react";
+import { Bell, Calendar, Send } from "lucide-react";
 
 interface SmartActionProps {
   onAction: (type: string) => void;

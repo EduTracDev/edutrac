@@ -9,6 +9,7 @@ import {
   FaXTwitter,
   FaInstagram,
   FaChevronRight,
+  FaTiktok,
 } from "react-icons/fa6";
 
 import logo from "@/modules/shared/assets/images/white-logo.png";
@@ -77,6 +78,11 @@ export default function Footer() {
                 href="#"
                 icon={<FaInstagram size={18} />}
                 label="Twitter"
+              />
+              <SocialIcon
+                href="#"
+                icon={<FaTiktok size={18} />}
+                label="TikTok"
               />
             </div>
           </div>

@@ -61,9 +61,9 @@ export default function Modal({
             initial="hidden"
             animate="visible"
             exit="hidden"
-            className="relative w-full max-w-lg bg-white rounded-[32px] shadow-2xl overflow-hidden"
+            className="relative w-full max-w-lg bg-white rounded-[32px] shadow-2xl overflow-hidden flex flex-col max-h-[90vh]"
           >
-            <div className="p-6 border-b border-slate-50 flex justify-between items-center">
+            <div className="p-6 border-b border-slate-50 flex justify-between items-center shrink-0">
               <h3 className="text-xl font-bold text-slate-900">{title}</h3>
               <button
                 onClick={onClose}
@@ -72,8 +72,9 @@ export default function Modal({
                 <X size={20} />
               </button>
             </div>
-
-            <div className="p-6">{children}</div>
+            <div className="p-6 overflow-y-auto custom-scrollbar">
+              {children}
+            </div>
           </motion.div>
         </div>
       )}

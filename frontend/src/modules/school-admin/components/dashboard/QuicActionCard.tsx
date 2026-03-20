@@ -20,7 +20,9 @@ export default function QuickActionCard({
         <Icon size={20} />
       </div>
       <div className="flex-1">
-        <h3 className="font-bold text-slate-800 text-sm">{title}</h3>
+        <h3 className="font-bold text-slate-800 text-sm text-nowrap">
+          {title}
+        </h3>
       </div>
       <Plus size={16} className="text-slate-300 group-hover:text-[#923CF9]" />
     </button>

@@ -3,18 +3,18 @@
 import React from "react";
 import { ShieldCheck, Loader2 } from "lucide-react";
 
-interface SingleInviteFormProps {
+interface SingleTeacherInviteFormProps {
   onSuccess: () => void;
   isSubmitting: boolean;
   formErrors: Record<string, string>;
   onSubmit: (e: React.FormEvent<HTMLFormElement>) => Promise<void>;
 }
 
-export const SingleInviteForm = ({
+export const SingleTeacherInviteForm = ({
   isSubmitting,
   formErrors,
   onSubmit,
-}: SingleInviteFormProps) => {
+}: SingleTeacherInviteFormProps) => {
   return (
     <form className="space-y-5" onSubmit={onSubmit}>
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">

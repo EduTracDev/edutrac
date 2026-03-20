@@ -1,15 +1,13 @@
 import Modal from "../Modal";
 
-// 1. Define the Props Interface
 interface ExpenseModalProps {
   isOpen: boolean;
   onClose: () => void;
-  onSubmit: (e: React.FormEvent<HTMLFormElement>) => Promise<void>; // Match the name
-  errors: { [key: string]: string }; // Match the name
+  onSubmit: (e: React.FormEvent<HTMLFormElement>) => Promise<void>;
+  errors: { [key: string]: string };
   isSubmitting: boolean;
 }
 
-// 2. Pass the props into the function
 export default function ExpensesModal({
   isOpen,
   onClose,
