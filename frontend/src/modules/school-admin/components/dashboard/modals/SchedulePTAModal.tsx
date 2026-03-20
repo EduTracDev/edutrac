@@ -5,14 +5,12 @@ interface PTAMeetingData {
   agenda: string;
 }
 
-// 2. Update the Props to use that type instead of any
 interface PTAModalProps {
   onClose: () => void;
   onSubmit: (data: PTAMeetingData) => void;
 }
 
 export const SchedulePTAModal = ({ onClose, onSubmit }: PTAModalProps) => {
-  // To make this fully functional, we should track the local state
   const [formData, setFormData] = React.useState<PTAMeetingData>({
     date: "",
     time: "",
@@ -21,7 +19,7 @@ export const SchedulePTAModal = ({ onClose, onSubmit }: PTAModalProps) => {
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-900/60 backdrop-blur-sm p-4">
-      <div className="bg-white rounded-[2rem] w-full max-w-lg overflow-hidden shadow-2xl animate-in fade-in zoom-in duration-200">
+      <div className="bg-white rounded-4xl w-full max-w-lg overflow-hidden shadow-2xl animate-in fade-in zoom-in duration-200">
         <div className="p-8 space-y-6">
           <div>
             <h3 className="text-2xl font-black text-slate-900">Schedule PTA</h3>
@@ -83,8 +81,8 @@ export const SchedulePTAModal = ({ onClose, onSubmit }: PTAModalProps) => {
               Cancel
             </button>
             <button
-              onClick={() => onSubmit(formData)} // Now correctly typed!
-              disabled={!formData.date || !formData.agenda} // Basic validation
+              onClick={() => onSubmit(formData)}
+              disabled={!formData.date || !formData.agenda}
               className="flex-1 py-4 text-sm font-bold bg-[#923CF9] text-white rounded-2xl shadow-lg shadow-purple-100 hover:bg-[#8126e8] transition-all disabled:opacity-50 disabled:cursor-not-allowed"
             >
               Schedule & Notify

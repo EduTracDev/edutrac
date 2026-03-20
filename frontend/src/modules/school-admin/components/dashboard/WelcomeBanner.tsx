@@ -14,17 +14,16 @@ export default function WelcomeBanner({
   registeredDate = "March 11, 2026",
   planName = "Premium plan",
 }: WelcomeBannerProps) {
-  // Dynamic Greeting Logic
   const greeting = useMemo(() => {
     const hour = new Date().getHours();
     if (hour < 12) return "Good morning";
-    if (hour < 17) return "Good afternoon";
+    if (hour < 16) return "Good afternoon";
     return "Good evening";
   }, []);
 
   return (
     <section
-      className="relative w-full overflow-hidden rounded-[2rem] bg-gradient-to-br from-[#923CF9] via-[#8126e8] to-[#6d1ccf] p-8 md:p-12 text-white shadow-2xl shadow-purple-200/50"
+      className="relative w-full overflow-hidden rounded-4xl bg-linear-to-br from-[#923CF9] via-[#8126e8] to-[#6d1ccf] p-8 md:p-12 text-white shadow-2xl shadow-purple-200/50"
       aria-labelledby="welcome-heading"
     >
       {/* Decorative SaaS elements */}

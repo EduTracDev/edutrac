@@ -1,4 +1,5 @@
 "use client";
+import { useState } from "react";
 import { useRouter } from "next/navigation";
 import AdminLayout from "@/modules/school-admin/layout/AdminLayout";
 import WelcomeBanner from "@/modules/school-admin/components/dashboard/WelcomeBanner";
@@ -31,11 +32,13 @@ import { ExpenseSummaryCard } from "@/modules/school-admin/components/dashboard/
 import { FinancialStatCard } from "@/modules/school-admin/components/dashboard/FinancialStatCard";
 import { AttendanceStatCard } from "@/modules/school-admin/components/dashboard/AttendanceStatCard";
 import { AdmissionsStatCard } from "@/modules/school-admin/components/dashboard/AdmissionsStatCard";
+import { AddStudentModal } from "@/modules/school-admin/components/dashboard/modals/AddStudentModal";
+import { AddTeacherModal } from "@/modules/school-admin/components/dashboard/modals/AddTeacherModal";
+import { AddParentModal } from "@/modules/school-admin/components/dashboard/modals/AddParentModal";
 import {
   UserCheck,
   GraduationCap,
   Users,
-  Layout,
   UserPlus,
   Wallet,
   PlusSquare,
@@ -99,9 +102,19 @@ export default function Page() {
     setActiveModal,
     closeModal,
     formErrors,
+    clearErrors,
     handleAnnouncementSubmit,
     handleClassSubmit,
     handleExpenseSubmit,
+    handleTeacherSubmit,
+    handleBulkTeacherSubmit,
+    teacherBulkErrors,
+    handleStudentSubmit,
+    handleBulkStudentSubmit,
+    studentBulkErrors,
+    parentBulkErrors,
+    handleParentSubmit,
+    handleBulkParentSubmit,
     isSubmitting,
   } = useDashboardForms();
 
@@ -160,7 +173,7 @@ export default function Page() {
           />
         </div>
 
-        {/* Section 1: Mobile-Only Quick Actions */}
+        {/* Mobile-Only Quick Actions */}
         <section className="lg:hidden">
           <div className="grid grid-cols-2 gap-3">
             <QuickActionCard
@@ -269,17 +282,17 @@ export default function Page() {
               <QuickActionCard
                 title="Add Teacher"
                 icon={UserPlus}
-                onClick={() => router.push("/school-admin/teachers/add")}
+                onClick={() => setActiveModal("teacher")}
               />
               <QuickActionCard
                 title="Add Student"
                 icon={UserPlus}
-                onClick={() => router.push("/school-admin/students/add")}
+                onClick={() => setActiveModal("student")}
               />
               <QuickActionCard
                 title="Add Parent"
                 icon={UserPlus}
-                onClick={() => router.push("/school-admin/parents/add")}
+                onClick={() => setActiveModal("parent")}
               />
               <QuickActionCard
                 title="Create Class"
@@ -299,7 +312,6 @@ export default function Page() {
           onClose={() => setActiveModal(null)}
           onConfirm={async () => {
             const t = toast.loading("Broadcasting reminders...");
-            // Simulate API Call
             await new Promise((res) => setTimeout(res, 2000));
             toast.success("Reminders sent successfully!", { id: t });
             setActiveModal(null);
@@ -320,19 +332,14 @@ export default function Page() {
         <BulkSMSModal
           onClose={() => setActiveModal(null)}
           onSend={(data) => {
-            // 1. Format the message for a URL
+            // Format the message for a URL
             const encodedMessage = encodeURIComponent(
               `*Broadcast from ${schoolData.name}*\n\n${data.message}`,
             );
 
-            // 2. Logic for recipient (In a real app, you'd loop or use a broadcast group)
-            // For now, we open the WhatsApp Web / App interface
+            //  Logic for recipient ( loop or use a broadcast group)
             const whatsappUrl = `https://wa.me/?text=${encodedMessage}`;
-
-            // 3. Open in new tab
             window.open(whatsappUrl, "_blank");
-
-            // 4. Feedback & Close
             toast.success("WhatsApp interface opened!");
             setActiveModal(null);
           }}
@@ -365,6 +372,43 @@ export default function Page() {
           isSubmitting={isSubmitting}
         />
       )}
+      {activeModal === "teacher" && (
+        <AddTeacherModal
+          isOpen={activeModal === "teacher"}
+          onClose={closeModal}
+          onSubmit={handleTeacherSubmit}
+          onBulkSubmit={handleBulkTeacherSubmit}
+          errors={formErrors}
+          isSubmitting={isSubmitting}
+          teacherBulkErrors={teacherBulkErrors}
+          clearErrors={clearErrors}
+        />
+      )}
+      {activeModal === "student" && (
+        <AddStudentModal
+          isOpen={activeModal === "student"}
+          onClose={closeModal}
+          onSubmit={handleStudentSubmit}
+          onBulkSubmit={handleBulkStudentSubmit}
+          errors={formErrors}
+          isSubmitting={isSubmitting}
+          studentBulkErrors={studentBulkErrors}
+          clearErrors={clearErrors}
+        />
+      )}
+      {activeModal === "parent" && (
+        <AddParentModal
+          isOpen={activeModal === "parent"}
+          onClose={closeModal}
+          onSubmit={handleParentSubmit}
+          onBulkSubmit={handleBulkParentSubmit}
+          errors={formErrors}
+          isSubmitting={isSubmitting}
+          parentBulkErrors={parentBulkErrors}
+          clearErrors={clearErrors}
+        />
+      )}
+      <BackToTop />
     </AdminLayout>
   );
 }

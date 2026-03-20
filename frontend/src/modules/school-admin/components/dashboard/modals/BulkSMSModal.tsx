@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 
-// 1. Define the specific shape of the SMS data
 interface BulkSMSData {
   recipientGroup: string;
   message: string;
@@ -8,7 +7,6 @@ interface BulkSMSData {
 
 interface BulkSMSProps {
   onClose: () => void;
-  // 2. Use the interface here instead of 'any'
   onSend: (data: BulkSMSData) => void;
 }
 
@@ -84,13 +82,6 @@ export const BulkSMSModal = ({ onClose, onSend }: BulkSMSProps) => {
             >
               Discard
             </button>
-            {/* <button
-              onClick={() => onSend(formData)}
-              disabled={!formData.message.trim()}
-              className="flex-1 py-4 text-sm font-bold bg-slate-900 text-white rounded-2xl hover:bg-black transition-all flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
-            >
-              🚀 Send Broadcast
-            </button> */}
             <button
               onClick={() => onSend(formData)}
               disabled={!formData.message.trim()}

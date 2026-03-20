@@ -1,10 +1,16 @@
 import * as yup from "yup";
 
-// --- REUSABLE FRAGMENTS ---
+// REUSABLE BASE
 const emailSchema = yup
   .string()
   .email("Invalid email")
   .required("Email is required");
+
+const phoneSchema = yup
+  .string()
+  .matches(/^[0-9+]+$/, "Invalid phone number")
+  .required("Required");
+
 const passwordSchema = yup
   .string()
   .required("Password is required")
@@ -16,25 +22,13 @@ const passwordSchema = yup
     /[@$!%*#?&]/,
     "Password must contain at least one special character (@$!%*#?&)",
   );
-const phoneSchema = yup
-  .string()
-  .matches(/^[0-9+]+$/, "Invalid phone number")
-  .required("Required");
 
-// --- 1. CONTACT FORM SCHEMA ---
-export const contactSchema = yup.object().shape({
-  firstName: yup.string().required("First name is required"),
-  lastName: yup.string().required("Last name is required"),
+//  AUTH & PUBLIC SCHEMAS
+export const loginSchema = yup.object().shape({
   email: emailSchema,
-  phoneNumber: phoneSchema,
-  schoolName: yup.string().required("School name is required"),
-  message: yup
-    .string()
-    .min(10, "Please provide more detail")
-    .required("Required"),
+  password: yup.string().required("Password is required"),
 });
 
-// --- 2. REGISTRATION SCHEMA (Extending the logic) ---
 export const registerSchema = yup.object().shape({
   schoolName: yup.string().required("School name is required"),
   adminName: yup.string().required("Full name is required"),
@@ -47,13 +41,20 @@ export const registerSchema = yup.object().shape({
   plan: yup.string().oneOf(["basic", "pro", "enterprise"]).required(),
 });
 
-// --- 3. LOGIN SCHEMA ---
-export const loginSchema = yup.object().shape({
+export const contactSchema = yup.object().shape({
+  firstName: yup.string().required("First name is required"),
+  lastName: yup.string().required("Last name is required"),
   email: emailSchema,
-  password: yup.string().required("Password is required"),
+  phoneNumber: phoneSchema,
+  schoolName: yup.string().required("School name is required"),
+  message: yup
+    .string()
+    .min(10, "Please provide more detail")
+    .required("Required"),
 });
 
-// --- THE SINGLE STUDENT TRUTH ---
+//PEOPLE MANAGEMENT (TEACHER & STUDENTS & PARENTS)
+// single student
 export const studentBaseSchema = yup.object().shape({
   firstName: yup.string().required("First name is required"),
   lastName: yup.string().required("Last name is required"),
@@ -70,9 +71,10 @@ export const studentBaseSchema = yup.object().shape({
     .string()
     .email("Invalid email")
     .required("Parent email is required for SMS/Alerts"),
-  studentId: yup.string().optional(), // System generated or Manual
+  parentPhoneNumber: phoneSchema.label("Parent Phone Number"),
+  studentId: yup.string().optional(),
 });
-// --- THE BULK UPLOAD SCHEMA ---
+//bulk student
 export const bulkStudentSchema = yup.object().shape({
   students: yup
     .array()
@@ -80,6 +82,72 @@ export const bulkStudentSchema = yup.object().shape({
     .min(1, "At least one student is required"),
 });
 
+// --- single teacher ---
+export const teacherBaseSchema = yup.object().shape({
+  name: yup.string().required("Full name is required"),
+  email: yup.string().email("Invalid email").required("Email is required"),
+  role: yup
+    .string()
+    .oneOf([
+      "Subject Teacher",
+      "Class Teacher",
+      "HOD (Dept Head)",
+      "VP Academic",
+    ])
+    .required("Role is required"),
+  assignedClass: yup.string().required("Assigned class is required"),
+});
+
+// --- bulk teacher ---
+export const bulkTeacherSchema = yup.object().shape({
+  teachers: yup
+    .array()
+    .of(teacherBaseSchema)
+    .min(1, "The list cannot be empty"),
+});
+export const VALID_TEACHER_ROLES = [
+  "Subject Teacher",
+  "Class Teacher",
+  "HOD (Dept Head)",
+  "VP Academic",
+] as const;
+
+// single parent
+export const parentBaseSchema = yup.object().shape({
+  fullName: yup
+    .string()
+    .min(3, "Full name is too short")
+    .required("Full name is required"),
+  email: emailSchema,
+  phoneNumber: phoneSchema,
+
+  relationship: yup
+    .string()
+    .oneOf(
+      ["Father", "Mother", "Guardian", "Other"],
+      "Invalid relationship type",
+    )
+    .required("Relationship to student is required"),
+
+  address: yup
+    .string()
+    .min(5, "Address is too short")
+    .required("Residential address is required"),
+
+  occupation: yup.string().optional(),
+  emergencyContact: yup.string().optional(),
+});
+
+// bulk parent
+export const bulkParentSchema = yup.object().shape({
+  parents: yup
+    .array()
+    .of(parentBaseSchema)
+    .required("Parent list cannot be empty"),
+});
+
+// SCHOOL OPERATIONS (CLASSES, EXPENSES, ANNOUNCEMENTS)
+//  -- announcement ---
 export const announcementSchema = yup.object().shape({
   title: yup
     .string()
@@ -91,12 +159,13 @@ export const announcementSchema = yup.object().shape({
     .min(10, "Min 10 characters")
     .max(500, "Max 500 characters"),
 });
-
+// --- class ---
 export const classSchema = yup.object().shape({
   className: yup.string().required("Class name is required"),
   category: yup.string().required("Please select a category"),
 });
 
+//--- expenses ---
 export const expenseSchema = yup.object().shape({
   amount: yup
     .number()
@@ -111,9 +180,11 @@ export const expenseSchema = yup.object().shape({
     .max(100, "Keep descriptions brief"),
 });
 
-// Types for your components
 export type ContactFormData = yup.InferType<typeof contactSchema>;
 export type RegisterFormData = yup.InferType<typeof registerSchema>;
 export type LoginFormData = yup.InferType<typeof loginSchema>;
 export type StudentFormData = yup.InferType<typeof studentBaseSchema>;
 export type BulkStudentFormData = yup.InferType<typeof bulkStudentSchema>;
+export type TeacherFormData = yup.InferType<typeof teacherBaseSchema>;
+export type ParentFormData = yup.InferType<typeof parentBaseSchema>;
+export type TeacherRole = (typeof VALID_TEACHER_ROLES)[number];

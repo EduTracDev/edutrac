@@ -13,7 +13,7 @@ export const FeeReminderModal = ({
 }: FeeReminderModalProps) => {
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-900/60 backdrop-blur-sm p-4">
-      <div className="bg-white rounded-[2rem] w-full max-w-lg overflow-hidden shadow-2xl animate-in fade-in zoom-in duration-200">
+      <div className="bg-white rounded-4xl w-full max-w-lg overflow-hidden shadow-2xl animate-in fade-in zoom-in duration-200">
         <div className="p-8 space-y-6">
           <div className="space-y-2 text-center">
             <h3 className="text-2xl font-black text-slate-900">
@@ -31,9 +31,10 @@ export const FeeReminderModal = ({
               Message Preview
             </p>
             <p className="text-sm text-slate-700 leading-relaxed italic">
-              "Dear Parent, this is a friendly reminder from <b>Lincoln High</b>{" "}
-              regarding the outstanding fees of <b>₦120,000</b> for{" "}
-              <b>{"{Student Name}"}</b>. Kindly ignore if already paid."
+              &quot;Dear Parent, this is a friendly reminder from{" "}
+              <b>Lincoln High</b> regarding the outstanding fees of{" "}
+              <b>₦120,000</b> for <b>{"{Student Name}"}</b>. Kindly ignore if
+              already paid.&quot;
             </p>
           </div>
 

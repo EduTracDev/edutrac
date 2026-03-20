@@ -16,10 +16,10 @@ import { AcademicDataPoint } from "@/modules/types/dashboard";
 interface AcademicChartProps {
   data: AcademicDataPoint[];
 }
-// Define colors in a constant for easy management
+
 const ACADEMIC_COLORS = {
   exceeding: "#923CF9", // Bright Purple
-  meeting: "#0D9488", // Dark Teal (High contrast against purple)
+  meeting: "#0D9488", // Dark Teal
   below: "#1E293B", // Deep Slate
 };
 
