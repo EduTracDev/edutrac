@@ -67,7 +67,7 @@ export default function Page() {
           />
         </div>
 
-        {/* <div className="space-y-4">
+        <div className="mt-8">
           <TeacherTable
             teachers={currentTeachers}
             onEdit={(t) => console.log("Edit", t)}
@@ -86,7 +86,7 @@ export default function Page() {
               setCurrentPage(1);
             }}
           />
-        </div> */}
+        </div>
         <AddTeacherModal
           isOpen={activeModal === "teacher"}
           onClose={closeModal}

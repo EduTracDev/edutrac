@@ -2,7 +2,8 @@
 
 import React from "react";
 import { BookOpen } from "lucide-react";
-import { TeacherRow } from "./TeacherRow";
+import { TeacherTableRow } from "./TeacherTableRow";
+import { TeacherMobileCard } from "./TeacherMobileCard";
 import { Teacher } from "@/modules/types/dashboard";
 import { EmptyState } from "@/modules/shared/EmptyState";
 import { useModals } from "@/modules/shared/component/ModalProvider/modalProvider";
@@ -36,52 +37,49 @@ export const TeacherTable = ({
 
   return (
     <div className="bg-white rounded-[32px] border border-slate-100 shadow-sm overflow-hidden">
-      {/* Main Responsive Wrapper: 
-          - On mobile, we hide the traditional table headers.
-          - We use overflow-x-auto to allow horizontal scrolling on small tablets.
-      */}
-      <div className="overflow-x-auto">
-        <table className="w-full text-left border-collapse min-w-[700px] md:min-w-full">
-          <thead>
-            <tr className="bg-slate-50/50 border-b border-slate-50 hidden md:table-row">
-              <th
-                scope="col"
-                className="px-6 py-5 text-[10px] font-black uppercase text-slate-400 tracking-widest"
-              >
-                Instructor
-              </th>
-              <th
-                scope="col"
-                className="px-6 py-5 text-[10px] font-black uppercase text-slate-400 tracking-widest"
-              >
-                Subject & Role
-              </th>
-              <th
-                scope="col"
-                className="px-6 py-5 text-[10px] font-black uppercase text-slate-400 tracking-widest hidden lg:table-cell"
-              >
-                Class
-              </th>
-              <th
-                scope="col"
-                className="px-6 py-5 text-[10px] font-black uppercase text-slate-400 tracking-widest"
-              >
-                Status
-              </th>
-              <th scope="col" className="px-6 py-5 text-right"></th>
-            </tr>
-          </thead>
-          <tbody className="divide-y divide-slate-50">
-            {teachers.map((teacher) => (
-              <TeacherRow
-                key={teacher.id}
-                teacher={teacher}
-                onEdit={() => onEdit(teacher)}
-                onView={() => onViewProfile(teacher.id)}
-              />
-            ))}
-          </tbody>
-        </table>
+      {/* DESKTOP */}
+
+      <table className="hidden md:table w-full text-left">
+        <thead>
+          <tr className="bg-slate-50">
+            <th className="px-6 py-4 text-xs font-bold text-slate-400 uppercase">
+              Teachers
+            </th>
+
+            <th className="px-6 py-4 text-xs font-bold text-slate-400 uppercase">
+              Subject & Role
+            </th>
+
+            <th className="px-6 py-4 text-xs font-bold text-slate-400 uppercase">
+              Status
+            </th>
+            <th></th>
+          </tr>
+        </thead>
+
+        <tbody>
+          {teachers.map((teacher) => (
+            <TeacherTableRow
+              key={teacher.id}
+              teacher={teacher}
+              onEdit={() => onEdit(teacher)}
+              onView={() => onViewProfile(teacher.id)}
+            />
+          ))}
+        </tbody>
+      </table>
+
+      {/* MOBILE */}
+
+      <div className="md:hidden p-3">
+        {teachers.map((teacher) => (
+          <TeacherMobileCard
+            key={teacher.id}
+            teacher={teacher}
+            onEdit={() => onEdit(teacher)}
+            onView={() => onViewProfile(teacher.id)}
+          />
+        ))}
       </div>
     </div>
   );
