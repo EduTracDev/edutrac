@@ -95,3 +95,14 @@ export interface CSVError {
   identifier: string;
   message: string;
 }
+
+export interface Teacher {
+  id: string;
+  name: string;
+  email: string;
+  role: string;
+  assignedClass: string;
+  subject: string;
+  status: "Active" | "On Leave" | "Inactive";
+  joinedDate: string;
+}

@@ -1,44 +1,80 @@
+// "use client";
+
+// import React from "react";
+
+// import classNames from "classnames";
+
+// import { Modal } from "../modal";
+// import { usePathname, useRouter, useSearchParams } from "next/navigation";
+// import ClearIcon from "@/modules/shared/assets/svgs/clear-icon.svg";
+// import { modalLayouts } from "@/routes/modalRoutes";
+
+// export const ModalProvider = () => {
+//   const router = useRouter();
+//   const pathname = usePathname();
+//   const searchParams = useSearchParams();
+
+//   const modalKey = searchParams.get("modal") as keyof typeof modalLayouts;
+
+//   const onDismiss = () => {
+//     if (modalLayouts?.[modalKey]?.isKeepOpen) return;
+//     const params = new URLSearchParams(searchParams.toString());
+
+//     params.delete("modal");
+//     router.replace(`${pathname}?${params}`);
+//   };
+
+//   const modalProps = modalLayouts?.[modalKey]?.modalProps || {}
+
+//   return (
+//     <Modal
+//       isOpen={!!(modalKey && modalLayouts[modalKey])}
+//       onClose={onDismiss}
+//       className={classNames("rounded-[10px] max-h-[99vh] flex flex-col")}
+//       {...modalProps}
+//     >
+//       {modalLayouts[modalKey]?.hasCloseIcon && (
+//         <ClearIcon onClick={onDismiss} className="absolute right-5 top-5" />
+//       )}
+//       <div className={classNames("overflow-y-auto flex-1")}>
+//         {modalLayouts?.[modalKey]?.component}
+//       </div>
+//     </Modal>
+//   );
+// };
+
 "use client";
 
-import React from "react";
+import React, { createContext, useContext, useState, ReactNode } from "react";
 
-import classNames from "classnames";
+type ModalType = "teacher" | "student" | "parent" | "class" | null;
 
-import { Modal } from "../modal";
-import { usePathname, useRouter, useSearchParams } from "next/navigation";
-import ClearIcon from "@/modules/shared/assets/svgs/clear-icon.svg";
-import { modalLayouts } from "@/routes/modalRoutes";
+interface ModalContextType {
+  activeModal: ModalType;
+  openModal: (type: ModalType) => void;
+  closeModal: () => void;
+}
 
-export const ModalProvider = () => {
-  const router = useRouter();
-  const pathname = usePathname();
-  const searchParams = useSearchParams();
+const ModalContext = createContext<ModalContextType | undefined>(undefined);
 
-  const modalKey = searchParams.get("modal") as keyof typeof modalLayouts;
+export function ModalProvider({ children }: { children: ReactNode }) {
+  const [activeModal, setActiveModal] = useState<ModalType>(null);
 
-  const onDismiss = () => {
-    if (modalLayouts?.[modalKey]?.isKeepOpen) return;
-    const params = new URLSearchParams(searchParams.toString());
-
-    params.delete("modal");
-    router.replace(`${pathname}?${params}`);
-  };
-
-  const modalProps = modalLayouts?.[modalKey]?.modalProps || {}
+  const openModal = (type: ModalType) => setActiveModal(type);
+  const closeModal = () => setActiveModal(null);
 
   return (
-    <Modal
-      isOpen={!!(modalKey && modalLayouts[modalKey])}
-      onClose={onDismiss}
-      className={classNames("rounded-[10px] max-h-[99vh] flex flex-col")}
-      {...modalProps}
-    >
-      {modalLayouts[modalKey]?.hasCloseIcon && (
-        <ClearIcon onClick={onDismiss} className="absolute right-5 top-5" />
-      )}
-      <div className={classNames("overflow-y-auto flex-1")}>
-        {modalLayouts?.[modalKey]?.component}
-      </div>
-    </Modal>
+    <ModalContext.Provider value={{ activeModal, openModal, closeModal }}>
+      {children}
+    </ModalContext.Provider>
   );
-};
+}
+
+// Custom hook for easy access
+export function useModals() {
+  const context = useContext(ModalContext);
+  if (context === undefined) {
+    throw new Error("useModals must be used within a ModalProvider");
+  }
+  return context;
+}

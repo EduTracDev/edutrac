@@ -2,6 +2,7 @@ import {
   AcademicDataPoint,
   EnrollmentDataPoint,
   ActivityItem,
+  Teacher,
 } from "../types/dashboard";
 export const schoolData = {
   name: "Lincoln High School",
@@ -55,5 +56,48 @@ export const recentActivities: ActivityItem[] = [
     title: "Results Published",
     subtitle: "JSS 3 Mathematics midterm scores uploaded",
     time: "2 hours ago",
+  },
+];
+
+export const teacherData: Teacher[] = [
+  {
+    id: "TCH-001",
+    name: "Adebayo Samuel",
+    email: "a.samuel@nexus.edu",
+    role: "HOD Science",
+    assignedClass: "SSS 3",
+    subject: "Physics",
+    status: "Active",
+    joinedDate: "Sept 2024",
+  },
+  {
+    id: "TCH-002",
+    name: "Chinedu Okoro",
+    email: "c.okoro@nexus.edu",
+    role: "Class Teacher",
+    assignedClass: "JSS 2",
+    subject: "Mathematics",
+    status: "Active",
+    joinedDate: "Jan 2025",
+  },
+  {
+    id: "TCH-003",
+    name: "Fatimah Dogara",
+    email: "f.dogara@nexus.edu",
+    role: "Frontend Lead",
+    assignedClass: "SSS 2",
+    subject: "Computer Science",
+    status: "Active",
+    joinedDate: "March 2026",
+  },
+  {
+    id: "TCH-004",
+    name: "Irene Smith",
+    email: "i.smith@nexus.edu",
+    role: "Arts Lead",
+    assignedClass: "JSS 3",
+    subject: "Literature",
+    status: "On Leave",
+    joinedDate: "Sept 2025",
   },
 ];
