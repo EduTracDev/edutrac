@@ -1,17 +1,15 @@
 "use client";
 
 import React from "react";
-import { Filter, UserPlus, DownloadCloud, Search } from "lucide-react";
+import { Filter, UserPlus, Search } from "lucide-react";
+import { useModals } from "@/modules/shared/component/ModalProvider/modalProvider";
 
 interface TeacherActionBarProps {
   onSearch: (query: string) => void;
-  onAddClick: () => void;
 }
 
-export const TeacherActionBar = ({
-  onSearch,
-  onAddClick,
-}: TeacherActionBarProps) => {
+export const TeacherActionBar = ({ onSearch }: TeacherActionBarProps) => {
+  const { openModal } = useModals();
   return (
     <div className="flex flex-col md:flex-row items-center justify-between gap-4 bg-white p-4 rounded-[24px] border border-slate-100 shadow-sm">
       {/* 1. Local Table Filter (Specific to Teachers) */}
@@ -37,7 +35,7 @@ export const TeacherActionBar = ({
         </button>
 
         <button
-          onClick={onAddClick}
+          onClick={() => openModal("teacher")}
           className="flex-1 md:flex-none flex items-center justify-center gap-2 px-6 py-3 bg-[#923CF9] text-white rounded-2xl text-sm font-bold hover:bg-[#7b2cd6] transition-all shadow-lg shadow-[#923CF9]/20"
         >
           <UserPlus size={18} />

@@ -9,8 +9,10 @@ import { TeacherActionBar } from "@/modules/school-admin/components/teachers/Tea
 import { TeacherTable } from "@/modules/school-admin/components/teachers/TeacherTable";
 import { teacherData } from "@/modules/constants/dashboard";
 import { SharedPagination } from "@/modules/shared/Pagination";
+import { useModals } from "@/modules/shared/component/ModalProvider/modalProvider";
 
 export default function Page() {
+  const { activeModal, closeModal } = useModals();
   const [searchQuery, setSearchQuery] = useState("");
 
   // --- ADDED MISSING STATE ---
@@ -35,9 +37,6 @@ export default function Page() {
   );
 
   const {
-    activeModal,
-    closeModal,
-    setActiveModal,
     isSubmitting,
     handleTeacherSubmit,
     handleBulkTeacherSubmit,
@@ -48,32 +47,32 @@ export default function Page() {
 
   return (
     <AdminLayout>
-      <div className="space-y-8 animate-fade-in-duration-500">
-        <div className="flex flex-col gap-6">
-          <div>
-            <h1 className="text-2xl font-black text-slate-900">
-              Teacher Directory
-            </h1>
-            <p className="text-slate-500 text-sm">
-              Manage your academic staff and department assignments.
-            </p>
-          </div>
-          <TeacherStats />
+      <div>
+        <div className="mb-6">
+          <h1 className="text-2xl font-black text-slate-900">
+            Teacher Directory
+          </h1>
+          <p className="text-slate-500 text-sm">
+            Manage your academic staff and department assignments.
+          </p>
         </div>
-        <TeacherActionBar
-          onSearch={(val) => {
-            setSearchQuery(val);
-            setCurrentPage(1);
-          }}
-          onAddClick={() => setActiveModal("teacher")}
-        />
-        <div className="space-y-4">
+        <TeacherStats />
+        <div className="mt-8">
+          {" "}
+          <TeacherActionBar
+            onSearch={(val) => {
+              setSearchQuery(val);
+              setCurrentPage(1);
+            }}
+          />
+        </div>
+
+        {/* <div className="space-y-4">
           <TeacherTable
             teachers={currentTeachers}
             onEdit={(t) => console.log("Edit", t)}
             onViewProfile={(id) => console.log("View", id)}
             onReset={() => setSearchQuery("")}
-            onAddClick={() => setActiveModal("teacher")}
           />
 
           <SharedPagination
@@ -87,7 +86,7 @@ export default function Page() {
               setCurrentPage(1);
             }}
           />
-        </div>
+        </div> */}
         <AddTeacherModal
           isOpen={activeModal === "teacher"}
           onClose={closeModal}
