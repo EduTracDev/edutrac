@@ -64,7 +64,9 @@ export const teacherData: Teacher[] = [
     id: "TCH-001",
     name: "Adebayo Samuel",
     email: "a.samuel@nexus.edu",
-    role: "HOD Science",
+    role: "VP Academic",
+    avatarUrl:
+      "https://gravatar.com/avatar/2b5b57aa71aea0118bc30f2c739c8487?s=400&d=robohash&r=x",
     assignedClass: "SSS 3",
     subject: "Physics",
     status: "Active",
@@ -74,6 +76,7 @@ export const teacherData: Teacher[] = [
     id: "TCH-002",
     name: "Chinedu Okoro",
     email: "c.okoro@nexus.edu",
+
     role: "Class Teacher",
     assignedClass: "JSS 2",
     subject: "Mathematics",
@@ -84,7 +87,8 @@ export const teacherData: Teacher[] = [
     id: "TCH-003",
     name: "Fatimah Dogara",
     email: "f.dogara@nexus.edu",
-    role: "Frontend Lead",
+
+    role: "Subject Teacher",
     assignedClass: "SSS 2",
     subject: "Computer Science",
     status: "Active",
@@ -94,10 +98,33 @@ export const teacherData: Teacher[] = [
     id: "TCH-004",
     name: "Irene Smith",
     email: "i.smith@nexus.edu",
-    role: "Arts Lead",
+
+    role: "Class Teacher",
     assignedClass: "JSS 3",
     subject: "Literature",
     status: "On Leave",
     joinedDate: "Sept 2025",
+  },
+  {
+    id: "TCH-005",
+    name: "Adebayo Samuel",
+    email: "a.samuel@nexus.edu",
+    role: "VP Academic",
+    assignedClass: "SSS 3",
+    subject: "Physics",
+    status: "Active",
+    joinedDate: "Sept 2024",
+  },
+  {
+    id: "TCH-006",
+    name: "Chinedu Okoro",
+    email: "c.okoro@nexus.edu",
+    avatarUrl:
+      "https://robohash.org/2b5b57aa71aea0118bc30f2c739c8487?set=set4&bgset=&size=400x400",
+    role: "HOD (Dept Head)",
+    assignedClass: "JSS 2",
+    subject: "Mathematics",
+    status: "Inactive",
+    joinedDate: "Jan 2025",
   },
 ];

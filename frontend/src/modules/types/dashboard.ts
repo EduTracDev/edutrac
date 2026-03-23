@@ -42,15 +42,21 @@ export interface GenderDataPoint {
   fill: string;
 }
 
-// CSV Import Interfaces
+export type TeacherRole =
+  | "Subject Teacher"
+  | "Class Teacher"
+  | "HOD (Dept Head)"
+  | "VP Academic";
 
 export interface TeacherCSVRow {
   "Full Name"?: string;
   fullName?: string;
   Email?: string;
   email?: string;
-  Role?: string;
-  role?: string;
+  Role?: TeacherRole;
+  role: TeacherRole;
+  subject: string;
+  Subject: string;
   "Assigned Class"?: string;
   assignedClass?: string;
 }
@@ -100,8 +106,9 @@ export interface Teacher {
   id: string;
   name: string;
   email: string;
-  role: string;
+  role: TeacherRole;
   assignedClass: string;
+  avatarUrl?: string;
   subject: string;
   status: "Active" | "On Leave" | "Inactive";
   joinedDate: string;

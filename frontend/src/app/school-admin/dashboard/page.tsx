@@ -129,287 +129,288 @@ export default function Page() {
         registeredDate={schoolData.date}
         planName={schoolData.plan}
       />
-
-      <SmartActions onAction={handleSmartAction} />
-      {/* School Population (Desktop Only) */}
-      <div className="hidden lg:block space-y-4">
-        <h2 className="text-sm font-bold uppercase tracking-wider text-slate-400">
-          Population Status
-        </h2>
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
-          <StatCard
-            title="Teachers"
-            value="87"
-            icon={UserCheck}
-            color="text-blue-600"
+      <div className="space-y-8">
+        <SmartActions onAction={handleSmartAction} />
+        {/* School Population (Desktop Only) */}
+        <div className="hidden lg:block space-y-4">
+          <h2 className="text-sm font-bold uppercase tracking-wider text-slate-400">
+            Population Status
+          </h2>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
+            <StatCard
+              title="Teachers"
+              value="87"
+              icon={UserCheck}
+              color="text-blue-600"
+            />
+            <StatCard
+              title="Students"
+              value="1,247"
+              icon={GraduationCap}
+              color="text-purple-600"
+            />
+            <StatCard
+              title="Parents"
+              value="980"
+              icon={Users}
+              color="text-orange-600"
+            />
+          </div>
+        </div>
+        {/* Expense + Insights + Health */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+          <ExpenseSummaryCard
+            total={1250000}
+            budget={2000000}
+            month="March 2026"
           />
-          <StatCard
-            title="Students"
-            value="1,247"
-            icon={GraduationCap}
-            color="text-purple-600"
-          />
-          <StatCard
-            title="Parents"
-            value="980"
-            icon={Users}
-            color="text-orange-600"
+          <InsightCard />
+          <SchoolHealthCard
+            finance={65}
+            attendance={92}
+            academic={78}
+            admissions={45}
           />
         </div>
-      </div>
-      {/* Expense + Insights + Health */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-        <ExpenseSummaryCard
-          total={1250000}
-          budget={2000000}
-          month="March 2026"
-        />
-        <InsightCard />
-        <SchoolHealthCard
-          finance={65}
-          attendance={92}
-          academic={78}
-          admissions={45}
-        />
-      </div>
 
-      {/* Mobile-Only Quick Actions */}
-      <section className="lg:hidden">
-        <div className="grid grid-cols-2 gap-3">
-          <QuickActionCard
-            title="Post Announcement"
-            icon={Megaphone}
-            onClick={() => setActiveModal("announcement")}
-          />
-          <QuickActionCard
-            title="Expenses"
-            icon={Wallet}
-            onClick={() => setActiveModal("expenses")}
-          />
-          <QuickActionCard
-            title="Approve Results"
-            icon={CheckCircle2}
-            onClick={() => {
-              toast.loading("Loading result portal...");
-              router.push("/school-admin/results/approve");
+        {/* Mobile-Only Quick Actions */}
+        <section className="lg:hidden">
+          <div className="grid grid-cols-2 gap-3">
+            <QuickActionCard
+              title="Post Announcement"
+              icon={Megaphone}
+              onClick={() => setActiveModal("announcement")}
+            />
+            <QuickActionCard
+              title="Expenses"
+              icon={Wallet}
+              onClick={() => setActiveModal("expenses")}
+            />
+            <QuickActionCard
+              title="Approve Results"
+              icon={CheckCircle2}
+              onClick={() => {
+                toast.loading("Loading result portal...");
+                router.push("/school-admin/results/approve");
+              }}
+            />
+          </div>
+        </section>
+        {/* Section 2: Key Metrics Grid */}
+        <section>
+          <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-4">
+            <h2 className="text-base sm:text-lg lg:text-xl font-bold text-slate-800">
+              School Overview
+            </h2>
+            <span className="text-xs sm:text-sm text-slate-400 font-medium italic mt-2 sm:mt-0">
+              Refreshed 12:19 PM
+            </span>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 lg:gap-6">
+            <FinancialStatCard
+              title="Unpaid Fees"
+              amount="₦4.25M"
+              count={42}
+              trend="+12%"
+              onViewDetails={() => router.push("/school-admin/finance/debtors")}
+            />
+            <AttendanceStatCard present={1185} total={1247} />
+            <AdmissionsStatCard pending={12} interviews={8} target={50} />
+          </div>
+        </section>
+        <div className="grid grid-cols-1 gap-8">
+          <AnalyticsGrid>
+            <ChartCard title="Fee Collection" subtitle="Revenue vs Debt">
+              <RevenueChart data={revenueData} />
+            </ChartCard>
+            <ChartCard title="Enrollment Growth" subtitle="Last 3 sessions">
+              <EnrollmentChart data={enrollmentData} />
+            </ChartCard>
+            <ChartCard
+              title="Gender Distribution"
+              subtitle="Male vs. Female population split"
+              isEmpty={genderData.length === 0}
+            >
+              <GenderChart data={genderData} />
+            </ChartCard>
+            <ChartCard
+              title="Academic Health"
+              subtitle="Performance distribution by class"
+              isEmpty={academicData.length === 0}
+            >
+              <AcademicChart data={academicData} />
+            </ChartCard>
+          </AnalyticsGrid>
+        </div>
+        <aside className="flex flex-col md:flex-row gap-6">
+          <div className="hidden lg:flex justify-between">
+            <div>
+              <h2 className="text-sm font-bold uppercase tracking-wider text-slate-400">
+                Daily Operations
+              </h2>
+              <div className="mt-4 flex flex-row gap-3">
+                <QuickActionCard
+                  title="Post Announcement"
+                  icon={Megaphone}
+                  onClick={() => setActiveModal("announcement")}
+                />
+                <QuickActionCard
+                  title="Expenses"
+                  icon={Wallet}
+                  onClick={() => setActiveModal("expenses")}
+                />
+                <QuickActionCard
+                  title="Approve Results"
+                  icon={CheckCircle2}
+                  onClick={() => {
+                    toast.loading("Loading result portal...");
+                    router.push("/school-admin/results/approve");
+                  }}
+                />
+              </div>
+              <div className="mt-8">
+                <RecentActivity activities={recentActivities} />
+              </div>
+            </div>
+          </div>
+          <div className="w-full">
+            <h2 className="text-sm font-bold uppercase tracking-wider text-slate-400">
+              School Management
+            </h2>
+            <div className="mt-4 flex flex-col gap-3">
+              <QuickActionCard
+                title="Add Teacher"
+                icon={UserPlus}
+                onClick={() => setActiveModal("teacher")}
+              />
+              <QuickActionCard
+                title="Add Student"
+                icon={UserPlus}
+                onClick={() => setActiveModal("student")}
+              />
+              <QuickActionCard
+                title="Add Parent"
+                icon={UserPlus}
+                onClick={() => setActiveModal("parent")}
+              />
+              <QuickActionCard
+                title="Create Class"
+                icon={PlusSquare}
+                onClick={() => setActiveModal("class")}
+              />
+            </div>
+          </div>
+        </aside>
+        {/* </div> */}
+
+        {/* MODAL REGISTRY */}
+        {activeModal === "fee-reminder-preview" && (
+          <FeeReminderModal
+            debtorsCount={financialData.debtorsCount}
+            totalAmount={financialData.unpaidFees}
+            onClose={() => setActiveModal(null)}
+            onConfirm={async () => {
+              const t = toast.loading("Broadcasting reminders...");
+              await new Promise((res) => setTimeout(res, 2000));
+              toast.success("Reminders sent successfully!", { id: t });
+              setActiveModal(null);
             }}
           />
-        </div>
-      </section>
-      {/* Section 2: Key Metrics Grid */}
-      <section>
-        <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-4">
-          <h2 className="text-base sm:text-lg lg:text-xl font-bold text-slate-800">
-            School Overview
-          </h2>
-          <span className="text-xs sm:text-sm text-slate-400 font-medium italic mt-2 sm:mt-0">
-            Refreshed 12:19 PM
-          </span>
-        </div>
-
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 lg:gap-6">
-          <FinancialStatCard
-            title="Unpaid Fees"
-            amount="₦4.25M"
-            count={42}
-            trend="+12%"
-            onViewDetails={() => router.push("/school-admin/finance/debtors")}
+        )}
+        {activeModal === "schedule-pta" && (
+          <SchedulePTAModal
+            onClose={() => setActiveModal(null)}
+            onSubmit={(data) => {
+              console.log("PTA Scheduled:", data);
+              toast.success("Meeting invitation sent to all parents");
+              setActiveModal(null);
+            }}
           />
-          <AttendanceStatCard present={1185} total={1247} />
-          <AdmissionsStatCard pending={12} interviews={8} target={50} />
-        </div>
-      </section>
-      <div className="grid grid-cols-1 gap-8">
-        <AnalyticsGrid>
-          <ChartCard title="Fee Collection" subtitle="Revenue vs Debt">
-            <RevenueChart data={revenueData} />
-          </ChartCard>
-          <ChartCard title="Enrollment Growth" subtitle="Last 3 sessions">
-            <EnrollmentChart data={enrollmentData} />
-          </ChartCard>
-          <ChartCard
-            title="Gender Distribution"
-            subtitle="Male vs. Female population split"
-            isEmpty={genderData.length === 0}
-          >
-            <GenderChart data={genderData} />
-          </ChartCard>
-          <ChartCard
-            title="Academic Health"
-            subtitle="Performance distribution by class"
-            isEmpty={academicData.length === 0}
-          >
-            <AcademicChart data={academicData} />
-          </ChartCard>
-        </AnalyticsGrid>
+        )}
+        {activeModal === "bulk-sms" && (
+          <BulkSMSModal
+            onClose={() => setActiveModal(null)}
+            onSend={(data) => {
+              // Format the message for a URL
+              const encodedMessage = encodeURIComponent(
+                `*Broadcast from ${schoolData.name}*\n\n${data.message}`,
+              );
+
+              //  Logic for recipient ( loop or use a broadcast group)
+              const whatsappUrl = `https://wa.me/?text=${encodedMessage}`;
+              window.open(whatsappUrl, "_blank");
+              toast.success("WhatsApp interface opened!");
+              setActiveModal(null);
+            }}
+          />
+        )}
+        {activeModal === "announcement" && (
+          <AnnouncementModal
+            isOpen={true}
+            onClose={closeModal}
+            onSubmit={handleAnnouncementSubmit}
+            errors={formErrors}
+            isSubmitting={isSubmitting}
+          />
+        )}
+        {activeModal === "expenses" && (
+          <ExpensesModal
+            isOpen={true}
+            onClose={closeModal}
+            onSubmit={handleExpenseSubmit}
+            errors={formErrors}
+            isSubmitting={isSubmitting}
+          />
+        )}
+        {activeModal === "class" && (
+          <CreateClassModal
+            // isOpen={true}
+            isOpen={activeModal === "class"}
+            onClose={closeModal}
+            onSubmit={handleClassSubmit}
+            errors={formErrors}
+            isSubmitting={isSubmitting}
+          />
+        )}
+        {activeModal === "teacher" && (
+          <AddTeacherModal
+            isOpen={activeModal === "teacher"}
+            onClose={closeModal}
+            onSubmit={handleTeacherSubmit}
+            onBulkSubmit={handleBulkTeacherSubmit}
+            errors={formErrors}
+            isSubmitting={isSubmitting}
+            teacherBulkErrors={teacherBulkErrors}
+            clearErrors={clearErrors}
+          />
+        )}
+        {activeModal === "student" && (
+          <AddStudentModal
+            isOpen={activeModal === "student"}
+            onClose={closeModal}
+            onSubmit={handleStudentSubmit}
+            onBulkSubmit={handleBulkStudentSubmit}
+            errors={formErrors}
+            isSubmitting={isSubmitting}
+            studentBulkErrors={studentBulkErrors}
+            clearErrors={clearErrors}
+          />
+        )}
+        {activeModal === "parent" && (
+          <AddParentModal
+            isOpen={activeModal === "parent"}
+            onClose={closeModal}
+            onSubmit={handleParentSubmit}
+            onBulkSubmit={handleBulkParentSubmit}
+            errors={formErrors}
+            isSubmitting={isSubmitting}
+            parentBulkErrors={parentBulkErrors}
+            clearErrors={clearErrors}
+          />
+        )}
+        <BackToTop />
       </div>
-      <aside className="flex flex-col md:flex-row gap-6">
-        <div className="hidden lg:flex justify-between">
-          <div>
-            <h2 className="text-sm font-bold uppercase tracking-wider text-slate-400">
-              Daily Operations
-            </h2>
-            <div className="mt-4 flex flex-row gap-3">
-              <QuickActionCard
-                title="Post Announcement"
-                icon={Megaphone}
-                onClick={() => setActiveModal("announcement")}
-              />
-              <QuickActionCard
-                title="Expenses"
-                icon={Wallet}
-                onClick={() => setActiveModal("expenses")}
-              />
-              <QuickActionCard
-                title="Approve Results"
-                icon={CheckCircle2}
-                onClick={() => {
-                  toast.loading("Loading result portal...");
-                  router.push("/school-admin/results/approve");
-                }}
-              />
-            </div>
-            <div className="mt-8">
-              <RecentActivity activities={recentActivities} />
-            </div>
-          </div>
-        </div>
-        <div className="w-full">
-          <h2 className="text-sm font-bold uppercase tracking-wider text-slate-400">
-            School Management
-          </h2>
-          <div className="mt-4 flex flex-col gap-3">
-            <QuickActionCard
-              title="Add Teacher"
-              icon={UserPlus}
-              onClick={() => setActiveModal("teacher")}
-            />
-            <QuickActionCard
-              title="Add Student"
-              icon={UserPlus}
-              onClick={() => setActiveModal("student")}
-            />
-            <QuickActionCard
-              title="Add Parent"
-              icon={UserPlus}
-              onClick={() => setActiveModal("parent")}
-            />
-            <QuickActionCard
-              title="Create Class"
-              icon={PlusSquare}
-              onClick={() => setActiveModal("class")}
-            />
-          </div>
-        </div>
-      </aside>
-      {/* </div> */}
-
-      {/* MODAL REGISTRY */}
-      {activeModal === "fee-reminder-preview" && (
-        <FeeReminderModal
-          debtorsCount={financialData.debtorsCount}
-          totalAmount={financialData.unpaidFees}
-          onClose={() => setActiveModal(null)}
-          onConfirm={async () => {
-            const t = toast.loading("Broadcasting reminders...");
-            await new Promise((res) => setTimeout(res, 2000));
-            toast.success("Reminders sent successfully!", { id: t });
-            setActiveModal(null);
-          }}
-        />
-      )}
-      {activeModal === "schedule-pta" && (
-        <SchedulePTAModal
-          onClose={() => setActiveModal(null)}
-          onSubmit={(data) => {
-            console.log("PTA Scheduled:", data);
-            toast.success("Meeting invitation sent to all parents");
-            setActiveModal(null);
-          }}
-        />
-      )}
-      {activeModal === "bulk-sms" && (
-        <BulkSMSModal
-          onClose={() => setActiveModal(null)}
-          onSend={(data) => {
-            // Format the message for a URL
-            const encodedMessage = encodeURIComponent(
-              `*Broadcast from ${schoolData.name}*\n\n${data.message}`,
-            );
-
-            //  Logic for recipient ( loop or use a broadcast group)
-            const whatsappUrl = `https://wa.me/?text=${encodedMessage}`;
-            window.open(whatsappUrl, "_blank");
-            toast.success("WhatsApp interface opened!");
-            setActiveModal(null);
-          }}
-        />
-      )}
-      {activeModal === "announcement" && (
-        <AnnouncementModal
-          isOpen={true}
-          onClose={closeModal}
-          onSubmit={handleAnnouncementSubmit}
-          errors={formErrors}
-          isSubmitting={isSubmitting}
-        />
-      )}
-      {activeModal === "expenses" && (
-        <ExpensesModal
-          isOpen={true}
-          onClose={closeModal}
-          onSubmit={handleExpenseSubmit}
-          errors={formErrors}
-          isSubmitting={isSubmitting}
-        />
-      )}
-      {activeModal === "class" && (
-        <CreateClassModal
-          // isOpen={true}
-          isOpen={activeModal === "class"}
-          onClose={closeModal}
-          onSubmit={handleClassSubmit}
-          errors={formErrors}
-          isSubmitting={isSubmitting}
-        />
-      )}
-      {activeModal === "teacher" && (
-        <AddTeacherModal
-          isOpen={activeModal === "teacher"}
-          onClose={closeModal}
-          onSubmit={handleTeacherSubmit}
-          onBulkSubmit={handleBulkTeacherSubmit}
-          errors={formErrors}
-          isSubmitting={isSubmitting}
-          teacherBulkErrors={teacherBulkErrors}
-          clearErrors={clearErrors}
-        />
-      )}
-      {activeModal === "student" && (
-        <AddStudentModal
-          isOpen={activeModal === "student"}
-          onClose={closeModal}
-          onSubmit={handleStudentSubmit}
-          onBulkSubmit={handleBulkStudentSubmit}
-          errors={formErrors}
-          isSubmitting={isSubmitting}
-          studentBulkErrors={studentBulkErrors}
-          clearErrors={clearErrors}
-        />
-      )}
-      {activeModal === "parent" && (
-        <AddParentModal
-          isOpen={activeModal === "parent"}
-          onClose={closeModal}
-          onSubmit={handleParentSubmit}
-          onBulkSubmit={handleBulkParentSubmit}
-          errors={formErrors}
-          isSubmitting={isSubmitting}
-          parentBulkErrors={parentBulkErrors}
-          clearErrors={clearErrors}
-        />
-      )}
-      <BackToTop />
     </AdminLayout>
   );
 }

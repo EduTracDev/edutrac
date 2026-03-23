@@ -47,8 +47,8 @@ export default function Page() {
 
   return (
     <AdminLayout>
-      <div>
-        <div className="mb-6">
+      <div className="">
+        <div className="mb-8">
           <h1 className="text-2xl font-black text-slate-900">
             Teacher Directory
           </h1>

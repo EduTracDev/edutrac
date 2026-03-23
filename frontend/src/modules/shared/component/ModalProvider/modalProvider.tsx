@@ -45,13 +45,40 @@
 
 "use client";
 
-import React, { createContext, useContext, useState, ReactNode } from "react";
+import React, {
+  createContext,
+  useContext,
+  useState,
+  ReactNode,
+  useCallback,
+} from "react";
+// import { Teacher, Student, Parent, Class } from "@/modules/types/dashboard";
+import { Teacher } from "@/modules/types/dashboard";
 
-type ModalType = "teacher" | "student" | "parent" | "class" | null;
+// 1. Define exactly what data each modal type expects
+type ModalType =
+  | "teacher"
+  | "student"
+  | "parent"
+  | "class"
+  | "confirm-action"
+  | null;
 
 interface ModalContextType {
   activeModal: ModalType;
-  openModal: (type: ModalType) => void;
+  // We use a Union here so TypeScript knows it's one of our defined types
+  // modalData:
+  //   | Teacher
+  //   | Student
+  //   | Parent
+  //   | Class
+  //   | { title: string; message: string; action: () => void }
+  //   | null;
+  modalData:
+    | Teacher
+    | { title: string; message: string; action: () => void }
+    | null;
+  openModal: (type: ModalType, data?: ModalContextType["modalData"]) => void;
   closeModal: () => void;
 }
 
@@ -59,18 +86,31 @@ const ModalContext = createContext<ModalContextType | undefined>(undefined);
 
 export function ModalProvider({ children }: { children: ReactNode }) {
   const [activeModal, setActiveModal] = useState<ModalType>(null);
+  const [modalData, setModalData] =
+    useState<ModalContextType["modalData"]>(null);
 
-  const openModal = (type: ModalType) => setActiveModal(type);
-  const closeModal = () => setActiveModal(null);
+  const openModal = useCallback(
+    (type: ModalType, data: ModalContextType["modalData"] = null) => {
+      setActiveModal(type);
+      setModalData(data);
+    },
+    [],
+  );
+
+  const closeModal = useCallback(() => {
+    setActiveModal(null);
+    setModalData(null);
+  }, []);
 
   return (
-    <ModalContext.Provider value={{ activeModal, openModal, closeModal }}>
+    <ModalContext.Provider
+      value={{ activeModal, modalData, openModal, closeModal }}
+    >
       {children}
     </ModalContext.Provider>
   );
 }
 
-// Custom hook for easy access
 export function useModals() {
   const context = useContext(ModalContext);
   if (context === undefined) {
