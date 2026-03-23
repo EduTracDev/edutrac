@@ -180,3 +180,32 @@ body {
   background: var(--color-neutral-100);
   color: var(--color-neutral-black);
 }
+
+@media print {
+  /* Hide everything else on the page */
+  body * {
+    visibility: hidden;
+  }
+
+  /* Only show the profile panel and its children */
+  .print-container,
+  .print-container * {
+    visibility: visible;
+  }
+
+  /* Position the card at the top left of the printed page */
+  .print-container {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 350px; /* Standard ID Card width ratio */
+    border: 1px solid #e2e8f0;
+    border-radius: 24px;
+    overflow: hidden;
+  }
+
+  /* Hide the close button and the download button during print */
+  .no-print {
+    display: none !important;
+  }
+}

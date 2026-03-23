@@ -168,26 +168,32 @@ export const useDashboardForms = () => {
     }
   };
 
-  const handleTeacherSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    const formData = new FormData(e.currentTarget);
-
-    const data: TeacherFormData = {
-      name: (formData.get("name") as string) || "",
-      email: (formData.get("email") as string) || "",
-      role: getValidatedRole((formData.get("role") as string) || ""),
-      assignedClass: (formData.get("assignedClass") as string) || "",
-    };
+  const handleTeacherSubmit = async (data: TeacherFormData) => {
+    // e.preventDefault() and formData extraction are DELETED.
+    // React Hook Form passes the 'data' object directly.
 
     try {
-      await teacherBaseSchema.validate(data, { abortEarly: false });
+      // 2. We skip manual validation because useForm({ resolver: yupResolver })
+      // handles this before handleTeacherSubmit is triggered.
       setIsSubmitting(true);
-      const loading = toast.loading("Sending professional invite...");
+
+      const loading = toast.loading(
+        `Sending professional invite to ${data.name}...`,
+      );
+
+      // Simulate API Delay
       await new Promise((res) => setTimeout(res, 1500));
-      toast.success(`Invite sent to ${data.name}!`, { id: loading });
+
+      // In a real app, you'd do: await api.teachers.create(data);
+
+      toast.success(`Invite successfully sent!`, { id: loading });
+
+      // 3. Close the modal using your context
       closeModal();
     } catch (err) {
-      handleValidationError(err);
+      // This will now only catch API/Network errors, not validation errors
+      console.error("Submission error:", err);
+      toast.error("Failed to send invite. Please try again.");
     } finally {
       setIsSubmitting(false);
     }
@@ -200,49 +206,62 @@ export const useDashboardForms = () => {
     setIsSubmitting(true);
     const loading = toast.loading("Analyzing staff list...");
 
+    // Use the inferred type from your schema to ensure consistency
     let teachersToValidate: TeacherFormData[] = [];
 
     try {
       const text = await file.text();
+
+      // 1. Parse CSV with specific row type
       const { data: rawRows } = Papa.parse<TeacherCSVRow>(text, {
         header: true,
         skipEmptyLines: true,
       });
 
-      teachersToValidate = rawRows.map((row) => ({
-        name: (row["Full Name"] || row.fullName || "").trim(),
-        email: (row["Email"] || row.email || "").trim(),
-        role: getValidatedRole((row["Role"] || row.role || "").trim()),
-        assignedClass: (
-          row["Assigned Class"] ||
-          row.assignedClass ||
-          ""
-        ).trim(),
-      }));
+      // 2. Strict Mapping Logic
+      teachersToValidate = rawRows.map((row) => {
+        // Use the headers exactly as they appear in the CSV or fallbacks
+        const rawRole = (row["Role"] || row.role || "").trim();
 
-      // Validate against the collection schema
+        return {
+          name: (row["Full Name"] || row.fullName || "").trim(),
+          email: (row["Email"] || row.email || "").trim(),
+          subject: (row["Subject"] || row.subject || "").trim(), // Added subject field
+          // Type assertion here ensures we pass the string through validation
+          role: getValidatedRole(rawRole) as TeacherFormData["role"],
+          assignedClass: (
+            row["Assigned Class"] ||
+            row.assignedClass ||
+            ""
+          ).trim(),
+        };
+      });
+
+      // 3. Schema Validation
+      // This will now use your Yup schema to catch bad emails or invalid roles
       await bulkTeacherSchema.validate(
         { teachers: teachersToValidate },
         { abortEarly: false },
       );
 
-      // Simulated Batch Processing
+      // Simulated API Batch Processing
       await new Promise((res) => setTimeout(res, 2000));
 
-      toast.success(`${teachersToValidate.length} invites sent!`, {
+      toast.success(`${teachersToValidate.length} staff invitations queued!`, {
         id: loading,
       });
+
       closeModal();
     } catch (err: unknown) {
-      // Use the universal formatter - we use "name" as the identifier for teachers
+      // 4. Handle errors with your universal formatter
       const formatted = formatCSVValidationErrors(
         err,
         teachersToValidate,
-        "name",
+        "name", // Use 'name' as the unique key to show which row failed
       );
 
       setTeacherBulkErrors(formatted);
-      toast.error("Validation failed. Please fix the CSV rows.", {
+      toast.error("CSV validation failed. Please check the rows below.", {
         id: loading,
       });
     } finally {
@@ -250,35 +269,27 @@ export const useDashboardForms = () => {
     }
   };
 
-  const handleStudentSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    const formData = new FormData(e.currentTarget);
-    const rawId = formData.get("studentId") as string;
-
-    const data = {
-      firstName: (formData.get("firstName") as string) || "",
-      lastName: (formData.get("lastName") as string) || "",
-      gender: formData.get("gender") as string,
-      dateOfBirth: formData.get("dateOfBirth")
-        ? new Date(formData.get("dateOfBirth") as string)
-        : undefined,
-      class: formData.get("class") as string,
-      parentEmail: (formData.get("parentEmail") as string) || "",
-      studentId: rawId.trim() || undefined,
-    };
+  const handleStudentSubmit = async (data: StudentFormData) => {
+    // e.preventDefault() and manual date parsing are now handled by the form resolver
 
     try {
-      await studentBaseSchema.validate(data, { abortEarly: false });
       setIsSubmitting(true);
-      const loading = toast.loading("Enrolling student...");
+      const loading = toast.loading(`Enrolling ${data.firstName}...`);
 
-      // Simulated API call
+      // 2. Simulated API call
+      // In production: await api.students.create(data);
       await new Promise((res) => setTimeout(res, 1500));
 
-      toast.success(`${data.firstName} has been enrolled!`, { id: loading });
+      toast.success(`${data.firstName} ${data.lastName} has been enrolled!`, {
+        id: loading,
+      });
+
+      // 3. Close the modal and clean up state
       closeModal();
     } catch (err) {
-      handleValidationError(err);
+      // This catches API errors. Validation errors are caught by the UI automatically.
+      console.error("Enrollment failed:", err);
+      toast.error("Could not complete enrollment. Please try again.");
     } finally {
       setIsSubmitting(false);
     }
@@ -291,6 +302,7 @@ export const useDashboardForms = () => {
     setIsSubmitting(true);
     const loading = toast.loading("Analyzing student list...");
 
+    // Use the inferred StudentFormData type to keep things strict
     let studentsToValidate: StudentFormData[] = [];
 
     try {
@@ -300,35 +312,34 @@ export const useDashboardForms = () => {
         skipEmptyLines: true,
       });
 
+      // 1. Filter out empty rows early
       const validRows = rawRows.filter(
         (row) => row && (row["First Name"] || row.firstName),
       );
 
+      // 2. Mapping Logic with Robust Date Parsing
       studentsToValidate = validRows.map((row) => {
         const dobSource = row["Date of Birth"] || row.dateOfBirth;
         const parsedDate = dobSource ? new Date(dobSource) : new Date();
 
+        // Ensure we provide a valid Date or undefined to let Yup handle the "Required" error
+        const finalDate = isNaN(parsedDate.getTime()) ? undefined : parsedDate;
+
         return {
           firstName: (row["First Name"] || row.firstName || "").trim(),
           lastName: (row["Last Name"] || row.lastName || "").trim(),
-          gender: (row["Gender"] || row.gender || "Other") as
-            | "Male"
-            | "Female"
-            | "Other",
-          dateOfBirth: isNaN(parsedDate.getTime()) ? new Date() : parsedDate,
-          classId: (row["Class"] || row.class || "").trim(),
+          gender: (row["Gender"] ||
+            row.gender ||
+            "Other") as StudentFormData["gender"],
+          dateOfBirth: finalDate as any, // Cast to any briefly if your Yup schema expects a Date object
+          class: (row["Class"] || row.class || "").trim(),
           parentEmail: (row["Parent Email"] || row.parentEmail || "").trim(),
-          parentPhoneNumber: (
-            row["Parent Phone Number"] ||
-            row.parentPhoneNumber ||
-            ""
-          ).trim(),
           studentId:
             (row["Student ID"] || row.studentId || "").trim() || undefined,
         };
       });
 
-      // Run Validation
+      // 3. Batch Validation
       await bulkStudentSchema.validate(
         { students: studentsToValidate },
         { abortEarly: false },
@@ -337,12 +348,16 @@ export const useDashboardForms = () => {
       // Simulated API/Firebase Batch Write
       await new Promise((res) => setTimeout(res, 2000));
 
-      toast.success(`${studentsToValidate.length} students enrolled!`, {
-        id: loading,
-      });
+      toast.success(
+        `${studentsToValidate.length} students successfully enrolled!`,
+        {
+          id: loading,
+        },
+      );
+
       closeModal();
     } catch (err: unknown) {
-      // 3. NOW ACCESSIBLE: The catch block can now see studentsToValidate
+      // 4. Use the identifier "firstName" to help the user locate errors in the CSV
       const formatted = formatCSVValidationErrors(
         err,
         studentsToValidate,
@@ -350,40 +365,35 @@ export const useDashboardForms = () => {
       );
 
       setStudentBulkErrors(formatted);
-      toast.error("Validation failed. Please check the rows.", { id: loading });
+      toast.error("CSV validation failed. Please check the highlighted rows.", {
+        id: loading,
+      });
     } finally {
       setIsSubmitting(false);
     }
   };
-  const handleParentSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    const formData = new FormData(e.currentTarget);
-
-    //  Construct the data object from FormData
-    const data = {
-      fullName: (formData.get("fullName") as string) || "",
-      email: (formData.get("email") as string) || "",
-      phoneNumber: (formData.get("phoneNumber") as string) || "",
-      relationship: (formData.get("relationship") as string) || "",
-      address: (formData.get("address") as string) || "",
-      occupation: (formData.get("occupation") as string) || "",
-      emergencyContact: (formData.get("emergencyContact") as string) || "",
-    };
+  const handleParentSubmit = async (data: ParentFormData) => {
+    // No e.preventDefault() or manual field mapping needed.
 
     try {
-      await parentBaseSchema.validate(data, { abortEarly: false });
-
       setIsSubmitting(true);
-      const loading = toast.loading("Registering parent record...");
+      const loading = toast.loading(`Registering ${data.fullName}...`);
 
+      // 2. Simulated API/Firebase call
+      // In production: await api.parents.create(data);
       await new Promise((res) => setTimeout(res, 1500));
 
-      toast.success(`${data.fullName} registered successfully!`, {
+      toast.success(`${data.fullName} has been registered successfully!`, {
         id: loading,
       });
+
+      // 3. Close the modal and reset global modal state
       closeModal();
-    } catch (err: unknown) {
-      handleValidationError(err);
+    } catch (err) {
+      // This catches server/network errors.
+      // Validation is already handled by the Form component.
+      console.error("Parent registration failed:", err);
+      toast.error("Could not register parent. Please check your connection.");
     } finally {
       setIsSubmitting(false);
     }
@@ -394,6 +404,8 @@ export const useDashboardForms = () => {
 
     setIsSubmitting(true);
     const loading = toast.loading("Processing parent records...");
+
+    // Use inferred ParentFormData for strict mapping
     let parentsToValidate: ParentFormData[] = [];
 
     try {
@@ -403,12 +415,14 @@ export const useDashboardForms = () => {
         skipEmptyLines: true,
       });
 
+      // 1. Strict Mapping with header fallbacks
       parentsToValidate = rawRows.map((row) => ({
         fullName: (row["Full Name"] || row.fullName || "").trim(),
         email: (row["Email"] || row.email || "").trim(),
         phoneNumber: (row["Phone Number"] || row.phoneNumber || "").trim(),
         occupation: (row["Occupation"] || row.occupation || "").trim(),
         address: (row["Address"] || row.address || "").trim(),
+        // Cast 'relationship' to ensure it matches your Yup schema's union types
         relationship: (row["Relationship"] ||
           row.relationship ||
           "Other") as ParentFormData["relationship"],
@@ -419,26 +433,33 @@ export const useDashboardForms = () => {
         ).trim(),
       }));
 
+      // 2. Collection Validation
       await bulkParentSchema.validate(
         { parents: parentsToValidate },
         { abortEarly: false },
       );
 
-      // Simulated API Call
+      // Simulated API Call (e.g., Firebase Batch Write)
       await new Promise((res) => setTimeout(res, 2000));
 
-      toast.success(`${parentsToValidate.length} parents registered!`, {
-        id: loading,
-      });
+      toast.success(
+        `${parentsToValidate.length} parent records successfully created!`,
+        {
+          id: loading,
+        },
+      );
+
       closeModal();
     } catch (err: unknown) {
+      // 3. Format errors using 'fullName' as the row identifier for the user
       const formatted = formatCSVValidationErrors(
         err,
         parentsToValidate,
         "fullName",
       );
+
       setParentBulkErrors(formatted);
-      toast.error("Validation failed. Check the highlighted rows.", {
+      toast.error("CSV validation failed. Please review the errors.", {
         id: loading,
       });
     } finally {

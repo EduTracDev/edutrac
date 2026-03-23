@@ -1,18 +1,20 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Modal from "../Modal";
 import { UserPlus, Users } from "lucide-react";
 import { SingleTeacherInviteForm } from "./SingleTeacherInviteForm";
 import { BulkTeacherUploadForm } from "./BulkTeacherUploadForm";
-import { CSVError } from "@/modules/types/dashboard";
+import { CSVError, Teacher } from "@/modules/types/dashboard"; // Ensure Teacher is imported
+import { useModals } from "@/modules/shared/component/ModalProvider/modalProvider";
+import { TeacherFormData } from "@/utils/validation";
 
 type InviteMethod = "single" | "bulk";
 
 interface AddTeacherModalProps {
   isOpen: boolean;
   onClose: () => void;
-  onSubmit: (e: React.FormEvent<HTMLFormElement>) => Promise<void>;
+  onSubmit: (data: TeacherFormData) => Promise<void>;
   onBulkSubmit: (file: File) => Promise<void>;
   errors: { [key: string]: string };
   isSubmitting: boolean;
@@ -31,13 +33,35 @@ export const AddTeacherModal = ({
   clearErrors,
 }: AddTeacherModalProps) => {
   const [method, setMethod] = useState<InviteMethod>("single");
+  const { modalData } = useModals();
+
+  // 1. Define the Type Guard using 'unknown'
+  const isTeacher = (data: unknown): data is Teacher => {
+    // Check if data is an object and not null
+    const isObject = typeof data === "object" && data !== null;
+
+    // Use 'in' operator to check for a unique Teacher property
+    return isObject && "subject" in (data as Record<string, unknown>);
+  };
+  // 2. Define currentTeacher safely
+  const currentTeacher = isTeacher(modalData) ? modalData : null;
+
+  // 3. Auto-switch to "single" if we are in Edit Mode
+  useEffect(() => {
+    if (currentTeacher) {
+      setMethod("single");
+    }
+  }, [currentTeacher]);
 
   return (
-    <Modal isOpen={isOpen} onClose={onClose} title="Add New Teacher">
+    <Modal
+      isOpen={isOpen}
+      onClose={onClose}
+      title={currentTeacher ? `Edit ${currentTeacher.name}` : "Add New Teacher"}
+    >
       <div className="space-y-6">
-        {/* Only show tabs if we haven't succeeded yet */}
-        <div className="space-y-6">
-          {/* Tab Switcher  */}
+        {/* Only show Tab Switcher if we are NOT in edit mode */}
+        {!currentTeacher && (
           <div className="flex p-1.5 bg-slate-50 rounded-2xl border border-slate-100">
             <button
               onClick={() => setMethod("single")}
@@ -60,15 +84,24 @@ export const AddTeacherModal = ({
               <Users size={16} /> BULK UPLOAD
             </button>
           </div>
-        </div>
+        )}
 
         {method === "single" ? (
-          <SingleTeacherInviteForm
-            onSuccess={onClose}
-            isSubmitting={isSubmitting}
-            formErrors={errors}
-            onSubmit={onSubmit}
-          />
+          <div className="space-y-4">
+            {/* Subtitle for Edit Mode */}
+            {currentTeacher && (
+              <p className="text-xs font-bold text-slate-400 uppercase">
+                Updating Teacher ID: {currentTeacher.id}
+              </p>
+            )}
+            <SingleTeacherInviteForm
+              onSuccess={onClose}
+              isSubmitting={isSubmitting}
+              formErrors={errors}
+              onSubmit={onSubmit}
+              initialData={currentTeacher} // You'll need to update the form to accept this!
+            />
+          </div>
         ) : (
           <BulkTeacherUploadForm
             isSubmitting={isSubmitting}

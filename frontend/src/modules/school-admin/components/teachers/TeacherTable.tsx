@@ -1,11 +1,13 @@
 "use client";
 
-import React from "react";
+import React, { useState } from "react";
 import { BookOpen } from "lucide-react";
-import { TeacherRow } from "./TeacherRow";
+import { TeacherTableRow } from "./TeacherTableRow";
+import { TeacherMobileCard } from "./TeacherMobileCard";
 import { Teacher } from "@/modules/types/dashboard";
 import { EmptyState } from "@/modules/shared/EmptyState";
 import { useModals } from "@/modules/shared/component/ModalProvider/modalProvider";
+import { TeacherProfileSlideover } from "./TeacherProfileSlideover";
 
 interface TeacherTableProps {
   teachers: Teacher[];
@@ -21,11 +23,21 @@ export const TeacherTable = ({
   onReset,
 }: TeacherTableProps) => {
   const { openModal } = useModals();
+  const [selectedTeacher, setSelectedTeacher] = useState<Teacher | null>(null);
+  const [isProfileOpen, setIsProfileOpen] = useState(false);
+
+  const handleViewProfile = (id: string) => {
+    const teacher = teachers.find((t) => t.id === id);
+    if (teacher) {
+      setSelectedTeacher(teacher);
+      setIsProfileOpen(true);
+    }
+  };
 
   if (teachers.length === 0) {
     return (
       <EmptyState
-        title="No instructors found"
+        title="No Teachers found"
         description="Try adjusting your filters or search terms."
         onReset={onReset}
         actionLabel="Add New Teacher"
@@ -35,53 +47,66 @@ export const TeacherTable = ({
   }
 
   return (
-    <div className="bg-white rounded-[32px] border border-slate-100 shadow-sm overflow-hidden">
-      {/* Main Responsive Wrapper: 
-          - On mobile, we hide the traditional table headers.
-          - We use overflow-x-auto to allow horizontal scrolling on small tablets.
-      */}
-      <div className="overflow-x-auto">
-        <table className="w-full text-left border-collapse min-w-[700px] md:min-w-full">
+    <div className="bg-white rounded-[32px] border border-slate-100 shadow-sm overflow-y-auto">
+      {/* DESKTOP */}
+
+      <>
+        {" "}
+        <table className="hidden md:table w-full text-left">
           <thead>
-            <tr className="bg-slate-50/50 border-b border-slate-50 hidden md:table-row">
-              <th
-                scope="col"
-                className="px-6 py-5 text-[10px] font-black uppercase text-slate-400 tracking-widest"
-              >
-                Instructor
+            <tr className="bg-slate-50">
+              <th className="px-6 py-4 text-xs font-bold text-slate-400 uppercase">
+                Teachers
               </th>
-              <th
-                scope="col"
-                className="px-6 py-5 text-[10px] font-black uppercase text-slate-400 tracking-widest"
-              >
-                Subject & Role
+
+              <th className="px-6 py-4 text-xs font-bold text-slate-400 uppercase">
+                Subject
               </th>
-              <th
-                scope="col"
-                className="px-6 py-5 text-[10px] font-black uppercase text-slate-400 tracking-widest hidden lg:table-cell"
-              >
-                Class
+
+              <th className="px-6 py-4 text-xs font-bold text-slate-400 uppercase">
+                Role
               </th>
-              <th
-                scope="col"
-                className="px-6 py-5 text-[10px] font-black uppercase text-slate-400 tracking-widest"
-              >
+              <th className="px-6 py-4 text-xs font-bold text-slate-400 uppercase">
                 Status
               </th>
-              <th scope="col" className="px-6 py-5 text-right"></th>
+              <th></th>
             </tr>
           </thead>
-          <tbody className="divide-y divide-slate-50">
+
+          <tbody>
             {teachers.map((teacher) => (
-              <TeacherRow
+              <TeacherTableRow
                 key={teacher.id}
                 teacher={teacher}
-                onEdit={() => onEdit(teacher)}
-                onView={() => onViewProfile(teacher.id)}
+                onEdit={() => openModal("teacher", teacher)}
+                onViewProfile={() => handleViewProfile(teacher.id)}
               />
             ))}
           </tbody>
         </table>
+        <TeacherProfileSlideover
+          teacher={selectedTeacher}
+          isOpen={isProfileOpen}
+          onClose={() => setIsProfileOpen(false)}
+        />
+      </>
+
+      {/* MOBILE */}
+
+      <div className="md:hidden p-3">
+        {teachers.map((teacher) => (
+          <TeacherMobileCard
+            key={teacher.id}
+            teacher={teacher}
+            onEdit={() => openModal("teacher", teacher)}
+            onViewProfile={() => handleViewProfile(teacher.id)}
+          />
+        ))}
+        <TeacherProfileSlideover
+          teacher={selectedTeacher}
+          isOpen={isProfileOpen}
+          onClose={() => setIsProfileOpen(false)}
+        />
       </div>
     </div>
   );

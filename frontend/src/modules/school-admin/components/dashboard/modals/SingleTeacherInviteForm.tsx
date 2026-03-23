@@ -1,133 +1,167 @@
 "use client";
 
-import React from "react";
-import { ShieldCheck, Loader2 } from "lucide-react";
+import React, { useEffect } from "react";
+import { useForm } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
+import { Teacher } from "@/modules/types/dashboard";
+import { TeacherFormData, teacherBaseSchema } from "@/utils/validation";
 
 interface SingleTeacherInviteFormProps {
+  initialData?: Teacher | null;
   onSuccess: () => void;
   isSubmitting: boolean;
-  formErrors: Record<string, string>;
-  onSubmit: (e: React.FormEvent<HTMLFormElement>) => Promise<void>;
+  formErrors: { [key: string]: string };
+  onSubmit: (data: TeacherFormData) => Promise<void>;
 }
 
 export const SingleTeacherInviteForm = ({
+  initialData,
+  onSuccess,
   isSubmitting,
   formErrors,
   onSubmit,
 }: SingleTeacherInviteFormProps) => {
-  return (
-    <form className="space-y-5" onSubmit={onSubmit}>
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-        {/* Full Name Input */}
-        <div className="space-y-1.5">
-          <label className="text-[10px] font-black uppercase text-slate-400 ml-1">
-            Full Name
-          </label>
-          <input
-            name="name"
-            type="text"
-            placeholder="e.g. Chinedu Azikiwe"
-            className={`w-full p-3.5 bg-slate-50 rounded-xl border-none text-sm outline-none transition-all ${
-              formErrors.name
-                ? "ring-2 ring-red-500 bg-red-50/50"
-                : "focus:ring-2 focus:ring-purple-200"
-            }`}
-          />
-          {formErrors.name && (
-            <p className="text-[10px] font-bold text-red-500 ml-1">
-              {formErrors.name}
-            </p>
-          )}
-        </div>
+  const {
+    register,
+    handleSubmit,
+    reset,
+    formState: { errors: localErrors },
+  } = useForm<TeacherFormData>({
+    resolver: yupResolver(teacherBaseSchema),
+    defaultValues: {
+      name: initialData?.name || "",
+      email: initialData?.email || "",
+      subject: initialData?.subject || "",
+      role: (initialData?.role as TeacherFormData["role"]) || "Subject Teacher",
+      assignedClass: initialData?.assignedClass || "",
+    },
+  });
 
-        {/* Email Address */}
-        <div className="space-y-1.5">
-          <label className="text-[10px] font-black uppercase text-slate-400 ml-1">
-            Email Address
-          </label>
-          <input
-            name="email"
-            type="email"
-            placeholder="chinedu@school.com"
-            className={`w-full p-3.5 bg-slate-50 rounded-xl border-none text-sm outline-none transition-all ${
-              formErrors.email
-                ? "ring-2 ring-red-500 bg-red-50/50"
-                : "focus:ring-2 focus:ring-purple-200"
-            }`}
-          />
-          {formErrors.email && (
-            <p className="text-[10px] font-bold text-red-500 ml-1">
-              {formErrors.email}
-            </p>
-          )}
-        </div>
+  useEffect(() => {
+    // If we have initialData, we are in EDIT mode
+    if (initialData) {
+      reset({
+        name: initialData.name ?? "",
+        email: initialData.email ?? "",
+        subject: initialData.subject ?? "",
+        // The 'as' assertion tells TS this string is definitely a valid Role
+        role:
+          (initialData.role as TeacherFormData["role"]) || "Subject Teacher",
+        assignedClass: initialData.assignedClass ?? "",
+      });
+    }
+    // If initialData is null, we are in ADD mode (Reset to empty)
+    else {
+      reset({
+        name: "",
+        email: "",
+        subject: "",
+        role: "Subject Teacher",
+        assignedClass: "",
+      });
+    }
+  }, [initialData, reset]);
+  const handleFormSubmit = async (data: TeacherFormData) => {
+    try {
+      await onSubmit(data);
+      onSuccess();
+    } catch (error) {
+      console.error("Submission failed", error);
+    }
+  };
+
+  // Helper to merge server-side errors with client-side validation
+  const getErrorMessage = (field: keyof TeacherFormData) =>
+    localErrors[field]?.message || formErrors[field];
+
+  return (
+    <form onSubmit={handleSubmit(handleFormSubmit)} className="space-y-4">
+      {/* Full Name */}
+      <div className="space-y-1">
+        <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest px-1">
+          Full Name
+        </label>
+        <input
+          {...register("name")}
+          placeholder="Fatimah Adebimpe"
+          className="w-full px-5 py-3.5 bg-slate-50 border border-transparent rounded-2xl text-sm focus:bg-white focus:border-[#923CF9]/20 focus:ring-4 focus:ring-[#923CF9]/5 transition-all outline-none"
+        />
+        {getErrorMessage("name") && (
+          <p className="text-[10px] font-bold text-red-500 px-1">
+            {getErrorMessage("name")}
+          </p>
+        )}
       </div>
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-        {/* Role Selection */}
-        <div className="space-y-1.5">
-          <label className="text-[10px] font-black uppercase text-slate-400 ml-1">
-            Staff Role
+      {/* Email Address */}
+      <div className="space-y-1">
+        <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest px-1">
+          Email Address
+        </label>
+        <input
+          {...register("email")}
+          type="email"
+          placeholder="fatimah@edutrac.com"
+          className="w-full px-5 py-3.5 bg-slate-50 border border-transparent rounded-2xl text-sm focus:bg-white focus:border-[#923CF9]/20 focus:ring-4 focus:ring-[#923CF9]/5 transition-all outline-none"
+        />
+        {getErrorMessage("email") && (
+          <p className="text-[10px] font-bold text-red-500 px-1">
+            {getErrorMessage("email")}
+          </p>
+        )}
+      </div>
+
+      <div className="grid grid-cols-2 gap-4">
+        {/* Subject */}
+        <div className="space-y-1">
+          <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest px-1">
+            Subject
           </label>
-          <select
-            name="role"
-            className={`w-full p-3.5 bg-slate-50 rounded-xl border-none text-sm outline-none transition-all appearance-none ${
-              formErrors.role
-                ? "ring-2 ring-red-500 bg-red-50/50"
-                : "focus:ring-2 focus:ring-purple-200"
-            }`}
-          >
-            <option value="">Select a role...</option>
-            <option value="Subject Teacher">Subject Teacher</option>
-            <option value="Class Teacher">Class Teacher</option>
-            <option value="HOD (Dept Head)">HOD (Dept Head)</option>
-            <option value="VP Academic">VP Academic</option>
-          </select>
-          {formErrors.role && (
-            <p className="text-[10px] font-bold text-red-500 ml-1">
-              {formErrors.role}
-            </p>
-          )}
+          <input
+            {...register("subject")}
+            placeholder="Mathematics"
+            className="w-full px-5 py-3.5 bg-slate-50 border border-transparent rounded-2xl text-sm focus:bg-white focus:border-[#923CF9]/20 focus:ring-4 focus:ring-[#923CF9]/5 transition-all outline-none"
+          />
         </div>
 
         {/* Assigned Class */}
-        <div className="space-y-1.5">
-          <label className="text-[10px] font-black uppercase text-slate-400 ml-1">
-            Assigned Class
+        <div className="space-y-1">
+          <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest px-1">
+            Class
           </label>
           <input
-            name="assignedClass"
-            type="text"
-            placeholder="e.g. JSS 3A"
-            className={`w-full p-3.5 bg-slate-50 rounded-xl border-none text-sm outline-none transition-all ${
-              formErrors.assignedClass
-                ? "ring-2 ring-red-500 bg-red-50/50"
-                : "focus:ring-2 focus:ring-purple-200"
-            }`}
+            {...register("assignedClass")}
+            placeholder="JSS 1"
+            className="w-full px-5 py-3.5 bg-slate-50 border border-transparent rounded-2xl text-sm focus:bg-white focus:border-[#923CF9]/20 focus:ring-4 focus:ring-[#923CF9]/5 transition-all outline-none"
           />
-          {formErrors.assignedClass && (
-            <p className="text-[10px] font-bold text-red-500 ml-1">
-              {formErrors.assignedClass}
-            </p>
-          )}
         </div>
       </div>
 
+      {/* Role Select */}
+      <div className="space-y-1">
+        <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest px-1">
+          Staff Role
+        </label>
+        <select
+          {...register("role")}
+          className="w-full px-5 py-3.5 bg-slate-50 border border-transparent rounded-2xl text-sm focus:bg-white focus:border-[#923CF9]/20 focus:ring-4 focus:ring-[#923CF9]/5 transition-all outline-none appearance-none cursor-pointer"
+        >
+          <option value="Subject Teacher">Subject Teacher</option>
+          <option value="Class Teacher">Class Teacher</option>
+          <option value="HOD (Dept Head)">Dept Head</option>
+          <option value="VP Academic">VP Academic</option>
+        </select>
+      </div>
       <button
         type="submit"
         disabled={isSubmitting}
-        className="w-full py-4 bg-[#923CF9] text-white rounded-2xl font-black text-sm shadow-lg shadow-purple-50 hover:bg-[#8126e8] transition-all flex items-center justify-center gap-2 mt-2 disabled:opacity-50 disabled:cursor-not-allowed"
+        className="w-full py-4 mt-2 bg-[#923CF9] text-white rounded-2xl text-sm font-black shadow-lg shadow-[#923CF9]/20 hover:-translate-y-0.5 active:scale-95 transition-all disabled:opacity-50"
       >
-        {isSubmitting ? (
-          <>
-            <Loader2 className="animate-spin" size={18} />
-            INVITING TEACHER...
-          </>
-        ) : (
-          <>
-            <ShieldCheck size={18} /> Send Professional Invite
-          </>
-        )}
+        {isSubmitting
+          ? "Processing..."
+          : initialData
+            ? "Update Record"
+            : "Send Invitation"}
       </button>
     </form>
   );

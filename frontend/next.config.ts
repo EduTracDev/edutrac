@@ -33,6 +33,30 @@ const nextConfig: NextConfig = {
     });
     return config;
   },
+  images: {
+    remotePatterns: [
+      {
+        protocol: "https",
+        hostname: "gravatar.com",
+        pathname: "/**", // This allows all paths under gravatar.com
+      },
+      {
+        protocol: "https",
+        hostname: "i.pravatar.cc",
+        pathname: "/**", // For mocks too. Add hostname from firebasestorage after proper upload
+      },
+      {
+        protocol: "https",
+        hostname: "api.adorable.io",
+        pathname: "/**",
+      },
+      {
+        protocol: "https",
+        hostname: "robohash.org",
+        pathname: "/**",
+      },
+    ],
+  },
 };
 
 export default nextConfig;

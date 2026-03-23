@@ -34,7 +34,7 @@ export const SmartActions = ({ onAction }: SmartActionProps) => {
   ];
 
   return (
-    <section>
+    <section className="mt-8">
       <h2 className="text-xs font-bold uppercase tracking-[0.2em] text-slate-400 mb-4 px-2">
         Recommended Actions
       </h2>

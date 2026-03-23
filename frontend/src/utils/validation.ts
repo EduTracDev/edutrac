@@ -83,9 +83,10 @@ export const bulkStudentSchema = yup.object().shape({
 });
 
 // --- single teacher ---
-export const teacherBaseSchema = yup.object().shape({
+export const teacherBaseSchema = yup.object({
   name: yup.string().required("Full name is required"),
   email: yup.string().email("Invalid email").required("Email is required"),
+  subject: yup.string().required("Subject department is required"), // Defined as its own field
   role: yup
     .string()
     .oneOf([
@@ -94,8 +95,8 @@ export const teacherBaseSchema = yup.object().shape({
       "HOD (Dept Head)",
       "VP Academic",
     ])
-    .required("Role is required"),
-  assignedClass: yup.string().required("Assigned class is required"),
+    .required("Please select a role"),
+  assignedClass: yup.string().required("Class assignment is required"),
 });
 
 // --- bulk teacher ---
