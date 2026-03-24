@@ -1,6 +1,7 @@
 "use client";
-import { useState } from "react";
+import React, { useState } from "react";
 import Image from "next/image";
+import { toast } from "react-hot-toast";
 
 import {
   MoreHorizontal,
@@ -8,6 +9,7 @@ import {
   UserMinus,
   Trash2,
   Edit3,
+  Send,
 } from "lucide-react";
 
 import { Teacher } from "@/modules/types/dashboard";
@@ -21,13 +23,41 @@ interface Props {
 
 export const TeacherMobileCard = ({
   teacher,
-  onView,
   onEdit,
   onViewProfile,
 }: Props) => {
-  const isActive = teacher.status === "Active";
+  const isActive = teacher.employmentStatus === "Active";
   const [imageError, setImageError] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
+
+  const [isResending, setIsResending] = useState(false);
+
+  const handleResendInvite = async (id: string) => {
+    setIsResending(true);
+
+    const promise = new Promise((resolve, reject) => {
+      setTimeout(async () => {
+        try {
+          resolve({ name: teacher.name });
+        } catch (err) {
+          reject(err);
+        }
+      }, 1500);
+    });
+
+    toast.promise(promise, {
+      loading: "Sending new invite...",
+      success: "Invite sent successfully!",
+      error: "Failed to send invite.",
+    });
+
+    try {
+      await promise;
+    } finally {
+      setIsResending(false);
+      setMenuOpen(false);
+    }
+  };
 
   const initials = teacher.name
     .split(" ")
@@ -40,91 +70,136 @@ export const TeacherMobileCard = ({
       onClick={() => onViewProfile(teacher.id)}
       className="relative bg-white border border-slate-100 rounded-2xl p-4 mb-3 shadow-sm cursor-pointer active:scale-[0.99] transition"
     >
+      {/* TOP ROW: Avatar and Primary Info */}
       <div className="flex items-center gap-3">
-        {/* 🖼️ NEW: Avatar Container */}
-        <div className="h-11 w-11 relative rounded-2xl overflow-hidden bg-[#923CF9]/10 flex items-center justify-center text-[#923CF9] font-bold">
+        <div className="h-11 w-11 relative rounded-2xl overflow-hidden bg-[#923CF9]/10 flex items-center justify-center text-[#923CF9] font-bold shrink-0">
           {teacher.avatarUrl && !imageError ? (
             <Image
               src={teacher.avatarUrl}
               alt={teacher.name}
-              fill // Use 'fill' for parent-relative sizing in Next.js
+              fill
               className="object-cover"
-              sizes="44px" // Optimization: tells Next.js exactly how small this image is
-              priority={false}
-              onError={() => setImageError(true)} // Set state on error
+              sizes="44px"
+              onError={() => setImageError(true)}
             />
           ) : (
-            // Fallback shows if there's no URL OR if the image fails to load
             <span className="text-sm uppercase tracking-wider">{initials}</span>
           )}
         </div>
         <div className="flex-1">
-          <p className="text-sm font-bold">{teacher.name}</p>
-          <p className="text-xs text-slate-400">ID: {teacher.id}</p>
+          <p className="text-sm font-bold text-slate-800">{teacher.name}</p>
+          <p className="text-[10px] text-slate-400 font-medium">
+            ID: {teacher.id}
+          </p>
         </div>
       </div>
-      <div className="mt-3 flex justify-between">
+
+      {/* MIDDLE ROW: Subject and Role */}
+      <div className="mt-4 flex justify-between border-t border-slate-50 pt-3">
         <div>
-          <p className="text-xs text-slate-400 font-bold">SUBJECT</p>
-          <p className="text-sm font-semibold">{teacher.subject}</p>
+          <p className="text-[10px] text-slate-400 font-black uppercase tracking-widest">
+            Subject
+          </p>
+          <p className="text-xs font-bold text-slate-700">{teacher.subject}</p>
         </div>
         <div className="text-right">
-          <p className="text-xs text-slate-400 font-bold">ROLE</p>
-          <p className="text-sm font-semibold">{teacher.role}</p>
+          <p className="text-[10px] text-slate-400 font-black uppercase tracking-widest">
+            Role
+          </p>
+          <p className="text-xs font-bold text-slate-700">{teacher.role}</p>
         </div>
       </div>
-      <div className="mt-3 flex justify-between items-center">
-        <div
-          className={`flex items-center gap-2 px-3 py-1 rounded-full border text-xs font-bold
-${
-  isActive
-    ? "text-emerald-600 bg-emerald-50 border-emerald-100"
-    : "text-amber-600 bg-amber-50 border-amber-100"
-}`}
-        >
-          {isActive ? <UserCheck size={12} /> : <UserMinus size={12} />}
 
-          {teacher.status}
-        </div>
-        <button
-          onClick={(e) => {
-            e.stopPropagation();
-            setMenuOpen(!menuOpen);
-          }}
-          className="p-2 rounded-xl hover:bg-white border border-transparent hover:border-slate-200 text-slate-400 hover:text-[#923CF9]"
-        >
-          <MoreHorizontal size={18} />
-        </button>
-
-        {/* The Dropdown Menu */}
-
-        {menuOpen && (
-          <div
-            // Stop clicks inside the menu from triggering onView card click
-            onClick={(e) => e.stopPropagation()}
-            className="absolute right-12 top-12 z-[100] w-48 bg-white rounded-2xl border border-slate-100 shadow-xl py-2 animate-in fade-in zoom-in-95 duration-200"
-          >
-            <button
-              onClick={(e) => {
-                e.stopPropagation(); // Double safety
-                onEdit();
-                setMenuOpen(false);
-              }}
-              className="w-full text-left px-4 py-2.5 text-xs font-bold text-slate-600 hover:bg-slate-50 flex items-center gap-2"
-            >
-              <Edit3 size={14} /> Edit Information
-            </button>
-            <button className="w-full text-left px-4 py-2.5 text-xs font-bold text-amber-600 hover:bg-amber-50 flex items-center gap-2">
-              <UserMinus size={14} /> Suspend Access
-            </button>
-
-            <div className="my-1 border-t border-slate-50" />
-
-            <button className="w-full text-left px-4 py-2.5 text-xs font-bold text-red-600 hover:bg-red-50 flex items-center gap-2">
-              <Trash2 size={14} /> Delete Teacher
-            </button>
+      {/* BOTTOM ROW: Statuses and Actions */}
+      <div className="mt-4 flex items-center justify-between">
+        <div className="flex items-center gap-2">
+          {/* Account Status */}
+          <div className="flex items-center gap-1.5 bg-slate-50 px-2 py-1 rounded-lg">
+            <div
+              className={`h-1.5 w-1.5 rounded-full ${
+                teacher.accountStatus === "Joined"
+                  ? "bg-emerald-400"
+                  : teacher.accountStatus === "Pending"
+                    ? "bg-amber-400 animate-pulse"
+                    : "bg-slate-300"
+              }`}
+            />
+            <span className="text-[9px] font-black text-slate-500 uppercase tracking-tighter">
+              {teacher.accountStatus}
+            </span>
           </div>
-        )}
+
+          {/* Employment Status */}
+          <div
+            className={`flex items-center gap-1.5 px-2 py-1 rounded-lg border text-[9px] font-black uppercase tracking-wider
+            ${
+              isActive
+                ? "text-emerald-600 bg-emerald-50 border-emerald-100"
+                : "text-amber-600 bg-amber-50 border-amber-100"
+            }`}
+          >
+            {isActive ? <UserCheck size={10} /> : <UserMinus size={10} />}
+            {teacher.employmentStatus}
+          </div>
+        </div>
+
+        <div className="relative">
+          <button
+            onClick={(e) => {
+              e.stopPropagation();
+              setMenuOpen(!menuOpen);
+            }}
+            className="p-2 rounded-xl hover:bg-slate-50 border border-transparent hover:border-slate-100 text-slate-400 hover:text-[#923CF9] transition-colors"
+          >
+            <MoreHorizontal size={18} />
+          </button>
+
+          {menuOpen && (
+            <div
+              onClick={(e) => e.stopPropagation()}
+              className="absolute right-0 bottom-full mb-2 z-[100] w-48 bg-white rounded-2xl border border-slate-100 shadow-xl py-2 animate-in fade-in slide-in-from-bottom-2 duration-200"
+            >
+              <button
+                onClick={(e) => {
+                  e.stopPropagation();
+                  onEdit();
+                  setMenuOpen(false);
+                }}
+                className="w-full text-left px-4 py-2.5 text-xs font-bold text-slate-600 hover:bg-slate-50 flex items-center gap-2"
+              >
+                <Edit3 size={14} /> Edit Information
+              </button>
+
+              {/* ✅ MOVE INSIDE: Resend button as a menu option */}
+              {teacher.accountStatus !== "Joined" && (
+                <button
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    handleResendInvite(teacher.id);
+                  }}
+                  disabled={isResending}
+                  className="w-full text-left px-4 py-2.5 text-xs font-bold text-[#923CF9] hover:bg-[#923CF9]/5 flex items-center gap-2 disabled:opacity-50"
+                >
+                  <Send
+                    size={14}
+                    className={isResending ? "animate-pulse" : ""}
+                  />
+                  {isResending ? "Sending..." : "Resend Invitation"}
+                </button>
+              )}
+
+              <button className="w-full text-left px-4 py-2.5 text-xs font-bold text-amber-600 hover:bg-amber-50 flex items-center gap-2">
+                <UserMinus size={14} /> Suspend Access
+              </button>
+
+              <div className="my-1 border-t border-slate-50" />
+
+              <button className="w-full text-left px-4 py-2.5 text-xs font-bold text-red-600 hover:bg-red-50 flex items-center gap-2">
+                <Trash2 size={14} /> Delete Teacher
+              </button>
+            </div>
+          )}
+        </div>
       </div>
     </div>
   );

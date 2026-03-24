@@ -47,67 +47,63 @@ export const TeacherTable = ({
   }
 
   return (
-    <div className="bg-white rounded-[32px] border border-slate-100 shadow-sm overflow-y-auto">
-      {/* DESKTOP */}
-
-      <>
-        {" "}
+    <>
+      <div className="bg-white rounded-[32px] border border-slate-100 shadow-sm overflow-hidden">
+        {/* DESKTOP TABLE */}
         <table className="hidden md:table w-full text-left">
-          <thead>
-            <tr className="bg-slate-50">
+          <thead className="bg-slate-50">
+            <tr>
               <th className="px-6 py-4 text-xs font-bold text-slate-400 uppercase">
                 Teachers
               </th>
-
               <th className="px-6 py-4 text-xs font-bold text-slate-400 uppercase">
                 Subject
               </th>
-
               <th className="px-6 py-4 text-xs font-bold text-slate-400 uppercase">
                 Role
               </th>
               <th className="px-6 py-4 text-xs font-bold text-slate-400 uppercase">
-                Status
+                Account Status
               </th>
-              <th></th>
+              <th className="px-6 py-4 text-xs font-bold text-slate-400 uppercase text-center">
+                Employment Status
+              </th>
+              <th className="px-6 py-4"></th>
             </tr>
           </thead>
-
           <tbody>
             {teachers.map((teacher) => (
               <TeacherTableRow
                 key={teacher.id}
                 teacher={teacher}
+                // Wrap the edit call to stop bubbling if needed,
+                // though it's better handled inside TeacherTableRow
                 onEdit={() => openModal("teacher", teacher)}
                 onViewProfile={() => handleViewProfile(teacher.id)}
               />
             ))}
           </tbody>
         </table>
-        <TeacherProfileSlideover
-          teacher={selectedTeacher}
-          isOpen={isProfileOpen}
-          onClose={() => setIsProfileOpen(false)}
-        />
-      </>
 
-      {/* MOBILE */}
-
-      <div className="md:hidden p-3">
-        {teachers.map((teacher) => (
-          <TeacherMobileCard
-            key={teacher.id}
-            teacher={teacher}
-            onEdit={() => openModal("teacher", teacher)}
-            onViewProfile={() => handleViewProfile(teacher.id)}
-          />
-        ))}
-        <TeacherProfileSlideover
-          teacher={selectedTeacher}
-          isOpen={isProfileOpen}
-          onClose={() => setIsProfileOpen(false)}
-        />
+        {/* MOBILE CARDS */}
+        <div className="md:hidden p-3">
+          {teachers.map((teacher) => (
+            <TeacherMobileCard
+              key={teacher.id}
+              teacher={teacher}
+              onEdit={() => openModal("teacher", teacher)}
+              onViewProfile={() => handleViewProfile(teacher.id)}
+            />
+          ))}
+        </div>
       </div>
-    </div>
+
+      {/* ✅ RENDER ONLY ONCE AT THE BOTTOM */}
+      <TeacherProfileSlideover
+        teacher={selectedTeacher}
+        isOpen={isProfileOpen}
+        onClose={() => setIsProfileOpen(false)}
+      />
+    </>
   );
 };

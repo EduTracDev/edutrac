@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useMemo } from "react";
 import { AddTeacherModal } from "@/modules/school-admin/components/dashboard/modals/AddTeacherModal";
 import AdminLayout from "@/modules/school-admin/layout/AdminLayout";
 import { useDashboardForms } from "@/utils/hooks/useDashboardForm";
@@ -10,25 +10,53 @@ import { TeacherTable } from "@/modules/school-admin/components/teachers/Teacher
 import { teacherData } from "@/modules/constants/dashboard";
 import { SharedPagination } from "@/modules/shared/Pagination";
 import { useModals } from "@/modules/shared/component/ModalProvider/modalProvider";
+import { AccountStatus, EmploymentStatus } from "@/modules/types/dashboard";
 
 export default function Page() {
   const { activeModal, closeModal } = useModals();
   const [searchQuery, setSearchQuery] = useState("");
 
-  // --- ADDED MISSING STATE ---
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage, setItemsPerPage] = useState(10);
+  const [filters, setFilters] = useState({
+    account: "All" as "All" | AccountStatus,
+    employment: "All" as "All" | EmploymentStatus,
+  });
 
-  // 1. Filter the data based on search
-  const filteredTeachers = teacherData.filter(
-    (t) =>
-      t.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      t.email.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      t.subject.toLowerCase().includes(searchQuery.toLowerCase()),
-  );
+  const handleFilterChange = (
+    type: "account" | "employment",
+    value: string,
+  ) => {
+    setFilters((prev) => ({ ...prev, [type]: value }));
+  };
 
-  // 2. --- ADDED SLICING LOGIC ---
-  // This ensures the table only shows the current page's items
+  const handleClearFilters = () => {
+    setFilters({ account: "All", employment: "All" });
+    setSearchQuery("");
+  };
+
+  const filteredTeachers = useMemo(() => {
+    console.log("Filtering logic running..."); // Good for debugging
+
+    return teacherData.filter((t) => {
+      const matchesSearch =
+        t.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        t.email.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        t.subject.toLowerCase().includes(searchQuery.toLowerCase());
+
+      const matchesAccount =
+        filters.account === "All" || t.accountStatus === filters.account;
+
+      const matchesEmployment =
+        filters.employment === "All" ||
+        t.employmentStatus === filters.employment;
+
+      return matchesSearch && matchesAccount && matchesEmployment;
+    });
+
+    // ✅ Use the EXACT name of the data variable here
+  }, [searchQuery, filters, teacherData]);
+
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
   const currentTeachers = filteredTeachers.slice(
@@ -57,13 +85,23 @@ export default function Page() {
           </p>
         </div>
         <TeacherStats />
+        <div className="px-4 py-2">
+          <p className="text-xs font-medium text-slate-500">
+            Showing{" "}
+            <span className="text-[#923CF9] font-bold">
+              {filteredTeachers.length}
+            </span>
+            {filteredTeachers.length === 1 ? " teacher" : " teachers"}
+            {searchQuery && ` matching "${searchQuery}"`}
+          </p>
+        </div>
         <div className="mt-8">
           {" "}
           <TeacherActionBar
-            onSearch={(val) => {
-              setSearchQuery(val);
-              setCurrentPage(1);
-            }}
+            onSearch={setSearchQuery}
+            activeFilters={filters}
+            onFilterChange={handleFilterChange}
+            onClearFilters={handleClearFilters}
           />
         </div>
 
