@@ -112,10 +112,10 @@ export const TeacherProfileSlideover = ({
               </div>
               <div className="p-4 bg-slate-50 rounded-2xl border border-slate-100">
                 <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest">
-                  Status
+                  Job Status
                 </p>
                 <p className="text-sm font-bold text-slate-700 mt-1">
-                  {teacher.status}
+                  {teacher.employmentStatus}
                 </p>
               </div>
             </div>

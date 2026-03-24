@@ -102,6 +102,8 @@ export interface CSVError {
   message: string;
 }
 
+export type AccountStatus = "Pending" | "Joined" | "Expired";
+export type EmploymentStatus = "Active" | "On Leave" | "Inactive";
 export interface Teacher {
   id: string;
   name: string;
@@ -110,6 +112,7 @@ export interface Teacher {
   assignedClass: string;
   avatarUrl?: string;
   subject: string;
-  status: "Active" | "On Leave" | "Inactive";
+  employmentStatus: EmploymentStatus;
+  accountStatus: AccountStatus;
   joinedDate: string;
 }
