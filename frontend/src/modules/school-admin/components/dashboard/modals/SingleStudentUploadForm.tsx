@@ -1,6 +1,10 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { useForm } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
+import { Student } from "@/modules/types/dashboard";
+import { StudentFormData, studentBaseSchema } from "@/utils/validation";
 import {
   Mail,
   Calendar,
@@ -13,229 +17,147 @@ import {
 } from "lucide-react";
 
 interface SingleStudentUploadFormProps {
+  initialData?: Student | null;
+  onSuccess: () => void;
   isSubmitting: boolean;
-  onStudentSubmit: (e: React.FormEvent<HTMLFormElement>) => Promise<void>;
-  formErrors: Record<string, string>;
+  formErrors: { [key: string]: string };
+  onSubmit: (data: StudentFormData) => Promise<void>;
 }
 
 export const SingleStudentUploadForm = ({
+  initialData,
+  onSuccess,
   isSubmitting,
-  onStudentSubmit,
   formErrors,
+  onSubmit,
 }: SingleStudentUploadFormProps) => {
-  const [autoGenerateId, setAutoGenerateId] = useState(true);
+  const {
+    register,
+    handleSubmit,
+    reset,
+    formState: { errors: localErrors },
+  } = useForm<StudentFormData>({
+    resolver: yupResolver(studentBaseSchema),
+    defaultValues: {
+      firstName: "",
+      lastName: "",
+      gender: "Male",
+      classId: "",
+      parentEmail: "",
+      studentId: "",
+    },
+  });
+
+  useEffect(() => {
+    if (initialData) {
+      // 🛠️ Transform: Split full name into first/last for the form
+      const [first, ...last] = (initialData.name || "").split(" ");
+
+      reset({
+        firstName: first || "",
+        lastName: last.join(" ") || "",
+        gender: initialData.gender as any,
+        classId: initialData.class, // Mapping 'class' to 'classId'
+        parentEmail: initialData.parentEmail,
+        studentId: initialData.id,
+        // Ensure dateOfBirth is a Date object if provided
+        dateOfBirth: new Date(),
+      });
+    } else {
+      reset({
+        firstName: "",
+        lastName: "",
+        gender: "Male",
+        classId: "",
+        parentEmail: "",
+      });
+    }
+  }, [initialData, reset]);
+
+  const handleFormSubmit = async (data: StudentFormData) => {
+    await onSubmit(data);
+    onSuccess();
+  };
+
+  const getErrorMessage = (field: keyof StudentFormData) =>
+    (localErrors[field]?.message as string) || formErrors[field];
+
   return (
-    <form
-      onSubmit={onStudentSubmit}
-      className="space-y-4 animate-in fade-in duration-300"
-    >
+    <form onSubmit={handleSubmit(handleFormSubmit)} className="space-y-5">
+      {/* 🚀 First Name & Last Name */}
       <div className="grid grid-cols-2 gap-4">
-        {/* First Name */}
-        <div className="space-y-1.5">
-          <label className="text-[10px] font-black uppercase text-slate-400 ml-1">
-            First Name
-          </label>
-          <div className="relative">
-            <User
-              className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400"
-              size={16}
-            />
-            <input
-              name="firstName"
-              placeholder="Musa"
-              className={`w-full bg-slate-50 border ${formErrors.firstName ? "border-red-500" : "border-slate-100"} rounded-2xl py-3 pl-10 pr-4 text-sm focus:ring-2 focus:ring-[#923CF9]/20 outline-none transition-all`}
-            />
-          </div>
-        </div>
-
-        {/* Last Name */}
-        <div className="space-y-1.5">
-          <label className="text-[10px] font-black uppercase text-slate-400 ml-1">
-            Last Name
-          </label>
-          <div className="relative">
-            <User
-              className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400"
-              size={16}
-            />
-            <input
-              name="lastName"
-              placeholder="Adamu"
-              className={`w-full bg-slate-50 border ${formErrors.lastName ? "border-red-500" : "border-slate-100"} rounded-2xl py-3 pl-10 pr-4 text-sm focus:ring-2 focus:ring-[#923CF9]/20 outline-none transition-all`}
-            />
-          </div>
-        </div>
-      </div>
-
-      {/* Parent Contact Info Group */}
-      <div className="grid grid-cols-2 gap-4">
-        <div className="space-y-1.5">
-          <label className="text-[10px] font-black uppercase text-slate-400 ml-1">
-            Parent/Guardian Phone Number
-          </label>
-          <div className="relative">
-            <Phone
-              className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400"
-              size={16}
-            />
-            <input
-              name="parentPhoneNumber"
-              placeholder="0803..."
-              className={`w-full bg-slate-50 border ${formErrors.parentPhoneNumber ? "border-red-500" : "border-slate-100"} rounded-2xl py-3 pl-10 pr-4 text-sm focus:ring-2 focus:ring-[#923CF9]/20 outline-none transition-all`}
-            />
-          </div>
-        </div>
-        <div className="space-y-1.5">
-          <label className="text-[10px] font-black uppercase text-slate-400 ml-1">
-            Parent Email
-          </label>
-          <div className="relative">
-            <Mail
-              className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400"
-              size={16}
-            />
-            <input
-              name="email"
-              type="email"
-              placeholder="parent@mail.com"
-              className={`w-full bg-slate-50 border ${formErrors.parentEmail ? "border-red-500" : "border-slate-100"} rounded-2xl py-3 pl-10 pr-4 text-sm focus:ring-2 focus:ring-[#923CF9]/20 outline-none transition-all`}
-            />
-          </div>
-        </div>
-      </div>
-
-      {/* Admission Number with Auto-Generate Toggle */}
-      <div className="space-y-1.5">
-        <div className="flex items-center justify-between ml-1">
-          <label className="text-[10px] font-black uppercase text-slate-400">
-            Admission No.
-          </label>
-          <button
-            type="button"
-            onClick={() => setAutoGenerateId(!autoGenerateId)}
-            className={`flex items-center gap-1.5 px-2 py-1 rounded-lg border transition-all ${
-              autoGenerateId
-                ? "bg-[#923CF9]/10 border-[#923CF9]/20 text-[#923CF9]"
-                : "bg-slate-50 border-slate-200 text-slate-400"
-            }`}
-          >
-            <Sparkles size={10} />
-            <span className="text-[9px] font-bold uppercase">
-              Auto-generate
-            </span>
-          </button>
-        </div>
-
-        <div className="relative">
-          <Hash
-            className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400"
-            size={16}
-          />
+        <div className="space-y-1">
+          <label className="text-xs font-bold text-slate-700">First Name</label>
           <input
-            name="studentId"
-            disabled={autoGenerateId}
-            placeholder={
-              autoGenerateId
-                ? "System will generate ID..."
-                : "e.g. ADM/2026/001"
-            }
-            className={`w-full bg-slate-50 border ${
-              formErrors.studentId ? "border-red-500" : "border-slate-100"
-            } rounded-2xl py-3 pl-10 pr-4 text-sm focus:ring-2 focus:ring-[#923CF9]/20 outline-none transition-all ${
-              autoGenerateId
-                ? "opacity-50 cursor-not-allowed italic"
-                : "opacity-100"
-            }`}
+            {...register("firstName")}
+            className={`w-full p-3 bg-slate-50 border ${getErrorMessage("firstName") ? "border-red-500" : "border-slate-100"} rounded-2xl text-sm outline-none focus:bg-white focus:ring-4 focus:ring-[#923CF9]/5 transition-all`}
+          />
+          {getErrorMessage("firstName") && (
+            <p className="text-[10px] text-red-500 font-bold">
+              {getErrorMessage("firstName")}
+            </p>
+          )}
+        </div>
+        <div className="space-y-1">
+          <label className="text-xs font-bold text-slate-700">Last Name</label>
+          <input
+            {...register("lastName")}
+            className="w-full p-3 bg-slate-50 border border-slate-100 rounded-2xl text-sm outline-none focus:bg-white transition-all"
           />
         </div>
-        {formErrors.studentId && (
-          <p className="text-[9px] text-red-500 font-bold ml-1">
-            {formErrors.studentId}
-          </p>
-        )}
       </div>
 
+      {/* 🚀 Date of Birth & Gender */}
       <div className="grid grid-cols-2 gap-4">
-        {/* Gender Selection */}
-        <div className="space-y-1.5">
-          <label className="text-[11px] font-black uppercase text-slate-400 ml-1">
-            Gender
+        <div className="space-y-1">
+          <label className="text-xs font-bold text-slate-700">
+            Date of Birth
           </label>
+          <input
+            type="date"
+            {...register("dateOfBirth")}
+            className="w-full p-3 bg-slate-50 border border-slate-100 rounded-2xl text-sm outline-none"
+          />
+        </div>
+        <div className="space-y-1">
+          <label className="text-xs font-bold text-slate-700">Gender</label>
           <select
-            name="gender"
-            className={`w-full bg-slate-50 border ${formErrors.gender ? "border-red-500" : "border-slate-100"} rounded-2xl py-3.5 px-4 text-sm focus:outline-none focus:ring-2 focus:ring-[#923CF9]/20 transition-all appearance-none`}
+            {...register("gender")}
+            className="w-full p-3 bg-slate-50 border border-slate-100 rounded-2xl text-sm outline-none cursor-pointer"
           >
-            <option value="">Select Gender</option>
             <option value="Male">Male</option>
             <option value="Female">Female</option>
             <option value="Other">Other</option>
           </select>
-          {formErrors.gender && (
-            <p className="text-[10px] text-red-500 font-bold ml-1">
-              {formErrors.gender}
-            </p>
-          )}
-        </div>
-
-        {/* Date of Birth */}
-        <div className="space-y-1.5">
-          <label className="text-[11px] font-black uppercase text-slate-400 ml-1">
-            Date of Birth
-          </label>
-          <div className="relative">
-            <Calendar
-              className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400"
-              size={18}
-            />
-            <input
-              name="dateOfBirth"
-              type="date"
-              className={`w-full bg-slate-50 border ${formErrors.dateOfBirth ? "border-red-500" : "border-slate-100"} rounded-2xl py-3.5 pl-11 pr-4 text-sm focus:outline-none focus:ring-2 focus:ring-[#923CF9]/20 transition-all`}
-            />
-          </div>
-          {formErrors.dateOfBirth && (
-            <p className="text-[10px] text-red-500 font-bold ml-1">
-              {formErrors.dateOfBirth}
-            </p>
-          )}
         </div>
       </div>
 
-      {/* Class Assignment */}
-      <div className="space-y-1.5">
-        <label className="text-[11px] font-black uppercase text-slate-400 ml-1">
-          Class Assignment
-        </label>
-        <div className="relative">
-          <GraduationCap
-            className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400"
-            size={18}
-          />
-          <select
-            name="classId"
-            className={`w-full bg-slate-50 border ${formErrors.classId ? "border-red-500" : "border-slate-100"} rounded-2xl py-3.5 pl-11 pr-4 text-sm focus:outline-none focus:ring-2 focus:ring-[#923CF9]/20 transition-all appearance-none`}
-          >
-            <option value="">Assign to a Class</option>
-            <option value="pri-1">Primary 1</option>
-            <option value="pri-2">Primary 2</option>
-          </select>
-        </div>
-        {formErrors.classId && (
-          <p className="text-[10px] text-red-500 font-bold ml-1">
-            {formErrors.classId}
+      {/* 🚀 Parent Contact */}
+      <div className="space-y-1">
+        <label className="text-xs font-bold text-slate-700">Parent Email</label>
+        <input
+          {...register("parentEmail")}
+          placeholder="For SMS & Result Alerts"
+          className="w-full p-3 bg-slate-50 border border-slate-100 rounded-2xl text-sm outline-none"
+        />
+        {getErrorMessage("parentEmail") && (
+          <p className="text-[10px] text-red-500 font-bold">
+            {getErrorMessage("parentEmail")}
           </p>
         )}
       </div>
+
+      {/* Submit Button */}
       <button
         type="submit"
         disabled={isSubmitting}
-        className="w-full bg-[#1C1C1C] hover:bg-black text-white py-4 rounded-2xl font-bold text-sm flex items-center justify-center gap-2 transition-all disabled:opacity-50"
+        className="w-full py-4 bg-[#923CF9] text-white rounded-2xl font-black text-xs uppercase tracking-widest hover:bg-[#7b2cd6] transition-all shadow-lg shadow-[#923CF9]/20 disabled:opacity-50 flex items-center justify-center gap-2"
       >
-        {isSubmitting ? (
-          <Loader2 className="animate-spin" size={20} />
-        ) : (
-          "Enroll Student"
-        )}
+        {isSubmitting
+          ? "Processing..."
+          : initialData
+            ? "Update Profile"
+            : "Enroll Student"}
       </button>
     </form>
   );

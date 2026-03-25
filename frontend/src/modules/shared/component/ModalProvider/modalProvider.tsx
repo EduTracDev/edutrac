@@ -42,7 +42,6 @@
 //     </Modal>
 //   );
 // };
-
 "use client";
 
 import React, {
@@ -52,10 +51,15 @@ import React, {
   ReactNode,
   useCallback,
 } from "react";
-// import { Teacher, Student, Parent, Class } from "@/modules/types/dashboard";
-import { Teacher } from "@/modules/types/dashboard";
+import { Teacher, Student } from "@/modules/types/dashboard";
 
-// 1. Define exactly what data each modal type expects
+// 1. Define the possible data shapes for modals
+type ModalData =
+  | Teacher
+  | Student
+  | { title: string; message: string; onConfirm: () => void } // For confirm-action
+  | null;
+
 type ModalType =
   | "teacher"
   | "student"
@@ -66,19 +70,8 @@ type ModalType =
 
 interface ModalContextType {
   activeModal: ModalType;
-  // We use a Union here so TypeScript knows it's one of our defined types
-  // modalData:
-  //   | Teacher
-  //   | Student
-  //   | Parent
-  //   | Class
-  //   | { title: string; message: string; action: () => void }
-  //   | null;
-  modalData:
-    | Teacher
-    | { title: string; message: string; action: () => void }
-    | null;
-  openModal: (type: ModalType, data?: ModalContextType["modalData"]) => void;
+  modalData: ModalData;
+  openModal: (type: ModalType, data?: ModalData) => void;
   closeModal: () => void;
 }
 
@@ -86,16 +79,12 @@ const ModalContext = createContext<ModalContextType | undefined>(undefined);
 
 export function ModalProvider({ children }: { children: ReactNode }) {
   const [activeModal, setActiveModal] = useState<ModalType>(null);
-  const [modalData, setModalData] =
-    useState<ModalContextType["modalData"]>(null);
+  const [modalData, setModalData] = useState<ModalData>(null);
 
-  const openModal = useCallback(
-    (type: ModalType, data: ModalContextType["modalData"] = null) => {
-      setActiveModal(type);
-      setModalData(data);
-    },
-    [],
-  );
+  const openModal = useCallback((type: ModalType, data: ModalData = null) => {
+    setActiveModal(type);
+    setModalData(data);
+  }, []);
 
   const closeModal = useCallback(() => {
     setActiveModal(null);

@@ -270,26 +270,29 @@ export const useDashboardForms = () => {
   };
 
   const handleStudentSubmit = async (data: StudentFormData) => {
-    // e.preventDefault() and manual date parsing are now handled by the form resolver
-
     try {
       setIsSubmitting(true);
       const loading = toast.loading(`Enrolling ${data.firstName}...`);
 
-      // 2. Simulated API call
-      // In production: await api.students.create(data);
+      // 🛠️ Data Transformation (If needed for your API)
+      const payload = {
+        ...data,
+        fullName: `${data.firstName} ${data.lastName}`,
+        enrolledAt: new Date().toISOString(),
+      };
+
+      // Simulate API Call
       await new Promise((res) => setTimeout(res, 1500));
 
-      toast.success(`${data.firstName} ${data.lastName} has been enrolled!`, {
+      toast.success(`${data.firstName} has been enrolled successfully!`, {
         id: loading,
       });
 
-      // 3. Close the modal and clean up state
       closeModal();
+      // Logic to refresh your list (e.g., mutate() if using SWR/React Query)
     } catch (err) {
-      // This catches API errors. Validation errors are caught by the UI automatically.
       console.error("Enrollment failed:", err);
-      toast.error("Could not complete enrollment. Please try again.");
+      toast.error("An error occurred during enrollment.");
     } finally {
       setIsSubmitting(false);
     }
@@ -302,7 +305,7 @@ export const useDashboardForms = () => {
     setIsSubmitting(true);
     const loading = toast.loading("Analyzing student list...");
 
-    // Use the inferred StudentFormData type to keep things strict
+    // Initialize with an empty array of the correct type
     let studentsToValidate: StudentFormData[] = [];
 
     try {
@@ -312,18 +315,17 @@ export const useDashboardForms = () => {
         skipEmptyLines: true,
       });
 
-      // 1. Filter out empty rows early
       const validRows = rawRows.filter(
         (row) => row && (row["First Name"] || row.firstName),
       );
 
-      // 2. Mapping Logic with Robust Date Parsing
+      // 2. Mapping Logic - Aligned with StudentFormData
       studentsToValidate = validRows.map((row) => {
         const dobSource = row["Date of Birth"] || row.dateOfBirth;
         const parsedDate = dobSource ? new Date(dobSource) : new Date();
 
-        // Ensure we provide a valid Date or undefined to let Yup handle the "Required" error
-        const finalDate = isNaN(parsedDate.getTime()) ? undefined : parsedDate;
+        // Fix: Check validity and cast to Date to avoid 'any' error
+        const finalDate = isNaN(parsedDate.getTime()) ? new Date() : parsedDate;
 
         return {
           firstName: (row["First Name"] || row.firstName || "").trim(),
@@ -331,9 +333,14 @@ export const useDashboardForms = () => {
           gender: (row["Gender"] ||
             row.gender ||
             "Other") as StudentFormData["gender"],
-          dateOfBirth: finalDate as any, // Cast to any briefly if your Yup schema expects a Date object
-          class: (row["Class"] || row.class || "").trim(),
+          dateOfBirth: finalDate, // No more 'as any'
+          classId: (row["Class"] || row.class || "").trim(), // Fix: Changed from 'class' to 'classId'
           parentEmail: (row["Parent Email"] || row.parentEmail || "").trim(),
+          parentPhoneNumber: (
+            row["Parent Phone Number"] ||
+            row.parentPhone ||
+            ""
+          ).trim(), // Fix: Added missing field
           studentId:
             (row["Student ID"] || row.studentId || "").trim() || undefined,
         };
@@ -345,29 +352,20 @@ export const useDashboardForms = () => {
         { abortEarly: false },
       );
 
-      // Simulated API/Firebase Batch Write
       await new Promise((res) => setTimeout(res, 2000));
 
-      toast.success(
-        `${studentsToValidate.length} students successfully enrolled!`,
-        {
-          id: loading,
-        },
-      );
-
+      toast.success(`${studentsToValidate.length} students enrolled!`, {
+        id: loading,
+      });
       closeModal();
     } catch (err: unknown) {
-      // 4. Use the identifier "firstName" to help the user locate errors in the CSV
       const formatted = formatCSVValidationErrors(
         err,
         studentsToValidate,
         "firstName",
       );
-
       setStudentBulkErrors(formatted);
-      toast.error("CSV validation failed. Please check the highlighted rows.", {
-        id: loading,
-      });
+      toast.error("CSV validation failed.", { id: loading });
     } finally {
       setIsSubmitting(false);
     }

@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
-import { Filter, UserPlus, Search, Check, X } from "lucide-react";
+import { Filter, UserPlus, Search } from "lucide-react";
 import { useModals } from "@/modules/shared/component/ModalProvider/modalProvider";
 import { AccountStatus, EmploymentStatus } from "@/modules/types/dashboard";
 
@@ -69,41 +69,56 @@ export const TeacherActionBar = ({
           {/* 🚀 The Filter Dropdown */}
           {isFilterOpen && (
             <>
+              {/* Overlay - now uses a darker backdrop for mobile focus */}
               <div
-                className="fixed inset-0 z-40"
+                className="fixed inset-0 z-40 bg-slate-900/20 backdrop-blur-sm md:bg-transparent md:backdrop-blur-none"
                 onClick={() => setIsFilterOpen(false)}
               />
-              <div className="absolute right-0 top-14 z-50 w-64 bg-white rounded-2xl border border-slate-100 shadow-2xl p-5 animate-in fade-in zoom-in-95 duration-200">
-                <div className="flex items-center justify-between mb-4">
-                  <h3 className="font-black text-[11px] uppercase tracking-widest text-slate-400">
+
+              <div
+                className="
+      /* Mobile Styles: Centered or Bottom-fixed */
+      fixed inset-x-4 top-[20%] z-50 
+      /* Desktop Styles: Absolute and aligned to button */
+      md:absolute md:inset-auto md:right-0 md:top-14 
+      
+      w-auto md:w-72 
+      bg-white rounded-3xl md:rounded-2xl 
+      border border-slate-100 shadow-2xl p-6 
+      animate-in fade-in zoom-in-95 slide-in-from-top-2 duration-200
+    "
+              >
+                <div className="flex items-center justify-between mb-6">
+                  <h3 className="font-black text-[12px] uppercase tracking-widest text-slate-400">
                     Advanced Filters
                   </h3>
                   {hasActiveFilters && (
                     <button
                       onClick={onClearFilters}
-                      className="text-[10px] font-bold text-[#923CF9] hover:underline"
+                      className="text-xs font-bold text-[#923CF9] hover:underline px-2 py-1 bg-[#923CF9]/5 rounded-lg"
                     >
-                      Clear All
+                      Reset All
                     </button>
                   )}
                 </div>
 
                 {/* Account Status Filter Group */}
-                <div className="space-y-3 mb-6">
-                  <p className="text-xs font-bold text-slate-700">
+                <div className="space-y-3 mb-8">
+                  <p className="text-xs font-black text-slate-700 flex items-center gap-2">
+                    <span className="w-1 h-1 rounded-full bg-[#923CF9]" />
                     Account Status
                   </p>
-                  <div className="flex flex-wrap gap-2">
+                  <div className="grid grid-cols-2 gap-2">
                     {["All", "Joined", "Pending", "Expired"].map((opt) => (
                       <button
                         key={opt}
                         onClick={() => onFilterChange("account", opt)}
-                        className={`px-3 py-1.5 rounded-lg text-[10px] font-bold border transition-all
-                          ${
-                            activeFilters.account === opt
-                              ? "bg-[#923CF9] border-[#923CF9] text-white"
-                              : "bg-white border-slate-100 text-slate-500 hover:border-slate-200"
-                          }`}
+                        className={`px-3 py-2.5 rounded-xl text-[11px] font-bold border transition-all
+                ${
+                  activeFilters.account === opt
+                    ? "bg-[#923CF9] border-[#923CF9] text-white shadow-md shadow-[#923CF9]/20"
+                    : "bg-slate-50 border-transparent text-slate-500 hover:bg-slate-100"
+                }`}
                       >
                         {opt}
                       </button>
@@ -113,20 +128,21 @@ export const TeacherActionBar = ({
 
                 {/* Employment Status Filter Group */}
                 <div className="space-y-3">
-                  <p className="text-xs font-bold text-slate-700">
+                  <p className="text-xs font-black text-slate-700 flex items-center gap-2">
+                    <span className="w-1 h-1 rounded-full bg-[#923CF9]" />
                     Employment Status
                   </p>
-                  <div className="flex flex-wrap gap-2">
+                  <div className="grid grid-cols-2 gap-2">
                     {["All", "Active", "On Leave", "Inactive"].map((opt) => (
                       <button
                         key={opt}
                         onClick={() => onFilterChange("employment", opt)}
-                        className={`px-3 py-1.5 rounded-lg text-[10px] font-bold border transition-all
-                          ${
-                            activeFilters.employment === opt
-                              ? "bg-[#923CF9] border-[#923CF9] text-white"
-                              : "bg-white border-slate-100 text-slate-500 hover:border-slate-200"
-                          }`}
+                        className={`px-3 py-2.5 rounded-xl text-[11px] font-bold border transition-all
+                ${
+                  activeFilters.employment === opt
+                    ? "bg-[#923CF9] border-[#923CF9] text-white shadow-md shadow-[#923CF9]/20"
+                    : "bg-slate-50 border-transparent text-slate-500 hover:bg-slate-100"
+                }`}
                       >
                         {opt}
                       </button>

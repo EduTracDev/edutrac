@@ -54,7 +54,7 @@ export default function Page() {
       return matchesSearch && matchesAccount && matchesEmployment;
     });
 
-    // ✅ Use the EXACT name of the data variable here
+    //
   }, [searchQuery, filters, teacherData]);
 
   const indexOfLastItem = currentPage * itemsPerPage;
@@ -85,7 +85,7 @@ export default function Page() {
           </p>
         </div>
         <TeacherStats />
-        <div className="px-4 py-2">
+        <div className="p-4 mt-8">
           <p className="text-xs font-medium text-slate-500">
             Showing{" "}
             <span className="text-[#923CF9] font-bold">
@@ -95,16 +95,12 @@ export default function Page() {
             {searchQuery && ` matching "${searchQuery}"`}
           </p>
         </div>
-        <div className="mt-8">
-          {" "}
-          <TeacherActionBar
-            onSearch={setSearchQuery}
-            activeFilters={filters}
-            onFilterChange={handleFilterChange}
-            onClearFilters={handleClearFilters}
-          />
-        </div>
-
+        <TeacherActionBar
+          onSearch={setSearchQuery}
+          activeFilters={filters}
+          onFilterChange={handleFilterChange}
+          onClearFilters={handleClearFilters}
+        />
         <div className="mt-8">
           <TeacherTable
             teachers={currentTeachers}

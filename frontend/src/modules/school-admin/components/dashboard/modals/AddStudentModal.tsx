@@ -1,17 +1,20 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Modal from "../Modal";
 import { UserPlus, Users } from "lucide-react";
 import { SingleStudentUploadForm } from "./SingleStudentUploadForm";
 import { BulkStudentUploadForm } from "./BulkStudentUploadForm";
-import { CSVError } from "@/modules/types/dashboard";
+import { CSVError, Student } from "@/modules/types/dashboard";
+import { StudentFormData } from "@/utils/validation";
+import { useModals } from "@/modules/shared/component/ModalProvider/modalProvider";
+
 type EntryMethod = "single" | "bulk";
 
 interface AddStudentModalProps {
   isOpen: boolean;
   onClose: () => void;
-  onSubmit: (e: React.FormEvent<HTMLFormElement>) => Promise<void>;
+  onSubmit: (data: StudentFormData) => Promise<void>;
   onBulkSubmit: (file: File) => Promise<void>;
   errors: { [key: string]: string };
   isSubmitting: boolean;
@@ -30,12 +33,33 @@ export const AddStudentModal = ({
   clearErrors,
 }: AddStudentModalProps) => {
   const [method, setMethod] = useState<EntryMethod>("single");
+  const { modalData } = useModals();
+
+  const isStudent = (data: unknown): data is Student => {
+    // Check if data is an object and not null
+    const isObject = typeof data === "object" && data !== null;
+
+    return isObject && "subject" in (data as Record<string, unknown>);
+  };
+
+  const currentStudent = isStudent(modalData) ? modalData : null;
+
+  //  Auto-switch to "single" if we are in Edit Mode
+  useEffect(() => {
+    if (currentStudent) {
+      setMethod("single");
+    }
+  }, [currentStudent]);
 
   return (
-    <Modal isOpen={isOpen} onClose={onClose} title="Add New Students">
+    <Modal
+      isOpen={isOpen}
+      onClose={onClose}
+      title={currentStudent ? `Edit ${currentStudent.name}` : "Add New Student"}
+    >
       <div className="space-y-6">
-        {/* Tab Switcher */}
-        <div className="space-y-6">
+        {/* Only show Tab Switcher if we are NOT in edit mode */}
+        {!currentStudent && (
           <div className="flex p-1.5 bg-slate-50 rounded-2xl border border-slate-100">
             <button
               onClick={() => setMethod("single")}
@@ -45,7 +69,7 @@ export const AddStudentModal = ({
                   : "text-slate-400"
               }`}
             >
-              <UserPlus size={16} /> SINGLE ENTRY
+              <UserPlus size={16} /> SINGLE INVITE
             </button>
             <button
               onClick={() => setMethod("bulk")}
@@ -58,15 +82,25 @@ export const AddStudentModal = ({
               <Users size={16} /> BULK UPLOAD
             </button>
           </div>
-        </div>
+        )}
 
         {/* Conditional Form Rendering */}
         {method === "single" ? (
-          <SingleStudentUploadForm
-            isSubmitting={isSubmitting}
-            formErrors={errors}
-            onStudentSubmit={onSubmit}
-          />
+          <div className="space-y-4">
+            {/* Subtitle for Edit Mode */}
+            {currentStudent && (
+              <p className="text-xs font-bold text-slate-400 uppercase">
+                Updating Teacher ID: {currentStudent.id}
+              </p>
+            )}
+            <SingleStudentUploadForm
+              onSuccess={onClose}
+              isSubmitting={isSubmitting}
+              formErrors={errors}
+              onSubmit={onSubmit}
+              initialData={currentStudent}
+            />
+          </div>
         ) : (
           <BulkStudentUploadForm
             isSubmitting={isSubmitting}

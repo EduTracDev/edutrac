@@ -76,8 +76,6 @@ export const TeacherTable = ({
               <TeacherTableRow
                 key={teacher.id}
                 teacher={teacher}
-                // Wrap the edit call to stop bubbling if needed,
-                // though it's better handled inside TeacherTableRow
                 onEdit={() => openModal("teacher", teacher)}
                 onViewProfile={() => handleViewProfile(teacher.id)}
               />
