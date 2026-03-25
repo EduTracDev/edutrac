@@ -60,24 +60,6 @@ export interface TeacherCSVRow {
   "Assigned Class"?: string;
   assignedClass?: string;
 }
-export interface StudentCSVRow {
-  "First Name"?: string;
-  firstName?: string;
-  "Last Name"?: string;
-  lastName?: string;
-  Gender?: string;
-  gender?: string;
-  "Date of Birth"?: string;
-  dateOfBirth?: string;
-  Class?: string;
-  class?: string;
-  "Parent Email"?: string;
-  parentEmail?: string;
-  "Parent Phone Number"?: string;
-  parentPhoneNumber?: string;
-  "Student ID"?: string;
-  studentId?: string;
-}
 
 export interface ParentCSVRow {
   "Full Name"?: string;
@@ -112,7 +94,57 @@ export interface Teacher {
   assignedClass: string;
   avatarUrl?: string;
   subject: string;
+  gender: "Male" | "Female";
   employmentStatus: EmploymentStatus;
   accountStatus: AccountStatus;
   joinedDate: string;
+}
+
+//STUDENT
+export type EnrollmentStatus =
+  | "Active"
+  | "Suspended"
+  | "Withdrawn"
+  | "Graduated";
+
+export interface Student {
+  id: string;
+  studentId: string; // Admission Number
+  firstName: string;
+  lastName: string;
+  email: string; // Student school email
+  class: string; // e.g., "JSS 1A" or "Grade 10"
+  gender: "Male" | "Female" | "Other";
+  avatarUrl?: string;
+  parentName: string;
+  parentEmail: string;
+  parentPhoneNumber: string;
+  enrollmentStatus: EnrollmentStatus;
+  accountStatus: AccountStatus; // "Joined" | "Pending"
+  admissionDate: string;
+}
+
+export interface StudentCSVRow {
+  "First Name"?: string;
+  firstName?: string;
+  "Last Name"?: string;
+  lastName?: string;
+  Gender?: string;
+  gender: "Male" | "Female" | "Other";
+  "Date of Birth"?: string;
+  dateOfBirth?: string;
+  Class?: string;
+  class?: string;
+  "Parent Email"?: string;
+  parentEmail?: string;
+  "Parent Phone Number"?: string;
+  parentPhoneNumber?: string;
+  "Student ID"?: string;
+  studentId?: string;
+}
+
+export interface StudentFilters {
+  class: string | "All";
+  gender: "Male" | "Female" | "other" | "All";
+  accountStatus: AccountStatus | "All";
 }

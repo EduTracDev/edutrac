@@ -35,7 +35,7 @@ export const AddTeacherModal = ({
   const [method, setMethod] = useState<InviteMethod>("single");
   const { modalData } = useModals();
 
-  // 1. Define the Type Guard using 'unknown'
+  //  Define the Type Guard using 'unknown'
   const isTeacher = (data: unknown): data is Teacher => {
     // Check if data is an object and not null
     const isObject = typeof data === "object" && data !== null;
@@ -43,10 +43,10 @@ export const AddTeacherModal = ({
     // Use 'in' operator to check for a unique Teacher property
     return isObject && "subject" in (data as Record<string, unknown>);
   };
-  // 2. Define currentTeacher safely
+  //  Define currentTeacher safely
   const currentTeacher = isTeacher(modalData) ? modalData : null;
 
-  // 3. Auto-switch to "single" if we are in Edit Mode
+  //  Auto-switch to "single" if we are in Edit Mode
   useEffect(() => {
     if (currentTeacher) {
       setMethod("single");
