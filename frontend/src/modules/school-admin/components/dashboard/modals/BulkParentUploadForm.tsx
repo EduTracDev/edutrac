@@ -44,16 +44,17 @@ export const BulkParentUploadForm = ({
 
   const downloadTemplate = () => {
     const headers = [
-      "Full Name",
-      "Email",
-      "Phone Number",
-      "Relationship",
-      "Address",
+      "fullName",
+      "email",
+      "phoneNumber",
+      "occupation",
+      "address",
+      "emergencyContact",
     ];
     const csvContent =
       headers.join(",") +
       "\n" +
-      "Jane Doe,jane@example.com,08012345678,Mother,123 School Ave";
+      "Jane Doe,jane@example.com,08012345678,Civil Servant,123 School Ave, 08012345678";
     const blob = new Blob([csvContent], { type: "text/csv" });
     const url = URL.createObjectURL(blob);
     const link = document.createElement("a");
@@ -131,17 +132,17 @@ export const BulkParentUploadForm = ({
                   <thead>
                     <tr className="bg-slate-50/50 border-b">
                       <th className="px-4 py-2">Name</th>
-                      <th className="px-4 py-2">Relationship</th>
+                      <th className="px-4 py-2">Email</th>
                     </tr>
                   </thead>
                   <tbody className="divide-y divide-slate-50">
                     {previewData.map((row, i) => (
                       <tr key={i} className="text-slate-600">
                         <td className="px-4 py-2">
-                          {row["Full Name"] || row.fullName || "—"}
+                          {row["fullName"] || row.fullName || "—"}
                         </td>
                         <td className="px-4 py-2">
-                          {row["Relationship"] || row.relationship || "Other"}
+                          {row["email"] || row.email || "—"}
                         </td>
                       </tr>
                     ))}

@@ -5,16 +5,7 @@ import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { Student } from "@/modules/types/dashboard";
 import { StudentFormData, studentBaseSchema } from "@/utils/validation";
-import {
-  Mail,
-  Calendar,
-  GraduationCap,
-  User,
-  Phone,
-  Loader2,
-  Hash,
-  Sparkles,
-} from "lucide-react";
+import { parentData } from "@/modules/constants/dashboard";
 
 interface SingleStudentUploadFormProps {
   initialData?: Student | null;
@@ -43,33 +34,24 @@ export const SingleStudentUploadForm = ({
       lastName: "",
       gender: "Male",
       classId: "",
-      parentEmail: "",
       studentId: "",
+      dateOfBirth: new Date(),
     },
   });
 
   useEffect(() => {
     if (initialData) {
       // 🛠️ Transform: Split full name into first/last for the form
-      const [first, ...last] = (initialData.name || "").split(" ");
+      const [first, ...last] =
+        "{initialData.firstName} $ {initialData.lastName}".split(" ");
 
       reset({
         firstName: first || "",
         lastName: last.join(" ") || "",
-        gender: initialData.gender as any,
-        classId: initialData.class, // Mapping 'class' to 'classId'
-        parentEmail: initialData.parentEmail,
+        gender: initialData.gender,
+        classId: initialData.class,
         studentId: initialData.id,
-        // Ensure dateOfBirth is a Date object if provided
         dateOfBirth: new Date(),
-      });
-    } else {
-      reset({
-        firstName: "",
-        lastName: "",
-        gender: "Male",
-        classId: "",
-        parentEmail: "",
       });
     }
   }, [initialData, reset]);
@@ -130,21 +112,6 @@ export const SingleStudentUploadForm = ({
             <option value="Other">Other</option>
           </select>
         </div>
-      </div>
-
-      {/* 🚀 Parent Contact */}
-      <div className="space-y-1">
-        <label className="text-xs font-bold text-slate-700">Parent Email</label>
-        <input
-          {...register("parentEmail")}
-          placeholder="For SMS & Result Alerts"
-          className="w-full p-3 bg-slate-50 border border-slate-100 rounded-2xl text-sm outline-none"
-        />
-        {getErrorMessage("parentEmail") && (
-          <p className="text-[10px] text-red-500 font-bold">
-            {getErrorMessage("parentEmail")}
-          </p>
-        )}
       </div>
 
       {/* Submit Button */}

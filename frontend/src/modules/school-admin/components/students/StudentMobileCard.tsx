@@ -14,16 +14,20 @@ import {
   XCircle,
 } from "lucide-react";
 
-import { Student, EnrollmentStatus } from "@/modules/types/dashboard";
+import { Student, Parent, EnrollmentStatus } from "@/modules/types/dashboard";
 
 interface Props {
   student: Student;
+  parent?: Parent;
+  relationship?: string;
   onEdit: () => void;
   onViewProfile: (id: string) => void;
 }
 
 export const StudentMobileCard = ({
   student,
+  parent,
+  relationship,
   onEdit,
   onViewProfile,
 }: Props) => {
@@ -114,31 +118,31 @@ export const StudentMobileCard = ({
       </div>
 
       <div className="mt-4 flex justify-between border-t border-slate-50 pt-3">
-        <div>
-          <p className="text-[9px] text-slate-400 font-black uppercase tracking-widest">
-            Class
-          </p>
-          <p className="text-xs font-bold text-slate-700">{student.class}</p>
-        </div>
-        <div className="flex flex-col gap-4">
-          {" "}
-          <div className="text-right">
-            <p className="text-[9px] text-slate-400 font-black uppercase tracking-widest">
-              Parent Email
+        {parent ? (
+          <div className="flex flex-col">
+            <p className="text-sm font-bold text-slate-700 whitespace-nowrap">
+              {parent.fullName}
+              <span className="ml-2 text-[10px] font-medium text-slate-400">
+                ({relationship})
+              </span>
             </p>
-            <p className="text-xs font-bold text-slate-700 truncate max-w-[120px]">
-              {student.parentEmail}
-            </p>
+            <div className="flex justify-between items-center gap-6 mt-2">
+              <p className="text-[11px] text-[#923CF9] font-bold">
+                {parent.email}
+              </p>
+              <p className="text-[11px] text-[#923CF9] font-bold">
+                {parent.phoneNumber}
+              </p>
+              <p className="text-[11px] text-slate-500 font-medium">
+                {parent.emergencyContact}
+              </p>
+            </div>
           </div>
-          <div className="text-right">
-            <p className="text-[9px] text-slate-400 font-black uppercase tracking-widest">
-              Parent Phone No
-            </p>
-            <p className="text-xs font-bold text-slate-700 truncate max-w-[120px]">
-              {student.parentPhoneNumber}
-            </p>
-          </div>
-        </div>
+        ) : (
+          <span className="text-xs text-rose-400 font-medium italic">
+            No parent linked
+          </span>
+        )}
       </div>
 
       {/* BOTTOM ROW: Statuses and Actions */}

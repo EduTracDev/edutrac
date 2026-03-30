@@ -61,21 +61,39 @@ export interface TeacherCSVRow {
   assignedClass?: string;
 }
 
-export interface ParentCSVRow {
-  "Full Name"?: string;
-  fullName?: string;
-  Email?: string;
-  email?: string;
-  "Phone Number"?: string;
-  phoneNumber?: string;
-  Occupation?: string;
-  occupation?: string;
-  Address?: string;
-  address?: string;
-  Relationship?: string;
-  relationship?: string;
-  "Emergency Contact"?: string;
+export interface Parent {
+  id: string;
+  email: string;
+  fullName: string;
+  avatarUrl?: string;
   emergencyContact?: string;
+  employmentStatus: EmploymentStatus;
+  phoneNumber: string;
+  occupation?: string;
+  address?: string;
+  accountStatus: "Joined" | "Pending";
+  studentIds: string[];
+}
+export interface ParentCSVRow {
+  fullName: string;
+  email: string;
+  phoneNumber: string;
+  occupation?: string;
+  address?: string;
+  emergencyContact?: string;
+
+  // 🔗 Linking Fields: These help create the StudentParentLink on import
+  relationship: "Father" | "Mother" | "Guardian" | "Other";
+  isPrimaryContact?: "Yes" | "No" | boolean;
+  canPickup?: "Yes" | "No" | boolean;
+}
+
+export interface ParentFilters {
+  searchQuery?: string;
+  accountStatus: "All" | "Joined" | "Pending";
+  occupation: string;
+  linkedStudentCount: "All" | "0" | "1" | "Multiple";
+  relationship?: string;
 }
 
 export interface CSVError {
@@ -109,42 +127,42 @@ export type EnrollmentStatus =
 
 export interface Student {
   id: string;
-  studentId: string; // Admission Number
+  studentId: string;
   firstName: string;
   lastName: string;
-  email: string; // Student school email
-  class: string; // e.g., "JSS 1A" or "Grade 10"
+  email: string;
+  class: string;
   gender: "Male" | "Female" | "Other";
   avatarUrl?: string;
-  parentName: string;
-  parentEmail: string;
-  parentPhoneNumber: string;
   enrollmentStatus: EnrollmentStatus;
-  accountStatus: AccountStatus; // "Joined" | "Pending"
+  accountStatus: AccountStatus;
   admissionDate: string;
+  parentIds: string[];
 }
 
 export interface StudentCSVRow {
-  "First Name"?: string;
-  firstName?: string;
-  "Last Name"?: string;
-  lastName?: string;
-  Gender?: string;
+  firstName: string;
+  lastName: string;
   gender: "Male" | "Female" | "Other";
-  "Date of Birth"?: string;
   dateOfBirth?: string;
-  Class?: string;
-  class?: string;
-  "Parent Email"?: string;
-  parentEmail?: string;
-  "Parent Phone Number"?: string;
-  parentPhoneNumber?: string;
-  "Student ID"?: string;
+  class: string;
   studentId?: string;
+  email?: string;
 }
 
 export interface StudentFilters {
   class: string | "All";
   gender: "Male" | "Female" | "other" | "All";
   accountStatus: AccountStatus | "All";
+  linkStatus?: "All" | "Unlinked";
+}
+
+export interface StudentParentLink {
+  id: string;
+  studentId: string;
+  parentId: string;
+  relationship: "Father" | "Mother" | "Guardian" | "Sibling" | "Other" | string;
+  isPrimaryContact: boolean;
+  canPickup: boolean;
+  createdAt?: string;
 }

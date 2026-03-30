@@ -55,7 +55,11 @@ export const AddStudentModal = ({
     <Modal
       isOpen={isOpen}
       onClose={onClose}
-      title={currentStudent ? `Edit ${currentStudent.name}` : "Add New Student"}
+      title={
+        currentStudent
+          ? `Edit ${currentStudent.firstName ?? ""} ${currentStudent.lastName ?? ""}`.trim()
+          : "Add New Student"
+      }
     >
       <div className="space-y-6">
         {/* Only show Tab Switcher if we are NOT in edit mode */}

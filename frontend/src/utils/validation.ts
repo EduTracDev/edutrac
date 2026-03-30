@@ -67,12 +67,9 @@ export const studentBaseSchema = yup.object().shape({
     .max(new Date(), "Birth date cannot be in the future")
     .required("DOB is required"),
   classId: yup.string().required("Class assignment is required"),
-  parentEmail: yup
-    .string()
-    .email("Invalid email")
-    .required("Parent email is required for SMS/Alerts"),
-  parentPhoneNumber: phoneSchema.label("Parent Phone Number"),
   studentId: yup.string().optional(),
+  // 🗑️ parentEmail and parentPhoneNumber removed.
+  // These are handled via the link to a Parent object.
 });
 //bulk student
 export const bulkStudentSchema = yup.object().shape({
@@ -114,37 +111,33 @@ export const VALID_TEACHER_ROLES = [
 ] as const;
 
 // single parent
-export const parentBaseSchema = yup.object().shape({
-  fullName: yup
-    .string()
-    .min(3, "Full name is too short")
-    .required("Full name is required"),
+export const parentBaseSchema = yup.object({
+  fullName: yup.string().required(),
   email: emailSchema,
   phoneNumber: phoneSchema,
-
-  relationship: yup
-    .string()
-    .oneOf(
-      ["Father", "Mother", "Guardian", "Other"],
-      "Invalid relationship type",
-    )
-    .required("Relationship to student is required"),
-
-  address: yup
-    .string()
-    .min(5, "Address is too short")
-    .required("Residential address is required"),
-
+  address: yup.string().required(),
   occupation: yup.string().optional(),
   emergencyContact: yup.string().optional(),
 });
 
 // bulk parent
-export const bulkParentSchema = yup.object().shape({
+export const bulkParentSchema = yup.object({
   parents: yup
     .array()
     .of(parentBaseSchema)
-    .required("Parent list cannot be empty"),
+    .min(1, "Parent list cannot be empty")
+    .required("Parent list is required"),
+});
+
+export const studentParentLinkSchema = yup.object({
+  studentId: yup.string().required(),
+  parentId: yup.string().required(),
+  relationship: yup
+    .string()
+    .oneOf(["Father", "Mother", "Guardian", "Other"])
+    .required("Please specify the relationship"),
+  isPrimaryContact: yup.boolean().default(false),
+  canPickup: yup.boolean().default(true),
 });
 
 // SCHOOL OPERATIONS (CLASSES, EXPENSES, ANNOUNCEMENTS)
