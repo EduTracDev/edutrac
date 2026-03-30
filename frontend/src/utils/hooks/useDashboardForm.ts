@@ -316,33 +316,27 @@ export const useDashboardForms = () => {
       });
 
       const validRows = rawRows.filter(
-        (row) => row && (row["First Name"] || row.firstName),
+        (row) => row && (row["firstName"] || row.firstName),
       );
 
       // 2. Mapping Logic - Aligned with StudentFormData
       studentsToValidate = validRows.map((row) => {
-        const dobSource = row["Date of Birth"] || row.dateOfBirth;
+        const dobSource = row["dateOfBirth"] || row.dateOfBirth;
         const parsedDate = dobSource ? new Date(dobSource) : new Date();
 
         // Fix: Check validity and cast to Date to avoid 'any' error
         const finalDate = isNaN(parsedDate.getTime()) ? new Date() : parsedDate;
 
         return {
-          firstName: (row["First Name"] || row.firstName || "").trim(),
-          lastName: (row["Last Name"] || row.lastName || "").trim(),
-          gender: (row["Gender"] ||
+          firstName: (row["firstName"] || row.firstName || "").trim(),
+          lastName: (row["lastName"] || row.lastName || "").trim(),
+          gender: (row["gender"] ||
             row.gender ||
             "Other") as StudentFormData["gender"],
           dateOfBirth: finalDate, // No more 'as any'
-          classId: (row["Class"] || row.class || "").trim(), // Fix: Changed from 'class' to 'classId'
-          parentEmail: (row["Parent Email"] || row.parentEmail || "").trim(),
-          parentPhoneNumber: (
-            row["Parent Phone Number"] ||
-            row.parentPhone ||
-            ""
-          ).trim(), // Fix: Added missing field
+          classId: (row["class"] || row.class || "").trim(), // Fix: Changed from 'class' to 'classId'
           studentId:
-            (row["Student ID"] || row.studentId || "").trim() || undefined,
+            (row["studentId"] || row.studentId || "").trim() || undefined,
         };
       });
 
@@ -371,27 +365,28 @@ export const useDashboardForms = () => {
     }
   };
   const handleParentSubmit = async (data: ParentFormData) => {
-    // No e.preventDefault() or manual field mapping needed.
-
     try {
       setIsSubmitting(true);
-      const loading = toast.loading(`Registering ${data.fullName}...`);
+      const loading = toast.loading(`Enrolling ${data.fullName}...`);
 
-      // 2. Simulated API/Firebase call
-      // In production: await api.parents.create(data);
+      // 🛠️ Data Transformation (If needed for your API)
+      const payload = {
+        ...data,
+        enrolledAt: new Date().toISOString(),
+      };
+
+      // Simulate API Call
       await new Promise((res) => setTimeout(res, 1500));
 
-      toast.success(`${data.fullName} has been registered successfully!`, {
+      toast.success(`${data.fullName} has been enrolled successfully!`, {
         id: loading,
       });
 
-      // 3. Close the modal and reset global modal state
       closeModal();
+      // Logic to refresh your list (e.g., mutate() if using SWR/React Query)
     } catch (err) {
-      // This catches server/network errors.
-      // Validation is already handled by the Form component.
-      console.error("Parent registration failed:", err);
-      toast.error("Could not register parent. Please check your connection.");
+      console.error("Registratiob failed:", err);
+      toast.error("An error occurred during enrollment.");
     } finally {
       setIsSubmitting(false);
     }
@@ -415,17 +410,15 @@ export const useDashboardForms = () => {
 
       // 1. Strict Mapping with header fallbacks
       parentsToValidate = rawRows.map((row) => ({
-        fullName: (row["Full Name"] || row.fullName || "").trim(),
-        email: (row["Email"] || row.email || "").trim(),
-        phoneNumber: (row["Phone Number"] || row.phoneNumber || "").trim(),
-        occupation: (row["Occupation"] || row.occupation || "").trim(),
-        address: (row["Address"] || row.address || "").trim(),
+        fullName: (row["fullName"] || row.fullName || "").trim(),
+        email: (row["email"] || row.email || "").trim(),
+        phoneNumber: (row["phoneNumber"] || row.phoneNumber || "").trim(),
+        occupation: (row["occupation"] || row.occupation || "").trim(),
+        address: (row["address"] || row.address || "").trim(),
         // Cast 'relationship' to ensure it matches your Yup schema's union types
-        relationship: (row["Relationship"] ||
-          row.relationship ||
-          "Other") as ParentFormData["relationship"],
+        relationship: row["relationship"] || row.relationship || "Other",
         emergencyContact: (
-          row["Emergency Contact"] ||
+          row["emergencyContact"] ||
           row.emergencyContact ||
           ""
         ).trim(),

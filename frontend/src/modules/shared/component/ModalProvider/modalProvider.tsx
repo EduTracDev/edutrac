@@ -51,12 +51,13 @@ import React, {
   ReactNode,
   useCallback,
 } from "react";
-import { Teacher, Student } from "@/modules/types/dashboard";
+import { Teacher, Student, Parent } from "@/modules/types/dashboard";
 
 // 1. Define the possible data shapes for modals
 type ModalData =
   | Teacher
   | Student
+  | Parent
   | { title: string; message: string; onConfirm: () => void } // For confirm-action
   | null;
 

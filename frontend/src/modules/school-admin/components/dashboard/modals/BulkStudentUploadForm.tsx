@@ -13,6 +13,7 @@ import {
 
 import { StudentCSVRow, CSVError } from "@/modules/types/dashboard";
 import { CSVErrorList } from "../../CSVErrorList";
+import { parentData } from "@/modules/constants/dashboard";
 
 interface BulkStudentUploadFormProps {
   isSubmitting: boolean;
@@ -58,17 +59,15 @@ export const BulkStudentUploadForm = ({
 
   const downloadCSVTemplate = () => {
     const headers = [
-      "First Name",
-      "Last Name",
-      "Gender",
-      "Date of Birth",
-      "Class",
-      "Parent Email",
-      "Parent Phone Number",
+      "firstName",
+      "lastName",
+      "gender",
+      "dateOfBirth",
+      "class",
+      "email",
     ];
     const sampleData = [
-      "Musa,Adamu,Male,2015-05-20,Primary 4,adamuparent@gmail.com,08023423422",
-      "Chinedu,Okonkwo,Female,2016-08-12,Primary 3,okonkwo.fam@yahoo.com,09123458766",
+      "Musa,Adamu,Male,2015-05-20,Primary 4,musa.a@school.com",
     ];
 
     const csvContent = [headers.join(","), ...sampleData].join("\n");
@@ -82,6 +81,15 @@ export const BulkStudentUploadForm = ({
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
+  };
+
+  const getParents = (parentIds?: string) => {
+    if (!parentIds) return [];
+
+    return parentIds
+      .split(",")
+      .map((id) => parentData.find((p) => p.id.trim() === id.trim()))
+      .filter(Boolean);
   };
 
   return (
@@ -168,7 +176,7 @@ export const BulkStudentUploadForm = ({
                       <th className="px-4 py-3">Last Name</th>
                       <th className="px-4 py-3">Gender</th>
                       <th className="px-4 py-3">Class</th>
-                      <th className="px-4 py-3">Parent Contact</th>
+                      <th className="px-4 py-3">Date of Birth</th>
                     </tr>
                   </thead>
                   <tbody className="divide-y divide-slate-50">
@@ -178,19 +186,19 @@ export const BulkStudentUploadForm = ({
                         className="text-slate-600 hover:bg-slate-50/50 transition-colors"
                       >
                         <td className="px-4 py-3 font-medium">
-                          {row["First Name"] || row.firstName || "—"}
+                          {row["firstName"] || row.firstName || "—"}
                         </td>
                         <td className="px-4 py-3 font-medium">
-                          {row["Last Name"] || row.lastName || "—"}
+                          {row["lastName"] || row.lastName || "—"}
                         </td>
                         <td className="px-4 py-3">
-                          {row["Gender"] || row.gender || "—"}
+                          {row["gender"] || row.gender || "—"}
                         </td>
                         <td className="px-4 py-3">
-                          {row["Class"] || row.class || "—"}
+                          {row["class"] || row.class || "—"}
                         </td>
-                        <td className="px-4 py-3 text-slate-400 italic">
-                          {row["Parent Email"] || row.parentEmail || "—"}
+                        <td className="px-4 py-3">
+                          {row["dateOfBirth"] || row.dateOfBirth || "—"}
                         </td>
                       </tr>
                     ))}

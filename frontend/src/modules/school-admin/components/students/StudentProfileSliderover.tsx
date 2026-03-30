@@ -129,7 +129,7 @@ export const StudentProfileSlideover = ({
 
             {/* Detailed Info List */}
             <div className="grid grid-cols-2 gap-y-6 gap-x-2">
-              <InfoRow
+              {/* <InfoRow
                 icon={<Mail size={18} />}
                 label="Parent Email"
                 value={student.parentEmail}
@@ -138,7 +138,7 @@ export const StudentProfileSlideover = ({
                 icon={<Phone size={18} />}
                 label="Parent Phone"
                 value={student.parentPhoneNumber}
-              />
+              /> */}
               <InfoRow
                 icon={<User size={18} />}
                 label="Gender"

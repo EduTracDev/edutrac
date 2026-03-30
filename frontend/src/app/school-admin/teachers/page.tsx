@@ -36,7 +36,7 @@ export default function Page() {
   };
 
   const filteredTeachers = useMemo(() => {
-    console.log("Filtering logic running..."); // Good for debugging
+    console.log("Filtering logic running...");
 
     return teacherData.filter((t) => {
       const matchesSearch =

@@ -10,18 +10,29 @@ import {
   Mail,
   GraduationCap,
   XCircle,
+  UserPlus,
 } from "lucide-react";
 import { toast } from "react-hot-toast";
-import { Student, EnrollmentStatus } from "@/modules/types/dashboard";
+import { Student, Parent, EnrollmentStatus } from "@/modules/types/dashboard";
 import Image from "next/image";
 
 interface Props {
   student: Student;
+  parent?: Parent;
+  relationship?: string;
   onViewProfile: (id: string) => void;
   onEdit: () => void;
+  onQuickLink: (student: Student) => void;
 }
 
-export const StudentTableRow = ({ student, onViewProfile, onEdit }: Props) => {
+export const StudentTableRow = ({
+  student,
+  parent,
+  relationship,
+  onViewProfile,
+  onEdit,
+  onQuickLink,
+}: Props) => {
   const [imageError, setImageError] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
   const [isResending, setIsResending] = useState(false);
@@ -118,13 +129,47 @@ export const StudentTableRow = ({ student, onViewProfile, onEdit }: Props) => {
       <td className="px-6 py-4 text-sm font-bold text-slate-600 whitespace-nowrap">
         {student.class}
       </td>
-
-      {/* Parent Contact */}
-      <td className="px-6 py-4 text-sm font-bold text-slate-600">
-        {student.parentEmail}
-      </td>
-      <td className="px-6 py-4 text-sm font-bold text-slate-600 whitespace-nowrap">
-        {student.parentPhoneNumber}
+      {/*  Dynamic Parent Contact Column */}
+      <td className="px-6 py-4">
+        {parent ? (
+          <div className="flex flex-col">
+            <p className="text-sm font-bold text-slate-700 whitespace-nowrap">
+              {parent.fullName}
+              <span className="ml-2 text-[10px] font-medium text-slate-400">
+                ({relationship})
+              </span>
+            </p>
+            <div className="flex items-center gap-2 mt-0.5">
+              <p className="text-[11px] text-[#923CF9] font-bold">
+                {parent.email}
+              </p>
+              <div>
+                <p className="text-[11px] text-[#923CF9] font-bold">
+                  {parent.phoneNumber}
+                </p>
+                <p className="text-[11px] text-slate-500 font-medium">
+                  {parent.emergencyContact}
+                </p>
+              </div>
+            </div>
+          </div>
+        ) : (
+          <button
+            onClick={(e) => {
+              e.stopPropagation();
+              onQuickLink(student); // Pass this prop down from the Table
+            }}
+            className="group flex items-center gap-2 px-3 py-2 bg-[#923CF9]/5 border border-[#923CF9]/20 rounded-xl hover:bg-[#923CF9] transition-all"
+          >
+            <UserPlus
+              size={14}
+              className="text-[#923CF9] group-hover:text-white"
+            />
+            <span className="text-[10px] font-black text-[#923CF9] group-hover:text-white uppercase tracking-tight">
+              Quick Link Parent
+            </span>
+          </button>
+        )}
       </td>
       {/* Enrollment Status Pill */}
       <td className="px-6 py-4">

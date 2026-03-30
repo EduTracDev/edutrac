@@ -4,6 +4,8 @@ import {
   ActivityItem,
   Teacher,
   Student,
+  Parent,
+  StudentParentLink,
 } from "../types/dashboard";
 export const schoolData = {
   name: "Lincoln High School",
@@ -150,13 +152,11 @@ export const studentData: Student[] = [
     email: "a.ciroma@edutrac.com",
     class: "SS 3 Science",
     gender: "Male",
-    parentName: "Mr. Ciroma",
     studentId: "LIN001",
-    parentEmail: "p.ciroma@mail.com",
-    parentPhoneNumber: "+234 801 234 5678",
     enrollmentStatus: "Active",
     accountStatus: "Joined",
     admissionDate: "2023-09-12",
+    parentIds: ["PAR-001"],
   },
   {
     id: "STU-2026-002",
@@ -166,12 +166,10 @@ export const studentData: Student[] = [
     email: "c.okoro@edutrac.com",
     class: "SS 3 Art",
     gender: "Female",
-    parentName: "Mrs. Okoro",
-    parentEmail: "okoro.fam@mail.com",
-    parentPhoneNumber: "+234 802 345 6789",
     enrollmentStatus: "Active",
-    accountStatus: "Pending", // 👈 This will trigger our "Resend Invite" UI
+    accountStatus: "Pending",
     admissionDate: "2023-09-15",
+    parentIds: ["PAR-001"],
   },
   {
     id: "STU-2026-003",
@@ -183,12 +181,10 @@ export const studentData: Student[] = [
     avatarUrl:
       "https://robohash.org/2b5b57aa71aea0118bc30f2c739c8487?set=set4&bgset=&size=400x400",
     gender: "Female",
-    parentName: "Alhaji Abubakar",
-    parentEmail: "abubakar.h@mail.com",
-    parentPhoneNumber: "+234 803 456 7890",
     enrollmentStatus: "Suspended",
     accountStatus: "Joined",
     admissionDate: "2025-01-05",
+    parentIds: ["PAR-003"],
   },
   {
     id: "STU-2026-004",
@@ -198,11 +194,102 @@ export const studentData: Student[] = [
     email: "o.adeyemi@edutrac.com",
     class: "SS 2 Commercial",
     gender: "Male",
-    parentName: "Mr. Adeyemi",
-    parentEmail: "adeyemi.o@mail.com",
-    parentPhoneNumber: "+234 805 567 8901",
     enrollmentStatus: "Active",
     accountStatus: "Pending",
     admissionDate: "2024-09-10",
+    parentIds: ["PAR-004"],
+  },
+  {
+    id: "STU-2026-005",
+    studentId: "LIN005",
+    firstName: "Jos",
+    lastName: " Ami",
+    email: "j.adeyemi@edutrac.com",
+    class: "SS 1 Commercial",
+    gender: "Male",
+    enrollmentStatus: "Active",
+    accountStatus: "Pending",
+    admissionDate: "2024-09-10",
+    parentIds: ["PAR-002"],
+  },
+];
+
+export const parentData: Parent[] = [
+  {
+    id: "PAR-001",
+    fullName: "Mr. Chukwuma Okoro",
+    email: "okoro@yahoo.com",
+    phoneNumber: "08034567891",
+    emergencyContact: "08099887766",
+    avatarUrl: "https://robohash.org/okoro?set=set4",
+    address: "12 Ikeja Street Lagos",
+    occupation: "Engineer",
+    employmentStatus: "Active",
+    accountStatus: "Joined",
+    studentIds: ["STU-2026-001", "STU-2026-002"], // Testing: Multiple
+  },
+  {
+    id: "PAR-002",
+    fullName: "Mrs. Bisola Ade",
+    email: "ade@gmail.com",
+    phoneNumber: "08122334455",
+    emergencyContact: "08199887766",
+    avatarUrl: "https://robohash.org/ade?set=set4",
+    address: "45 Yaba Road Lagos",
+    occupation: "Teacher",
+    accountStatus: "Pending",
+    employmentStatus: "Inactive",
+    studentIds: ["STU-2026-002"], // Testing: Single
+  },
+  {
+    id: "PAR-005", // New entry for testing "None" filter
+    fullName: "Mr. Babatunde Lawal",
+    email: "lawal.b@outlook.com",
+    phoneNumber: "09011223344",
+    emergencyContact: "09011223355",
+    address: "7 Surulere Way, Lagos",
+    occupation: "Legal Counsel",
+    accountStatus: "Pending",
+    employmentStatus: "Active",
+    studentIds: [], // Testing: 0 Wards
+  },
+];
+
+export const studentParentLink: StudentParentLink[] = [
+  {
+    id: "LINK-001",
+    studentId: "STU-2026-001", // Fixed to match studentData
+    parentId: "PAR-001",
+    relationship: "Father",
+    isPrimaryContact: true,
+    canPickup: true,
+    createdAt: "2026-03-27",
+  },
+  {
+    id: "LINK-002",
+    studentId: "STU-2026-002", // Fixed to match studentData
+    parentId: "PAR-001",
+    relationship: "Father",
+    isPrimaryContact: false,
+    canPickup: true,
+    createdAt: "2026-03-27",
+  },
+  {
+    id: "LINK-003",
+    studentId: "STU-2026-003",
+    parentId: "PAR-003",
+    relationship: "Father",
+    isPrimaryContact: true,
+    canPickup: true,
+    createdAt: "2026-03-28",
+  },
+  {
+    id: "LINK-004",
+    studentId: "STU-2026-005",
+    parentId: "PAR-002",
+    relationship: "Mother",
+    isPrimaryContact: true,
+    canPickup: true,
+    createdAt: "2026-03-28",
   },
 ];

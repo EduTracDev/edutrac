@@ -9,7 +9,6 @@ interface SharedPaginationProps {
   currentPage: number;
   onPageChange: (page: number) => void;
   onItemsPerPageChange: (count: number) => void;
-  /* Add a 'label' prop to customize the screen reader context */
   entityName: string;
 }
 

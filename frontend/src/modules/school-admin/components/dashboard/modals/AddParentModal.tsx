@@ -1,18 +1,20 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Modal from "../Modal";
 import { UserPlus, Users } from "lucide-react";
 import { SingleParentUploadForm } from "./SingleParentUploadForm";
 import { BulkParentUploadForm } from "./BulkParentUploadForm";
-import { CSVError } from "@/modules/types/dashboard";
+import { CSVError, Parent } from "@/modules/types/dashboard";
+import { ParentFormData } from "@/utils/validation";
+import { useModals } from "@/modules/shared/component/ModalProvider/modalProvider";
 
 type EntryMethod = "single" | "bulk";
 
 interface AddParentModalProps {
   isOpen: boolean;
   onClose: () => void;
-  onSubmit: (e: React.FormEvent<HTMLFormElement>) => Promise<void>;
+  onSubmit: (data: ParentFormData) => Promise<void>;
   onBulkSubmit: (file: File) => Promise<void>;
   errors: { [key: string]: string };
   isSubmitting: boolean;
@@ -31,6 +33,25 @@ export const AddParentModal = ({
   clearErrors,
 }: AddParentModalProps) => {
   const [method, setMethod] = useState<EntryMethod>("single");
+  const { modalData } = useModals();
+
+  //  Define the Type Guard using 'unknown'
+  const isParent = (data: unknown): data is Parent => {
+    // Check if data is an object and not null
+    const isObject = typeof data === "object" && data !== null;
+
+    // Use 'in' operator to check for a unique Teacher property
+    return isObject && "subject" in (data as Record<string, unknown>);
+  };
+  //  Define currentTeacher safely
+  const currentParent = isParent(modalData) ? modalData : null;
+
+  //  Auto-switch to "single" if we are in Edit Mode
+  useEffect(() => {
+    if (currentParent) {
+      setMethod("single");
+    }
+  }, [currentParent]);
 
   return (
     <Modal isOpen={isOpen} onClose={onClose} title="Register Parents">
@@ -61,9 +82,11 @@ export const AddParentModal = ({
 
         {method === "single" ? (
           <SingleParentUploadForm
+            onSuccess={onClose}
             isSubmitting={isSubmitting}
             formErrors={errors}
-            onParentSubmit={onSubmit}
+            onSubmit={onSubmit}
+            initialData={currentParent}
           />
         ) : (
           <BulkParentUploadForm
