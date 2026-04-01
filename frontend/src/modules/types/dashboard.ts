@@ -166,3 +166,12 @@ export interface StudentParentLink {
   canPickup: boolean;
   createdAt?: string;
 }
+
+export type AttendanceStatus = "present" | "absent" | "late" | "unmarked";
+
+export interface AttendanceRecord {
+  studentId: string;
+  status: AttendanceStatus;
+  timestamp: string;
+  markedBy: string; // Teacher ID
+}

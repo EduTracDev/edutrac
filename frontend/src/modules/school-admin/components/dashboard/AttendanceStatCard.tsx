@@ -1,5 +1,6 @@
-import React from "react";
+import React, { useMemo } from "react";
 import { Users } from "lucide-react";
+import { mockAttendanceData } from "@/modules/constants/dashboard";
 
 interface AttendanceStatCardProps {
   present: number;
@@ -84,3 +85,15 @@ export const AttendanceStatCard = ({
     </div>
   );
 };
+
+// const stats = useMemo(() => {
+//   const total = mockAttendanceData.length;
+//   const present = mockAttendanceData.filter(d => d.status === "present").length;
+//   const absent = mockAttendanceData.filter(d => d.status === "absent").length;
+//   const late = mockAttendanceData.filter(d => d.status === "late").length;
+
+//   return {
+//     percentage: ((present + late) / total * 100).toFixed(0) + "%",
+//     absentCount: absent
+//   };
+// }, [mockAttendanceData]);
