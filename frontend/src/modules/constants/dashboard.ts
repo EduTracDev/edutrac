@@ -6,6 +6,7 @@ import {
   Student,
   Parent,
   StudentParentLink,
+  AttendanceStatus,
 } from "../types/dashboard";
 export const schoolData = {
   name: "Lincoln High School",
@@ -277,7 +278,7 @@ export const studentParentLink: StudentParentLink[] = [
   {
     id: "LINK-003",
     studentId: "STU-2026-003",
-    parentId: "PAR-003",
+    parentId: "PAR-002",
     relationship: "Father",
     isPrimaryContact: true,
     canPickup: true,
@@ -291,5 +292,42 @@ export const studentParentLink: StudentParentLink[] = [
     isPrimaryContact: true,
     canPickup: true,
     createdAt: "2026-03-28",
+  },
+];
+
+export interface DailyAttendance {
+  studentId: string;
+  status: AttendanceStatus;
+  remarks?: string; // Optional: "Medical reason", "Travel", etc.
+  markedAt: string;
+}
+
+export const mockAttendanceData: DailyAttendance[] = [
+  {
+    studentId: "STU-2026-001", // Adewale Benson
+    status: "present",
+    markedAt: "2026-04-01T08:15:00Z",
+  },
+  {
+    studentId: "STU-2026-002", // Chinyere Okoro
+    status: "late",
+    remarks: "Heavy traffic at Lekki toll gate",
+    markedAt: "2026-04-01T08:45:00Z",
+  },
+  {
+    studentId: "STU-2026-003", // Fatimah Abubakar
+    status: "absent",
+    remarks: "Reported ill by parent",
+    markedAt: "2026-04-01T09:00:00Z",
+  },
+  {
+    studentId: "STU-2026-004", // Joshua Adeyemi
+    status: "present",
+    markedAt: "2026-04-01T08:10:00Z",
+  },
+  {
+    studentId: "STU-2026-005", // Jos Ami
+    status: "unmarked", // Testing the 'not yet marked' state
+    markedAt: "",
   },
 ];
