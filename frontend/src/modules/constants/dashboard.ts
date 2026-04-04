@@ -7,6 +7,7 @@ import {
   Parent,
   StudentParentLink,
   AttendanceStatus,
+  StudentResult,
 } from "../types/dashboard";
 export const schoolData = {
   name: "Lincoln High School",
@@ -154,6 +155,7 @@ export const studentData: Student[] = [
     class: "SS 3 Science",
     gender: "Male",
     studentId: "LIN001",
+    dateOfBirth: "2005-06-15",
     enrollmentStatus: "Active",
     accountStatus: "Joined",
     admissionDate: "2023-09-12",
@@ -166,6 +168,7 @@ export const studentData: Student[] = [
     lastName: "Okoro",
     email: "c.okoro@edutrac.com",
     class: "SS 3 Art",
+    dateOfBirth: "2005-08-20",
     gender: "Female",
     enrollmentStatus: "Active",
     accountStatus: "Pending",
@@ -185,6 +188,7 @@ export const studentData: Student[] = [
     enrollmentStatus: "Suspended",
     accountStatus: "Joined",
     admissionDate: "2025-01-05",
+    dateOfBirth: "2010-02-10",
     parentIds: ["PAR-003"],
   },
   {
@@ -198,6 +202,7 @@ export const studentData: Student[] = [
     enrollmentStatus: "Active",
     accountStatus: "Pending",
     admissionDate: "2024-09-10",
+    dateOfBirth: "2006-11-25",
     parentIds: ["PAR-004"],
   },
   {
@@ -211,6 +216,7 @@ export const studentData: Student[] = [
     enrollmentStatus: "Active",
     accountStatus: "Pending",
     admissionDate: "2024-09-10",
+    dateOfBirth: "2007-01-15",
     parentIds: ["PAR-002"],
   },
 ];
@@ -329,5 +335,100 @@ export const mockAttendanceData: DailyAttendance[] = [
     studentId: "STU-2026-005", // Jos Ami
     status: "unmarked", // Testing the 'not yet marked' state
     markedAt: "",
+  },
+];
+
+export const mockResults: StudentResult[] = [
+  {
+    id: "res-001",
+    studentId: "STU-2026-001",
+    studentName: "Adewale Johnson",
+    class: "SS3-Science",
+    subjectId: "MATH-101",
+    subjectName: "Mathematics",
+    ca1: 18,
+    ca2: 15,
+    exam: 52,
+    total: 85,
+    grade: "A",
+    remark: "Excellent",
+    term: "Second",
+    session: "2025/2026",
+    status: "Pending",
+    updatedAt: "2026-04-01T10:00:00Z",
+  },
+  {
+    id: "res-002",
+    studentId: "STU-2026-002",
+    studentName: "Chidi Okafor",
+    class: "SS3-Science",
+    subjectId: "MATH-101",
+    subjectName: "Mathematics",
+    ca1: 12,
+    ca2: 10,
+    exam: 45,
+    total: 67,
+    grade: "B",
+    remark: "Very Good",
+    term: "Second",
+    session: "2025/2026",
+    status: "Pending",
+    updatedAt: "2026-04-02T08:30:00Z",
+  },
+  {
+    id: "res-003",
+    studentId: "STU-2026-003",
+    studentName: "Fatima Musa",
+    class: "SS3-Science",
+    subjectId: "MATH-101",
+    subjectName: "Mathematics",
+    ca1: 20, // Suspiciously high
+    ca2: 20, // Suspiciously high
+    exam: 60, // Perfect score
+    total: 100,
+    grade: "A",
+    remark: "Distinction",
+    term: "Second",
+    session: "2025/2026",
+    status: "Flagged", // Admin needs to double check this
+    adminComment:
+      "Please verify if these scores are accurate. Too many perfect marks.",
+    updatedAt: "2026-03-30T14:20:00Z",
+  },
+  {
+    id: "res-004",
+    studentId: "STU-2026-004",
+    studentName: "Blessing Ekong",
+    class: "SS2-Commercial",
+    subjectId: "MATH-101",
+    subjectName: "Mathematics",
+    ca1: 8,
+    ca2: 7,
+    exam: 25,
+    total: 40,
+    grade: "E",
+    remark: "Pass",
+    term: "Second",
+    session: "2025/2026",
+    status: "Pending",
+    updatedAt: "2026-04-03T09:15:00Z",
+  },
+  {
+    id: "res-005",
+    studentId: "STU-2026-005",
+    studentName: "Samuel Zhang",
+    class: "SS1-Art",
+    subjectId: "MATH-101",
+    subjectName: "Mathematics",
+    ca1: 14,
+    ca2: 12,
+    exam: 30,
+    total: 56,
+    grade: "C",
+    remark: "Credit",
+    term: "Second",
+    session: "2025/2026",
+    status: "Approved", // Already processed
+    updatedAt: "2026-03-28T11:00:00Z",
   },
 ];

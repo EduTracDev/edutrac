@@ -186,14 +186,14 @@ export default function Page() {
               icon={Wallet}
               onClick={() => setActiveModal("expenses")}
             />
-            <QuickActionCard
+            {/* <QuickActionCard
               title="Approve Results"
               icon={CheckCircle2}
               onClick={() => {
-                toast.loading("Loading result portal...");
-                router.push("/school-admin/results/approve");
+                toast.loading("Opening Approval Portal...");
+                router.push("/school-admin/results/");
               }}
-            />
+            /> */}
           </div>
         </section>
         {/* Section 2: Key Metrics Grid */}

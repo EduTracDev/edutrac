@@ -1,6 +1,5 @@
-// app/school-admin/students/[id]/page.tsx
 "use client";
-import { use } from "react";
+import { use, useState } from "react";
 import AdminLayout from "@/modules/school-admin/layout/AdminLayout";
 import {
   studentData,
@@ -8,8 +7,18 @@ import {
   parentData,
 } from "@/modules/constants/dashboard";
 import { ArrowLeft, Mail, Phone, Calendar, ShieldCheck } from "lucide-react";
+
 import Link from "next/link";
-import { notFound } from "next/navigation";
+import { notFound, useRouter } from "next/navigation";
+import { EditStudentProfileModal } from "@/modules/school-admin/components/dashboard/modals/EditStudentProfileModal";
+
+interface EditStudentFormValues {
+  firstName: string;
+  lastName: string;
+  gender: "Male" | "Female" | "Other";
+  dateOfBirth: string;
+  classId: string;
+}
 
 export default function StudentProfilePage({
   params,
@@ -17,11 +26,34 @@ export default function StudentProfilePage({
   params: Promise<{ id: string }>;
 }) {
   const { id } = use(params);
-
-  // 1. Fetch Data
+  const router = useRouter(); // We'll use this to "refresh" the page
+  // 1. Fetch Data (Currently from constants)
   const student = studentData.find((s) => s.id === id);
   const link = studentParentLink.find((l) => l.studentId === id);
   const parent = parentData.find((p) => p.id === link?.parentId);
+
+  const [isEditModalOpen, setIsEditModalOpen] = useState(false);
+
+  // 2. Handle Update Logic
+  const handleUpdateStudent = async (formData: EditStudentFormValues) => {
+    try {
+      console.log("Updating student ID:", id, "with data:", formData);
+
+      // Simulate an API call delay
+      await new Promise((resolve) => setTimeout(resolve, 1000));
+
+      // Since we are using constants, data won't actually change
+      // unless you move studentData into a State or use a real Database/API.
+      // For now, we simulate a "refresh":
+      router.refresh();
+
+      // 3. Close the modal
+      setIsEditModalOpen(false);
+      alert("Profile updated successfully (Mock)!");
+    } catch (error) {
+      console.error("Failed to update:", error);
+    }
+  };
 
   if (!student) return notFound();
 
@@ -59,7 +91,10 @@ export default function StudentProfilePage({
           </div>
 
           <div className="flex gap-3">
-            <button className="px-6 py-3 bg-[#923CF9] text-white rounded-2xl font-black text-sm shadow-lg shadow-[#923CF9]/20 hover:-translate-y-0.5 transition-all">
+            <button
+              onClick={() => setIsEditModalOpen(true)}
+              className="px-6 py-3 bg-[#923CF9] text-white rounded-2xl font-black text-sm shadow-lg shadow-[#923CF9]/20 hover:-translate-y-0.5 transition-all"
+            >
               Edit Profile
             </button>
           </div>
@@ -129,6 +164,13 @@ export default function StudentProfilePage({
               </p>
             )}
           </section>
+          {/* The Modal */}
+          <EditStudentProfileModal
+            isOpen={isEditModalOpen}
+            onClose={() => setIsEditModalOpen(false)}
+            initialData={student}
+            onSubmit={handleUpdateStudent}
+          />
         </div>
       </div>
     </AdminLayout>
