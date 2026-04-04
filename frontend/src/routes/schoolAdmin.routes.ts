@@ -9,5 +9,5 @@ export enum SchoolAdminRoutes {
   profile = `${root}/profile`,
   attendance = `${root}/attendance`,
   announcements = `${root}/announcements`,
-  assignments = `${root}/assignments`,
+  results = `${root}/results`,
 }

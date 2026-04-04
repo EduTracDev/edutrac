@@ -131,13 +131,14 @@ export interface Student {
   firstName: string;
   lastName: string;
   email: string;
-  class: string;
+  class?: string;
   gender: "Male" | "Female" | "Other";
   avatarUrl?: string;
   enrollmentStatus: EnrollmentStatus;
   accountStatus: AccountStatus;
   admissionDate: string;
   parentIds: string[];
+  dateOfBirth?: string;
 }
 
 export interface StudentCSVRow {
@@ -174,4 +175,34 @@ export interface AttendanceRecord {
   status: AttendanceStatus;
   timestamp: string;
   markedBy: string; // Teacher ID
+}
+
+export type ResultStatus = "Draft" | "Pending" | "Approved" | "Flagged";
+
+export interface StudentResult {
+  id: string; // Unique ID for this specific result record
+  studentId: string; // Reference to the student
+  studentName: string; // Flattened for easy display in tables
+  class: string; // e.g., "SS3-Science"
+  subjectId: string; // e.g., "MATH-101"
+  subjectName: string; // e.g., "Mathematics"
+
+  // Assessment Breakdown
+  ca1: number; // Continuous Assessment 1 (e.g., max 20)
+  ca2: number; // Continuous Assessment 2 (e.g., max 20)
+  exam: number; // Final Exam (e.g., max 60)
+  total: number; // ca1 + ca2 + exam (max 100)
+
+  // Grading & Ranking
+  grade: "A" | "B" | "C" | "D" | "E" | "F";
+  remark: string; // e.g., "Excellent", "Credit"
+  position?: number; // Rank in class (optional until all are processed)
+
+  // Workflow Metadata
+  term: "First" | "Second" | "Third";
+  session: string; // e.g., "2025/2026"
+  status: ResultStatus;
+  teacherComment?: string;
+  adminComment?: string; // For flagging reasons
+  updatedAt: Date | string;
 }

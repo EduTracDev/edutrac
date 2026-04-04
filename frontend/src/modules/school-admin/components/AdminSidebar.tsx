@@ -35,8 +35,8 @@ export default function AdminSidebar({ sidebarOpen, setSidebarOpen }: Props) {
     { name: "Students", href: SchoolAdminRoutes.students, icon: Users },
     { name: "Classes", href: SchoolAdminRoutes.classes, icon: BookOpen },
     {
-      name: "Assignments",
-      href: SchoolAdminRoutes.assignments,
+      name: "Results",
+      href: SchoolAdminRoutes.results,
       icon: FileText,
     },
     { name: "Profile", href: SchoolAdminRoutes.profile, icon: Users },

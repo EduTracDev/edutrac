@@ -77,7 +77,9 @@ export default function Page() {
   }, [searchQuery, filters]);
 
   const availableClasses = useMemo(() => {
-    const classes = studentData.map((s) => s.class);
+    const classes = studentData
+      .map((s) => s.class)
+      .filter((id): id is string => !!id);
     return Array.from(new Set(classes)).sort();
   }, []);
 

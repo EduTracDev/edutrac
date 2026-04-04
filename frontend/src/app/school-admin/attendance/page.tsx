@@ -20,7 +20,6 @@ interface ClassRegisterStatus {
   submissionTime?: string;
 }
 
-// 2. This is a Sub-component (not the default export)
 const AttendanceStatusItem = ({ cls }: { cls: ClassRegisterStatus }) => (
   <div className="flex items-center justify-between p-4 bg-slate-50 rounded-2xl border border-slate-100">
     <div className="flex items-center gap-4">
@@ -54,9 +53,7 @@ const AttendanceStatusItem = ({ cls }: { cls: ClassRegisterStatus }) => (
   </div>
 );
 
-// 3. THIS MUST BE THE DEFAULT EXPORT
 export default function Page() {
-  // Mock data for testing
   const classes: ClassRegisterStatus[] = [
     {
       id: "1",
