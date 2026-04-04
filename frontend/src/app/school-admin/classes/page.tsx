@@ -1,8 +1,7 @@
 "use client";
 import { useState, useMemo, useEffect } from "react";
 import AdminLayout from "@/modules/school-admin/layout/AdminLayout";
-import { SubjectTeacherList } from "@/modules/school-admin/components/classes/SubjectTeacherList";
-import { teacherData, studentData } from "@/modules/constants/dashboard";
+import { studentData } from "@/modules/constants/dashboard";
 import { StudentTable } from "@/modules/school-admin/components/students/StudentTable";
 import { ClassFilterBar } from "@/modules/school-admin/components/classes/ClassFilterBar";
 import { ClassCardSkeleton } from "@/modules/school-admin/components/classes/ClassCardSkeleton";
@@ -33,7 +32,11 @@ export default function Page() {
   // Get unique classes and filter them for the Directory view
   const filteredClasses = useMemo(() => {
     const allUniqueClasses = Array.from(
-      new Set(studentData.map((s) => s.class)),
+      new Set(
+        studentData
+          .map((s) => s.class)
+          .filter((className): className is string => Boolean(className)),
+      ),
     );
 
     return allUniqueClasses.filter((className) => {
@@ -70,6 +73,17 @@ export default function Page() {
           activeCategory={category}
           onCategoryChange={setCategory}
         />
+
+        <div className="mb-6">
+          <input
+            type="search"
+            value={searchQuery}
+            onChange={(event) => setSearchQuery(event.target.value)}
+            placeholder="Search classes"
+            className="w-full rounded-2xl border border-slate-200 bg-white px-4 py-3 text-sm text-slate-700 outline-none transition focus:border-[#923CF9] focus:ring-2 focus:ring-[#923CF9]/10"
+          />
+        </div>
+
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {isLoading
             ? // Render 6 skeleton cards while "loading"

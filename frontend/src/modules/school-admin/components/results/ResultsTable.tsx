@@ -1,32 +1,24 @@
 "use client";
-import { useState } from "react";
 import ResultTableRow from "./ResultTableRow";
 import ResultMobileCard from "./ResultMobileCard";
 import { StudentResult } from "@/modules/types/dashboard";
 
+interface ResultsTableProps {
+  results: StudentResult[];
+  selectedIds: string[];
+  onSelect: (id: string) => void;
+  onSelectAll: () => void;
+  onApprove: (id: string) => void;
+  onFlag: (id: string) => void;
+}
 export const ResultsTable = ({
   results,
-  onFlag,
+  selectedIds,
+  onSelect,
+  onSelectAll,
   onApprove,
-}: {
-  results: StudentResult[];
-  onFlag: (id: string) => void;
-  onApprove: (id: string) => void;
-}) => {
-  const [selectedIds, setSelectedIds] = useState<string[]>([]);
-
-  const toggleSelect = (id: string) => {
-    setSelectedIds((prev) =>
-      prev.includes(id) ? prev.filter((i) => i !== id) : [...prev, id],
-    );
-  };
-
-  const toggleSelectAll = () => {
-    setSelectedIds(
-      selectedIds.length === results.length ? [] : results.map((r) => r.id),
-    );
-  };
-
+  onFlag,
+}: ResultsTableProps) => {
   return (
     <div>
       {/* Desktop View */}
@@ -37,7 +29,7 @@ export const ResultsTable = ({
               <th className="p-4 w-10">
                 <input
                   type="checkbox"
-                  onChange={toggleSelectAll}
+                  onChange={onSelectAll}
                   checked={selectedIds.length === results.length}
                 />
               </th>
@@ -71,7 +63,7 @@ export const ResultsTable = ({
                 key={res.id}
                 result={res}
                 isSelected={selectedIds.includes(res.id)}
-                onSelect={toggleSelect}
+                onSelect={onSelectAll}
                 onFlag={onFlag}
                 onApprove={onApprove}
               />
@@ -87,7 +79,7 @@ export const ResultsTable = ({
             key={res.id}
             result={res}
             isSelected={selectedIds.includes(res.id)}
-            onSelect={toggleSelect}
+            onSelect={onSelectAll}
             onFlag={onFlag}
             onApprove={onApprove}
           />

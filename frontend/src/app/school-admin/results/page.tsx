@@ -1,15 +1,44 @@
 "use client";
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import AdminLayout from "@/modules/school-admin/layout/AdminLayout";
 import { ResultsTable } from "@/modules/school-admin/components/results/ResultsTable";
 import { mockResults } from "@/modules/constants/dashboard";
 import { SharedPagination } from "@/modules/shared/Pagination";
 import { toast } from "react-hot-toast";
 import { FlagResultModal } from "@/modules/school-admin/components/dashboard/modals/FlagResultModal";
+import { ResultsActionBar } from "@/modules/school-admin/components/results/ResultsActionBar";
+import { ResultFilterState } from "@/modules/school-admin/components/results/ResultsActionBar";
 
 export default function ApproveResultsPage() {
   const [results, setResults] = useState(mockResults);
   const [flaggingId, setFlaggingId] = useState<string | null>(null);
+  const [selectedIds, setSelectedIds] = useState<string[]>([]);
+  const [filters, setFilters] = useState<ResultFilterState>({
+    search: "",
+    class: "",
+    status: "All",
+  });
+
+  const handleFilterChange = (newFilters: Partial<ResultFilterState>) => {
+    setFilters((prev) => ({
+      ...prev,
+      ...newFilters,
+    }));
+  };
+
+  // Example of how you'd then use those filters to slice your data:
+  const filteredResults = results.filter((res) => {
+    const matchesSearch = res.studentName
+      .toLowerCase()
+      .includes(filters.search?.toLowerCase() || "");
+    const matchesClass = filters.class ? res.class === filters.class : true;
+    return matchesSearch && matchesClass;
+  });
+
+  // Get unique classes for the filter dropdown
+  const availableClasses = useMemo(() => {
+    return Array.from(new Set(results.map((r) => r.class)));
+  }, [results]);
 
   // Find the student currently being flagged
   const studentToFlag = results.find((r) => r.id === flaggingId);
@@ -42,30 +71,62 @@ export default function ApproveResultsPage() {
     toast.success("Result approved");
   };
 
-  const handleBulkApprove = (ids: string[]) => {
+  const handleBulkApprove = () => {
     setResults((prev) =>
       prev.map((res) =>
-        ids.includes(res.id) ? { ...res, status: "Approved" } : res,
+        selectedIds.includes(res.id) ? { ...res, status: "Approved" } : res,
       ),
     );
-    toast.success(`Approved ${ids.length} results`);
+    setSelectedIds([]); // Reset selection after approval
+    toast.success(`Successfully approved ${selectedIds.length} results!`);
+  };
+  // 1. Individual Selection
+  const toggleSelect = (id: string) => {
+    setSelectedIds((prev) =>
+      prev.includes(id) ? prev.filter((i) => i !== id) : [...prev, id],
+    );
+  };
+
+  // 2. Select All (based on currently visible/filtered results)
+  const handleSelectAll = () => {
+    if (selectedIds.length === filteredResults.length) {
+      setSelectedIds([]); // Deselect all
+    } else {
+      setSelectedIds(filteredResults.map((r) => r.id)); // Select only visible
+    }
   };
   return (
     <AdminLayout>
       <div className="space-y-6">
         {/* 1. Header Component */}
-        {/* <ApprovalHeader totalPending={42} onBulkApprove={handleBulkApprove} /> */}
-
-        {/* 2. Filter Component */}
-        <div className="bg-white p-4 rounded-3xl border border-slate-100 flex gap-4">
-          {/* <ClassSelector /> */}
-          {/* <SubjectSelector /> */}
-          {/* <SearchBar /> */}
+        <div>
+          <h1 className="text-2xl font-black text-slate-800">
+            Result Approval Portal
+          </h1>
+          <p className="text-slate-500 text-sm">
+            Review and publish student academic records.
+          </p>
         </div>
 
+        {/* 2. Filter Component */}
+        <ResultsActionBar
+          selectedCount={selectedIds.length}
+          onBulkApprove={handleBulkApprove}
+          onClearSelection={() => setSelectedIds([])}
+          availableClasses={availableClasses}
+          onFilterChange={handleFilterChange}
+        />
+
         {/* 3. The Main Table */}
-        <section className="bg-white rounded-[32px] border border-slate-100 overflow-hidden">
-          <ResultsTable results={results} onFlag={handleFlagClick} />
+        <section className="bg-white rounded-4xl border border-slate-100 overflow-hidden">
+          <ResultsTable
+            results={filteredResults} // Use the filtered list
+            selectedIds={selectedIds} // Use state from parent
+            onSelect={toggleSelect} // Use handler from parent
+            onSelectAll={handleSelectAll}
+            onApprove={handleApprove}
+            onFlag={handleFlagClick}
+          />
           <FlagResultModal
             isOpen={!!flaggingId}
             onClose={() => setFlaggingId(null)}
