@@ -10,4 +10,5 @@ export enum SchoolAdminRoutes {
   attendance = `${root}/attendance`,
   announcements = `${root}/announcements`,
   results = `${root}/results`,
+  feeManagement = `${root}/fee-management`,
 }

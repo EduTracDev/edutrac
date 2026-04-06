@@ -1,5 +1,5 @@
 "use client";
-import { useState } from "react";
+import { useState, useMemo } from "react";
 import { useRouter } from "next/navigation";
 import AdminLayout from "@/modules/school-admin/layout/AdminLayout";
 import WelcomeBanner from "@/modules/school-admin/components/dashboard/WelcomeBanner";
@@ -16,10 +16,11 @@ import {
   genderData,
   academicData,
   recentActivities,
+  mockDebtors,
 } from "@/modules/constants/dashboard";
 import { useDashboardForms } from "@/utils/hooks/useDashboardForm";
 import AnnouncementModal from "@/modules/school-admin/components/dashboard/modals/AnnouncementModal";
-import ExpensesModal from "@/modules/school-admin/components/dashboard/modals/ExpensesModal";
+
 import { FeeReminderModal } from "@/modules/school-admin/components/dashboard/modals/FeeReminderModal";
 import { SchedulePTAModal } from "@/modules/school-admin/components/dashboard/modals/SchedulePTAModal";
 import { BulkSMSModal } from "@/modules/school-admin/components/dashboard/modals/BulkSMSModal";
@@ -28,13 +29,14 @@ import AcademicChart from "@/modules/school-admin/components/dashboard/AcademicC
 import RecentActivity from "@/modules/school-admin/components/dashboard/RecentActivity";
 import { SmartActions } from "@/modules/school-admin/components/dashboard/SmartAction";
 import { SchoolHealthCard } from "@/modules/school-admin/components/dashboard/SchoolHealthCard";
-import { ExpenseSummaryCard } from "@/modules/school-admin/components/dashboard/ExpenseSummaryCard";
+
 import { FinancialStatCard } from "@/modules/school-admin/components/dashboard/FinancialStatCard";
 import { AttendanceStatCard } from "@/modules/school-admin/components/dashboard/AttendanceStatCard";
 import { AdmissionsStatCard } from "@/modules/school-admin/components/dashboard/AdmissionsStatCard";
 import { AddStudentModal } from "@/modules/school-admin/components/dashboard/modals/AddStudentModal";
 import { AddTeacherModal } from "@/modules/school-admin/components/dashboard/modals/AddTeacherModal";
 import { AddParentModal } from "@/modules/school-admin/components/dashboard/modals/AddParentModal";
+import { ExpenseSummaryCard } from "@/modules/school-admin/components/dashboard/ExpensesSummaryCard";
 
 import {
   UserCheck,
@@ -51,6 +53,7 @@ import { toast } from "react-hot-toast";
 import CreateClassModal from "@/modules/school-admin/components/dashboard/modals/CreateClassModal";
 import BackToTop from "@/app/BackToTop";
 import { InsightCard } from "@/modules/school-admin/components/dashboard/InsightCard";
+import { formatCurrency } from "@/utils/currency";
 
 // export const metadata: Metadata = {
 //   title: "School Overview | EduTrac Proprietor",
@@ -68,11 +71,7 @@ import { InsightCard } from "@/modules/school-admin/components/dashboard/Insight
 // };
 
 export default function Page() {
-  const financialData = {
-    unpaidFees: "₦4.25M",
-    debtorsCount: 42,
-    trend: "+12%",
-  };
+  const [records] = useState(mockDebtors);
 
   const handleSmartAction = (id: string) => {
     switch (id) {
@@ -119,6 +118,19 @@ export default function Page() {
     isSubmitting,
   } = useDashboardForms();
 
+  const stats = useMemo(() => {
+    const totalOutstanding = records.reduce((sum, r) => sum + r.balance, 0);
+    const criticalDebtors = records.filter(
+      (r) => r.status === "Overdue",
+    ).length;
+
+    return {
+      totalOutstanding,
+      debtorCount: records.length,
+      criticalDebtors,
+    };
+  }, [records]);
+
   const router = useRouter();
 
   return (
@@ -160,9 +172,10 @@ export default function Page() {
         {/* Expense + Insights + Health */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
           <ExpenseSummaryCard
-            total={1250000}
-            budget={2000000}
-            month="March 2026"
+            total={2400000}
+            budget={2500000}
+            month="March"
+            href="/school-admin/fee-management"
           />
           <InsightCard />
           <SchoolHealthCard
@@ -260,14 +273,14 @@ export default function Page() {
                   icon={Wallet}
                   onClick={() => setActiveModal("expenses")}
                 />
-                <QuickActionCard
+                {/* <QuickActionCard
                   title="Approve Results"
                   icon={CheckCircle2}
                   onClick={() => {
                     toast.loading("Loading result portal...");
                     router.push("/school-admin/results/approve");
                   }}
-                />
+                /> */}
               </div>
               <div className="mt-8">
                 <RecentActivity activities={recentActivities} />
@@ -307,8 +320,17 @@ export default function Page() {
         {/* MODAL REGISTRY */}
         {activeModal === "fee-reminder-preview" && (
           <FeeReminderModal
-            debtorsCount={financialData.debtorsCount}
-            totalAmount={financialData.unpaidFees}
+            // debtorsCount={financialData.debtorsCount}
+            // totalAmount={formatCurrency(stats.totalOutstanding)}
+            // onClose={() => setActiveModal(null)}
+            // onConfirm={async () => {
+            //   const t = toast.loading("Broadcasting reminders...");
+            //   await new Promise((res) => setTimeout(res, 2000));
+            //   toast.success("Reminders sent successfully!", { id: t });
+            //   setActiveModal(null);
+            // }}
+            debtorsCount={stats.debtorCount}
+            totalAmount={stats.totalOutstanding}
             onClose={() => setActiveModal(null)}
             onConfirm={async () => {
               const t = toast.loading("Broadcasting reminders...");
@@ -354,18 +376,8 @@ export default function Page() {
             isSubmitting={isSubmitting}
           />
         )}
-        {activeModal === "expenses" && (
-          <ExpensesModal
-            isOpen={true}
-            onClose={closeModal}
-            onSubmit={handleExpenseSubmit}
-            errors={formErrors}
-            isSubmitting={isSubmitting}
-          />
-        )}
         {activeModal === "class" && (
           <CreateClassModal
-            // isOpen={true}
             isOpen={activeModal === "class"}
             onClose={closeModal}
             onSubmit={handleClassSubmit}
