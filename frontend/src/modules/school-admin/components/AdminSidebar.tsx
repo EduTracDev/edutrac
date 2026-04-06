@@ -50,6 +50,11 @@ export default function AdminSidebar({ sidebarOpen, setSidebarOpen }: Props) {
       href: SchoolAdminRoutes.announcements,
       icon: Megaphone,
     },
+    {
+      name: "Fee Management",
+      href: SchoolAdminRoutes.feeManagement,
+      icon: FileText,
+    },
     { name: "Settings", href: SchoolAdminRoutes.settings, icon: Settings },
   ];
 

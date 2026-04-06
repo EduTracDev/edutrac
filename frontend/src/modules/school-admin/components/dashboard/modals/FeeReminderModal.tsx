@@ -1,6 +1,8 @@
+import { formatCurrency } from "@/utils/currency";
+
 interface FeeReminderModalProps {
   debtorsCount: number;
-  totalAmount: string;
+  totalAmount: number;
   onClose: () => void;
   onConfirm?: () => void;
 }
@@ -22,7 +24,7 @@ export const FeeReminderModal = ({
             <p className="text-sm text-slate-500">
               You are about to send personalized SMS/Email alerts to{" "}
               <b>{debtorsCount} parents</b> owing a total of{" "}
-              <b>{totalAmount}</b>.
+              <b>{formatCurrency(totalAmount)}</b>.
             </p>
           </div>
 

@@ -206,3 +206,50 @@ export interface StudentResult {
   adminComment?: string; // For flagging reasons
   updatedAt: Date | string;
 }
+
+export type AnnouncementChannel = "SMS" | "WhatsApp" | "Email" | "In-App";
+export type AnnouncementAudience =
+  | "All Parents"
+  | "All Teachers"
+  | "Specific Class"
+  | "Debtors";
+
+export interface AnnouncementLog {
+  id: string;
+  title: string;
+  preview: string; // Short snippet of the message
+  content: string; // Full message
+  channel: AnnouncementChannel;
+  audience: AnnouncementAudience;
+  targetDetail?: string; // e.g., "SS3 Science" if audience is "Specific Class"
+  sentAt: string;
+  sentBy: string; // Admin name
+  status: "Delivered" | "Failed" | "Pending";
+  recipientsCount: number;
+}
+
+export type PaymentStatus = "Unpaid" | "Partial" | "Paid" | "Overdue";
+
+export interface PaymentEntry {
+  id: string;
+  amount: number;
+  date: string;
+  method: "Cash" | "Transfer" | "POS" | "Online";
+  reference: string;
+  receivedBy: string;
+}
+
+export interface FinancialRecord {
+  id: string;
+  studentId: string;
+  studentName: string;
+  class: string;
+  totalBilled: number;
+  amountPaid: number;
+  balance: number;
+  dueDate: string;
+  lastPaymentDate?: string;
+  status: PaymentStatus;
+  category: "Tuition" | "Comprehensive" | "Special";
+  history?: PaymentEntry[];
+}

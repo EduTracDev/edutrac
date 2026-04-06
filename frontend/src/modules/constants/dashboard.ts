@@ -8,6 +8,9 @@ import {
   StudentParentLink,
   AttendanceStatus,
   StudentResult,
+  AnnouncementLog,
+  FinancialRecord,
+  PaymentEntry,
 } from "../types/dashboard";
 export const schoolData = {
   name: "Lincoln High School",
@@ -430,5 +433,157 @@ export const mockResults: StudentResult[] = [
     session: "2025/2026",
     status: "Approved", // Already processed
     updatedAt: "2026-03-28T11:00:00Z",
+  },
+];
+
+export const mockAnnouncementHistory: AnnouncementLog[] = [
+  {
+    id: "ann-001",
+    title: "PTA Meeting Reminder",
+    preview: "Dear Parents, this is a reminder of our upcoming...",
+    content:
+      "Dear Parents, this is a reminder of our upcoming PTA meeting scheduled for Saturday at 10 AM.",
+    channel: "WhatsApp",
+    audience: "All Parents",
+    sentAt: "2026-04-01T09:00:00Z",
+    sentBy: "Admin Sarah",
+    status: "Delivered",
+    recipientsCount: 450,
+  },
+  {
+    id: "ann-002",
+    title: "Urgent: Fee Balance Notice",
+    preview: "Final notice regarding outstanding tuition fees...",
+    content:
+      "Final notice regarding outstanding tuition fees for the second term. Please clear balances by Friday.",
+    channel: "SMS",
+    audience: "Debtors",
+    sentAt: "2026-03-28T14:30:00Z",
+    sentBy: "Bursar James",
+    status: "Delivered",
+    recipientsCount: 32,
+  },
+  {
+    id: "ann-003",
+    title: "Mid-Term Break Announcement",
+    preview: "School will be closed from Wednesday for the...",
+    content:
+      "School will be closed from Wednesday for the mid-term break. Classes resume next Monday.",
+    channel: "Email",
+    audience: "All Parents",
+    targetDetail: "Whole School",
+    sentAt: "2026-03-15T11:00:00Z",
+    sentBy: "Admin Sarah",
+    status: "Delivered",
+    recipientsCount: 512,
+  },
+];
+
+export const mockDebtors: FinancialRecord[] = [
+  {
+    id: "fin-001",
+    studentId: "STU-2026-001",
+    studentName: "Adewale Johnson",
+    class: "SS3-Science",
+    totalBilled: 150000,
+    amountPaid: 45000,
+    balance: 105000,
+    dueDate: "2026-01-15T00:00:00Z",
+    lastPaymentDate: "2026-02-10T11:20:00Z",
+    status: "Partial",
+    category: "Tuition",
+  },
+  {
+    id: "fin-002",
+    studentId: "STU-2026-004",
+    studentName: "Blessing Ekong",
+    class: "SS2-Commercial",
+    totalBilled: 120000,
+    amountPaid: 0,
+    balance: 120000,
+    dueDate: "2026-01-15T00:00:00Z",
+    status: "Overdue",
+    category: "Tuition",
+  },
+  {
+    id: "fin-003",
+    studentId: "STU-2026-009",
+    studentName: "Ibrahim Musa",
+    class: "JSS1-B",
+    totalBilled: 85000,
+    amountPaid: 20000,
+    balance: 65000,
+    dueDate: "2026-02-01T00:00:00Z",
+    lastPaymentDate: "2026-02-15T09:45:00Z",
+    status: "Partial",
+    category: "Comprehensive",
+  },
+  {
+    id: "fin-004",
+    studentId: "STU-2026-012",
+    studentName: "Zainab Yusuf",
+    class: "SS3-Art",
+    totalBilled: 150000,
+    amountPaid: 0,
+    balance: 150000,
+    dueDate: "2026-01-15T00:00:00Z",
+    status: "Unpaid",
+    category: "Tuition",
+  },
+  {
+    id: "fin-005",
+    studentId: "STU-2026-015",
+    studentName: "Kelvin Hart",
+    class: "Primary 5",
+    totalBilled: 95000,
+    amountPaid: 80000,
+    balance: 15000,
+    dueDate: "2026-01-15T00:00:00Z",
+    lastPaymentDate: "2026-03-20T16:00:00Z",
+    status: "Partial",
+    category: "Special", // e.g., Music/Sports club fees
+  },
+];
+
+export const paymentHistoryMock: PaymentEntry[] = [
+  {
+    id: "pay-001",
+    amount: 25000,
+    date: "2026-01-10T10:00:00Z",
+    method: "Transfer",
+    reference: "TRF-992011",
+    receivedBy: "Bursar James",
+  },
+  {
+    id: "pay-002",
+    amount: 20000,
+    date: "2026-02-15T14:30:00Z",
+    method: "POS",
+    reference: "POS-88271",
+    receivedBy: "Admin Sarah",
+  },
+];
+
+export const mockExpenses = [
+  {
+    id: "exp-1",
+    title: "Staff Salaries",
+    amount: 2400000,
+    budget: 2500000,
+    month: "March",
+  },
+  {
+    id: "exp-2",
+    title: "Generator Fuel",
+    amount: 150000,
+    budget: 120000,
+    month: "March",
+  }, // Over budget
+  {
+    id: "exp-3",
+    title: "Stationery & Exam Papers",
+    amount: 45000,
+    budget: 100000,
+    month: "March",
   },
 ];
