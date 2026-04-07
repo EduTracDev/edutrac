@@ -9,6 +9,7 @@ interface RowProps {
   onSelect: (id: string) => void;
   onFlag: (id: string) => void;
   onApprove: (id: string) => void;
+  onViewReport: (id: string) => void;
 }
 
 const ResultMobileCard = ({
@@ -17,6 +18,7 @@ const ResultMobileCard = ({
   onSelect,
   onFlag,
   onApprove,
+  onViewReport,
 }: RowProps) => {
   // ✅ 1. Use curly braces and declare hooks at the top
   const [showMenu, setShowMenu] = useState(false);
@@ -61,6 +63,14 @@ const ResultMobileCard = ({
                   onClick={() => setShowMenu(false)}
                 />
                 <div className="absolute right-0 mt-2 w-32 bg-white border border-slate-100 shadow-xl rounded-xl z-20 py-1">
+                  {result.status === "Approved" && (
+                    <button
+                      onClick={() => onViewReport(result.id)}
+                      className="py-2 px-4 text-[#923CF9] hover:bg-[#923CF9]/5 font-bold text-xs w-full text-left"
+                    >
+                      Print
+                    </button>
+                  )}
                   <button
                     onClick={() => {
                       onApprove(result.id);

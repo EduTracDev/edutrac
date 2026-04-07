@@ -18,6 +18,7 @@ import {
   type TeacherFormData,
   type StudentFormData,
   type ParentFormData,
+  type ProfileFormData,
 } from "@/utils/validation";
 
 import {
@@ -457,6 +458,34 @@ export const useDashboardForms = () => {
       setIsSubmitting(false);
     }
   };
+
+  const handleProfileUpdate = async (data: ProfileFormData) => {
+    try {
+      setIsSubmitting(true);
+      const loading = toast.loading("Updating your profile...");
+
+      //  Data Transformation
+      const payload = {
+        ...data,
+        updatedAt: new Date().toISOString(),
+      };
+
+      // Simulate API Call
+      await new Promise((res) => setTimeout(res, 1500));
+
+      toast.success("Profile updated successfully!", {
+        id: loading,
+      });
+
+      // We don't necessarily call closeModal() here because
+      // the profile is usually an on-page form, not a modal.
+    } catch (err) {
+      console.error("Profile update failed:", err);
+      toast.error("Failed to update profile. Please try again.");
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
   return {
     activeModal,
     setActiveModal,
@@ -472,6 +501,7 @@ export const useDashboardForms = () => {
     handleBulkStudentSubmit,
     handleParentSubmit,
     handleBulkParentSubmit,
+    handleProfileUpdate,
     studentBulkErrors,
     teacherBulkErrors,
     parentBulkErrors,

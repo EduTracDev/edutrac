@@ -1,15 +1,16 @@
-// @/modules/school-admin/components/dashboard/ResultsActionBar.tsx
+// @/modules/school-admin/components/results/ResultsActionBar.tsx
+import { CheckCircle, Download, X, Filter, ChevronDown } from "lucide-react";
 import { ResultStatus } from "@/modules/types/dashboard";
-import { Search, Filter, CheckCircle2, X } from "lucide-react";
 
 export interface ResultFilterState {
   search?: string;
   class?: string;
   status?: ResultStatus | "All";
 }
-interface ResultsActionBarProps {
+interface ActionBarProps {
   selectedCount: number;
   onBulkApprove: () => void;
+  onBulkGenerate: () => void;
   onClearSelection: () => void;
   availableClasses: string[];
   onFilterChange: (filters: Partial<ResultFilterState>) => void;
@@ -18,86 +19,80 @@ interface ResultsActionBarProps {
 export const ResultsActionBar = ({
   selectedCount,
   onBulkApprove,
+  onBulkGenerate,
   onClearSelection,
   availableClasses,
   onFilterChange,
-}: ResultsActionBarProps) => {
+}: ActionBarProps) => {
+  const isBatchMode = selectedCount > 0;
+
   return (
-    <div className="space-y-4">
-      {/* 🚀 Top Row: Search and Filters */}
-      <div className="flex flex-col md:flex-row gap-4 items-center justify-between bg-white p-4 rounded-[24px] border border-slate-100 shadow-sm">
-        <div className="relative w-full md:w-96">
-          <Search
-            className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400"
-            size={18}
-          />
-          <input
-            type="text"
-            placeholder="Search student name or ID..."
-            className="w-full pl-12 pr-4 py-3 bg-slate-50 border border-slate-100 rounded-2xl text-sm outline-none focus:bg-white focus:ring-4 focus:ring-[#923CF9]/5 transition-all"
-            onChange={(e) => onFilterChange({ search: e.target.value })}
-          />
-        </div>
-        {/* Class Filter */}
-        <div className="flex gap-2 w-full md:w-auto">
-          <select
-            className="flex-1 md:w-40 p-3 bg-slate-50 border border-slate-100 rounded-2xl text-xs font-bold text-slate-600 outline-none"
-            // ✅ Type-safe: compiler knows 'class' is a valid key
-            onChange={(e) => onFilterChange({ class: e.target.value })}
-          >
-            <option value="">All Classes</option>
-            {availableClasses.map((c) => (
-              <option key={c} value={c}>
-                {c}
-              </option>
-            ))}
-          </select>
+    <div
+      className={`relative transition-all duration-300 rounded-[28px] overflow-hidden border ${
+        isBatchMode
+          ? "bg-[#923CF9] border-[#923CF9] shadow-lg shadow-[#923CF9]/20"
+          : "bg-white border-slate-100 shadow-sm"
+      }`}
+    >
+      <div className="flex items-center justify-between p-3 min-h-[72px]">
+        {/* LEFT SIDE: Context or Selection Count */}
+        <div className="flex items-center gap-4 px-3">
+          {isBatchMode ? (
+            <div className="flex items-center gap-3 animate-in slide-in-from-left-4">
+              <button
+                onClick={onClearSelection}
+                className="p-1.5 bg-white/20 hover:bg-white/30 rounded-xl text-white transition-colors"
+              >
+                <X size={18} />
+              </button>
+              <span className="text-white font-black text-sm uppercase tracking-widest">
+                {selectedCount} Selected
+              </span>
+            </div>
+          ) : (
+            <div className="flex items-center gap-2 text-slate-400">
+              <Filter size={18} />
+              <span className="text-[10px] font-black uppercase tracking-widest">
+                Filter Results
+              </span>
+            </div>
+          )}
         </div>
 
-        {/* <div className="flex gap-2 w-full md:w-auto">
-          <select
-            className="flex-1 md:w-40 p-3 bg-slate-50 border border-slate-100 rounded-2xl text-xs font-bold text-slate-600 outline-none"
-            onChange={(e) => onFilterChange({ class: e.target.value })}
-          >
-            <option value="">All Classes</option>
-            {availableClasses.map((c) => (
-              <option key={c} value={c}>
-                {c}
-              </option>
-            ))}
-          </select>
-
-          <button className="p-3 bg-slate-50 text-slate-600 rounded-2xl hover:bg-slate-100 transition-colors">
-            <Filter size={20} />
-          </button>
-        </div> */}
+        {/* RIGHT SIDE: Filters (Normal Mode) OR Actions (Batch Mode) */}
+        <div className="flex items-center gap-2 px-1">
+          {isBatchMode ? (
+            <div className="flex gap-2 animate-in zoom-in-95">
+              <button
+                onClick={onBulkApprove}
+                className="flex items-center gap-2 px-5 py-3 bg-white text-[#923CF9] rounded-2xl text-[10px] font-black uppercase tracking-widest hover:scale-[1.02] transition-all"
+              >
+                <CheckCircle size={16} /> Approve & Lock
+              </button>
+              <button
+                onClick={onBulkGenerate}
+                className="flex items-center gap-2 px-5 py-3 bg-white/20 hover:bg-white/30 text-white rounded-2xl text-[10px] font-black uppercase tracking-widest transition-all"
+              >
+                <Download size={16} /> Generate PDF
+              </button>
+            </div>
+          ) : (
+            <div className="flex gap-3">
+              <select className="bg-slate-50 border-none rounded-2xl px-4 py-2.5 text-xs font-bold text-slate-600 outline-none focus:ring-2 focus:ring-[#923CF9]/10">
+                {availableClasses.map((c) => (
+                  <option key={c} value={c}>
+                    {c}
+                  </option>
+                ))}
+              </select>
+              <select className="bg-slate-50 border-none rounded-2xl px-4 py-2.5 text-xs font-bold text-slate-600 outline-none focus:ring-2 focus:ring-[#923CF9]/10">
+                <option>First Term</option>
+                <option>Second Term</option>
+              </select>
+            </div>
+          )}
+        </div>
       </div>
-
-      {/* 🚀 Bottom Row: Floating Selection Bar (Only shows when items are selected) */}
-      {selectedCount > 0 && (
-        <div className="flex items-center justify-between bg-[#923CF9] p-4 rounded-[24px] shadow-lg shadow-[#923CF9]/20 animate-in fade-in slide-in-from-bottom-4 duration-300">
-          <div className="flex items-center gap-4">
-            <button
-              onClick={onClearSelection}
-              className="p-1 hover:bg-white/10 rounded-full text-white transition-colors"
-            >
-              <X size={20} />
-            </button>
-            <p className="text-white text-sm font-bold">
-              {selectedCount} {selectedCount === 1 ? "result" : "results"}{" "}
-              selected
-            </p>
-          </div>
-
-          <button
-            onClick={onBulkApprove}
-            className="flex items-center gap-2 px-6 py-2 bg-white text-[#923CF9] rounded-xl font-black text-sm hover:bg-slate-50 transition-all active:scale-95"
-          >
-            <CheckCircle2 size={18} />
-            Approve All Selected
-          </button>
-        </div>
-      )}
     </div>
   );
 };

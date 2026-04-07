@@ -8,6 +8,8 @@ import { toast } from "react-hot-toast";
 import { FlagResultModal } from "@/modules/school-admin/components/dashboard/modals/FlagResultModal";
 import { ResultsActionBar } from "@/modules/school-admin/components/results/ResultsActionBar";
 import { ResultFilterState } from "@/modules/school-admin/components/results/ResultsActionBar";
+import { ClassStatsHeader } from "@/modules/school-admin/components/results/ClassStatsHeader";
+import { ResultBulkActions } from "@/modules/school-admin/components/results/ResultBulkActions";
 
 export default function ApproveResultsPage() {
   const [results, setResults] = useState(mockResults);
@@ -83,7 +85,7 @@ export default function ApproveResultsPage() {
   // 1. Individual Selection
   const toggleSelect = (id: string) => {
     setSelectedIds((prev) =>
-      prev.includes(id) ? prev.filter((i) => i !== id) : [...prev, id],
+      prev.includes(id) ? prev.filter((item) => item !== id) : [...prev, id],
     );
   };
 
@@ -99,19 +101,25 @@ export default function ApproveResultsPage() {
     <AdminLayout>
       <div className="space-y-6">
         {/* 1. Header Component */}
-        <div>
-          <h1 className="text-2xl font-black text-slate-800">
-            Result Approval Portal
+        <div className="space-y-2 mb-8">
+          <h1 className="text-3xl font-black text-slate-800 tracking-tight">
+            Grade Review
           </h1>
-          <p className="text-slate-500 text-sm">
-            Review and publish student academic records.
+          <p className="text-slate-500 font-medium">
+            JSS 3 Gold — Mathematics (First Term)
           </p>
         </div>
-
+        <ClassStatsHeader
+          average={68}
+          highest={98}
+          lowest={24}
+          pendingCount={12}
+        />
         {/* 2. Filter Component */}
         <ResultsActionBar
           selectedCount={selectedIds.length}
           onBulkApprove={handleBulkApprove}
+          onBulkGenerate={() => console.log("Generating PDFs...")}
           onClearSelection={() => setSelectedIds([])}
           availableClasses={availableClasses}
           onFilterChange={handleFilterChange}
@@ -121,11 +129,12 @@ export default function ApproveResultsPage() {
         <section className="bg-white rounded-4xl border border-slate-100 overflow-hidden">
           <ResultsTable
             results={filteredResults} // Use the filtered list
-            selectedIds={selectedIds} // Use state from parent
+            selectedIds={selectedIds}
             onSelect={toggleSelect} // Use handler from parent
             onSelectAll={handleSelectAll}
             onApprove={handleApprove}
             onFlag={handleFlagClick}
+            onViewReport={(id) => console.log("Viewing...", id)}
           />
           <FlagResultModal
             isOpen={!!flaggingId}

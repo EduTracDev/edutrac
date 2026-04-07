@@ -41,6 +41,19 @@ export const registerSchema = yup.object().shape({
   plan: yup.string().oneOf(["basic", "pro", "enterprise"]).required(),
 });
 
+export const profileSchema = yup.object().shape({
+  fullName: yup
+    .string()
+    .min(3, "Name is too short")
+    .required("Full name is required"),
+  email: emailSchema,
+  phoneNumber: yup
+    .string()
+    .matches(/^\+?[0-9]{10,15}$/, "Invalid phone number")
+    .required("Phone number is required"),
+  bio: yup.string().max(200, "Bio must be under 200 characters"),
+});
+
 export const contactSchema = yup.object().shape({
   firstName: yup.string().required("First name is required"),
   lastName: yup.string().required("Last name is required"),
@@ -182,3 +195,4 @@ export type BulkStudentFormData = yup.InferType<typeof bulkStudentSchema>;
 export type TeacherFormData = yup.InferType<typeof teacherBaseSchema>;
 export type ParentFormData = yup.InferType<typeof parentBaseSchema>;
 export type TeacherRole = (typeof VALID_TEACHER_ROLES)[number];
+export type ProfileFormData = yup.InferType<typeof profileSchema>;
