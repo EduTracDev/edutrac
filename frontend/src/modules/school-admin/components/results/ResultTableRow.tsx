@@ -1,5 +1,5 @@
 import { ResultStatus, StudentResult } from "@/modules/types/dashboard";
-import { CheckCircle2, Flag } from "lucide-react";
+import { CheckCircle2, Flag, FileText } from "lucide-react";
 
 interface RowProps {
   result: StudentResult;
@@ -7,6 +7,7 @@ interface RowProps {
   onSelect: (id: string) => void;
   onFlag: (id: string) => void;
   onApprove: (id: string) => void;
+  onViewReport: (id: string) => void;
 }
 
 export const StatusBadge = ({ status }: { status: ResultStatus }) => {
@@ -32,9 +33,10 @@ const ResultTableRow = ({
   onSelect,
   onFlag,
   onApprove,
+  onViewReport,
 }: RowProps) => (
   <tr
-    className={`group hover:bg-slate-50 transition-colors ${result.status === "Flagged" ? "bg-red-50/30" : ""}`}
+    className={`group hover:bg-slate-50 transition-colors ${isSelected ? "bg-[#923CF9]/5" : ""} ${result.status === "Flagged" ? "bg-red-50/30" : ""}`}
   >
     <td className="p-4">
       <input
@@ -78,6 +80,16 @@ const ResultTableRow = ({
     </td>
     <td className="p-4 text-right">
       <div className="flex justify-end gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
+        {/* ONLY show the generate icon if it's already approved */}
+        {result.status === "Approved" && (
+          <button
+            onClick={() => onViewReport(result.id)}
+            className="p-2 text-[#923CF9] hover:bg-[#923CF9]/5 rounded-lg transition-colors"
+            title="View Report Card"
+          >
+            <FileText size={16} />
+          </button>
+        )}
         <button
           onClick={() => onApprove(result.id)}
           className="p-2 text-emerald-500 hover:bg-emerald-50 rounded-lg transition-colors"

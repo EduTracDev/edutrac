@@ -10,6 +10,7 @@ interface ResultsTableProps {
   onSelectAll: () => void;
   onApprove: (id: string) => void;
   onFlag: (id: string) => void;
+  onViewReport: (id: string) => void;
 }
 export const ResultsTable = ({
   results,
@@ -18,7 +19,10 @@ export const ResultsTable = ({
   onSelectAll,
   onApprove,
   onFlag,
+  onViewReport,
 }: ResultsTableProps) => {
+  const isAllSelected =
+    results.length > 0 && selectedIds.length === results.length;
   return (
     <div>
       {/* Desktop View */}
@@ -30,7 +34,7 @@ export const ResultsTable = ({
                 <input
                   type="checkbox"
                   onChange={onSelectAll}
-                  checked={selectedIds.length === results.length}
+                  checked={isAllSelected}
                 />
               </th>
               <th className="p-4 text-[10px] font-black text-slate-400 uppercase">
@@ -63,9 +67,10 @@ export const ResultsTable = ({
                 key={res.id}
                 result={res}
                 isSelected={selectedIds.includes(res.id)}
-                onSelect={onSelectAll}
+                onSelect={onSelect}
                 onFlag={onFlag}
                 onApprove={onApprove}
+                onViewReport={onViewReport}
               />
             ))}
           </tbody>
@@ -79,9 +84,10 @@ export const ResultsTable = ({
             key={res.id}
             result={res}
             isSelected={selectedIds.includes(res.id)}
-            onSelect={onSelectAll}
+            onSelect={onSelect}
             onFlag={onFlag}
             onApprove={onApprove}
+            onViewReport={onViewReport}
           />
         ))}
       </div>
