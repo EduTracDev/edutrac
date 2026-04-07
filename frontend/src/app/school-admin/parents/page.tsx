@@ -96,8 +96,9 @@ export default function Page() {
           </p>
         </div>
         {/* parent stat */}
+
         <ParentStats />
-        <div className="p-4 mt-8">
+        <div className=" mt-8">
           <p className="text-xs font-medium text-slate-500">
             Showing{" "}
             <span className="text-[#923CF9] font-bold">
@@ -107,13 +108,14 @@ export default function Page() {
             {searchQuery && ` matching "${searchQuery}"`}
           </p>
         </div>
-
-        <ParentActionBar
-          onSearch={setSearchQuery}
-          activeFilters={filters}
-          onFilterChange={handleFilterChange}
-          onClearFilters={handleClearFilters}
-        />
+        <div className="mt-8">
+          <ParentActionBar
+            onSearch={setSearchQuery}
+            activeFilters={filters}
+            onFilterChange={handleFilterChange}
+            onClearFilters={handleClearFilters}
+          />
+        </div>
 
         <div className="mt-8">
           <ParentTable
@@ -125,7 +127,6 @@ export default function Page() {
             setParents={setParents}
           />
 
-          {/* pagination */}
           <SharedPagination
             entityName="teacher"
             totalItems={filteredParents.length}

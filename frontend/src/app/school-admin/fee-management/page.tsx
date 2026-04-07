@@ -18,6 +18,7 @@ import { PaymentHistoryModal } from "@/modules/school-admin/components/dashboard
 import { ExpenseSummaryCard } from "@/modules/school-admin/components/dashboard/ExpensesSummaryCard";
 import { useDashboardForms } from "@/utils/hooks/useDashboardForm";
 import { ExpenseLedger } from "@/modules/school-admin/components/fee-management/ExpenseLedger";
+import { SharedPagination } from "@/modules/shared/Pagination";
 
 export default function FeeManagementPage() {
   const [records] = useState(mockDebtors);
@@ -27,6 +28,12 @@ export default function FeeManagementPage() {
   );
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [showDetails, setShowDetails] = useState(false);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [itemsPerPage, setItemsPerPage] = useState(10);
+  const indexOfLastItem = currentPage * itemsPerPage;
+  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+
+  const currentRecords = mockDebtors.slice(indexOfFirstItem, indexOfLastItem);
 
   // 2. Calculate summary stats dynamically
   const stats = useMemo(() => {
@@ -158,9 +165,21 @@ export default function FeeManagementPage() {
 
           <section className="bg-white rounded-[32px] border border-slate-100 overflow-hidden shadow-sm">
             {/* Pass the mock data records here */}
+
             <DebtorsTable
-              records={records}
+              records={currentRecords}
               onViewDetails={(record) => setViewingHistory(record)}
+            />
+            <SharedPagination
+              entityName="debtors"
+              totalItems={mockDebtors.length}
+              itemsPerPage={itemsPerPage}
+              currentPage={currentPage}
+              onPageChange={setCurrentPage}
+              onItemsPerPageChange={(val) => {
+                setItemsPerPage(val);
+                setCurrentPage(1);
+              }}
             />
           </section>
           {viewingHistory && (
