@@ -140,11 +140,11 @@ export const ParentTable = ({
 
   return (
     <>
-      <div className="bg-white rounded-[32px] border border-slate-100 shadow-sm overflow-hidden">
+      <div className="bg-white rounded-[32px] border border-slate-100 shadow-sm">
         <table className="hidden md:table w-full text-left">
           <thead className="bg-slate-50">
             <tr>
-              <th className="px-6 py-4 text-xs font-bold text-slate-400 uppercase">
+              <th className="px-6 py-4 text-xs font-bold text-slate-400 uppercase ">
                 Parents
               </th>
               <th className="px-6 py-4 text-xs font-bold text-slate-400 uppercase">
@@ -165,6 +165,7 @@ export const ParentTable = ({
               <th className="px-6 py-4 text-xs font-bold text-slate-400 uppercase">
                 Status
               </th>
+              <th className="px-6 py-4"></th>
               <th className="px-6 py-4"></th>
             </tr>
           </thead>

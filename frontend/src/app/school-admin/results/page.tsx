@@ -11,7 +11,7 @@ import { ResultFilterState } from "@/modules/school-admin/components/results/Res
 import { ClassStatsHeader } from "@/modules/school-admin/components/results/ClassStatsHeader";
 import { ResultBulkActions } from "@/modules/school-admin/components/results/ResultBulkActions";
 
-export default function ApproveResultsPage() {
+export default function Page() {
   const [results, setResults] = useState(mockResults);
   const [flaggingId, setFlaggingId] = useState<string | null>(null);
   const [selectedIds, setSelectedIds] = useState<string[]>([]);
@@ -21,21 +21,35 @@ export default function ApproveResultsPage() {
     status: "All",
   });
 
+  const filteredResults = useMemo(() => {
+    return results.filter((res) => {
+      const matchesSearch = res.studentName
+        .toLowerCase()
+        .includes(filters.search?.toLowerCase() || "");
+
+      const matchesClass = filters.class ? res.class === filters.class : true;
+
+      const matchesStatus =
+        filters.status !== "All" ? res.status === filters.status : true;
+
+      return matchesSearch && matchesClass && matchesStatus;
+    });
+  }, [results, filters]);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [itemsPerPage, setItemsPerPage] = useState(10);
+  const indexOfLastItem = currentPage * itemsPerPage;
+  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+  const currentResults = filteredResults.slice(
+    indexOfFirstItem,
+    indexOfLastItem,
+  );
   const handleFilterChange = (newFilters: Partial<ResultFilterState>) => {
     setFilters((prev) => ({
       ...prev,
       ...newFilters,
     }));
+    setCurrentPage(1);
   };
-
-  // Example of how you'd then use those filters to slice your data:
-  const filteredResults = results.filter((res) => {
-    const matchesSearch = res.studentName
-      .toLowerCase()
-      .includes(filters.search?.toLowerCase() || "");
-    const matchesClass = filters.class ? res.class === filters.class : true;
-    return matchesSearch && matchesClass;
-  });
 
   // Get unique classes for the filter dropdown
   const availableClasses = useMemo(() => {
@@ -128,7 +142,7 @@ export default function ApproveResultsPage() {
         {/* 3. The Main Table */}
         <section className="bg-white rounded-4xl border border-slate-100 overflow-hidden">
           <ResultsTable
-            results={filteredResults} // Use the filtered list
+            results={currentResults}
             selectedIds={selectedIds}
             onSelect={toggleSelect} // Use handler from parent
             onSelectAll={handleSelectAll}
@@ -145,7 +159,19 @@ export default function ApproveResultsPage() {
         </section>
 
         {/* 4. Pagination */}
-        {/* <SharedPagination /> */}
+        {filteredResults.length > itemsPerPage && (
+          <SharedPagination
+            entityName="results"
+            totalItems={filteredResults.length}
+            itemsPerPage={itemsPerPage}
+            currentPage={currentPage}
+            onPageChange={setCurrentPage}
+            onItemsPerPageChange={(val) => {
+              setItemsPerPage(val);
+              setCurrentPage(1);
+            }}
+          />
+        )}
       </div>
     </AdminLayout>
   );
