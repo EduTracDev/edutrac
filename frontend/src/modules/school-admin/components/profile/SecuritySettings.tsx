@@ -1,7 +1,14 @@
 import { Lock, LogOut, Trash2 } from "lucide-react";
 
-export const SecuritySettings = () => {
-  const actions = [
+interface SecuritySettingsProps {
+  isTeacher?: boolean;
+}
+
+export const SecuritySettings = ({
+  isTeacher = false,
+}: SecuritySettingsProps) => {
+  // Define base actions
+  const baseActions = [
     {
       label: "Change Password",
       icon: Lock,
@@ -14,13 +21,20 @@ export const SecuritySettings = () => {
       color: "text-amber-600",
       bg: "bg-amber-50",
     },
-    {
-      label: "Deactivate Account",
-      icon: Trash2,
-      color: "text-red-500",
-      bg: "bg-red-50",
-    },
   ];
+
+  // Only add Deactivate if it's NOT a teacher
+  const actions = isTeacher
+    ? baseActions
+    : [
+        ...baseActions,
+        {
+          label: "Deactivate Account",
+          icon: Trash2,
+          color: "text-red-500",
+          bg: "bg-red-50",
+        },
+      ];
 
   return (
     <div className="bg-white p-8 rounded-[32px] border border-slate-100 shadow-sm mt-6">
@@ -28,7 +42,10 @@ export const SecuritySettings = () => {
         Security & Account
       </h2>
 
-      <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+      {/* Dynamic grid columns based on action count */}
+      <div
+        className={`grid grid-cols-1 ${actions.length === 3 ? "sm:grid-cols-3" : "sm:grid-cols-2"} gap-4`}
+      >
         {actions.map((action) => (
           <button
             key={action.label}
