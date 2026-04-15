@@ -184,7 +184,7 @@ export const studentData: Student[] = [
     firstName: "Fatimah",
     lastName: "Abubakar",
     email: "f.abubakar@edutrac.com",
-    class: "JSS 1 Gold",
+    class: "SS 3 Art",
     avatarUrl:
       "https://robohash.org/2b5b57aa71aea0118bc30f2c739c8487?set=set4&bgset=&size=400x400",
     gender: "Female",
