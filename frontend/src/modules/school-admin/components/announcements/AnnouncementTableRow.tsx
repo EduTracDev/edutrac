@@ -1,4 +1,3 @@
-// @/modules/school-admin/components/announcements/AnnouncementTableRow.tsx
 import {
   AnnouncementLog,
   AnnouncementChannel,

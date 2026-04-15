@@ -1,16 +1,24 @@
+// @/modules/common/components/announcements/AnnouncementStats.tsx
+
 import StatCard from "@/modules/school-admin/components/dashboard/StatCard";
-import { Send, Users, Zap, TrendingUp } from "lucide-react";
+import { Send, Users, Zap, TrendingUp, BookOpen } from "lucide-react";
 
 interface StatsProps {
   totalSent: number;
   totalRecipients: number;
-  activeChannels: number;
+  // Admin-specific
+  activeChannels?: number;
+  // Teacher-specific
+  classCount?: number;
+  variant?: "admin" | "teacher";
 }
 
 export const AnnouncementStats = ({
   totalSent,
   totalRecipients,
-  activeChannels,
+  activeChannels = 0,
+  classCount = 0,
+  variant = "admin",
 }: StatsProps) => {
   return (
     <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
@@ -23,7 +31,7 @@ export const AnnouncementStats = ({
         description={
           <div className="flex items-center gap-1 text-[10px] font-bold text-emerald-600">
             <TrendingUp size={12} />
-            <span>+12% from last month</span>
+            <span>Active communications</span>
           </div>
         }
       />
@@ -36,23 +44,41 @@ export const AnnouncementStats = ({
         bgColor="bg-[#923CF9]/5"
         description={
           <p className="text-[10px] font-medium text-slate-500">
-            Unique parents and staff reached
+            {variant === "admin"
+              ? "Total community reach"
+              : "Students in your classes"}
           </p>
         }
       />
 
-      <StatCard
-        title="Active Channels"
-        value={activeChannels}
-        icon={Zap}
-        color="text-emerald-600"
-        bgColor="bg-emerald-50"
-        description={
-          <p className="text-[10px] font-medium text-slate-500">
-            WhatsApp, SMS, and Email active
-          </p>
-        }
-      />
+      {/* Conditional Rendering based on Variant */}
+      {variant === "admin" ? (
+        <StatCard
+          title="Active Channels"
+          value={activeChannels}
+          icon={Zap}
+          color="text-emerald-600"
+          bgColor="bg-emerald-50"
+          description={
+            <p className="text-[10px] font-medium text-slate-500">
+              WhatsApp, SMS, and Email
+            </p>
+          }
+        />
+      ) : (
+        <StatCard
+          title="Affected Classes"
+          value={classCount}
+          icon={BookOpen}
+          color="text-amber-600"
+          bgColor="bg-amber-50"
+          description={
+            <p className="text-[10px] font-medium text-slate-500">
+              Broadcast coverage across grades
+            </p>
+          }
+        />
+      )}
     </div>
   );
 };

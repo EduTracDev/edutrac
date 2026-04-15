@@ -228,6 +228,7 @@ export interface AnnouncementLog {
   recipientsCount: number;
 }
 
+export type AnnouncementCategory = "General" | "Urgent" | "Academic" | "Event";
 export type PaymentStatus = "Unpaid" | "Partial" | "Paid" | "Overdue";
 
 export interface PaymentEntry {
