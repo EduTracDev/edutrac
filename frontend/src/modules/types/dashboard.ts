@@ -228,6 +228,7 @@ export interface AnnouncementLog {
   recipientsCount: number;
 }
 
+export type AnnouncementCategory = "General" | "Urgent" | "Academic" | "Event";
 export type PaymentStatus = "Unpaid" | "Partial" | "Paid" | "Overdue";
 
 export interface PaymentEntry {
@@ -252,4 +253,21 @@ export interface FinancialRecord {
   status: PaymentStatus;
   category: "Tuition" | "Comprehensive" | "Special";
   history?: PaymentEntry[];
+}
+
+export type AssignmentStatus = "Draft" | "Published" | "Closed";
+
+export interface Assignment {
+  id: string;
+  title: string;
+  subject: string;
+  class: string;
+  dueDate: string;
+  status: AssignmentStatus;
+  submissions: {
+    turnedIn: number;
+    total: number;
+    graded: number;
+  };
+  points: number;
 }

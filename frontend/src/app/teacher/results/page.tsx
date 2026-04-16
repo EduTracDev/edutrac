@@ -34,7 +34,7 @@ interface ValidationSummary {
 
 type ClassScores = Record<string, ScoreSet>;
 
-export default function TeacherResultsPage() {
+export default function Page() {
   const myClasses = ["JSS 2 Gold", "SS 2 Science", "SS 3 Art"];
   const [selectedClass, setSelectedClass] = useState(myClasses[0]);
   const [searchQuery, setSearchQuery] = useState("");

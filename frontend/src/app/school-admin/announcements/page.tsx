@@ -1,7 +1,6 @@
 "use client";
 import { useState } from "react";
 import AdminLayout from "@/modules/school-admin/layout/AdminLayout";
-
 import { mockAnnouncementHistory } from "@/modules/constants/dashboard";
 import { AnnouncementTable } from "@/modules/school-admin/components/announcements/AnnouncementTable";
 import { AnnouncementLog } from "@/modules/types/dashboard";
@@ -17,6 +16,7 @@ export default function AnnouncementsPage() {
   return (
     <AdminLayout>
       <AnnouncementStats
+        variant="admin" // Explicitly setting this ensures 'Active Channels' shows
         totalSent={mockAnnouncementHistory.length}
         totalRecipients={totalRecipients}
         activeChannels={
