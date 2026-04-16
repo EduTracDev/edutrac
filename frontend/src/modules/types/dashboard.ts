@@ -254,3 +254,20 @@ export interface FinancialRecord {
   category: "Tuition" | "Comprehensive" | "Special";
   history?: PaymentEntry[];
 }
+
+export type AssignmentStatus = "Draft" | "Published" | "Closed";
+
+export interface Assignment {
+  id: string;
+  title: string;
+  subject: string;
+  class: string;
+  dueDate: string;
+  status: AssignmentStatus;
+  submissions: {
+    turnedIn: number;
+    total: number;
+    graded: number;
+  };
+  points: number;
+}

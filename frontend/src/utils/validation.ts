@@ -187,6 +187,19 @@ export const expenseSchema = yup.object().shape({
     .max(100, "Keep descriptions brief"),
 });
 
+export const assignmentSchema = yup.object({
+  title: yup
+    .string()
+    .required("Headline is required")
+    .min(5, "Title too short"),
+  description: yup.string().required("Instructions are required"),
+  targetClass: yup.string().required("Select a target class"),
+  points: yup.number().typeError("Points must be a number").required().min(0),
+  dueDate: yup.string().required("Deadline is required"),
+  dueTime: yup.string().required("Time is required"),
+  allowLateSubmission: yup.boolean().default(false),
+});
+
 export type ContactFormData = yup.InferType<typeof contactSchema>;
 export type RegisterFormData = yup.InferType<typeof registerSchema>;
 export type LoginFormData = yup.InferType<typeof loginSchema>;
@@ -196,3 +209,4 @@ export type TeacherFormData = yup.InferType<typeof teacherBaseSchema>;
 export type ParentFormData = yup.InferType<typeof parentBaseSchema>;
 export type TeacherRole = (typeof VALID_TEACHER_ROLES)[number];
 export type ProfileFormData = yup.InferType<typeof profileSchema>;
+export type AssignmentFormData = yup.InferType<typeof assignmentSchema>;
