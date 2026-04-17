@@ -8,10 +8,12 @@ export const ProfileHeader = ({
   name,
   email,
   role,
+  schoolName,
 }: {
   name: string;
   email: string;
   role: string;
+  schoolName?: string;
 }) => {
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [isUploading, setIsUploading] = useState(false);
@@ -100,20 +102,30 @@ export const ProfileHeader = ({
             <Camera size={18} />
           </button>
         </div>
+        <div className="text-center md:text-left flex-1">
+          {/* Name Row */}
+          <h1 className="text-2xl font-black text-slate-800 mb-1">{name}</h1>
 
-        {/* Text Details remain the same... */}
-        <div className="text-center md:text-left space-y-1">
-          <div className="flex items-center justify-center md:justify-start gap-2">
-            <h1 className="text-2xl md:text-3xl font-black text-slate-800 tracking-tight">
-              {name}
-            </h1>
-            <ShieldCheck className="text-emerald-500" size={20} />
-          </div>
-          <p className="text-slate-500 font-medium">{email}</p>
-          <div className="pt-2">
-            <span className="px-3 py-1 bg-[#923CF9]/10 text-[#923CF9] text-[10px] font-black uppercase tracking-widest rounded-full">
-              {role}
-            </span>
+          {/* Info Row: Role, School, and Email */}
+          <div className="flex flex-col md:flex-row md:items-center gap-x-4 gap-y-2">
+            {/* Role & School Group */}
+            <div className="flex items-center gap-2">
+              <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest">
+                {role}
+              </p>
+
+              {schoolName && (
+                <span className="text-[10px] font-black text-[#923CF9] bg-[#923CF9]/5 px-3 py-1 rounded-lg">
+                  @ {schoolName}
+                </span>
+              )}
+            </div>
+
+            {/* Separator Dot (Hidden on mobile) */}
+            <span className="hidden md:block w-1.5 h-1.5 bg-slate-100 rounded-full" />
+
+            {/* Email */}
+            <p className="text-xs font-medium text-slate-400">{email}</p>
           </div>
         </div>
       </div>

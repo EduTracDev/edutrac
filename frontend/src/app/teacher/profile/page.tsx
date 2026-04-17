@@ -28,7 +28,7 @@ export default function Page() {
               <Award className="text-[#923CF9]" size={20} />
               Personal Information
             </h2>
-            <ProfileForm />
+            <ProfileForm role="teacher" />
           </div>
 
           {/* Right: Academic Context (Sidebar) */}
