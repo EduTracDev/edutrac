@@ -41,8 +41,6 @@ export const SecuritySettings = ({
       <h2 className="text-sm font-black text-slate-400 uppercase tracking-widest mb-6 px-1">
         Security & Account
       </h2>
-
-      {/* Dynamic grid columns based on action count */}
       <div
         className={`grid grid-cols-1 ${actions.length === 3 ? "sm:grid-cols-3" : "sm:grid-cols-2"} gap-4`}
       >
