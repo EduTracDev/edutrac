@@ -271,3 +271,11 @@ export interface Assignment {
   };
   points: number;
 }
+
+export interface Ward {
+  id: string;
+  name: string;
+  class: string;
+  avatar?: string;
+  gender: "male" | "female";
+}

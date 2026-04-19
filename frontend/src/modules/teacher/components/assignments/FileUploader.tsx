@@ -7,11 +7,15 @@ import { Paperclip, X } from "lucide-react";
 interface FileUploaderProps {
   attachments: File[];
   setAttachments: React.Dispatch<React.SetStateAction<File[]>>;
+  label?: string; // Optional custom label
+  allowMultiple?: boolean;
 }
 
 export const FileUploader = ({
   attachments,
   setAttachments,
+  label = "Click to attach resources",
+  allowMultiple = true,
 }: FileUploaderProps) => {
   const fileInputRef = useRef<HTMLInputElement>(null);
 
@@ -32,7 +36,7 @@ export const FileUploader = ({
         type="file"
         ref={fileInputRef}
         className="hidden"
-        multiple
+        multiple={allowMultiple}
         onChange={handleFileChange}
       />
 
@@ -46,7 +50,7 @@ export const FileUploader = ({
         </div>
         <div className="text-center">
           <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest group-hover:text-slate-600">
-            Click to attach resources
+            {label}
           </p>
           <p className="text-[9px] text-slate-400 font-medium mt-1">
             PDF, DOCX, or Images (Max 10MB)
