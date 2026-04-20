@@ -5,8 +5,9 @@ import { AssignmentCard } from "@/modules/parent/components/learning/AssignmentC
 import { SubmitAssignmentModal } from "@/modules/parent/components/learning/SubmitAssignmentModal";
 import { Calendar } from "lucide-react";
 import { useState } from "react";
+import { EmptyState } from "@/modules/shared/EmptyState";
+import { ClipboardCheck } from "lucide-react";
 
-// 1. Define the interface to replace 'any'
 interface AssignmentTask {
   id: string;
   title: string;
@@ -16,8 +17,7 @@ interface AssignmentTask {
 export default function Page() {
   const { activeWard } = useWard();
   const [isModalOpen, setIsModalOpen] = useState(false);
-
-  // 2. Use the interface in the state
+  const pendingAssignments = [];
   const [activeTask, setActiveTask] = useState<AssignmentTask | null>(null);
 
   const handleOpenSubmit = (task: AssignmentTask) => {
@@ -54,35 +54,45 @@ export default function Page() {
               4 Total
             </span>
           </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <AssignmentCard
-              subject="Mathematics"
-              title="Quadratic Equations: Exercise 4.2"
-              dueDate="Tomorrow, 8:00 AM"
-              status="pending"
-              onAction={() =>
-                handleOpenSubmit({
-                  id: "1",
-                  title: "Quadratic Equations",
-                  subject: "Mathematics",
-                })
-              }
+          {pendingAssignments.length > 0 ? (
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <AssignmentCard
+                subject="Mathematics"
+                title="Quadratic Equations: Exercise 4.2"
+                dueDate="Tomorrow, 8:00 AM"
+                status="pending"
+                onAction={() =>
+                  handleOpenSubmit({
+                    id: "1",
+                    title: "Quadratic Equations",
+                    subject: "Mathematics",
+                  })
+                }
+              />
+              <AssignmentCard
+                subject="English Language"
+                title="Argumentative Essay: The Role of AI"
+                dueDate="Friday, 12:00 PM"
+                status="pending"
+                onAction={() =>
+                  handleOpenSubmit({
+                    id: "2",
+                    title: "Argumentative Essay",
+                    subject: "English Language",
+                  })
+                }
+              />
+            </div>
+          ) : (
+            <EmptyState
+              icon={ClipboardCheck}
+              title="All Caught Up!"
+              description={`There are no pending assignments for ${activeWard.name} at the moment. Check back later for new classwork.`}
+              actionLabel="Refresh Tasks"
+              onActionClick={() => window.location.reload()}
+              isSearch={false}
             />
-            <AssignmentCard
-              subject="English Language"
-              title="Argumentative Essay: The Role of AI"
-              dueDate="Friday, 12:00 PM"
-              status="pending"
-              onAction={() =>
-                handleOpenSubmit({
-                  id: "2",
-                  title: "Argumentative Essay",
-                  subject: "English Language",
-                })
-              }
-            />
-          </div>
+          )}
         </div>
 
         <div className="space-y-6">
@@ -114,8 +124,6 @@ export default function Page() {
           </div>
         </div>
       </div>
-
-      {/* 3. Replaced 'selectedAssignment' with 'activeTask' and added 'isOpen' */}
       <SubmitAssignmentModal
         isOpen={isModalOpen}
         assignment={activeTask}

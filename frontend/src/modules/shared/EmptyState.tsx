@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import { SearchX, UserPlus, RefreshCcw } from "lucide-react";
+import { SearchX, UserPlus, RefreshCcw, LucideIcon } from "lucide-react";
 
 interface EmptyStateProps {
   title: string;
@@ -10,6 +10,7 @@ interface EmptyStateProps {
   actionLabel?: string;
   onReset?: () => void;
   isSearch?: boolean;
+  icon?: LucideIcon;
 }
 
 export const EmptyState = ({
@@ -19,6 +20,7 @@ export const EmptyState = ({
   actionLabel,
   onReset,
   isSearch = true,
+  icon: Icon = SearchX,
 }: EmptyStateProps) => {
   return (
     <div className="flex flex-col items-center justify-center py-24 px-6 bg-white rounded-[32px] border border-dashed border-slate-200 animate-in fade-in zoom-in-95 duration-500">
@@ -26,7 +28,7 @@ export const EmptyState = ({
       <div className="relative mb-6">
         <div className="absolute inset-0 bg-[#923CF9]/10 blur-2xl rounded-full" />
         <div className="relative bg-white border border-slate-100 p-8 rounded-[32px] shadow-sm">
-          <SearchX className="text-[#923CF9]" size={48} strokeWidth={1.5} />
+          <Icon className="text-[#923CF9]" size={48} strokeWidth={1.5} />
         </div>
       </div>
 
