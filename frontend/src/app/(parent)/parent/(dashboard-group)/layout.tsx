@@ -18,7 +18,7 @@ const MOCK_WARDS: Ward[] = [
   },
 ];
 
-export default function RootParentLayout({
+export default function DashboardGroupLayout({
   children,
 }: {
   children: React.ReactNode;

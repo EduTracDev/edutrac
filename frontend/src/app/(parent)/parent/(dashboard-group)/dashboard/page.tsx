@@ -6,6 +6,7 @@ import { StudentIdentityCard } from "@/modules/parent/components/dashboard/Stude
 import { TuitionWidget } from "@/modules/parent/components/dashboard/TuitionWidget";
 import { StaffWidget } from "@/modules/parent/components/dashboard/StaffWidget";
 import { QuickActions } from "@/modules/parent/components/dashboard/QuickActions";
+import { AcademicPulse } from "@/modules/parent/components/dashboard/AcademicPulse";
 import Modal from "@/modules/school-admin/components/dashboard/Modal";
 import { FileUploader } from "@/modules/teacher/components/assignments/FileUploader";
 import { Send, Loader2 } from "lucide-react";
@@ -46,25 +47,11 @@ export default function Page() {
       <QuickActions />
       {/* Contacts & Academic Pulse */}
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
+        <AcademicPulse activeWard={activeWard} />
+
         <div className="lg:col-span-4">
           <StaffWidget />
         </div>
-        {/* <div className="lg:col-span-8 bg-white rounded-[32px] border border-slate-100 p-8 flex flex-col items-center justify-center text-center shadow-sm relative overflow-hidden">
-          <div className="absolute inset-0 opacity-[0.03] pointer-events-none bg-[url('/grid.svg')]" />
-
-          <div className="relative space-y-4">
-            <div className="w-16 h-16 bg-[#923CF9]/5 rounded-full flex items-center justify-center mx-auto">
-              <div className="w-8 h-8 border-2 border-dashed border-[#923CF9]/30 rounded-lg animate-pulse" />
-            </div>
-            <p className="text-slate-400 font-medium italic text-sm max-w-sm">
-              <span className="text-[#923CF9] font-black not-italic uppercase tracking-tighter">
-                Academic Pulse:
-              </span>
-              <br />
-              Pending assignments and timetable overview coming soon
-            </p>
-          </div>
-        </div> */}
       </div>
       <Modal
         isOpen={isReceiptModalOpen}

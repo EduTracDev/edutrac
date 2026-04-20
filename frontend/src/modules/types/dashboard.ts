@@ -278,4 +278,5 @@ export interface Ward {
   class: string;
   avatar?: string;
   gender: "male" | "female";
+  activeWard?: boolean;
 }
