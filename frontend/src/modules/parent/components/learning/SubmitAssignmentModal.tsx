@@ -3,8 +3,8 @@
 
 import { useState } from "react";
 import { Send, Loader2 } from "lucide-react";
-import Modal from "@/modules/school-admin/components/dashboard/Modal";
-import { FileUploader } from "@/modules/teacher/components/assignments/FileUploader";
+import Modal from "@/modules/shared/component/Modal";
+import { FileUploader } from "@/modules/shared/component/FileUploader";
 
 interface SubmitAssignmentModalProps {
   isOpen: boolean;

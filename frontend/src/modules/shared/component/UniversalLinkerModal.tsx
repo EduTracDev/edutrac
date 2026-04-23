@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState, useMemo } from "react";
-import { Modal } from "@/modules/shared/component/modal";
+import Modal from "@/modules/shared/component/Modal";
 import { Search, UserPlus, Check, User, Users } from "lucide-react";
 import { Student, Parent } from "@/modules/types/dashboard";
 import Image from "next/image";
@@ -87,7 +87,11 @@ export const UniversalLinkerModal = ({
   };
 
   return (
-    <Modal isOpen={isOpen} onClose={onClose}>
+    <Modal
+      isOpen={isOpen}
+      onClose={onClose}
+      title='Link {mode === "find-student" ? "Student" : "Parent"}'
+    >
       <div className="p-6 space-y-6 w-full max-w-md md:min-w-[480px]">
         <div>
           <h2 className="text-xl font-black text-slate-800 flex items-center gap-2">

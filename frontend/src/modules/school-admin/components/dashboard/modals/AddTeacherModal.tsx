@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import Modal from "../Modal";
+import Modal from "../../../../shared/component/Modal";
 import { UserPlus, Users } from "lucide-react";
 import { SingleTeacherInviteForm } from "./SingleTeacherInviteForm";
 import { BulkTeacherUploadForm } from "./BulkTeacherUploadForm";

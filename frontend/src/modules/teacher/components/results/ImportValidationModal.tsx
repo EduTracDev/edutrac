@@ -1,6 +1,6 @@
 "use client";
 import { UserPlus, CheckCircle2, AlertTriangle, Info } from "lucide-react";
-import Modal from "@/modules/school-admin/components/dashboard/Modal";
+import Modal from "@/modules/shared/component/Modal";
 
 interface ValidationSummary {
   totalRows: number;

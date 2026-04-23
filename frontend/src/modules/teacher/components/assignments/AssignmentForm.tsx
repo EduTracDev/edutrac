@@ -3,7 +3,7 @@ import { useRef } from "react";
 import { UseFormRegister, FieldErrors } from "react-hook-form";
 import { Paperclip, X } from "lucide-react";
 import { AssignmentFormData } from "@/utils/validation";
-import { FileUploader } from "./FileUploader";
+import { FileUploader } from "../../../shared/component/FileUploader";
 
 interface FormProps {
   register: UseFormRegister<AssignmentFormData>;

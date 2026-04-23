@@ -1,4 +1,4 @@
-import Modal from "../Modal";
+import Modal from "../../../../shared/component/Modal";
 interface AnnouncementModalProps {
   isOpen: boolean;
   onClose: () => void;

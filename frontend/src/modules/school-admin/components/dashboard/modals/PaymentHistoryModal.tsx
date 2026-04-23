@@ -1,5 +1,5 @@
 // @/modules/school-admin/components/finance/modals/PaymentHistoryModal.tsx
-import Modal from "../../dashboard/Modal";
+import Modal from "../../../../shared/component/Modal";
 import { PaymentEntry } from "@/modules/types/dashboard";
 import { formatCurrency } from "@/utils/currency";
 import { CheckCircle2, CreditCard, Landmark, User } from "lucide-react";

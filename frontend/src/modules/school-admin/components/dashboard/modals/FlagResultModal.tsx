@@ -1,4 +1,4 @@
-import Modal from "../Modal";
+import Modal from "../../../../shared/component/Modal";
 import { useState } from "react";
 
 interface FlagResultModalProps {

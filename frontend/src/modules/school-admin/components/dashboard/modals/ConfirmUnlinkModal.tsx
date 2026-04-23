@@ -1,7 +1,7 @@
 "use client";
 
 import { X, AlertCircle } from "lucide-react";
-import { Modal } from "@/modules/shared/component/modal";
+import Modal from "@/modules/shared/component/Modal";
 
 interface Props {
   isOpen: boolean;
@@ -21,7 +21,7 @@ export const ConfirmUnlinkModal = ({
   if (!isOpen) return null;
 
   return (
-    <Modal isOpen={isOpen} onClose={onClose}>
+    <Modal isOpen={isOpen} onClose={onClose} title="Unlink Ward?">
       <div className="relative bg-white w-full max-w-sm rounded-[32px] p-8 shadow-2xl animate-in fade-in zoom-in duration-200">
         <div className="flex flex-col items-center text-center">
           <div className="h-16 w-16 bg-red-50 text-red-500 rounded-full flex items-center justify-center mb-4">
