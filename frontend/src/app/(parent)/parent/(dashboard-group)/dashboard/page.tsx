@@ -7,8 +7,8 @@ import { TuitionWidget } from "@/modules/parent/components/dashboard/TuitionWidg
 import { StaffWidget } from "@/modules/parent/components/dashboard/StaffWidget";
 import { QuickActions } from "@/modules/parent/components/dashboard/QuickActions";
 import { AcademicPulse } from "@/modules/parent/components/dashboard/AcademicPulse";
-import Modal from "@/modules/school-admin/components/dashboard/Modal";
-import { FileUploader } from "@/modules/teacher/components/assignments/FileUploader";
+import Modal from "@/modules/shared/component/Modal";
+import { FileUploader } from "@/modules/shared/component/FileUploader";
 import { Send, Loader2 } from "lucide-react";
 
 export default function Page() {

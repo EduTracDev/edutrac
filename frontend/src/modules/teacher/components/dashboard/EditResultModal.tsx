@@ -1,7 +1,7 @@
 "use client";
 import React, { useState, useEffect } from "react";
 import { AlertCircle, Save } from "lucide-react";
-import Modal from "@/modules/school-admin/components/dashboard/Modal";
+import Modal from "@/modules/shared/component/Modal";
 
 export interface FlaggedResult {
   id: string;

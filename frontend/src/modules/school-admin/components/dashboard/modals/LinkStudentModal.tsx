@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState, useMemo } from "react";
-import { Modal } from "@/modules/shared/component/modal";
+import Modal from "@/modules/shared/component/Modal";
 import { Search, UserPlus, Check, User } from "lucide-react";
 import { Student, Parent } from "@/modules/types/dashboard";
 import Image from "next/image";
@@ -57,7 +57,7 @@ export const LinkStudentModal = ({
   };
 
   return (
-    <Modal isOpen={isOpen} onClose={onClose}>
+    <Modal isOpen={isOpen} onClose={onClose} title="Link Student">
       {/* Set a consistent width here */}
       <div className="p-6 space-y-6 w-full max-w-md md:min-w-[450px]">
         <div>

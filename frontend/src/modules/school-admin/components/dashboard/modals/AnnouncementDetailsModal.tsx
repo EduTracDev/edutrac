@@ -1,5 +1,5 @@
 // @/modules/school-admin/components/announcements/modals/AnnouncementDetailsModal.tsx
-import Modal from "../../dashboard/Modal";
+import Modal from "../../../../shared/component/Modal";
 import { AnnouncementLog } from "@/modules/types/dashboard";
 import { ChannelIcon } from "@/modules/school-admin/components/announcements/AnnouncementTableRow";
 import { Calendar, User, Users } from "lucide-react";

@@ -2,7 +2,7 @@
 import { useState, useMemo, useEffect } from "react";
 import { Send, Phone, Mail, AlertTriangle, X, Users } from "lucide-react";
 import { Student, Parent } from "@/modules/types/dashboard";
-import Modal from "../Modal";
+import Modal from "../../../../shared/component/Modal";
 
 interface ParentAlertModalProps {
   isOpen: boolean;

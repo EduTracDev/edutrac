@@ -6,7 +6,7 @@ import { StudentTable } from "@/modules/school-admin/components/students/Student
 import { ClassFilterBar } from "@/modules/school-admin/components/classes/ClassFilterBar";
 import { ClassCardSkeleton } from "@/modules/school-admin/components/classes/ClassCardSkeleton";
 import { ClassCard } from "@/modules/school-admin/components/classes/ClassCard";
-import Modal from "@/modules/school-admin/components/dashboard/Modal";
+import Modal from "@/modules/shared/component/Modal";
 
 // Define local type
 type ClassCategory = "All" | "Junior" | "Senior" | "Primary";

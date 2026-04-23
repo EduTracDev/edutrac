@@ -1,7 +1,7 @@
 import { useForm } from "react-hook-form";
 import { useEffect } from "react";
 import { Student } from "@/modules/types/dashboard";
-import Modal from "../Modal";
+import Modal from "../../../../shared/component/Modal";
 
 interface EditStudentFormValues {
   firstName: string;
