@@ -43,8 +43,8 @@ export default function ParentSidebar({ sidebarOpen, setSidebarOpen }: Props) {
       icon: BookOpenCheck,
     },
     {
-      name: "Performance",
-      href: ParentRoutes.performance,
+      name: "Results",
+      href: ParentRoutes.results,
       icon: BarChart3,
     },
     {
