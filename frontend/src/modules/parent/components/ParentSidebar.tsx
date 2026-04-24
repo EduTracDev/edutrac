@@ -8,6 +8,7 @@ import {
   BookOpenCheck,
   BarChart3,
   CalendarCheck2,
+  CalendarDays,
   Wallet,
   Megaphone,
   Settings,
@@ -51,6 +52,11 @@ export default function ParentSidebar({ sidebarOpen, setSidebarOpen }: Props) {
       name: "Attendance",
       href: ParentRoutes.attendance,
       icon: CalendarCheck2,
+    },
+    {
+      name: "Calendar",
+      href: ParentRoutes.calendar,
+      icon: CalendarDays,
     },
     {
       name: "Billing",
