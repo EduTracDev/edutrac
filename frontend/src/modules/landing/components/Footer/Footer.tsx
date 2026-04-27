@@ -3,7 +3,15 @@
 import React from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { Facebook, Instagram, Twitter, ChevronRight } from "lucide-react";
+import {
+  FaFacebookF,
+  FaLinkedin,
+  FaXTwitter,
+  FaInstagram,
+  FaChevronRight,
+  FaTiktok,
+} from "react-icons/fa6";
+
 import logo from "@/modules/shared/assets/images/white-logo.png";
 import image1 from "@/modules/shared/assets/images/footer-gallery-1.png";
 import image2 from "@/modules/shared/assets/images/footer-gallery-2.png";
@@ -19,7 +27,7 @@ export default function Footer() {
   const services = [
     { name: "About", href: LandingRoutes.about },
     { name: "Pricing", href: LandingRoutes.pricing },
-    { name: "Product", href: LandingRoutes.product },
+    // { name: "Product", href: LandingRoutes.product },
     { name: "Contact", href: LandingRoutes.contact },
   ];
 
@@ -53,18 +61,28 @@ export default function Footer() {
             <div className="flex gap-4">
               <SocialIcon
                 href="#"
-                icon={<Facebook size={18} />}
+                icon={<FaFacebookF size={18} />}
                 label="Facebook"
               />
               <SocialIcon
                 href="#"
-                icon={<Instagram size={18} />}
+                icon={<FaLinkedin size={18} />}
                 label="Instagram"
               />
               <SocialIcon
                 href="#"
-                icon={<Twitter size={18} />}
+                icon={<FaXTwitter size={18} />}
                 label="Twitter"
+              />
+              <SocialIcon
+                href="#"
+                icon={<FaInstagram size={18} />}
+                label="Twitter"
+              />
+              <SocialIcon
+                href="#"
+                icon={<FaTiktok size={18} />}
+                label="TikTok"
               />
             </div>
           </div>
@@ -132,7 +150,7 @@ function FooterLink({ href, text }: { href: string; text: string }) {
         href={href}
         className="group flex items-center text-gray-400 hover:text-white transition-colors text-sm"
       >
-        <ChevronRight
+        <FaChevronRight
           size={14}
           className="mr-2 text-white group-hover:translate-x-1 transition-transform"
         />
