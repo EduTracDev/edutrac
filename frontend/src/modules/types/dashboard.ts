@@ -280,3 +280,12 @@ export interface Ward {
   gender: "male" | "female";
   activeWard?: boolean;
 }
+
+export interface School {
+  name: string;
+  slug: string;
+  address: string;
+  phone: string;
+  logo: File | string | null;
+  plan?: "basic" | "pro" | "ultra";
+}
