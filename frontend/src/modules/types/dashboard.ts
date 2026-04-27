@@ -281,11 +281,11 @@ export interface Ward {
   activeWard?: boolean;
 }
 
-interface School {
-  adminUid: string;
+export interface School {
   name: string;
-  slug: string; // generated from name: "green-tree"
-  logoUrl: string;
-  plan: "basic" | "pro" | "enterprise";
-  theme: { primary: string; secondary: string };
+  slug: string;
+  address: string;
+  phone: string;
+  logo: File | string | null;
+  plan?: "basic" | "pro" | "ultra";
 }
