@@ -280,3 +280,12 @@ export interface Ward {
   gender: "male" | "female";
   activeWard?: boolean;
 }
+
+interface School {
+  adminUid: string;
+  name: string;
+  slug: string; // generated from name: "green-tree"
+  logoUrl: string;
+  plan: "basic" | "pro" | "enterprise";
+  theme: { primary: string; secondary: string };
+}
