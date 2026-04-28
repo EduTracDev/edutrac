@@ -24,10 +24,12 @@ const passwordSchema = yup
   );
 
 //  AUTH & PUBLIC SCHEMAS
-export const loginSchema = yup.object().shape({
-  email: emailSchema,
-  password: yup.string().required("Password is required"),
-});
+export const loginSchema = yup
+  .object({
+    email: emailSchema,
+    password: passwordSchema,
+  })
+  .required();
 
 export const registerSchema = yup.object().shape({
   schoolName: yup.string().required("School name is required"),
