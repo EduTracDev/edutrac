@@ -2,14 +2,14 @@
 
 import { PlanSelection } from "@/modules/onboarding/components/PlanSelection";
 import { useRouter } from "next/navigation";
+import { OnboardingRoutes } from "@/routes/onboardingRoutes";
 
 export default function PlanSelectionPage() {
   const router = useRouter();
 
   const handleSelect = (planId: string) => {
-    //  Save selected plan to global state/localStorage
     console.log("Selected plan:", planId);
-    router.push("/onboarding/school-info");
+    router.push(OnboardingRoutes.plan);
   };
 
   return (

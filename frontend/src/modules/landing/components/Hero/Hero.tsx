@@ -6,6 +6,7 @@ import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 import { motion } from "framer-motion"; // Optional: adds a smooth entrance
 import dashboardScreenshot from "@/modules/shared/assets/images/DASHBOARD.png";
+import { OnboardingRoutes } from "@/routes/onboardingRoutes";
 
 interface HeroProps {
   title: string;
@@ -47,7 +48,7 @@ export default function Hero({
 
             <div className="pt-4">
               <Link
-                href={buttonLink}
+                href={OnboardingRoutes.plan}
                 className="group inline-flex items-center gap-3 bg-[#923CF9] text-white px-8 py-4 rounded-full font-bold transition-all hover:bg-[#7b2dd1] hover:shadow-xl hover:shadow-purple-200 active:scale-95 shadow-lg"
               >
                 {buttonText}

@@ -5,6 +5,7 @@ import { motion } from "framer-motion";
 import { Check } from "lucide-react";
 import Link from "next/link";
 import { AuthRoutes } from "@/routes/auth.routes";
+import { OnboardingRoutes } from "@/routes/onboardingRoutes";
 
 interface Plan {
   id: string;
@@ -106,7 +107,7 @@ export default function PricingGrids({
                 ))}
               </ul>
               <Link
-                href={`${AuthRoutes.register}?plan=${plan.id}`}
+                href={OnboardingRoutes.plan}
                 className={`w-full py-4 rounded-xl font-bold transition-all text-center block ${
                   plan.isPopular
                     ? "bg-[#923CF9] text-white hover:bg-[#7a2dd4] shadow-lg shadow-[#923CF9]/20"

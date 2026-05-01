@@ -3,7 +3,7 @@
 import React from "react";
 import Link from "next/link";
 import { Check } from "lucide-react";
-import { AuthRoutes } from "@/routes/auth.routes";
+import { OnboardingRoutes } from "@/routes/onboardingRoutes";
 
 interface PricingPlan {
   id: string;
@@ -20,27 +20,6 @@ export default function Pricing({ items }: { items: PricingPlan[] }) {
     <section className="py-20 bg-white" aria-labelledby="pricing-heading">
       <div className="max-w-7xl mx-auto px-6">
         {/* Header */}
-        {/* <div className="text-center mb-16">
-          <span className="inline-block px-4 py-1 mb-4 text-xs font-bold uppercase tracking-widest text-[#923CF9] bg-[#923CF9]/10 rounded-md">
-            PRICING
-          </span>
-          <h2
-            id="pricing-heading"
-            className="text-3xl md:text-5xl font-extrabold text-[#0F172A] mb-8"
-          >
-            Choose Your Plan
-          </h2>
-
-         
-          <div className="inline-flex items-center bg-gray-50 p-1.5 rounded-2xl border border-gray-100">
-            <span className="px-8 py-2.5 text-sm font-bold text-gray-400">
-              Monthly
-            </span>
-            <span className="px-8 py-2.5 text-sm font-bold bg-[#923CF9] text-white rounded-xl shadow-lg">
-              Yearly
-            </span>
-          </div>
-        </div> */}
         <div className="text-center mb-16">
           <span className="inline-block px-4 py-1 mb-4 text-xs font-bold uppercase tracking-widest text-[#923CF9] bg-[#923CF9]/10 rounded-md">
             PRICING
@@ -64,7 +43,7 @@ export default function Pricing({ items }: { items: PricingPlan[] }) {
           {items.map((plan) => (
             <Link
               key={plan.id}
-              href={`${AuthRoutes.register}?plan=${plan.id}`}
+              href={OnboardingRoutes.plan}
               className={`relative flex flex-col rounded-[40px] transition-all duration-500 hover:scale-[1.02] group ${
                 plan.isPopular
                   ? "bg-[#923CF9] text-white py-16 shadow-2xl z-20 scale-105"

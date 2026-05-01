@@ -16,6 +16,7 @@ import about1 from "@/modules/shared/assets/images/about-1.png";
 import about2 from "@/modules/shared/assets/images/about-2.png";
 import about3 from "@/modules/shared/assets/images/about-3.png";
 import FeatureHub from "@/modules/landing/components/Feature/FeatureHub";
+import { OnboardingRoutes } from "@/routes/onboardingRoutes";
 
 export const metadata: Metadata = {
   title:
@@ -63,7 +64,7 @@ export default function HomePage() {
       description:
         "EduTrac was born from a vision to revolutionize education through technology.We understand the challenges schools face in managing operations, engaging students, and empowering educators. Our mission is to provide a comprehensive, user-friendly platform that streamlines school management, enhances communication, and fosters a collaborative learning environment. With EduTrac, we aim to transform the educational experience for administrators, teachers, students, and parents alike.",
       buttonText: "Get Started",
-      buttonLink: AuthRoutes.register,
+      buttonLink: OnboardingRoutes.plan,
     },
     featureHub: {
       badge: "Core Features",
@@ -159,7 +160,7 @@ export default function HomePage() {
     ],
     navigation: {
       buttonText: "Sign Up",
-      buttonLink: AuthRoutes.register,
+      buttonLink: OnboardingRoutes.plan,
     },
 
     freeTrial: {
@@ -225,8 +226,8 @@ export default function HomePage() {
     ],
     pricing: [
       {
-        id: "free",
-        name: "Free",
+        id: "basic",
+        name: "Basic",
         description: "Have a go and test your superpowers",
         price: "0",
         features: [
@@ -238,8 +239,8 @@ export default function HomePage() {
         ],
       },
       {
-        id: "basic",
-        name: "Basic",
+        id: "pro",
+        name: "Pro",
         description:
           "For Growing Schools: Simplify Fee Management, Track Student Progress, and Communicate Efficiently with Parents.",
         price: "8,000",
@@ -256,8 +257,8 @@ export default function HomePage() {
         ],
       },
       {
-        id: "premium",
-        name: "Premium",
+        id: "ultra",
+        name: "Ultra",
         description: "Unveil new superpowers and join the Design League",
         price: "16,000",
         features: [

@@ -8,6 +8,7 @@ import Navbar from "@/modules/landing/components/Navbar/Navbar";
 import FreeTrial from "@/modules/landing/components/FreeTrial/FreeTrial";
 import { AuthRoutes } from "@/routes/auth.routes";
 import FinalCTA from "@/modules/landing/components/PricingComponents/FinalCTA";
+import { OnboardingRoutes } from "@/routes/onboardingRoutes";
 
 export const metadata: Metadata = {
   title: "Pricing | EduTrac – Affordable School Management Plans",
@@ -55,8 +56,8 @@ export default function PricingPage() {
       },
 
       {
-        id: "enterprise",
-        name: "Enterprise",
+        id: "ultra",
+        name: "Ultra",
         description: "Tailored solutions for large multi-campus institutions.",
         price: "Custom",
 
@@ -81,32 +82,32 @@ export default function PricingPage() {
               name: "Student Management",
               basic: true,
               pro: true,
-              enterprise: true,
+              ultra: true,
             },
-            { name: "Attendance", basic: true, pro: true, enterprise: true },
+            { name: "Attendance", basic: true, pro: true, ultra: true },
             {
               name: "Exam Management",
               basic: false,
               pro: true,
-              enterprise: true,
+              ultra: true,
             },
             {
               name: "Custom Domain",
               basic: false,
               pro: false,
-              enterprise: true,
+              ultra: true,
             },
           ],
         },
         {
           name: "Support",
           features: [
-            { name: "Help Center", basic: true, pro: true, enterprise: true },
+            { name: "Help Center", basic: true, pro: true, ultra: true },
             {
               name: "Response Time",
               basic: "48h",
               pro: "12h",
-              enterprise: "Instant",
+              ultra: "Instant",
             },
           ],
         },
@@ -137,7 +138,7 @@ export default function PricingPage() {
       title: "Ready to transform your institution?",
       subtitle: "Join over 1,200 schools already growing with EduTrac.",
       buttonText: "Get Started Now",
-      buttonLink: AuthRoutes.register,
+      buttonLink: OnboardingRoutes.plan,
     },
     freeTrial: {
       title: "Ready to Simplify Your Learning Management?",
@@ -148,7 +149,7 @@ export default function PricingPage() {
   };
   return (
     <Box>
-      <Navbar buttonText="Get Started" buttonLink={AuthRoutes.register} />
+      <Navbar buttonText="Get Started" buttonLink={OnboardingRoutes.plan} />
       <PricingGrids
         badge="Pricing Plans"
         title="Simple, Transparent Pricing"
