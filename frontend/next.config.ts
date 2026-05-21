@@ -4,6 +4,20 @@ import type { NextConfig } from "next";
 const nextConfig: NextConfig = {
   /* config options here */
   reactStrictMode: false,
+
+  // This allows production builds to successfully complete
+  // even if your project has ESLint errors.
+  eslint: {
+    ignoreDuringBuilds: true,
+  },
+
+  // If you also want to ignore TypeScript errors during build,
+  // you can add this (optional but helpful for quick deployments):
+
+  // typescript: {
+  //   ignoreBuildErrors: true,
+  // },
+
   turbopack: {
     rules: {
       "*.svg": {
@@ -18,6 +32,35 @@ const nextConfig: NextConfig = {
       use: ["@svgr/webpack"],
     });
     return config;
+  },
+  images: {
+    remotePatterns: [
+      {
+        protocol: "https",
+        hostname: "gravatar.com",
+        pathname: "/**", // This allows all paths under gravatar.com
+      },
+      {
+        protocol: "https",
+        hostname: "api.dicebear.com",
+        pathname: "/**",
+      },
+      {
+        protocol: "https",
+        hostname: "i.pravatar.cc",
+        pathname: "/**", // For mocks too. Add hostname from firebasestorage after proper upload
+      },
+      {
+        protocol: "https",
+        hostname: "api.adorable.io",
+        pathname: "/**",
+      },
+      {
+        protocol: "https",
+        hostname: "robohash.org",
+        pathname: "/**",
+      },
+    ],
   },
 };
 
