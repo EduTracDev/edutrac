@@ -14,7 +14,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Contact EduTrac Support – We're Here to Help",
     description:
-      "Speak with our experts today. Whether you need technical support or a custom enterprise quote, we're just a message away,
+      "Speak with our experts today. Whether you need technical support or a custom enterprise quote, we're just a message away.",
   },
 };
 
