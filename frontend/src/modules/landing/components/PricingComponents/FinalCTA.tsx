@@ -1,4 +1,5 @@
 "use client";
+import { OnboardingRoutes } from "@/routes/onboardingRoutes";
 import Link from "next/link";
 
 interface FinalCTAProps {
@@ -25,7 +26,7 @@ export default function FinalCTA({
           <h2 className="text-3xl md:text-5xl font-black">{title}</h2>
           <p className="text-white/80 text-lg max-w-2xl mx-auto">{subtitle}</p>
           <Link
-            href={buttonLink}
+            href={OnboardingRoutes.plan}
             className="inline-block bg-white text-[#923CF9] px-10 py-5 rounded-2xl font-black text-lg hover:scale-105 transition-transform shadow-lg"
           >
             {buttonText}

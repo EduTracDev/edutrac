@@ -7,7 +7,7 @@ interface Feature {
   name: string;
   basic: boolean | string;
   pro: boolean | string;
-  enterprise: boolean | string;
+  ultra: boolean | string;
 }
 
 interface Category {
@@ -69,7 +69,7 @@ export default function PlanComparison({
                     <div className="absolute top-0 left-0 w-full h-1 bg-[#923CF9]" />
                   </th>
                   <th className="py-8 px-6 text-xl font-black text-gray-900 bg-white">
-                    Enterprise
+                    Ultra
                   </th>
                 </tr>
               </thead>
@@ -99,7 +99,7 @@ export default function PlanComparison({
                         {renderValue(feature.basic)}
                       </td>
                       <td className="py-5 px-6">
-                        {renderValue(feature.enterprise)}
+                        {renderValue(feature.ultra)}
                       </td>
                     </tr>
                   ))}
@@ -138,7 +138,7 @@ export default function PlanComparison({
                           <p className="text-[10px] text-gray-400 font-bold uppercase mb-1">
                             Ent.
                           </p>
-                          {renderValue(feature.enterprise)}
+                          {renderValue(feature.ultra)}
                         </div>
                       </div>
                     </div>

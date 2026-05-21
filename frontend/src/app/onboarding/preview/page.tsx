@@ -1,12 +1,9 @@
-// app/onboarding/preview/page.tsx
 "use client";
 
-import { useEffect, useState } from "react";
-
-import { School } from "@/modules/types/dashboard";
 import { LandingPagePreview } from "@/modules/onboarding/components/LandingPagePreview";
 import { useRouter } from "next/navigation";
 import { useOnboarding } from "@/modules/context/onbooardingContext";
+import { OnboardingRoutes } from "@/routes/onboardingRoutes";
 
 export default function PreviewPage() {
   const { schoolData } = useOnboarding();
@@ -16,7 +13,7 @@ export default function PreviewPage() {
     return (
       <div className="min-h-screen flex items-center justify-center bg-slate-50">
         <button
-          onClick={() => router.push("/onboarding/school-info")}
+          onClick={() => router.push(OnboardingRoutes.schoolInfo)}
           className="font-black text-[#923CF9] uppercase tracking-widest"
         >
           ← Return to Setup
