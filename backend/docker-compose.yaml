@@ -1,0 +1,30 @@
+version: '3.0'
+services:
+  edutrac-lms:
+    image: postgres:18
+    container_name: edutrac-lms
+    restart: always
+    ports:
+      - 5431:5432
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: edutrac-db
+    volumes:
+      - dev-db-data:/var/lib/postgresql
+
+  test-service-edutrac:
+    image: postgres:18
+    container_name: test-service-edutrac
+    restart: always
+    ports:
+      - 5437:5432
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: test-db
+    volumes:
+      - test-db-data:/var/lib/postgresql
+        
+volumes:
+  dev-db-data:
