@@ -2,14 +2,14 @@
 
 import { PlanSelection } from "@/modules/onboarding/components/PlanSelection";
 import { useRouter } from "next/navigation";
+import { OnboardingRoutes } from "@/routes/onboardingRoutes";
 
 export default function PlanSelectionPage() {
   const router = useRouter();
 
   const handleSelect = (planId: string) => {
-    //  Save selected plan to global state/localStorage
     console.log("Selected plan:", planId);
-    router.push("/onboarding/school-info");
+    router.push(OnboardingRoutes.schoolInfo);
   };
 
   return (
@@ -19,8 +19,9 @@ export default function PlanSelectionPage() {
           Choose your power.
         </h1>
         <p className="text-slate-400 font-medium leading-relaxed">
-          Select the plan that fits your school&apos;s current size. You can
-          upgrade or downgrade anytime as you grow.
+          Select the plan that fits your school&apos;s current size.You can
+          upgrade or downgrade anytime as you grow. No hidden fees, no
+          surprises. Just transparent pricing that scales with you.
         </p>
       </div>
 
