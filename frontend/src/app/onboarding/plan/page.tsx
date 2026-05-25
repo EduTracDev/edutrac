@@ -9,7 +9,7 @@ export default function PlanSelectionPage() {
 
   const handleSelect = (planId: string) => {
     console.log("Selected plan:", planId);
-    router.push(OnboardingRoutes.plan);
+    router.push(OnboardingRoutes.schoolInfo);
   };
 
   return (
