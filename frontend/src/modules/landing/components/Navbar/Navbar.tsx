@@ -25,7 +25,6 @@ export default function Navbar({
     { name: "Home", href: LandingRoutes.home },
     { name: "About", href: LandingRoutes.about },
     { name: "Pricing", href: LandingRoutes.pricing },
-    // { name: "Product", href: LandingRoutes.product },
     { name: "Contact", href: LandingRoutes.contact },
   ];
 

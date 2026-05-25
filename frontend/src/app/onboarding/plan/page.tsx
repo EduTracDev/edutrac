@@ -19,8 +19,9 @@ export default function PlanSelectionPage() {
           Choose your power.
         </h1>
         <p className="text-slate-400 font-medium leading-relaxed">
-          Select the plan that fits your school&apos;s current size. You can
-          upgrade or downgrade anytime as you grow.
+          Select the plan that fits your school&apos;s current size.You can
+          upgrade or downgrade anytime as you grow. No hidden fees, no
+          surprises. Just transparent pricing that scales with you.
         </p>
       </div>
 
