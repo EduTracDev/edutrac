@@ -1,9 +1,18 @@
 import { Module } from '@nestjs/common';
 import { AuthController } from './auth.controller';
-import { AuthService } from './auth.service';
+import { AuthService } from './services/auth.service';
+import { JwtModule } from "@nestjs/jwt";
+import { JwtStrategy } from './strategy/jwt.strategy';
+import { MailModule } from '../mail/mail.module';
+import {UserAuthController} from './controllers/user-auth.controller';
+import {TenantAuthController} from './controllers/tenant-auth.controller';
+import { TokenService } from './services/token.service';
+import { RolesService } from './services/roles.service';
+import { TenantModule } from '../tenant/tenant.module';
 
 @Module({
-  controllers: [AuthController],
-  providers: [AuthService]
+  imports: [JwtModule.register({}), MailModule, TenantModule],
+  controllers: [AuthController, UserAuthController, TenantAuthController],
+  providers: [AuthService, TokenService, JwtStrategy, RolesService]
 })
-export class AuthModule {}
+export class AuthModule { }

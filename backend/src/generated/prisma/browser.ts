@@ -27,3 +27,33 @@ export type Tenant = Prisma.TenantModel
  * 
  */
 export type User = Prisma.UserModel
+/**
+ * Model PackagePlan
+ * 
+ */
+export type PackagePlan = Prisma.PackagePlanModel
+/**
+ * Model Subscription
+ * 
+ */
+export type Subscription = Prisma.SubscriptionModel
+/**
+ * Model Role
+ * 
+ */
+export type Role = Prisma.RoleModel
+/**
+ * Model UserRole
+ * 
+ */
+export type UserRole = Prisma.UserRoleModel
+/**
+ * Model VerificationToken
+ * 
+ */
+export type VerificationToken = Prisma.VerificationTokenModel
+/**
+ * Model Invitation
+ * 
+ */
+export type Invitation = Prisma.InvitationModel

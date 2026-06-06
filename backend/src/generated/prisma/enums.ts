@@ -9,7 +9,32 @@
 * 🟢 You can import this file directly.
 */
 
+export const TokenType = {
+  EMAIL_VERIFICATION: 'EMAIL_VERIFICATION',
+  PASSWORD_RESET: 'PASSWORD_RESET',
+  TEACHER_INVITATION: 'TEACHER_INVITATION',
+  PARENT_INVITATION: 'PARENT_INVITATION',
+  STUDENT_INVITATION: 'STUDENT_INVITATION'
+} as const
+
+export type TokenType = (typeof TokenType)[keyof typeof TokenType]
 
 
-// This file is empty because there are no enums in the schema.
-export {}
+export const InvitationType = {
+  TEACHER: 'TEACHER',
+  STUDENT: 'STUDENT',
+  PARENT: 'PARENT',
+  ADMIN: 'ADMIN'
+} as const
+
+export type InvitationType = (typeof InvitationType)[keyof typeof InvitationType]
+
+
+export const InvitationStatus = {
+  PENDING: 'PENDING',
+  ACCEPTED: 'ACCEPTED',
+  EXPIRED: 'EXPIRED',
+  CANCELLED: 'CANCELLED'
+} as const
+
+export type InvitationStatus = (typeof InvitationStatus)[keyof typeof InvitationStatus]

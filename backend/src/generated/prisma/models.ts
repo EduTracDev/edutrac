@@ -10,4 +10,10 @@
  */
 export type * from './models/Tenant'
 export type * from './models/User'
+export type * from './models/PackagePlan'
+export type * from './models/Subscription'
+export type * from './models/Role'
+export type * from './models/UserRole'
+export type * from './models/VerificationToken'
+export type * from './models/Invitation'
 export type * from './commonInputTypes'

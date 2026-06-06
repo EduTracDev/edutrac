@@ -7,6 +7,7 @@ generator client {
   provider = "prisma-client"
   importFileExtension = ""
   output   = "../src/generated/prisma"
+  moduleFormat = "cjs"
 }
 
 datasource db {
@@ -15,17 +16,177 @@ datasource db {
 
 model Tenant{
   id Int @id @default(autoincrement())
+  publidId String @unique @default(uuid())
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
   organisation_name String
+  slug String @unique
+  logoUrl String?
+  contactPhone String?
+  contactAddress String?
+  contactEmail String
+  isActive Boolean @default(true)
+  status String @default("PENDING_EMAIL_VERIFICATION")  //PENDING_ONBOARDING
+  users User[]
+  roles Role[]
+  subscription Subscription?
+  invitations Invitation[]
+
+  @@map("tenants")
 }
 
 model User{
   id Int @id @default(autoincrement())
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+  email String
+  emailVerified Boolean @default(false)
+  emailVerifiedAt DateTime?
+  password_hash String?
+  firstName String?
+  lastName String?
+  isActive Boolean @default(true)
+  userRoles UserRole[]
+  verificationTokens VerificationToken[]
+  sentInvitations Invitation[] @relation("UserSentInvitations")
 
-  email String @unique
-  password_hash String
+  tenantId Int
+  tenant Tenant @relation(fields: [tenantId], references: [id])
+  
+  @@unique([id, tenantId])
+  @@unique([email, tenantId])
+  @@map("users")
+}
+
+model PackagePlan{
+  id Int @id @default(autoincrement())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  
+  name String @unique
+  features String[]
+  actual_price Float
+  discount Float
+  subscriptions Subscription[]
+
+  maxUsers Int
+  maxRoles Int?
+  maxStorageMb Int?
+  allowsAdvancedAnalytics Boolean @default(false)
+
+  @@map("package_plans")
+}
+
+model Subscription{
+  id Int @id @default(autoincrement())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  tenant Tenant @relation(fields: [tenantId], references:[id], onDelete:Cascade)
+  tenantId Int @unique
+
+  packagePlanId Int
+  packagePlan PackagePlan @relation(fields: [packagePlanId], references: [id])
+
+  status String @default("ACTIVE") // ACTIVE, SUSPENDED, EXPIRED
+  startedAt DateTime @default(now())
+  endsAt DateTime?
+  
+  @@map("subscriptions")
+}
+
+model Role {
+  id Int @id @default(autoincrement())
+  tenantId Int
+  name String
+  description String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  tenant Tenant @relation(fields: [tenantId], references: [id])
+  userRoles UserRole[]
+  invitations Invitation[]
+
+  @@unique([id, tenantId, name])
+  @@map("roles")
+}
+
+model UserRole{
+  userId Int
+  roleId Int
+  createdAt DateTime @default(now())
+
+  user User @relation(fields:[userId], references: [id])
+  role Role @relation(fields: [roleId], references: [id])
+
+  @@unique([userId, roleId])
+  @@map("userRoles")
+}
+
+model VerificationToken {
+  id         Int      @id @default(autoincrement())
+  tokenHash  String   @unique
+  type       TokenType
+  expiresAt  DateTime
+  usedAt     DateTime?
+  createdAt  DateTime @default(now())
+
+  userId     Int
+  user       User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([tokenHash])
+}
+
+model Invitation {
+  id            Int      @id @default(autoincrement())
+  tokenHash     String   @unique
+
+  email         String
+  type          InvitationType
+
+  status        InvitationStatus @default(PENDING)
+
+  expiresAt     DateTime
+  acceptedAt    DateTime?
+
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  tenantId      Int
+  tenant        Tenant @relation(fields: [tenantId], references: [id], onDelete: Cascade)
+
+  invitedById   Int
+  invitedBy     User @relation("UserSentInvitations",fields: [invitedById], references: [id])
+
+  roleId        Int?
+  role          Role? @relation(fields: [roleId], references: [id])
+
+  @@index([tenantId])
+  @@index([invitedById])
+  @@index([roleId])
+  @@index([email])
+  @@index([tokenHash])
+}
+
+enum TokenType {
+  EMAIL_VERIFICATION
+  PASSWORD_RESET
+  TEACHER_INVITATION
+  PARENT_INVITATION
+  STUDENT_INVITATION
+}
+
+enum InvitationType {
+  TEACHER
+  STUDENT
+  PARENT
+  ADMIN
+}
+
+enum InvitationStatus {
+  PENDING
+  ACCEPTED
+  EXPIRED
+  CANCELLED
 }
