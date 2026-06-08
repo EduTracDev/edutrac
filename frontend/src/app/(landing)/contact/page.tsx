@@ -25,7 +25,7 @@ export default function ContactPage() {
       buttonLink: AuthRoutes.register,
     },
     freeTrial: {
-      title: "Ready to Simplify Your Learning Management?",
+      title: "Ready to Simplify Your School Management?",
       description:
         "Join thousands of Learning Platforms already benefiting from EduTrac's powerful features.",
       buttonText: "Start Free Trial",
