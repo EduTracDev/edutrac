@@ -18,9 +18,10 @@ import { AttendanceModule } from './attendance/attendance.module';
 import { SubscriptionModule } from './subscription/subscription.module';
 import { CommunicationModule } from './communication/communication.module';
 import { MailModule } from './mail/mail.module';
+import { PackagePlanModule } from './package-plan/package-plan.module';
 
 @Module({
-  imports: [AuthModule, PrismaModule, ConfigModule.forRoot({isGlobal: true}), TenantModule, UserModule, TeacherModule, ParentModule, StudentModule, CourseModule, EnrollmentModule, AttendanceModule, SubscriptionModule, CommunicationModule, MailModule],
+  imports: [AuthModule, PrismaModule, ConfigModule.forRoot({isGlobal: true}), TenantModule, UserModule, TeacherModule, ParentModule, StudentModule, CourseModule, EnrollmentModule, AttendanceModule, SubscriptionModule, CommunicationModule, MailModule, PackagePlanModule],
   controllers: [AppController, TeacherController, AdminController, ParentController],
   providers: [AppService],
 })

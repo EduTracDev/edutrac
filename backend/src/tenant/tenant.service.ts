@@ -24,11 +24,12 @@ export class TenantService {
             const tenant = await tx.tenant.create({
                 data: {
                     organisation_name: name,
-                    slug: name
+                    slug: name,
+                    contactEmail: params.email
                 }
             });
             //Seed roles
-            await this.rolesService.seedDefaultRoles(String(tenant.id));
+            await this.rolesService.seedDefaultRoles(tx, tenant.id);
             //Create tenant subscription
             const subscription = await tx.subscription.create({
                 data: {

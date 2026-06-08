@@ -1,6 +1,6 @@
 import {IsEmail, IsString, IsNotEmpty, MinLength, IsNumber} from 'class-validator';
 
-export class UpdatePasswordDto{
+export class ForgotPasswordDto{
     @IsEmail()
     @IsNotEmpty({message: "Email is required"})
     @IsString()
@@ -9,10 +9,6 @@ export class UpdatePasswordDto{
     @IsNotEmpty({message: "Tenant ID is required"})
     @IsNumber()
     tenantId: number;
-
-    @IsNotEmpty({message: "Current password is required"})
-    @IsString()
-    currentPassword: string
 
     @IsString()
     @IsNotEmpty()

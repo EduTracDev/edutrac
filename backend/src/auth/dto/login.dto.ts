@@ -8,8 +8,4 @@ export class LoginDto{
     @IsString()
     @IsNotEmpty()
     password: string
-
-
-    @IsNotEmpty()
-    tenantId: number
 }

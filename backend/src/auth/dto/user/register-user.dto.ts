@@ -17,9 +17,6 @@ export class RegisterUserDto{
     passwordConfirm: string
 
     @IsNotEmpty()
-    tenantId: number
-
-    @IsNotEmpty()
     @IsString()
     fistName?: string
 

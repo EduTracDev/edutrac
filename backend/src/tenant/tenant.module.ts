@@ -5,6 +5,7 @@ import { RolesService } from '../auth/services/roles.service';
 
 @Module({
   providers: [TenantService, RolesService],
-  controllers: [TenantController]
+  controllers: [TenantController],
+  exports: [TenantService]
 })
 export class TenantModule {}

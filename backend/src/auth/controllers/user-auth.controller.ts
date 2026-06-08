@@ -1,24 +1,34 @@
-import { Controller, Body, Post, Get } from '@nestjs/common';
+import { Controller, Body, Post, Param, ParseIntPipe } from '@nestjs/common';
 import { AuthService } from '../services/auth.service';
-import { RegisterUserDto, VerifyAccountDto } from '../dto';
-import {MailService} from '../../mail/mail.service';
+import { VerifyAccountDto, UpdatePasswordDto, LoginDto, resendVerificationEmailDto, ForgotPasswordDto } from '../dto';
 
-@Controller('auth/user')
+
+@Controller(':tenantId/auth')
 export class UserAuthController {
-    constructor(private authService: AuthService, private mailService: MailService) { }
-
-    @Post('register-user')
-    async register(@Body() dto: RegisterUserDto) {
-        return this.authService.registerUser(dto);
-    }
-
-    @Post('verify-email')
-    async verifyEmailAddress(@Body() dto: VerifyAccountDto){
-        return this.authService.verifyAccount(dto);
-    }
+    constructor(private authService: AuthService) { }
 
     @Post('signin')
-    async signin(@Body() dto: RegisterUserDto) {
-        return this.authService.signInUser(dto);
+    async signin(@Body() dto: LoginDto, @Param('tenantId', ParseIntPipe) tenantId: number) {
+        return this.authService.signInUserViaEmailPassword(dto, tenantId);
+    }
+
+    @Post('verify-account')
+    async verifyEmailAddress(@Body() dto: VerifyAccountDto, @Param('tenantId', ParseIntPipe) tenantId: number){
+        return this.authService.verifyAccount(dto, tenantId);
+    }
+
+    @Post('reset-password')
+    async resetPassword(@Body() dto: UpdatePasswordDto, @Param('tenantId', ParseIntPipe) tenantId: number){
+        return this.authService.passwordReset(dto, tenantId);
+    }
+
+    @Post('resend-verification-email')
+    async resendVerificationEmail(@Body() dto: resendVerificationEmailDto, @Param('tenantId', ParseIntPipe) tenantId: number){
+        return this.authService.resendVerificationEmail(dto, tenantId);
+    }
+
+    @Post('forgot-password')
+    async forgotPassword(@Body() dto: ForgotPasswordDto, @Param('tenantId', ParseIntPipe) tenantId: number){
+        return this.authService.forgotPassword(dto, tenantId);
     }
 }

@@ -36,6 +36,7 @@ export type TenantSumAggregateOutputType = {
 
 export type TenantMinAggregateOutputType = {
   id: number | null
+  publidId: string | null
   createdAt: Date | null
   updatedAt: Date | null
   organisation_name: string | null
@@ -43,12 +44,14 @@ export type TenantMinAggregateOutputType = {
   logoUrl: string | null
   contactPhone: string | null
   contactAddress: string | null
+  contactEmail: string | null
   isActive: boolean | null
   status: string | null
 }
 
 export type TenantMaxAggregateOutputType = {
   id: number | null
+  publidId: string | null
   createdAt: Date | null
   updatedAt: Date | null
   organisation_name: string | null
@@ -56,12 +59,14 @@ export type TenantMaxAggregateOutputType = {
   logoUrl: string | null
   contactPhone: string | null
   contactAddress: string | null
+  contactEmail: string | null
   isActive: boolean | null
   status: string | null
 }
 
 export type TenantCountAggregateOutputType = {
   id: number
+  publidId: number
   createdAt: number
   updatedAt: number
   organisation_name: number
@@ -69,6 +74,7 @@ export type TenantCountAggregateOutputType = {
   logoUrl: number
   contactPhone: number
   contactAddress: number
+  contactEmail: number
   isActive: number
   status: number
   _all: number
@@ -85,6 +91,7 @@ export type TenantSumAggregateInputType = {
 
 export type TenantMinAggregateInputType = {
   id?: true
+  publidId?: true
   createdAt?: true
   updatedAt?: true
   organisation_name?: true
@@ -92,12 +99,14 @@ export type TenantMinAggregateInputType = {
   logoUrl?: true
   contactPhone?: true
   contactAddress?: true
+  contactEmail?: true
   isActive?: true
   status?: true
 }
 
 export type TenantMaxAggregateInputType = {
   id?: true
+  publidId?: true
   createdAt?: true
   updatedAt?: true
   organisation_name?: true
@@ -105,12 +114,14 @@ export type TenantMaxAggregateInputType = {
   logoUrl?: true
   contactPhone?: true
   contactAddress?: true
+  contactEmail?: true
   isActive?: true
   status?: true
 }
 
 export type TenantCountAggregateInputType = {
   id?: true
+  publidId?: true
   createdAt?: true
   updatedAt?: true
   organisation_name?: true
@@ -118,6 +129,7 @@ export type TenantCountAggregateInputType = {
   logoUrl?: true
   contactPhone?: true
   contactAddress?: true
+  contactEmail?: true
   isActive?: true
   status?: true
   _all?: true
@@ -211,6 +223,7 @@ export type TenantGroupByArgs<ExtArgs extends runtime.Types.Extensions.InternalA
 
 export type TenantGroupByOutputType = {
   id: number
+  publidId: string
   createdAt: Date
   updatedAt: Date
   organisation_name: string
@@ -218,6 +231,7 @@ export type TenantGroupByOutputType = {
   logoUrl: string | null
   contactPhone: string | null
   contactAddress: string | null
+  contactEmail: string
   isActive: boolean
   status: string
   _count: TenantCountAggregateOutputType | null
@@ -247,6 +261,7 @@ export type TenantWhereInput = {
   OR?: Prisma.TenantWhereInput[]
   NOT?: Prisma.TenantWhereInput | Prisma.TenantWhereInput[]
   id?: Prisma.IntFilter<"Tenant"> | number
+  publidId?: Prisma.StringFilter<"Tenant"> | string
   createdAt?: Prisma.DateTimeFilter<"Tenant"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Tenant"> | Date | string
   organisation_name?: Prisma.StringFilter<"Tenant"> | string
@@ -254,6 +269,7 @@ export type TenantWhereInput = {
   logoUrl?: Prisma.StringNullableFilter<"Tenant"> | string | null
   contactPhone?: Prisma.StringNullableFilter<"Tenant"> | string | null
   contactAddress?: Prisma.StringNullableFilter<"Tenant"> | string | null
+  contactEmail?: Prisma.StringFilter<"Tenant"> | string
   isActive?: Prisma.BoolFilter<"Tenant"> | boolean
   status?: Prisma.StringFilter<"Tenant"> | string
   users?: Prisma.UserListRelationFilter
@@ -264,6 +280,7 @@ export type TenantWhereInput = {
 
 export type TenantOrderByWithRelationInput = {
   id?: Prisma.SortOrder
+  publidId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   organisation_name?: Prisma.SortOrder
@@ -271,6 +288,7 @@ export type TenantOrderByWithRelationInput = {
   logoUrl?: Prisma.SortOrderInput | Prisma.SortOrder
   contactPhone?: Prisma.SortOrderInput | Prisma.SortOrder
   contactAddress?: Prisma.SortOrderInput | Prisma.SortOrder
+  contactEmail?: Prisma.SortOrder
   isActive?: Prisma.SortOrder
   status?: Prisma.SortOrder
   users?: Prisma.UserOrderByRelationAggregateInput
@@ -281,6 +299,7 @@ export type TenantOrderByWithRelationInput = {
 
 export type TenantWhereUniqueInput = Prisma.AtLeast<{
   id?: number
+  publidId?: string
   slug?: string
   AND?: Prisma.TenantWhereInput | Prisma.TenantWhereInput[]
   OR?: Prisma.TenantWhereInput[]
@@ -291,16 +310,18 @@ export type TenantWhereUniqueInput = Prisma.AtLeast<{
   logoUrl?: Prisma.StringNullableFilter<"Tenant"> | string | null
   contactPhone?: Prisma.StringNullableFilter<"Tenant"> | string | null
   contactAddress?: Prisma.StringNullableFilter<"Tenant"> | string | null
+  contactEmail?: Prisma.StringFilter<"Tenant"> | string
   isActive?: Prisma.BoolFilter<"Tenant"> | boolean
   status?: Prisma.StringFilter<"Tenant"> | string
   users?: Prisma.UserListRelationFilter
   roles?: Prisma.RoleListRelationFilter
   subscription?: Prisma.XOR<Prisma.SubscriptionNullableScalarRelationFilter, Prisma.SubscriptionWhereInput> | null
   invitations?: Prisma.InvitationListRelationFilter
-}, "id" | "slug">
+}, "id" | "publidId" | "slug">
 
 export type TenantOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
+  publidId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   organisation_name?: Prisma.SortOrder
@@ -308,6 +329,7 @@ export type TenantOrderByWithAggregationInput = {
   logoUrl?: Prisma.SortOrderInput | Prisma.SortOrder
   contactPhone?: Prisma.SortOrderInput | Prisma.SortOrder
   contactAddress?: Prisma.SortOrderInput | Prisma.SortOrder
+  contactEmail?: Prisma.SortOrder
   isActive?: Prisma.SortOrder
   status?: Prisma.SortOrder
   _count?: Prisma.TenantCountOrderByAggregateInput
@@ -322,6 +344,7 @@ export type TenantScalarWhereWithAggregatesInput = {
   OR?: Prisma.TenantScalarWhereWithAggregatesInput[]
   NOT?: Prisma.TenantScalarWhereWithAggregatesInput | Prisma.TenantScalarWhereWithAggregatesInput[]
   id?: Prisma.IntWithAggregatesFilter<"Tenant"> | number
+  publidId?: Prisma.StringWithAggregatesFilter<"Tenant"> | string
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"Tenant"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"Tenant"> | Date | string
   organisation_name?: Prisma.StringWithAggregatesFilter<"Tenant"> | string
@@ -329,11 +352,13 @@ export type TenantScalarWhereWithAggregatesInput = {
   logoUrl?: Prisma.StringNullableWithAggregatesFilter<"Tenant"> | string | null
   contactPhone?: Prisma.StringNullableWithAggregatesFilter<"Tenant"> | string | null
   contactAddress?: Prisma.StringNullableWithAggregatesFilter<"Tenant"> | string | null
+  contactEmail?: Prisma.StringWithAggregatesFilter<"Tenant"> | string
   isActive?: Prisma.BoolWithAggregatesFilter<"Tenant"> | boolean
   status?: Prisma.StringWithAggregatesFilter<"Tenant"> | string
 }
 
 export type TenantCreateInput = {
+  publidId?: string
   createdAt?: Date | string
   updatedAt?: Date | string
   organisation_name: string
@@ -341,6 +366,7 @@ export type TenantCreateInput = {
   logoUrl?: string | null
   contactPhone?: string | null
   contactAddress?: string | null
+  contactEmail: string
   isActive?: boolean
   status?: string
   users?: Prisma.UserCreateNestedManyWithoutTenantInput
@@ -351,6 +377,7 @@ export type TenantCreateInput = {
 
 export type TenantUncheckedCreateInput = {
   id?: number
+  publidId?: string
   createdAt?: Date | string
   updatedAt?: Date | string
   organisation_name: string
@@ -358,6 +385,7 @@ export type TenantUncheckedCreateInput = {
   logoUrl?: string | null
   contactPhone?: string | null
   contactAddress?: string | null
+  contactEmail: string
   isActive?: boolean
   status?: string
   users?: Prisma.UserUncheckedCreateNestedManyWithoutTenantInput
@@ -367,6 +395,7 @@ export type TenantUncheckedCreateInput = {
 }
 
 export type TenantUpdateInput = {
+  publidId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   organisation_name?: Prisma.StringFieldUpdateOperationsInput | string
@@ -374,6 +403,7 @@ export type TenantUpdateInput = {
   logoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   contactPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   contactAddress?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  contactEmail?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   status?: Prisma.StringFieldUpdateOperationsInput | string
   users?: Prisma.UserUpdateManyWithoutTenantNestedInput
@@ -384,6 +414,7 @@ export type TenantUpdateInput = {
 
 export type TenantUncheckedUpdateInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
+  publidId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   organisation_name?: Prisma.StringFieldUpdateOperationsInput | string
@@ -391,6 +422,7 @@ export type TenantUncheckedUpdateInput = {
   logoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   contactPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   contactAddress?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  contactEmail?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   status?: Prisma.StringFieldUpdateOperationsInput | string
   users?: Prisma.UserUncheckedUpdateManyWithoutTenantNestedInput
@@ -401,6 +433,7 @@ export type TenantUncheckedUpdateInput = {
 
 export type TenantCreateManyInput = {
   id?: number
+  publidId?: string
   createdAt?: Date | string
   updatedAt?: Date | string
   organisation_name: string
@@ -408,11 +441,13 @@ export type TenantCreateManyInput = {
   logoUrl?: string | null
   contactPhone?: string | null
   contactAddress?: string | null
+  contactEmail: string
   isActive?: boolean
   status?: string
 }
 
 export type TenantUpdateManyMutationInput = {
+  publidId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   organisation_name?: Prisma.StringFieldUpdateOperationsInput | string
@@ -420,12 +455,14 @@ export type TenantUpdateManyMutationInput = {
   logoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   contactPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   contactAddress?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  contactEmail?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   status?: Prisma.StringFieldUpdateOperationsInput | string
 }
 
 export type TenantUncheckedUpdateManyInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
+  publidId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   organisation_name?: Prisma.StringFieldUpdateOperationsInput | string
@@ -433,12 +470,14 @@ export type TenantUncheckedUpdateManyInput = {
   logoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   contactPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   contactAddress?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  contactEmail?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   status?: Prisma.StringFieldUpdateOperationsInput | string
 }
 
 export type TenantCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
+  publidId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   organisation_name?: Prisma.SortOrder
@@ -446,6 +485,7 @@ export type TenantCountOrderByAggregateInput = {
   logoUrl?: Prisma.SortOrder
   contactPhone?: Prisma.SortOrder
   contactAddress?: Prisma.SortOrder
+  contactEmail?: Prisma.SortOrder
   isActive?: Prisma.SortOrder
   status?: Prisma.SortOrder
 }
@@ -456,6 +496,7 @@ export type TenantAvgOrderByAggregateInput = {
 
 export type TenantMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
+  publidId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   organisation_name?: Prisma.SortOrder
@@ -463,12 +504,14 @@ export type TenantMaxOrderByAggregateInput = {
   logoUrl?: Prisma.SortOrder
   contactPhone?: Prisma.SortOrder
   contactAddress?: Prisma.SortOrder
+  contactEmail?: Prisma.SortOrder
   isActive?: Prisma.SortOrder
   status?: Prisma.SortOrder
 }
 
 export type TenantMinOrderByAggregateInput = {
   id?: Prisma.SortOrder
+  publidId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   organisation_name?: Prisma.SortOrder
@@ -476,6 +519,7 @@ export type TenantMinOrderByAggregateInput = {
   logoUrl?: Prisma.SortOrder
   contactPhone?: Prisma.SortOrder
   contactAddress?: Prisma.SortOrder
+  contactEmail?: Prisma.SortOrder
   isActive?: Prisma.SortOrder
   status?: Prisma.SortOrder
 }
@@ -489,12 +533,12 @@ export type TenantScalarRelationFilter = {
   isNot?: Prisma.TenantWhereInput
 }
 
-export type DateTimeFieldUpdateOperationsInput = {
-  set?: Date | string
-}
-
 export type StringFieldUpdateOperationsInput = {
   set?: string
+}
+
+export type DateTimeFieldUpdateOperationsInput = {
+  set?: Date | string
 }
 
 export type NullableStringFieldUpdateOperationsInput = {
@@ -570,6 +614,7 @@ export type TenantUpdateOneRequiredWithoutInvitationsNestedInput = {
 }
 
 export type TenantCreateWithoutUsersInput = {
+  publidId?: string
   createdAt?: Date | string
   updatedAt?: Date | string
   organisation_name: string
@@ -577,6 +622,7 @@ export type TenantCreateWithoutUsersInput = {
   logoUrl?: string | null
   contactPhone?: string | null
   contactAddress?: string | null
+  contactEmail: string
   isActive?: boolean
   status?: string
   roles?: Prisma.RoleCreateNestedManyWithoutTenantInput
@@ -586,6 +632,7 @@ export type TenantCreateWithoutUsersInput = {
 
 export type TenantUncheckedCreateWithoutUsersInput = {
   id?: number
+  publidId?: string
   createdAt?: Date | string
   updatedAt?: Date | string
   organisation_name: string
@@ -593,6 +640,7 @@ export type TenantUncheckedCreateWithoutUsersInput = {
   logoUrl?: string | null
   contactPhone?: string | null
   contactAddress?: string | null
+  contactEmail: string
   isActive?: boolean
   status?: string
   roles?: Prisma.RoleUncheckedCreateNestedManyWithoutTenantInput
@@ -617,6 +665,7 @@ export type TenantUpdateToOneWithWhereWithoutUsersInput = {
 }
 
 export type TenantUpdateWithoutUsersInput = {
+  publidId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   organisation_name?: Prisma.StringFieldUpdateOperationsInput | string
@@ -624,6 +673,7 @@ export type TenantUpdateWithoutUsersInput = {
   logoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   contactPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   contactAddress?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  contactEmail?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   status?: Prisma.StringFieldUpdateOperationsInput | string
   roles?: Prisma.RoleUpdateManyWithoutTenantNestedInput
@@ -633,6 +683,7 @@ export type TenantUpdateWithoutUsersInput = {
 
 export type TenantUncheckedUpdateWithoutUsersInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
+  publidId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   organisation_name?: Prisma.StringFieldUpdateOperationsInput | string
@@ -640,6 +691,7 @@ export type TenantUncheckedUpdateWithoutUsersInput = {
   logoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   contactPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   contactAddress?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  contactEmail?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   status?: Prisma.StringFieldUpdateOperationsInput | string
   roles?: Prisma.RoleUncheckedUpdateManyWithoutTenantNestedInput
@@ -648,6 +700,7 @@ export type TenantUncheckedUpdateWithoutUsersInput = {
 }
 
 export type TenantCreateWithoutSubscriptionInput = {
+  publidId?: string
   createdAt?: Date | string
   updatedAt?: Date | string
   organisation_name: string
@@ -655,6 +708,7 @@ export type TenantCreateWithoutSubscriptionInput = {
   logoUrl?: string | null
   contactPhone?: string | null
   contactAddress?: string | null
+  contactEmail: string
   isActive?: boolean
   status?: string
   users?: Prisma.UserCreateNestedManyWithoutTenantInput
@@ -664,6 +718,7 @@ export type TenantCreateWithoutSubscriptionInput = {
 
 export type TenantUncheckedCreateWithoutSubscriptionInput = {
   id?: number
+  publidId?: string
   createdAt?: Date | string
   updatedAt?: Date | string
   organisation_name: string
@@ -671,6 +726,7 @@ export type TenantUncheckedCreateWithoutSubscriptionInput = {
   logoUrl?: string | null
   contactPhone?: string | null
   contactAddress?: string | null
+  contactEmail: string
   isActive?: boolean
   status?: string
   users?: Prisma.UserUncheckedCreateNestedManyWithoutTenantInput
@@ -695,6 +751,7 @@ export type TenantUpdateToOneWithWhereWithoutSubscriptionInput = {
 }
 
 export type TenantUpdateWithoutSubscriptionInput = {
+  publidId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   organisation_name?: Prisma.StringFieldUpdateOperationsInput | string
@@ -702,6 +759,7 @@ export type TenantUpdateWithoutSubscriptionInput = {
   logoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   contactPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   contactAddress?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  contactEmail?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   status?: Prisma.StringFieldUpdateOperationsInput | string
   users?: Prisma.UserUpdateManyWithoutTenantNestedInput
@@ -711,6 +769,7 @@ export type TenantUpdateWithoutSubscriptionInput = {
 
 export type TenantUncheckedUpdateWithoutSubscriptionInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
+  publidId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   organisation_name?: Prisma.StringFieldUpdateOperationsInput | string
@@ -718,6 +777,7 @@ export type TenantUncheckedUpdateWithoutSubscriptionInput = {
   logoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   contactPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   contactAddress?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  contactEmail?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   status?: Prisma.StringFieldUpdateOperationsInput | string
   users?: Prisma.UserUncheckedUpdateManyWithoutTenantNestedInput
@@ -726,6 +786,7 @@ export type TenantUncheckedUpdateWithoutSubscriptionInput = {
 }
 
 export type TenantCreateWithoutRolesInput = {
+  publidId?: string
   createdAt?: Date | string
   updatedAt?: Date | string
   organisation_name: string
@@ -733,6 +794,7 @@ export type TenantCreateWithoutRolesInput = {
   logoUrl?: string | null
   contactPhone?: string | null
   contactAddress?: string | null
+  contactEmail: string
   isActive?: boolean
   status?: string
   users?: Prisma.UserCreateNestedManyWithoutTenantInput
@@ -742,6 +804,7 @@ export type TenantCreateWithoutRolesInput = {
 
 export type TenantUncheckedCreateWithoutRolesInput = {
   id?: number
+  publidId?: string
   createdAt?: Date | string
   updatedAt?: Date | string
   organisation_name: string
@@ -749,6 +812,7 @@ export type TenantUncheckedCreateWithoutRolesInput = {
   logoUrl?: string | null
   contactPhone?: string | null
   contactAddress?: string | null
+  contactEmail: string
   isActive?: boolean
   status?: string
   users?: Prisma.UserUncheckedCreateNestedManyWithoutTenantInput
@@ -773,6 +837,7 @@ export type TenantUpdateToOneWithWhereWithoutRolesInput = {
 }
 
 export type TenantUpdateWithoutRolesInput = {
+  publidId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   organisation_name?: Prisma.StringFieldUpdateOperationsInput | string
@@ -780,6 +845,7 @@ export type TenantUpdateWithoutRolesInput = {
   logoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   contactPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   contactAddress?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  contactEmail?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   status?: Prisma.StringFieldUpdateOperationsInput | string
   users?: Prisma.UserUpdateManyWithoutTenantNestedInput
@@ -789,6 +855,7 @@ export type TenantUpdateWithoutRolesInput = {
 
 export type TenantUncheckedUpdateWithoutRolesInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
+  publidId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   organisation_name?: Prisma.StringFieldUpdateOperationsInput | string
@@ -796,6 +863,7 @@ export type TenantUncheckedUpdateWithoutRolesInput = {
   logoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   contactPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   contactAddress?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  contactEmail?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   status?: Prisma.StringFieldUpdateOperationsInput | string
   users?: Prisma.UserUncheckedUpdateManyWithoutTenantNestedInput
@@ -804,6 +872,7 @@ export type TenantUncheckedUpdateWithoutRolesInput = {
 }
 
 export type TenantCreateWithoutInvitationsInput = {
+  publidId?: string
   createdAt?: Date | string
   updatedAt?: Date | string
   organisation_name: string
@@ -811,6 +880,7 @@ export type TenantCreateWithoutInvitationsInput = {
   logoUrl?: string | null
   contactPhone?: string | null
   contactAddress?: string | null
+  contactEmail: string
   isActive?: boolean
   status?: string
   users?: Prisma.UserCreateNestedManyWithoutTenantInput
@@ -820,6 +890,7 @@ export type TenantCreateWithoutInvitationsInput = {
 
 export type TenantUncheckedCreateWithoutInvitationsInput = {
   id?: number
+  publidId?: string
   createdAt?: Date | string
   updatedAt?: Date | string
   organisation_name: string
@@ -827,6 +898,7 @@ export type TenantUncheckedCreateWithoutInvitationsInput = {
   logoUrl?: string | null
   contactPhone?: string | null
   contactAddress?: string | null
+  contactEmail: string
   isActive?: boolean
   status?: string
   users?: Prisma.UserUncheckedCreateNestedManyWithoutTenantInput
@@ -851,6 +923,7 @@ export type TenantUpdateToOneWithWhereWithoutInvitationsInput = {
 }
 
 export type TenantUpdateWithoutInvitationsInput = {
+  publidId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   organisation_name?: Prisma.StringFieldUpdateOperationsInput | string
@@ -858,6 +931,7 @@ export type TenantUpdateWithoutInvitationsInput = {
   logoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   contactPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   contactAddress?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  contactEmail?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   status?: Prisma.StringFieldUpdateOperationsInput | string
   users?: Prisma.UserUpdateManyWithoutTenantNestedInput
@@ -867,6 +941,7 @@ export type TenantUpdateWithoutInvitationsInput = {
 
 export type TenantUncheckedUpdateWithoutInvitationsInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
+  publidId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   organisation_name?: Prisma.StringFieldUpdateOperationsInput | string
@@ -874,6 +949,7 @@ export type TenantUncheckedUpdateWithoutInvitationsInput = {
   logoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   contactPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   contactAddress?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  contactEmail?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   status?: Prisma.StringFieldUpdateOperationsInput | string
   users?: Prisma.UserUncheckedUpdateManyWithoutTenantNestedInput
@@ -932,6 +1008,7 @@ export type TenantCountOutputTypeCountInvitationsArgs<ExtArgs extends runtime.Ty
 
 export type TenantSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
+  publidId?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   organisation_name?: boolean
@@ -939,6 +1016,7 @@ export type TenantSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs =
   logoUrl?: boolean
   contactPhone?: boolean
   contactAddress?: boolean
+  contactEmail?: boolean
   isActive?: boolean
   status?: boolean
   users?: boolean | Prisma.Tenant$usersArgs<ExtArgs>
@@ -950,6 +1028,7 @@ export type TenantSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs =
 
 export type TenantSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
+  publidId?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   organisation_name?: boolean
@@ -957,12 +1036,14 @@ export type TenantSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extens
   logoUrl?: boolean
   contactPhone?: boolean
   contactAddress?: boolean
+  contactEmail?: boolean
   isActive?: boolean
   status?: boolean
 }, ExtArgs["result"]["tenant"]>
 
 export type TenantSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
+  publidId?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   organisation_name?: boolean
@@ -970,12 +1051,14 @@ export type TenantSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extens
   logoUrl?: boolean
   contactPhone?: boolean
   contactAddress?: boolean
+  contactEmail?: boolean
   isActive?: boolean
   status?: boolean
 }, ExtArgs["result"]["tenant"]>
 
 export type TenantSelectScalar = {
   id?: boolean
+  publidId?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   organisation_name?: boolean
@@ -983,11 +1066,12 @@ export type TenantSelectScalar = {
   logoUrl?: boolean
   contactPhone?: boolean
   contactAddress?: boolean
+  contactEmail?: boolean
   isActive?: boolean
   status?: boolean
 }
 
-export type TenantOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "createdAt" | "updatedAt" | "organisation_name" | "slug" | "logoUrl" | "contactPhone" | "contactAddress" | "isActive" | "status", ExtArgs["result"]["tenant"]>
+export type TenantOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "publidId" | "createdAt" | "updatedAt" | "organisation_name" | "slug" | "logoUrl" | "contactPhone" | "contactAddress" | "contactEmail" | "isActive" | "status", ExtArgs["result"]["tenant"]>
 export type TenantInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   users?: boolean | Prisma.Tenant$usersArgs<ExtArgs>
   roles?: boolean | Prisma.Tenant$rolesArgs<ExtArgs>
@@ -1008,6 +1092,7 @@ export type $TenantPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: number
+    publidId: string
     createdAt: Date
     updatedAt: Date
     organisation_name: string
@@ -1015,6 +1100,7 @@ export type $TenantPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs
     logoUrl: string | null
     contactPhone: string | null
     contactAddress: string | null
+    contactEmail: string
     isActive: boolean
     status: string
   }, ExtArgs["result"]["tenant"]>
@@ -1445,6 +1531,7 @@ export interface Prisma__TenantClient<T, Null = never, ExtArgs extends runtime.T
  */
 export interface TenantFieldRefs {
   readonly id: Prisma.FieldRef<"Tenant", 'Int'>
+  readonly publidId: Prisma.FieldRef<"Tenant", 'String'>
   readonly createdAt: Prisma.FieldRef<"Tenant", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"Tenant", 'DateTime'>
   readonly organisation_name: Prisma.FieldRef<"Tenant", 'String'>
@@ -1452,6 +1539,7 @@ export interface TenantFieldRefs {
   readonly logoUrl: Prisma.FieldRef<"Tenant", 'String'>
   readonly contactPhone: Prisma.FieldRef<"Tenant", 'String'>
   readonly contactAddress: Prisma.FieldRef<"Tenant", 'String'>
+  readonly contactEmail: Prisma.FieldRef<"Tenant", 'String'>
   readonly isActive: Prisma.FieldRef<"Tenant", 'Boolean'>
   readonly status: Prisma.FieldRef<"Tenant", 'String'>
 }

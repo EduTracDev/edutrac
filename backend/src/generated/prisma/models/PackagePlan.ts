@@ -28,6 +28,8 @@ export type AggregatePackagePlan = {
 
 export type PackagePlanAvgAggregateOutputType = {
   id: number | null
+  actual_price: number | null
+  discount: number | null
   maxUsers: number | null
   maxRoles: number | null
   maxStorageMb: number | null
@@ -35,6 +37,8 @@ export type PackagePlanAvgAggregateOutputType = {
 
 export type PackagePlanSumAggregateOutputType = {
   id: number | null
+  actual_price: number | null
+  discount: number | null
   maxUsers: number | null
   maxRoles: number | null
   maxStorageMb: number | null
@@ -45,9 +49,8 @@ export type PackagePlanMinAggregateOutputType = {
   createdAt: Date | null
   updatedAt: Date | null
   name: string | null
-  features: string | null
-  actual_price: string | null
-  discount: string | null
+  actual_price: number | null
+  discount: number | null
   maxUsers: number | null
   maxRoles: number | null
   maxStorageMb: number | null
@@ -59,9 +62,8 @@ export type PackagePlanMaxAggregateOutputType = {
   createdAt: Date | null
   updatedAt: Date | null
   name: string | null
-  features: string | null
-  actual_price: string | null
-  discount: string | null
+  actual_price: number | null
+  discount: number | null
   maxUsers: number | null
   maxRoles: number | null
   maxStorageMb: number | null
@@ -86,6 +88,8 @@ export type PackagePlanCountAggregateOutputType = {
 
 export type PackagePlanAvgAggregateInputType = {
   id?: true
+  actual_price?: true
+  discount?: true
   maxUsers?: true
   maxRoles?: true
   maxStorageMb?: true
@@ -93,6 +97,8 @@ export type PackagePlanAvgAggregateInputType = {
 
 export type PackagePlanSumAggregateInputType = {
   id?: true
+  actual_price?: true
+  discount?: true
   maxUsers?: true
   maxRoles?: true
   maxStorageMb?: true
@@ -103,7 +109,6 @@ export type PackagePlanMinAggregateInputType = {
   createdAt?: true
   updatedAt?: true
   name?: true
-  features?: true
   actual_price?: true
   discount?: true
   maxUsers?: true
@@ -117,7 +122,6 @@ export type PackagePlanMaxAggregateInputType = {
   createdAt?: true
   updatedAt?: true
   name?: true
-  features?: true
   actual_price?: true
   discount?: true
   maxUsers?: true
@@ -232,9 +236,9 @@ export type PackagePlanGroupByOutputType = {
   createdAt: Date
   updatedAt: Date
   name: string
-  features: string
-  actual_price: string
-  discount: string
+  features: runtime.JsonValue
+  actual_price: number
+  discount: number
   maxUsers: number
   maxRoles: number | null
   maxStorageMb: number | null
@@ -269,14 +273,14 @@ export type PackagePlanWhereInput = {
   createdAt?: Prisma.DateTimeFilter<"PackagePlan"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"PackagePlan"> | Date | string
   name?: Prisma.StringFilter<"PackagePlan"> | string
-  features?: Prisma.StringFilter<"PackagePlan"> | string
-  actual_price?: Prisma.StringFilter<"PackagePlan"> | string
-  discount?: Prisma.StringFilter<"PackagePlan"> | string
+  features?: Prisma.JsonFilter<"PackagePlan">
+  actual_price?: Prisma.FloatFilter<"PackagePlan"> | number
+  discount?: Prisma.FloatFilter<"PackagePlan"> | number
   maxUsers?: Prisma.IntFilter<"PackagePlan"> | number
   maxRoles?: Prisma.IntNullableFilter<"PackagePlan"> | number | null
   maxStorageMb?: Prisma.IntNullableFilter<"PackagePlan"> | number | null
   allowsAdvancedAnalytics?: Prisma.BoolFilter<"PackagePlan"> | boolean
-  subscription?: Prisma.SubscriptionListRelationFilter
+  subscriptions?: Prisma.SubscriptionListRelationFilter
 }
 
 export type PackagePlanOrderByWithRelationInput = {
@@ -291,7 +295,7 @@ export type PackagePlanOrderByWithRelationInput = {
   maxRoles?: Prisma.SortOrderInput | Prisma.SortOrder
   maxStorageMb?: Prisma.SortOrderInput | Prisma.SortOrder
   allowsAdvancedAnalytics?: Prisma.SortOrder
-  subscription?: Prisma.SubscriptionOrderByRelationAggregateInput
+  subscriptions?: Prisma.SubscriptionOrderByRelationAggregateInput
 }
 
 export type PackagePlanWhereUniqueInput = Prisma.AtLeast<{
@@ -302,14 +306,14 @@ export type PackagePlanWhereUniqueInput = Prisma.AtLeast<{
   NOT?: Prisma.PackagePlanWhereInput | Prisma.PackagePlanWhereInput[]
   createdAt?: Prisma.DateTimeFilter<"PackagePlan"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"PackagePlan"> | Date | string
-  features?: Prisma.StringFilter<"PackagePlan"> | string
-  actual_price?: Prisma.StringFilter<"PackagePlan"> | string
-  discount?: Prisma.StringFilter<"PackagePlan"> | string
+  features?: Prisma.JsonFilter<"PackagePlan">
+  actual_price?: Prisma.FloatFilter<"PackagePlan"> | number
+  discount?: Prisma.FloatFilter<"PackagePlan"> | number
   maxUsers?: Prisma.IntFilter<"PackagePlan"> | number
   maxRoles?: Prisma.IntNullableFilter<"PackagePlan"> | number | null
   maxStorageMb?: Prisma.IntNullableFilter<"PackagePlan"> | number | null
   allowsAdvancedAnalytics?: Prisma.BoolFilter<"PackagePlan"> | boolean
-  subscription?: Prisma.SubscriptionListRelationFilter
+  subscriptions?: Prisma.SubscriptionListRelationFilter
 }, "id" | "name">
 
 export type PackagePlanOrderByWithAggregationInput = {
@@ -339,9 +343,9 @@ export type PackagePlanScalarWhereWithAggregatesInput = {
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"PackagePlan"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"PackagePlan"> | Date | string
   name?: Prisma.StringWithAggregatesFilter<"PackagePlan"> | string
-  features?: Prisma.StringWithAggregatesFilter<"PackagePlan"> | string
-  actual_price?: Prisma.StringWithAggregatesFilter<"PackagePlan"> | string
-  discount?: Prisma.StringWithAggregatesFilter<"PackagePlan"> | string
+  features?: Prisma.JsonWithAggregatesFilter<"PackagePlan">
+  actual_price?: Prisma.FloatWithAggregatesFilter<"PackagePlan"> | number
+  discount?: Prisma.FloatWithAggregatesFilter<"PackagePlan"> | number
   maxUsers?: Prisma.IntWithAggregatesFilter<"PackagePlan"> | number
   maxRoles?: Prisma.IntNullableWithAggregatesFilter<"PackagePlan"> | number | null
   maxStorageMb?: Prisma.IntNullableWithAggregatesFilter<"PackagePlan"> | number | null
@@ -352,14 +356,14 @@ export type PackagePlanCreateInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   name: string
-  features: string
-  actual_price: string
-  discount: string
+  features: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  actual_price: number
+  discount: number
   maxUsers: number
   maxRoles?: number | null
   maxStorageMb?: number | null
   allowsAdvancedAnalytics?: boolean
-  subscription?: Prisma.SubscriptionCreateNestedManyWithoutPackagePlanInput
+  subscriptions?: Prisma.SubscriptionCreateNestedManyWithoutPackagePlanInput
 }
 
 export type PackagePlanUncheckedCreateInput = {
@@ -367,28 +371,28 @@ export type PackagePlanUncheckedCreateInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   name: string
-  features: string
-  actual_price: string
-  discount: string
+  features: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  actual_price: number
+  discount: number
   maxUsers: number
   maxRoles?: number | null
   maxStorageMb?: number | null
   allowsAdvancedAnalytics?: boolean
-  subscription?: Prisma.SubscriptionUncheckedCreateNestedManyWithoutPackagePlanInput
+  subscriptions?: Prisma.SubscriptionUncheckedCreateNestedManyWithoutPackagePlanInput
 }
 
 export type PackagePlanUpdateInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
-  features?: Prisma.StringFieldUpdateOperationsInput | string
-  actual_price?: Prisma.StringFieldUpdateOperationsInput | string
-  discount?: Prisma.StringFieldUpdateOperationsInput | string
+  features?: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  actual_price?: Prisma.FloatFieldUpdateOperationsInput | number
+  discount?: Prisma.FloatFieldUpdateOperationsInput | number
   maxUsers?: Prisma.IntFieldUpdateOperationsInput | number
   maxRoles?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   maxStorageMb?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   allowsAdvancedAnalytics?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  subscription?: Prisma.SubscriptionUpdateManyWithoutPackagePlanNestedInput
+  subscriptions?: Prisma.SubscriptionUpdateManyWithoutPackagePlanNestedInput
 }
 
 export type PackagePlanUncheckedUpdateInput = {
@@ -396,14 +400,14 @@ export type PackagePlanUncheckedUpdateInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
-  features?: Prisma.StringFieldUpdateOperationsInput | string
-  actual_price?: Prisma.StringFieldUpdateOperationsInput | string
-  discount?: Prisma.StringFieldUpdateOperationsInput | string
+  features?: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  actual_price?: Prisma.FloatFieldUpdateOperationsInput | number
+  discount?: Prisma.FloatFieldUpdateOperationsInput | number
   maxUsers?: Prisma.IntFieldUpdateOperationsInput | number
   maxRoles?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   maxStorageMb?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   allowsAdvancedAnalytics?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  subscription?: Prisma.SubscriptionUncheckedUpdateManyWithoutPackagePlanNestedInput
+  subscriptions?: Prisma.SubscriptionUncheckedUpdateManyWithoutPackagePlanNestedInput
 }
 
 export type PackagePlanCreateManyInput = {
@@ -411,9 +415,9 @@ export type PackagePlanCreateManyInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   name: string
-  features: string
-  actual_price: string
-  discount: string
+  features: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  actual_price: number
+  discount: number
   maxUsers: number
   maxRoles?: number | null
   maxStorageMb?: number | null
@@ -424,9 +428,9 @@ export type PackagePlanUpdateManyMutationInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
-  features?: Prisma.StringFieldUpdateOperationsInput | string
-  actual_price?: Prisma.StringFieldUpdateOperationsInput | string
-  discount?: Prisma.StringFieldUpdateOperationsInput | string
+  features?: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  actual_price?: Prisma.FloatFieldUpdateOperationsInput | number
+  discount?: Prisma.FloatFieldUpdateOperationsInput | number
   maxUsers?: Prisma.IntFieldUpdateOperationsInput | number
   maxRoles?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   maxStorageMb?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
@@ -438,9 +442,9 @@ export type PackagePlanUncheckedUpdateManyInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
-  features?: Prisma.StringFieldUpdateOperationsInput | string
-  actual_price?: Prisma.StringFieldUpdateOperationsInput | string
-  discount?: Prisma.StringFieldUpdateOperationsInput | string
+  features?: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  actual_price?: Prisma.FloatFieldUpdateOperationsInput | number
+  discount?: Prisma.FloatFieldUpdateOperationsInput | number
   maxUsers?: Prisma.IntFieldUpdateOperationsInput | number
   maxRoles?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   maxStorageMb?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
@@ -463,6 +467,8 @@ export type PackagePlanCountOrderByAggregateInput = {
 
 export type PackagePlanAvgOrderByAggregateInput = {
   id?: Prisma.SortOrder
+  actual_price?: Prisma.SortOrder
+  discount?: Prisma.SortOrder
   maxUsers?: Prisma.SortOrder
   maxRoles?: Prisma.SortOrder
   maxStorageMb?: Prisma.SortOrder
@@ -473,7 +479,6 @@ export type PackagePlanMaxOrderByAggregateInput = {
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   name?: Prisma.SortOrder
-  features?: Prisma.SortOrder
   actual_price?: Prisma.SortOrder
   discount?: Prisma.SortOrder
   maxUsers?: Prisma.SortOrder
@@ -487,7 +492,6 @@ export type PackagePlanMinOrderByAggregateInput = {
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   name?: Prisma.SortOrder
-  features?: Prisma.SortOrder
   actual_price?: Prisma.SortOrder
   discount?: Prisma.SortOrder
   maxUsers?: Prisma.SortOrder
@@ -498,6 +502,8 @@ export type PackagePlanMinOrderByAggregateInput = {
 
 export type PackagePlanSumOrderByAggregateInput = {
   id?: Prisma.SortOrder
+  actual_price?: Prisma.SortOrder
+  discount?: Prisma.SortOrder
   maxUsers?: Prisma.SortOrder
   maxRoles?: Prisma.SortOrder
   maxStorageMb?: Prisma.SortOrder
@@ -508,6 +514,14 @@ export type PackagePlanScalarRelationFilter = {
   isNot?: Prisma.PackagePlanWhereInput
 }
 
+export type FloatFieldUpdateOperationsInput = {
+  set?: number
+  increment?: number
+  decrement?: number
+  multiply?: number
+  divide?: number
+}
+
 export type NullableIntFieldUpdateOperationsInput = {
   set?: number | null
   increment?: number
@@ -516,84 +530,84 @@ export type NullableIntFieldUpdateOperationsInput = {
   divide?: number
 }
 
-export type PackagePlanCreateNestedOneWithoutSubscriptionInput = {
-  create?: Prisma.XOR<Prisma.PackagePlanCreateWithoutSubscriptionInput, Prisma.PackagePlanUncheckedCreateWithoutSubscriptionInput>
-  connectOrCreate?: Prisma.PackagePlanCreateOrConnectWithoutSubscriptionInput
+export type PackagePlanCreateNestedOneWithoutSubscriptionsInput = {
+  create?: Prisma.XOR<Prisma.PackagePlanCreateWithoutSubscriptionsInput, Prisma.PackagePlanUncheckedCreateWithoutSubscriptionsInput>
+  connectOrCreate?: Prisma.PackagePlanCreateOrConnectWithoutSubscriptionsInput
   connect?: Prisma.PackagePlanWhereUniqueInput
 }
 
-export type PackagePlanUpdateOneRequiredWithoutSubscriptionNestedInput = {
-  create?: Prisma.XOR<Prisma.PackagePlanCreateWithoutSubscriptionInput, Prisma.PackagePlanUncheckedCreateWithoutSubscriptionInput>
-  connectOrCreate?: Prisma.PackagePlanCreateOrConnectWithoutSubscriptionInput
-  upsert?: Prisma.PackagePlanUpsertWithoutSubscriptionInput
+export type PackagePlanUpdateOneRequiredWithoutSubscriptionsNestedInput = {
+  create?: Prisma.XOR<Prisma.PackagePlanCreateWithoutSubscriptionsInput, Prisma.PackagePlanUncheckedCreateWithoutSubscriptionsInput>
+  connectOrCreate?: Prisma.PackagePlanCreateOrConnectWithoutSubscriptionsInput
+  upsert?: Prisma.PackagePlanUpsertWithoutSubscriptionsInput
   connect?: Prisma.PackagePlanWhereUniqueInput
-  update?: Prisma.XOR<Prisma.XOR<Prisma.PackagePlanUpdateToOneWithWhereWithoutSubscriptionInput, Prisma.PackagePlanUpdateWithoutSubscriptionInput>, Prisma.PackagePlanUncheckedUpdateWithoutSubscriptionInput>
+  update?: Prisma.XOR<Prisma.XOR<Prisma.PackagePlanUpdateToOneWithWhereWithoutSubscriptionsInput, Prisma.PackagePlanUpdateWithoutSubscriptionsInput>, Prisma.PackagePlanUncheckedUpdateWithoutSubscriptionsInput>
 }
 
-export type PackagePlanCreateWithoutSubscriptionInput = {
+export type PackagePlanCreateWithoutSubscriptionsInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   name: string
-  features: string
-  actual_price: string
-  discount: string
+  features: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  actual_price: number
+  discount: number
   maxUsers: number
   maxRoles?: number | null
   maxStorageMb?: number | null
   allowsAdvancedAnalytics?: boolean
 }
 
-export type PackagePlanUncheckedCreateWithoutSubscriptionInput = {
+export type PackagePlanUncheckedCreateWithoutSubscriptionsInput = {
   id?: number
   createdAt?: Date | string
   updatedAt?: Date | string
   name: string
-  features: string
-  actual_price: string
-  discount: string
+  features: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  actual_price: number
+  discount: number
   maxUsers: number
   maxRoles?: number | null
   maxStorageMb?: number | null
   allowsAdvancedAnalytics?: boolean
 }
 
-export type PackagePlanCreateOrConnectWithoutSubscriptionInput = {
+export type PackagePlanCreateOrConnectWithoutSubscriptionsInput = {
   where: Prisma.PackagePlanWhereUniqueInput
-  create: Prisma.XOR<Prisma.PackagePlanCreateWithoutSubscriptionInput, Prisma.PackagePlanUncheckedCreateWithoutSubscriptionInput>
+  create: Prisma.XOR<Prisma.PackagePlanCreateWithoutSubscriptionsInput, Prisma.PackagePlanUncheckedCreateWithoutSubscriptionsInput>
 }
 
-export type PackagePlanUpsertWithoutSubscriptionInput = {
-  update: Prisma.XOR<Prisma.PackagePlanUpdateWithoutSubscriptionInput, Prisma.PackagePlanUncheckedUpdateWithoutSubscriptionInput>
-  create: Prisma.XOR<Prisma.PackagePlanCreateWithoutSubscriptionInput, Prisma.PackagePlanUncheckedCreateWithoutSubscriptionInput>
+export type PackagePlanUpsertWithoutSubscriptionsInput = {
+  update: Prisma.XOR<Prisma.PackagePlanUpdateWithoutSubscriptionsInput, Prisma.PackagePlanUncheckedUpdateWithoutSubscriptionsInput>
+  create: Prisma.XOR<Prisma.PackagePlanCreateWithoutSubscriptionsInput, Prisma.PackagePlanUncheckedCreateWithoutSubscriptionsInput>
   where?: Prisma.PackagePlanWhereInput
 }
 
-export type PackagePlanUpdateToOneWithWhereWithoutSubscriptionInput = {
+export type PackagePlanUpdateToOneWithWhereWithoutSubscriptionsInput = {
   where?: Prisma.PackagePlanWhereInput
-  data: Prisma.XOR<Prisma.PackagePlanUpdateWithoutSubscriptionInput, Prisma.PackagePlanUncheckedUpdateWithoutSubscriptionInput>
+  data: Prisma.XOR<Prisma.PackagePlanUpdateWithoutSubscriptionsInput, Prisma.PackagePlanUncheckedUpdateWithoutSubscriptionsInput>
 }
 
-export type PackagePlanUpdateWithoutSubscriptionInput = {
+export type PackagePlanUpdateWithoutSubscriptionsInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
-  features?: Prisma.StringFieldUpdateOperationsInput | string
-  actual_price?: Prisma.StringFieldUpdateOperationsInput | string
-  discount?: Prisma.StringFieldUpdateOperationsInput | string
+  features?: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  actual_price?: Prisma.FloatFieldUpdateOperationsInput | number
+  discount?: Prisma.FloatFieldUpdateOperationsInput | number
   maxUsers?: Prisma.IntFieldUpdateOperationsInput | number
   maxRoles?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   maxStorageMb?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   allowsAdvancedAnalytics?: Prisma.BoolFieldUpdateOperationsInput | boolean
 }
 
-export type PackagePlanUncheckedUpdateWithoutSubscriptionInput = {
+export type PackagePlanUncheckedUpdateWithoutSubscriptionsInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
-  features?: Prisma.StringFieldUpdateOperationsInput | string
-  actual_price?: Prisma.StringFieldUpdateOperationsInput | string
-  discount?: Prisma.StringFieldUpdateOperationsInput | string
+  features?: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  actual_price?: Prisma.FloatFieldUpdateOperationsInput | number
+  discount?: Prisma.FloatFieldUpdateOperationsInput | number
   maxUsers?: Prisma.IntFieldUpdateOperationsInput | number
   maxRoles?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   maxStorageMb?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
@@ -606,11 +620,11 @@ export type PackagePlanUncheckedUpdateWithoutSubscriptionInput = {
  */
 
 export type PackagePlanCountOutputType = {
-  subscription: number
+  subscriptions: number
 }
 
 export type PackagePlanCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  subscription?: boolean | PackagePlanCountOutputTypeCountSubscriptionArgs
+  subscriptions?: boolean | PackagePlanCountOutputTypeCountSubscriptionsArgs
 }
 
 /**
@@ -626,7 +640,7 @@ export type PackagePlanCountOutputTypeDefaultArgs<ExtArgs extends runtime.Types.
 /**
  * PackagePlanCountOutputType without action
  */
-export type PackagePlanCountOutputTypeCountSubscriptionArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+export type PackagePlanCountOutputTypeCountSubscriptionsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   where?: Prisma.SubscriptionWhereInput
 }
 
@@ -643,7 +657,7 @@ export type PackagePlanSelect<ExtArgs extends runtime.Types.Extensions.InternalA
   maxRoles?: boolean
   maxStorageMb?: boolean
   allowsAdvancedAnalytics?: boolean
-  subscription?: boolean | Prisma.PackagePlan$subscriptionArgs<ExtArgs>
+  subscriptions?: boolean | Prisma.PackagePlan$subscriptionsArgs<ExtArgs>
   _count?: boolean | Prisma.PackagePlanCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["packagePlan"]>
 
@@ -691,7 +705,7 @@ export type PackagePlanSelectScalar = {
 
 export type PackagePlanOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "createdAt" | "updatedAt" | "name" | "features" | "actual_price" | "discount" | "maxUsers" | "maxRoles" | "maxStorageMb" | "allowsAdvancedAnalytics", ExtArgs["result"]["packagePlan"]>
 export type PackagePlanInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  subscription?: boolean | Prisma.PackagePlan$subscriptionArgs<ExtArgs>
+  subscriptions?: boolean | Prisma.PackagePlan$subscriptionsArgs<ExtArgs>
   _count?: boolean | Prisma.PackagePlanCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type PackagePlanIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {}
@@ -700,16 +714,16 @@ export type PackagePlanIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.
 export type $PackagePlanPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "PackagePlan"
   objects: {
-    subscription: Prisma.$SubscriptionPayload<ExtArgs>[]
+    subscriptions: Prisma.$SubscriptionPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: number
     createdAt: Date
     updatedAt: Date
     name: string
-    features: string
-    actual_price: string
-    discount: string
+    features: runtime.JsonValue
+    actual_price: number
+    discount: number
     maxUsers: number
     maxRoles: number | null
     maxStorageMb: number | null
@@ -1108,7 +1122,7 @@ readonly fields: PackagePlanFieldRefs;
  */
 export interface Prisma__PackagePlanClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
-  subscription<T extends Prisma.PackagePlan$subscriptionArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.PackagePlan$subscriptionArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$SubscriptionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  subscriptions<T extends Prisma.PackagePlan$subscriptionsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.PackagePlan$subscriptionsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$SubscriptionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1142,9 +1156,9 @@ export interface PackagePlanFieldRefs {
   readonly createdAt: Prisma.FieldRef<"PackagePlan", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"PackagePlan", 'DateTime'>
   readonly name: Prisma.FieldRef<"PackagePlan", 'String'>
-  readonly features: Prisma.FieldRef<"PackagePlan", 'String'>
-  readonly actual_price: Prisma.FieldRef<"PackagePlan", 'String'>
-  readonly discount: Prisma.FieldRef<"PackagePlan", 'String'>
+  readonly features: Prisma.FieldRef<"PackagePlan", 'Json'>
+  readonly actual_price: Prisma.FieldRef<"PackagePlan", 'Float'>
+  readonly discount: Prisma.FieldRef<"PackagePlan", 'Float'>
   readonly maxUsers: Prisma.FieldRef<"PackagePlan", 'Int'>
   readonly maxRoles: Prisma.FieldRef<"PackagePlan", 'Int'>
   readonly maxStorageMb: Prisma.FieldRef<"PackagePlan", 'Int'>
@@ -1540,9 +1554,9 @@ export type PackagePlanDeleteManyArgs<ExtArgs extends runtime.Types.Extensions.I
 }
 
 /**
- * PackagePlan.subscription
+ * PackagePlan.subscriptions
  */
-export type PackagePlan$subscriptionArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+export type PackagePlan$subscriptionsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   /**
    * Select specific fields to fetch from the Subscription
    */

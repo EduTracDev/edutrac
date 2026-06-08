@@ -147,6 +147,13 @@ Run migrations:
 yarn prisma:dev:deploy
 ```
 
+Seed the database:
+
+```bash
+npx prisma db seed
+```
+
+
 Open Prisma Studio (optional):
 
 ```bash

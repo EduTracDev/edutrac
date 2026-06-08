@@ -1,25 +1,13 @@
-import { Controller, Body, Post, Get, Query } from '@nestjs/common';
+import { Controller, Body, Post } from '@nestjs/common';
 import { AuthService } from '../services/auth.service';
-import { RegisterUserDto } from '../dto';
-import {MailService} from '../../mail/mail.service'
-import { RegisterTenantDto, VerifyAccountDto } from '../dto';
+import { RegisterTenantDto } from '../dto';
 
-@Controller('auth/tenant')
+@Controller('institution/auth')
 export class TenantAuthController {
-    constructor(private authService: AuthService, private mailService: MailService) { }
+    constructor(private authService: AuthService) { }
 
-    @Post('register-platform')
+    @Post('register')
     async registerTenant(@Body() dto:RegisterTenantDto){
-        return this.authService.registerTenant(dto)
-    }
-
-    @Post('signin')
-    async signin(@Body() dto: RegisterUserDto) {
-        return this.authService.signInUser(dto);
-    }
-
-    @Post('verifyaccount')
-    async verifyEmailAddress(@Body() dto: VerifyAccountDto){
-        return this.authService.verifyAccount(dto);
+        return this.authService.registerTenantViaEmailPassword(dto)
     }
 }

@@ -250,7 +250,7 @@ export type UserRoleScalarWhereWithAggregatesInput = {
 
 export type UserRoleCreateInput = {
   createdAt?: Date | string
-  user: Prisma.UserCreateNestedOneWithoutUserRoleInput
+  user: Prisma.UserCreateNestedOneWithoutUserRolesInput
   role: Prisma.RoleCreateNestedOneWithoutUserRolesInput
 }
 
@@ -262,7 +262,7 @@ export type UserRoleUncheckedCreateInput = {
 
 export type UserRoleUpdateInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  user?: Prisma.UserUpdateOneRequiredWithoutUserRoleNestedInput
+  user?: Prisma.UserUpdateOneRequiredWithoutUserRolesNestedInput
   role?: Prisma.RoleUpdateOneRequiredWithoutUserRolesNestedInput
 }
 
@@ -461,7 +461,7 @@ export type UserRoleScalarWhereInput = {
 
 export type UserRoleCreateWithoutRoleInput = {
   createdAt?: Date | string
-  user: Prisma.UserCreateNestedOneWithoutUserRoleInput
+  user: Prisma.UserCreateNestedOneWithoutUserRolesInput
 }
 
 export type UserRoleUncheckedCreateWithoutRoleInput = {
@@ -521,7 +521,7 @@ export type UserRoleCreateManyRoleInput = {
 
 export type UserRoleUpdateWithoutRoleInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  user?: Prisma.UserUpdateOneRequiredWithoutUserRoleNestedInput
+  user?: Prisma.UserUpdateOneRequiredWithoutUserRolesNestedInput
 }
 
 export type UserRoleUncheckedUpdateWithoutRoleInput = {

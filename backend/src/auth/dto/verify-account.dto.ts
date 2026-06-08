@@ -1,4 +1,5 @@
 import { IsEmail, IsNotEmpty, IsString } from "class-validator";
+import { TenantModule } from "src/tenant/tenant.module";
 
 export class VerifyAccountDto{
     @IsEmail()
@@ -13,4 +14,4 @@ export class VerifyAccountDto{
     @IsString()
     @IsNotEmpty()
     redirectUrl?: string;
-}
+}TenantModule

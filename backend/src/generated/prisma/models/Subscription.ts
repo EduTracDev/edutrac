@@ -318,7 +318,7 @@ export type SubscriptionCreateInput = {
   startedAt?: Date | string
   endsAt?: Date | string | null
   tenant: Prisma.TenantCreateNestedOneWithoutSubscriptionInput
-  packagePlan: Prisma.PackagePlanCreateNestedOneWithoutSubscriptionInput
+  packagePlan: Prisma.PackagePlanCreateNestedOneWithoutSubscriptionsInput
 }
 
 export type SubscriptionUncheckedCreateInput = {
@@ -339,7 +339,7 @@ export type SubscriptionUpdateInput = {
   startedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   endsAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   tenant?: Prisma.TenantUpdateOneRequiredWithoutSubscriptionNestedInput
-  packagePlan?: Prisma.PackagePlanUpdateOneRequiredWithoutSubscriptionNestedInput
+  packagePlan?: Prisma.PackagePlanUpdateOneRequiredWithoutSubscriptionsNestedInput
 }
 
 export type SubscriptionUncheckedUpdateInput = {
@@ -523,7 +523,7 @@ export type SubscriptionCreateWithoutTenantInput = {
   status?: string
   startedAt?: Date | string
   endsAt?: Date | string | null
-  packagePlan: Prisma.PackagePlanCreateNestedOneWithoutSubscriptionInput
+  packagePlan: Prisma.PackagePlanCreateNestedOneWithoutSubscriptionsInput
 }
 
 export type SubscriptionUncheckedCreateWithoutTenantInput = {
@@ -558,7 +558,7 @@ export type SubscriptionUpdateWithoutTenantInput = {
   status?: Prisma.StringFieldUpdateOperationsInput | string
   startedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   endsAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  packagePlan?: Prisma.PackagePlanUpdateOneRequiredWithoutSubscriptionNestedInput
+  packagePlan?: Prisma.PackagePlanUpdateOneRequiredWithoutSubscriptionsNestedInput
 }
 
 export type SubscriptionUncheckedUpdateWithoutTenantInput = {
