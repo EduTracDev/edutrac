@@ -62,6 +62,7 @@ export const contactSchema = yup.object().shape({
   email: emailSchema,
   phoneNumber: phoneSchema,
   schoolName: yup.string().required("School name is required"),
+  subject: yup.string().required("Subject is required"),
   message: yup
     .string()
     .min(10, "Please provide more detail")
