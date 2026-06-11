@@ -1,107 +1,79 @@
+// TeamSection.tsx
 "use client";
 
 import React from "react";
 import Image from "next/image";
 import { StaticImageData } from "next/image";
-import { motion } from "framer-motion";
-import {
-  FaFacebookF,
-  FaLinkedin,
-  FaXTwitter,
-  FaInstagram,
-} from "react-icons/fa6";
 
 interface TeamMember {
   name: string;
   role: string;
-  image: StaticImageData;
-  socials: {
-    facebook?: string;
-    instagram?: string;
-    linkedin?: string;
-    twitter?: string;
-  };
+  image: string | StaticImageData;
 }
 
-export default function TeamSection({
-  badge,
-  title,
-  members,
-}: {
+interface TeamProps {
   badge: string;
   title: string;
+  description?: string;
   members: TeamMember[];
-}) {
+}
+
+export default function TeamSection({ badge, title, description, members }: TeamProps) {
   return (
-    <section className="py-24 bg-white" aria-labelledby="team-heading">
-      <div className="max-w-7xl mx-auto px-6 text-center">
-        {/* Header */}
-        <div className="mb-16 space-y-4">
-          <span className="inline-block px-4 py-1.5 bg-[#923CF9]/10 text-[#923CF9] text-xs font-bold uppercase tracking-widest rounded-full">
+    <section className="py-20 md:py-16 bg-white" aria-labelledby="team-heading">
+      <div className="max-w-7xl mx-auto px-6 text-center space-y-12">
+        
+        {/* Header Stack */}
+        <div className="space-y-4 max-w-3xl mx-auto">
+          <span className="inline-block bg-[#923CF6]/10 text-[#923CF6] text-[10px] md:text-[11px] font-bold tracking-widest uppercase px-3 py-1.5 rounded-md">
             {badge}
           </span>
           <h2
             id="team-heading"
-            className="text-4xl md:text-5xl font-extrabold text-slate-900"
+            className="text-4xl md:text-5xl font-extrabold text-[#0F172A] uppercase tracking-tight"
           >
             {title}
           </h2>
+          {description && (
+            <p className="text-[13px] md:text-[13px] text-slate-500 max-w-4xl mx-auto leading-relaxed">
+              {description}
+            </p>
+          )}
         </div>
 
-        {/* Members Grid - Centered for 3 people */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-12 lg:gap-16 justify-center">
-          {members.map((member, index) => (
-            <motion.div
-              key={index}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: index * 0.1 }}
-              whileHover={{ y: -10 }} // "Lift" effect
-              className="group"
-            >
-              {/* Image Container with Shadow */}
-              <div className="relative aspect-[4/5] mb-6 rounded-[32px] overflow-hidden shadow-lg group-hover:shadow-2xl transition-all duration-300">
-                <Image
-                  src={member.image}
-                  alt={`Portrait of ${member.name}`} // WAI-ARIA alt text
-                  fill
-                  className="object-cover transition-transform duration-500 group-hover:scale-110"
-                />
+        {/* 5-Member Circular Flex Grid Grid Container */}
+        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-x-3 gap-y-6 pt-6 items-start justify-center">
+          {members?.map((member, index) => (
+            <div key={index} className="flex flex-col items-center text-center space-y-2 group">
+              
+              {/* Circular Wrapper Frame with Peach/Warm Tint Underlay */}
+              <div className="relative w-full aspect-square max-w-[190px] rounded-full overflow-hidden bg-[#F2D0B6] shadow-sm transition-transform duration-300 group-hover:scale-105">
+                {member.image ? (
+                  <Image
+                    src={member.image}
+                    alt={member.name}
+                    fill
+                    className="object-cover object-center pt-4"
+                  />
+                ) : (
+                  <div className="w-full h-full bg-slate-200" />
+                )}
               </div>
 
-              {/* Info */}
-              <h3 className="text-2xl font-bold text-slate-900">
-                {member.name}
-              </h3>
-              <p className="text-[#923CF9] font-medium mb-4">{member.role}</p>
-
-              {/* Social Icons with WAI-ARIA labels */}
-              <div className="flex justify-center gap-4">
-                {Object.entries(member.socials).map(([platform, url]) => {
-                  const Icon = {
-                    facebook: FaFacebookF,
-                    instagram: FaInstagram,
-                    linkedin: FaLinkedin,
-                    twitter: FaXTwitter,
-                  }[platform as keyof typeof member.socials];
-                  return (
-                    url && (
-                      <a
-                        key={platform}
-                        href={url}
-                        className="p-2 text-slate-400 hover:text-[#923CF9] transition-colors"
-                        aria-label={`Visit ${member.name}'s ${platform} profile`}
-                      >
-                        {Icon && <Icon size={20} />}
-                      </a>
-                    )
-                  );
-                })}
+              {/* Identity Descriptions Text Stack */}
+              <div className="space-y-1">
+                <h4 className="text-base font-bold text-[#0F172A] tracking-tight">
+                  {member.name}
+                </h4>
+                <p className="text-xs font-semibold text-[#6A82A4]">
+                  {member.role}
+                </p>
               </div>
-            </motion.div>
+
+            </div>
           ))}
         </div>
+
       </div>
     </section>
   );
