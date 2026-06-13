@@ -62,7 +62,7 @@ export default function Testimonial({ items }: TestimonialProps) {
           </span>
           <h2
             id="testimonial-heading"
-            className="text-3xl md:text-5xl font-extrabold text-[#0F172A] leading-tight max-w-3xl mx-auto"
+            className="text-3xl md:text-5xl font-extrabold text-[#0F172A] leading-tight max-w-2xl mx-auto"
           >
             Creating A Community Of Life Long Learners.
           </h2>
@@ -77,7 +77,7 @@ export default function Testimonial({ items }: TestimonialProps) {
                   className="flex-[0_0_100%] md:flex-[0_0_50%] lg:flex-[0_0_33.33%] min-w-0 px-4"
                   role="listitem"
                 >
-                  <figure className="h-full relative p-8 bg-white border border-[#17254E] rounded-2xl shadow-sm hover:shadow-xl transition-all duration-300">
+                  <figure className="h-full relative p-6 border border-[#17254E] rounded-2xl shadow-sm hover:shadow-xl transition-all duration-300">
                     <div className="absolute -top-4 left-6 text-gray-200">
                       <Quote
                         size={48}
@@ -90,8 +90,8 @@ export default function Testimonial({ items }: TestimonialProps) {
                         &ldquo;{item.quote}&rdquo;
                       </p>
                     </blockquote>
-                    <figcaption className="border-t border-gray-50 pt-6">
-                      <div className="font-black text-[#0F172A] text-lg uppercase tracking-tight">
+                    <figcaption className="border-t border-gray-50">
+                      <div className="font-black text-[#0F172A] text-lg tracking-tight">
                         {item.author}
                       </div>
                       <div className="text-[#923CF9] text-sm font-bold mt-1">

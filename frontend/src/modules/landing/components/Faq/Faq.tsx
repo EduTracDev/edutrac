@@ -2,8 +2,6 @@
 
 import React, { useState } from "react";
 import { ChevronDown } from "lucide-react";
-import Image from "next/image";
-import backgroundMap from "@/modules/shared/assets/images/BackgroundMap.jpeg";
 
 interface FAQProps {
   items: {
@@ -13,6 +11,7 @@ interface FAQProps {
 }
 
 export default function FAQ({ items }: FAQProps) {
+  // First card open by default to mirror screenshot layout
   const [openIndex, setOpenIndex] = useState<number | null>(0);
 
   const toggleFAQ = (index: number) => {
@@ -20,65 +19,64 @@ export default function FAQ({ items }: FAQProps) {
   };
 
   return (
-    <section className="relative py-10" aria-labelledby="faq-heading">
-      <div className="max-w-4xl mx-auto px-6">
-        <div className="text-center mb-12">
-          <span className="inline-block px-4 py-1 mb-4 text-xs font-bold uppercase tracking-widest text-purple-600 bg-purple-100 rounded-md">
-            FAQs
+    <section 
+      className="w-full bg-gradient-to-b from-[#FAF8FF] via-[#FAF8FF] to-white pt-16 pb-24 text-left" 
+      aria-labelledby="faq-heading"
+    >
+      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+        
+        {/* Badge Header Block */}
+        <div className=" mb-16 space-y-3">
+          <span className="text-center inline-block px-5 py-1 text-[10px] font-bold tracking-widest uppercase bg-[#EFE8FC] text-[#923CF9] rounded-md">
+            FAQS
           </span>
           <h2
             id="faq-heading"
-            className="text-3xl md:text-4xl font-extrabold text-gray-900"
+            className="text-left text-3xl sm:text-4xl font-black text-[#0A1128] tracking-tight"
           >
             Frequently Asked Questions
           </h2>
         </div>
 
-        <div className="space-y-4">
-          {items.map((item, index) => (
-            <div
-              key={index}
-              className={`border rounded-xl transition-all duration-300 ${
-                openIndex === index
-                  ? "border-purple-200 shadow-sm"
-                  : "border-gray-200"
-              }`}
-            >
-              <button
-                onClick={() => toggleFAQ(index)}
-                aria-expanded={openIndex === index}
-                className="w-full flex items-center justify-between p-5 md:p-6 text-left group outline-none"
+        {/* Accordions Stack Grid Column container */}
+        <div className="space-y-4 max-w-4xl mx-auto relative z-10">
+          {items.map((item, index) => {
+            const isOpen = openIndex === index;
+            
+            return (
+              <div
+                key={index}
+                className="bg-white border border-gray-200/90 rounded-[20px] overflow-hidden transition-all duration-300 shadow-sm shadow-purple-100/10"
               >
-                <span
-                  className={`text-lg font-bold ${
-                    openIndex === index ? "text-purple-600" : "text-gray-900"
+                {/* Trigger Row Button */}
+                <button
+                  onClick={() => toggleFAQ(index)}
+                  aria-expanded={isOpen}
+                  className="w-full flex items-center justify-between p-5 sm:p-6 text-left outline-none group"
+                >
+                  <span className="text-base font-bold text-[#0A1128] transition-colors duration-200 group-hover:text-[#923CF9]">
+                    {item.question}
+                  </span>
+                  <div className={`p-1 text-gray-500 transition-transform duration-300 ${isOpen ? "rotate-180" : ""}`}>
+                    <ChevronDown size={18} />
+                  </div>
+                </button>
+
+                {/* Collapsible content pane wrapper */}
+                <div
+                  className={`transition-all duration-300 ease-in-out overflow-hidden ${
+                    isOpen ? "max-h-[250px] opacity-100" : "max-h-0 opacity-0"
                   }`}
                 >
-                  {item.question}
-                </span>
-                <ChevronDown
-                  className={`transition-transform duration-300 ${
-                    openIndex === index
-                      ? "rotate-180 text-purple-600"
-                      : "text-gray-400"
-                  }`}
-                />
-              </button>
-
-              <div
-                className={`overflow-hidden transition-all duration-300 ease-in-out ${
-                  openIndex === index
-                    ? "max-h-96 opacity-100"
-                    : "max-h-0 opacity-0"
-                }`}
-              >
-                <div className="px-5 pb-6 md:px-6 md:pb-7 text-gray-500">
-                  {item.answer}
+                  <div className="px-5 pb-6 sm:px-6 sm:pb-6 text-sm leading-relaxed text-[#717D96] font-medium max-w-3xl">
+                    {item.answer}
+                  </div>
                 </div>
               </div>
-            </div>
-          ))}
+            );
+          })}
         </div>
+
       </div>
     </section>
   );

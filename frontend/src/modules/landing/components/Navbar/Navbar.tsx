@@ -29,7 +29,7 @@ export default function Navbar({
   ];
 
   return (
-    <nav className="fixed top-0 z-50 w-full bg-white/80 backdrop-blur-md py-4 shadow-sm border-b border-gray-100">
+    <nav className="font-source-sans fixed top-0 z-50 w-full bg-white/80 backdrop-blur-md py-4 shadow-sm border-b border-gray-100">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between">
           {/* Logo */}
@@ -54,7 +54,7 @@ export default function Navbar({
                 <Link
                   key={link.name}
                   href={link.href}
-                  className={`relative text-[16px] font-medium transition-colors duration-200 py-1 ${
+                  className={`relative text-[16px] font-bold transition-colors duration-200 py-1 ${
                     isActive
                       ? "text-[#923CF9]"
                       : "text-gray-600 hover:text-[#923CF9]"
