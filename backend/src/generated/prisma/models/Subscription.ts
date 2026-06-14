@@ -44,7 +44,7 @@ export type SubscriptionMinAggregateOutputType = {
   updatedAt: Date | null
   tenantId: number | null
   packagePlanId: number | null
-  status: string | null
+  status: $Enums.SubscriptionStatus | null
   startedAt: Date | null
   endsAt: Date | null
 }
@@ -55,7 +55,7 @@ export type SubscriptionMaxAggregateOutputType = {
   updatedAt: Date | null
   tenantId: number | null
   packagePlanId: number | null
-  status: string | null
+  status: $Enums.SubscriptionStatus | null
   startedAt: Date | null
   endsAt: Date | null
 }
@@ -211,7 +211,7 @@ export type SubscriptionGroupByOutputType = {
   updatedAt: Date
   tenantId: number
   packagePlanId: number
-  status: string
+  status: $Enums.SubscriptionStatus
   startedAt: Date
   endsAt: Date | null
   _count: SubscriptionCountAggregateOutputType | null
@@ -245,7 +245,7 @@ export type SubscriptionWhereInput = {
   updatedAt?: Prisma.DateTimeFilter<"Subscription"> | Date | string
   tenantId?: Prisma.IntFilter<"Subscription"> | number
   packagePlanId?: Prisma.IntFilter<"Subscription"> | number
-  status?: Prisma.StringFilter<"Subscription"> | string
+  status?: Prisma.EnumSubscriptionStatusFilter<"Subscription"> | $Enums.SubscriptionStatus
   startedAt?: Prisma.DateTimeFilter<"Subscription"> | Date | string
   endsAt?: Prisma.DateTimeNullableFilter<"Subscription"> | Date | string | null
   tenant?: Prisma.XOR<Prisma.TenantScalarRelationFilter, Prisma.TenantWhereInput>
@@ -274,7 +274,7 @@ export type SubscriptionWhereUniqueInput = Prisma.AtLeast<{
   createdAt?: Prisma.DateTimeFilter<"Subscription"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Subscription"> | Date | string
   packagePlanId?: Prisma.IntFilter<"Subscription"> | number
-  status?: Prisma.StringFilter<"Subscription"> | string
+  status?: Prisma.EnumSubscriptionStatusFilter<"Subscription"> | $Enums.SubscriptionStatus
   startedAt?: Prisma.DateTimeFilter<"Subscription"> | Date | string
   endsAt?: Prisma.DateTimeNullableFilter<"Subscription"> | Date | string | null
   tenant?: Prisma.XOR<Prisma.TenantScalarRelationFilter, Prisma.TenantWhereInput>
@@ -306,7 +306,7 @@ export type SubscriptionScalarWhereWithAggregatesInput = {
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"Subscription"> | Date | string
   tenantId?: Prisma.IntWithAggregatesFilter<"Subscription"> | number
   packagePlanId?: Prisma.IntWithAggregatesFilter<"Subscription"> | number
-  status?: Prisma.StringWithAggregatesFilter<"Subscription"> | string
+  status?: Prisma.EnumSubscriptionStatusWithAggregatesFilter<"Subscription"> | $Enums.SubscriptionStatus
   startedAt?: Prisma.DateTimeWithAggregatesFilter<"Subscription"> | Date | string
   endsAt?: Prisma.DateTimeNullableWithAggregatesFilter<"Subscription"> | Date | string | null
 }
@@ -314,7 +314,7 @@ export type SubscriptionScalarWhereWithAggregatesInput = {
 export type SubscriptionCreateInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
-  status?: string
+  status: $Enums.SubscriptionStatus
   startedAt?: Date | string
   endsAt?: Date | string | null
   tenant: Prisma.TenantCreateNestedOneWithoutSubscriptionInput
@@ -327,7 +327,7 @@ export type SubscriptionUncheckedCreateInput = {
   updatedAt?: Date | string
   tenantId: number
   packagePlanId: number
-  status?: string
+  status: $Enums.SubscriptionStatus
   startedAt?: Date | string
   endsAt?: Date | string | null
 }
@@ -335,7 +335,7 @@ export type SubscriptionUncheckedCreateInput = {
 export type SubscriptionUpdateInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  status?: Prisma.StringFieldUpdateOperationsInput | string
+  status?: Prisma.EnumSubscriptionStatusFieldUpdateOperationsInput | $Enums.SubscriptionStatus
   startedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   endsAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   tenant?: Prisma.TenantUpdateOneRequiredWithoutSubscriptionNestedInput
@@ -348,7 +348,7 @@ export type SubscriptionUncheckedUpdateInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   tenantId?: Prisma.IntFieldUpdateOperationsInput | number
   packagePlanId?: Prisma.IntFieldUpdateOperationsInput | number
-  status?: Prisma.StringFieldUpdateOperationsInput | string
+  status?: Prisma.EnumSubscriptionStatusFieldUpdateOperationsInput | $Enums.SubscriptionStatus
   startedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   endsAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
 }
@@ -359,7 +359,7 @@ export type SubscriptionCreateManyInput = {
   updatedAt?: Date | string
   tenantId: number
   packagePlanId: number
-  status?: string
+  status: $Enums.SubscriptionStatus
   startedAt?: Date | string
   endsAt?: Date | string | null
 }
@@ -367,7 +367,7 @@ export type SubscriptionCreateManyInput = {
 export type SubscriptionUpdateManyMutationInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  status?: Prisma.StringFieldUpdateOperationsInput | string
+  status?: Prisma.EnumSubscriptionStatusFieldUpdateOperationsInput | $Enums.SubscriptionStatus
   startedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   endsAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
 }
@@ -378,7 +378,7 @@ export type SubscriptionUncheckedUpdateManyInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   tenantId?: Prisma.IntFieldUpdateOperationsInput | number
   packagePlanId?: Prisma.IntFieldUpdateOperationsInput | number
-  status?: Prisma.StringFieldUpdateOperationsInput | string
+  status?: Prisma.EnumSubscriptionStatusFieldUpdateOperationsInput | $Enums.SubscriptionStatus
   startedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   endsAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
 }
@@ -517,10 +517,14 @@ export type SubscriptionUncheckedUpdateManyWithoutPackagePlanNestedInput = {
   deleteMany?: Prisma.SubscriptionScalarWhereInput | Prisma.SubscriptionScalarWhereInput[]
 }
 
+export type EnumSubscriptionStatusFieldUpdateOperationsInput = {
+  set?: $Enums.SubscriptionStatus
+}
+
 export type SubscriptionCreateWithoutTenantInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
-  status?: string
+  status: $Enums.SubscriptionStatus
   startedAt?: Date | string
   endsAt?: Date | string | null
   packagePlan: Prisma.PackagePlanCreateNestedOneWithoutSubscriptionsInput
@@ -531,7 +535,7 @@ export type SubscriptionUncheckedCreateWithoutTenantInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   packagePlanId: number
-  status?: string
+  status: $Enums.SubscriptionStatus
   startedAt?: Date | string
   endsAt?: Date | string | null
 }
@@ -555,7 +559,7 @@ export type SubscriptionUpdateToOneWithWhereWithoutTenantInput = {
 export type SubscriptionUpdateWithoutTenantInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  status?: Prisma.StringFieldUpdateOperationsInput | string
+  status?: Prisma.EnumSubscriptionStatusFieldUpdateOperationsInput | $Enums.SubscriptionStatus
   startedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   endsAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   packagePlan?: Prisma.PackagePlanUpdateOneRequiredWithoutSubscriptionsNestedInput
@@ -566,7 +570,7 @@ export type SubscriptionUncheckedUpdateWithoutTenantInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   packagePlanId?: Prisma.IntFieldUpdateOperationsInput | number
-  status?: Prisma.StringFieldUpdateOperationsInput | string
+  status?: Prisma.EnumSubscriptionStatusFieldUpdateOperationsInput | $Enums.SubscriptionStatus
   startedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   endsAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
 }
@@ -574,7 +578,7 @@ export type SubscriptionUncheckedUpdateWithoutTenantInput = {
 export type SubscriptionCreateWithoutPackagePlanInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
-  status?: string
+  status: $Enums.SubscriptionStatus
   startedAt?: Date | string
   endsAt?: Date | string | null
   tenant: Prisma.TenantCreateNestedOneWithoutSubscriptionInput
@@ -585,7 +589,7 @@ export type SubscriptionUncheckedCreateWithoutPackagePlanInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   tenantId: number
-  status?: string
+  status: $Enums.SubscriptionStatus
   startedAt?: Date | string
   endsAt?: Date | string | null
 }
@@ -624,7 +628,7 @@ export type SubscriptionScalarWhereInput = {
   updatedAt?: Prisma.DateTimeFilter<"Subscription"> | Date | string
   tenantId?: Prisma.IntFilter<"Subscription"> | number
   packagePlanId?: Prisma.IntFilter<"Subscription"> | number
-  status?: Prisma.StringFilter<"Subscription"> | string
+  status?: Prisma.EnumSubscriptionStatusFilter<"Subscription"> | $Enums.SubscriptionStatus
   startedAt?: Prisma.DateTimeFilter<"Subscription"> | Date | string
   endsAt?: Prisma.DateTimeNullableFilter<"Subscription"> | Date | string | null
 }
@@ -634,7 +638,7 @@ export type SubscriptionCreateManyPackagePlanInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   tenantId: number
-  status?: string
+  status: $Enums.SubscriptionStatus
   startedAt?: Date | string
   endsAt?: Date | string | null
 }
@@ -642,7 +646,7 @@ export type SubscriptionCreateManyPackagePlanInput = {
 export type SubscriptionUpdateWithoutPackagePlanInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  status?: Prisma.StringFieldUpdateOperationsInput | string
+  status?: Prisma.EnumSubscriptionStatusFieldUpdateOperationsInput | $Enums.SubscriptionStatus
   startedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   endsAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   tenant?: Prisma.TenantUpdateOneRequiredWithoutSubscriptionNestedInput
@@ -653,7 +657,7 @@ export type SubscriptionUncheckedUpdateWithoutPackagePlanInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   tenantId?: Prisma.IntFieldUpdateOperationsInput | number
-  status?: Prisma.StringFieldUpdateOperationsInput | string
+  status?: Prisma.EnumSubscriptionStatusFieldUpdateOperationsInput | $Enums.SubscriptionStatus
   startedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   endsAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
 }
@@ -663,7 +667,7 @@ export type SubscriptionUncheckedUpdateManyWithoutPackagePlanInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   tenantId?: Prisma.IntFieldUpdateOperationsInput | number
-  status?: Prisma.StringFieldUpdateOperationsInput | string
+  status?: Prisma.EnumSubscriptionStatusFieldUpdateOperationsInput | $Enums.SubscriptionStatus
   startedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   endsAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
 }
@@ -746,7 +750,7 @@ export type $SubscriptionPayload<ExtArgs extends runtime.Types.Extensions.Intern
     updatedAt: Date
     tenantId: number
     packagePlanId: number
-    status: string
+    status: $Enums.SubscriptionStatus
     startedAt: Date
     endsAt: Date | null
   }, ExtArgs["result"]["subscription"]>
@@ -1179,7 +1183,7 @@ export interface SubscriptionFieldRefs {
   readonly updatedAt: Prisma.FieldRef<"Subscription", 'DateTime'>
   readonly tenantId: Prisma.FieldRef<"Subscription", 'Int'>
   readonly packagePlanId: Prisma.FieldRef<"Subscription", 'Int'>
-  readonly status: Prisma.FieldRef<"Subscription", 'String'>
+  readonly status: Prisma.FieldRef<"Subscription", 'SubscriptionStatus'>
   readonly startedAt: Prisma.FieldRef<"Subscription", 'DateTime'>
   readonly endsAt: Prisma.FieldRef<"Subscription", 'DateTime'>
 }

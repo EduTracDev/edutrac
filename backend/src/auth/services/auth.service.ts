@@ -154,6 +154,7 @@ export class AuthService {
             },
             data: {
                 emailVerified: true,
+                status: 'ACTIVE',
                 emailVerifiedAt: new Date(),
             },
         });
@@ -235,7 +236,7 @@ export class AuthService {
     }
 
     // Technical debt...Considering Moving to a Dedeicated Service
-    private async signToken(userId: Number, email: string): Promise<{ access_token: string }> {
+    async signToken(userId: Number, email: string): Promise<{ access_token: string }> {
         const payload = {
             sub: userId,
             email
@@ -277,5 +278,17 @@ export class AuthService {
                 verificationUrl
             }
         })
+    }
+
+    //GET USER
+    async getUserInfo(tenantId: number, userId: number) {
+        const user = await this.prismaService.user.findUnique({
+            where: {
+                id: userId,
+                tenantId,
+            }
+        })
+        if (!user) throw new NotFoundException('User not found');
+        return user;
     }
 }

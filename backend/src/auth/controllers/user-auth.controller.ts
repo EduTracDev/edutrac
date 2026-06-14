@@ -1,4 +1,4 @@
-import { Controller, Body, Post, Param, ParseIntPipe } from '@nestjs/common';
+import { Controller, Body, Post, Param, ParseIntPipe, Query } from '@nestjs/common';
 import { AuthService } from '../services/auth.service';
 import { VerifyAccountDto, UpdatePasswordDto, LoginDto, resendVerificationEmailDto, ForgotPasswordDto } from '../dto';
 
@@ -30,5 +30,10 @@ export class UserAuthController {
     @Post('forgot-password')
     async forgotPassword(@Body() dto: ForgotPasswordDto, @Param('tenantId', ParseIntPipe) tenantId: number){
         return this.authService.forgotPassword(dto, tenantId);
+    }
+
+    @Post('me/:tenantId')
+    async me(@Param('tenantId', ParseIntPipe) tenantId: number, @Query('userId', ParseIntPipe) userId: number){
+        return this.authService.getUserInfo(tenantId, userId);
     }
 }

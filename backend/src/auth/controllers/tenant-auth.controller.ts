@@ -10,4 +10,9 @@ export class TenantAuthController {
     async registerTenant(@Body() dto:RegisterTenantDto){
         return this.authService.registerTenantViaEmailPassword(dto)
     }
+    @Post('test')
+    async test(){
+
+        return "Testing"
+    }
 }

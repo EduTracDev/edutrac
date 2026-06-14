@@ -19,9 +19,10 @@ import { SubscriptionModule } from './subscription/subscription.module';
 import { CommunicationModule } from './communication/communication.module';
 import { MailModule } from './mail/mail.module';
 import { PackagePlanModule } from './package-plan/package-plan.module';
+import { InvitationModule } from './invitation/invitation.module';
 
 @Module({
-  imports: [AuthModule, PrismaModule, ConfigModule.forRoot({isGlobal: true}), TenantModule, UserModule, TeacherModule, ParentModule, StudentModule, CourseModule, EnrollmentModule, AttendanceModule, SubscriptionModule, CommunicationModule, MailModule, PackagePlanModule],
+  imports: [AuthModule, PrismaModule, ConfigModule.forRoot({isGlobal: true}), TenantModule, UserModule, TeacherModule, ParentModule, StudentModule, CourseModule, EnrollmentModule, AttendanceModule, SubscriptionModule, CommunicationModule, MailModule, PackagePlanModule, InvitationModule],
   controllers: [AppController, TeacherController, AdminController, ParentController],
   providers: [AppService],
 })

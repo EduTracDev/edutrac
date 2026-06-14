@@ -83,6 +83,8 @@ export type InvitationCountAggregateOutputType = {
   tenantId: number
   invitedById: number
   roleId: number
+  assignedSubject: number
+  metadata: number
   _all: number
 }
 
@@ -144,6 +146,8 @@ export type InvitationCountAggregateInputType = {
   tenantId?: true
   invitedById?: true
   roleId?: true
+  assignedSubject?: true
+  metadata?: true
   _all?: true
 }
 
@@ -246,6 +250,8 @@ export type InvitationGroupByOutputType = {
   tenantId: number
   invitedById: number
   roleId: number | null
+  assignedSubject: runtime.JsonValue | null
+  metadata: runtime.JsonValue | null
   _count: InvitationCountAggregateOutputType | null
   _avg: InvitationAvgAggregateOutputType | null
   _sum: InvitationSumAggregateOutputType | null
@@ -284,6 +290,8 @@ export type InvitationWhereInput = {
   tenantId?: Prisma.IntFilter<"Invitation"> | number
   invitedById?: Prisma.IntFilter<"Invitation"> | number
   roleId?: Prisma.IntNullableFilter<"Invitation"> | number | null
+  assignedSubject?: Prisma.JsonNullableFilter<"Invitation">
+  metadata?: Prisma.JsonNullableFilter<"Invitation">
   tenant?: Prisma.XOR<Prisma.TenantScalarRelationFilter, Prisma.TenantWhereInput>
   invitedBy?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
   role?: Prisma.XOR<Prisma.RoleNullableScalarRelationFilter, Prisma.RoleWhereInput> | null
@@ -302,6 +310,8 @@ export type InvitationOrderByWithRelationInput = {
   tenantId?: Prisma.SortOrder
   invitedById?: Prisma.SortOrder
   roleId?: Prisma.SortOrderInput | Prisma.SortOrder
+  assignedSubject?: Prisma.SortOrderInput | Prisma.SortOrder
+  metadata?: Prisma.SortOrderInput | Prisma.SortOrder
   tenant?: Prisma.TenantOrderByWithRelationInput
   invitedBy?: Prisma.UserOrderByWithRelationInput
   role?: Prisma.RoleOrderByWithRelationInput
@@ -323,6 +333,8 @@ export type InvitationWhereUniqueInput = Prisma.AtLeast<{
   tenantId?: Prisma.IntFilter<"Invitation"> | number
   invitedById?: Prisma.IntFilter<"Invitation"> | number
   roleId?: Prisma.IntNullableFilter<"Invitation"> | number | null
+  assignedSubject?: Prisma.JsonNullableFilter<"Invitation">
+  metadata?: Prisma.JsonNullableFilter<"Invitation">
   tenant?: Prisma.XOR<Prisma.TenantScalarRelationFilter, Prisma.TenantWhereInput>
   invitedBy?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
   role?: Prisma.XOR<Prisma.RoleNullableScalarRelationFilter, Prisma.RoleWhereInput> | null
@@ -341,6 +353,8 @@ export type InvitationOrderByWithAggregationInput = {
   tenantId?: Prisma.SortOrder
   invitedById?: Prisma.SortOrder
   roleId?: Prisma.SortOrderInput | Prisma.SortOrder
+  assignedSubject?: Prisma.SortOrderInput | Prisma.SortOrder
+  metadata?: Prisma.SortOrderInput | Prisma.SortOrder
   _count?: Prisma.InvitationCountOrderByAggregateInput
   _avg?: Prisma.InvitationAvgOrderByAggregateInput
   _max?: Prisma.InvitationMaxOrderByAggregateInput
@@ -364,6 +378,8 @@ export type InvitationScalarWhereWithAggregatesInput = {
   tenantId?: Prisma.IntWithAggregatesFilter<"Invitation"> | number
   invitedById?: Prisma.IntWithAggregatesFilter<"Invitation"> | number
   roleId?: Prisma.IntNullableWithAggregatesFilter<"Invitation"> | number | null
+  assignedSubject?: Prisma.JsonNullableWithAggregatesFilter<"Invitation">
+  metadata?: Prisma.JsonNullableWithAggregatesFilter<"Invitation">
 }
 
 export type InvitationCreateInput = {
@@ -375,6 +391,8 @@ export type InvitationCreateInput = {
   acceptedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  assignedSubject?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   tenant: Prisma.TenantCreateNestedOneWithoutInvitationsInput
   invitedBy: Prisma.UserCreateNestedOneWithoutSentInvitationsInput
   role?: Prisma.RoleCreateNestedOneWithoutInvitationsInput
@@ -393,6 +411,8 @@ export type InvitationUncheckedCreateInput = {
   tenantId: number
   invitedById: number
   roleId?: number | null
+  assignedSubject?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
 }
 
 export type InvitationUpdateInput = {
@@ -404,6 +424,8 @@ export type InvitationUpdateInput = {
   acceptedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  assignedSubject?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   tenant?: Prisma.TenantUpdateOneRequiredWithoutInvitationsNestedInput
   invitedBy?: Prisma.UserUpdateOneRequiredWithoutSentInvitationsNestedInput
   role?: Prisma.RoleUpdateOneWithoutInvitationsNestedInput
@@ -422,6 +444,8 @@ export type InvitationUncheckedUpdateInput = {
   tenantId?: Prisma.IntFieldUpdateOperationsInput | number
   invitedById?: Prisma.IntFieldUpdateOperationsInput | number
   roleId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  assignedSubject?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
 }
 
 export type InvitationCreateManyInput = {
@@ -437,6 +461,8 @@ export type InvitationCreateManyInput = {
   tenantId: number
   invitedById: number
   roleId?: number | null
+  assignedSubject?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
 }
 
 export type InvitationUpdateManyMutationInput = {
@@ -448,6 +474,8 @@ export type InvitationUpdateManyMutationInput = {
   acceptedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  assignedSubject?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
 }
 
 export type InvitationUncheckedUpdateManyInput = {
@@ -463,6 +491,8 @@ export type InvitationUncheckedUpdateManyInput = {
   tenantId?: Prisma.IntFieldUpdateOperationsInput | number
   invitedById?: Prisma.IntFieldUpdateOperationsInput | number
   roleId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  assignedSubject?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
 }
 
 export type InvitationListRelationFilter = {
@@ -488,6 +518,8 @@ export type InvitationCountOrderByAggregateInput = {
   tenantId?: Prisma.SortOrder
   invitedById?: Prisma.SortOrder
   roleId?: Prisma.SortOrder
+  assignedSubject?: Prisma.SortOrder
+  metadata?: Prisma.SortOrder
 }
 
 export type InvitationAvgOrderByAggregateInput = {
@@ -677,6 +709,8 @@ export type InvitationCreateWithoutTenantInput = {
   acceptedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  assignedSubject?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   invitedBy: Prisma.UserCreateNestedOneWithoutSentInvitationsInput
   role?: Prisma.RoleCreateNestedOneWithoutInvitationsInput
 }
@@ -693,6 +727,8 @@ export type InvitationUncheckedCreateWithoutTenantInput = {
   updatedAt?: Date | string
   invitedById: number
   roleId?: number | null
+  assignedSubject?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
 }
 
 export type InvitationCreateOrConnectWithoutTenantInput = {
@@ -736,6 +772,8 @@ export type InvitationScalarWhereInput = {
   tenantId?: Prisma.IntFilter<"Invitation"> | number
   invitedById?: Prisma.IntFilter<"Invitation"> | number
   roleId?: Prisma.IntNullableFilter<"Invitation"> | number | null
+  assignedSubject?: Prisma.JsonNullableFilter<"Invitation">
+  metadata?: Prisma.JsonNullableFilter<"Invitation">
 }
 
 export type InvitationCreateWithoutInvitedByInput = {
@@ -747,6 +785,8 @@ export type InvitationCreateWithoutInvitedByInput = {
   acceptedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  assignedSubject?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   tenant: Prisma.TenantCreateNestedOneWithoutInvitationsInput
   role?: Prisma.RoleCreateNestedOneWithoutInvitationsInput
 }
@@ -763,6 +803,8 @@ export type InvitationUncheckedCreateWithoutInvitedByInput = {
   updatedAt?: Date | string
   tenantId: number
   roleId?: number | null
+  assignedSubject?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
 }
 
 export type InvitationCreateOrConnectWithoutInvitedByInput = {
@@ -799,6 +841,8 @@ export type InvitationCreateWithoutRoleInput = {
   acceptedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  assignedSubject?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   tenant: Prisma.TenantCreateNestedOneWithoutInvitationsInput
   invitedBy: Prisma.UserCreateNestedOneWithoutSentInvitationsInput
 }
@@ -815,6 +859,8 @@ export type InvitationUncheckedCreateWithoutRoleInput = {
   updatedAt?: Date | string
   tenantId: number
   invitedById: number
+  assignedSubject?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
 }
 
 export type InvitationCreateOrConnectWithoutRoleInput = {
@@ -854,6 +900,8 @@ export type InvitationCreateManyTenantInput = {
   updatedAt?: Date | string
   invitedById: number
   roleId?: number | null
+  assignedSubject?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
 }
 
 export type InvitationUpdateWithoutTenantInput = {
@@ -865,6 +913,8 @@ export type InvitationUpdateWithoutTenantInput = {
   acceptedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  assignedSubject?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   invitedBy?: Prisma.UserUpdateOneRequiredWithoutSentInvitationsNestedInput
   role?: Prisma.RoleUpdateOneWithoutInvitationsNestedInput
 }
@@ -881,6 +931,8 @@ export type InvitationUncheckedUpdateWithoutTenantInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   invitedById?: Prisma.IntFieldUpdateOperationsInput | number
   roleId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  assignedSubject?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
 }
 
 export type InvitationUncheckedUpdateManyWithoutTenantInput = {
@@ -895,6 +947,8 @@ export type InvitationUncheckedUpdateManyWithoutTenantInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   invitedById?: Prisma.IntFieldUpdateOperationsInput | number
   roleId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  assignedSubject?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
 }
 
 export type InvitationCreateManyInvitedByInput = {
@@ -909,6 +963,8 @@ export type InvitationCreateManyInvitedByInput = {
   updatedAt?: Date | string
   tenantId: number
   roleId?: number | null
+  assignedSubject?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
 }
 
 export type InvitationUpdateWithoutInvitedByInput = {
@@ -920,6 +976,8 @@ export type InvitationUpdateWithoutInvitedByInput = {
   acceptedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  assignedSubject?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   tenant?: Prisma.TenantUpdateOneRequiredWithoutInvitationsNestedInput
   role?: Prisma.RoleUpdateOneWithoutInvitationsNestedInput
 }
@@ -936,6 +994,8 @@ export type InvitationUncheckedUpdateWithoutInvitedByInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   tenantId?: Prisma.IntFieldUpdateOperationsInput | number
   roleId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  assignedSubject?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
 }
 
 export type InvitationUncheckedUpdateManyWithoutInvitedByInput = {
@@ -950,6 +1010,8 @@ export type InvitationUncheckedUpdateManyWithoutInvitedByInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   tenantId?: Prisma.IntFieldUpdateOperationsInput | number
   roleId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  assignedSubject?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
 }
 
 export type InvitationCreateManyRoleInput = {
@@ -964,6 +1026,8 @@ export type InvitationCreateManyRoleInput = {
   updatedAt?: Date | string
   tenantId: number
   invitedById: number
+  assignedSubject?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
 }
 
 export type InvitationUpdateWithoutRoleInput = {
@@ -975,6 +1039,8 @@ export type InvitationUpdateWithoutRoleInput = {
   acceptedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  assignedSubject?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   tenant?: Prisma.TenantUpdateOneRequiredWithoutInvitationsNestedInput
   invitedBy?: Prisma.UserUpdateOneRequiredWithoutSentInvitationsNestedInput
 }
@@ -991,6 +1057,8 @@ export type InvitationUncheckedUpdateWithoutRoleInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   tenantId?: Prisma.IntFieldUpdateOperationsInput | number
   invitedById?: Prisma.IntFieldUpdateOperationsInput | number
+  assignedSubject?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
 }
 
 export type InvitationUncheckedUpdateManyWithoutRoleInput = {
@@ -1005,6 +1073,8 @@ export type InvitationUncheckedUpdateManyWithoutRoleInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   tenantId?: Prisma.IntFieldUpdateOperationsInput | number
   invitedById?: Prisma.IntFieldUpdateOperationsInput | number
+  assignedSubject?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
 }
 
 
@@ -1022,6 +1092,8 @@ export type InvitationSelect<ExtArgs extends runtime.Types.Extensions.InternalAr
   tenantId?: boolean
   invitedById?: boolean
   roleId?: boolean
+  assignedSubject?: boolean
+  metadata?: boolean
   tenant?: boolean | Prisma.TenantDefaultArgs<ExtArgs>
   invitedBy?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   role?: boolean | Prisma.Invitation$roleArgs<ExtArgs>
@@ -1040,6 +1112,8 @@ export type InvitationSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Ex
   tenantId?: boolean
   invitedById?: boolean
   roleId?: boolean
+  assignedSubject?: boolean
+  metadata?: boolean
   tenant?: boolean | Prisma.TenantDefaultArgs<ExtArgs>
   invitedBy?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   role?: boolean | Prisma.Invitation$roleArgs<ExtArgs>
@@ -1058,6 +1132,8 @@ export type InvitationSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Ex
   tenantId?: boolean
   invitedById?: boolean
   roleId?: boolean
+  assignedSubject?: boolean
+  metadata?: boolean
   tenant?: boolean | Prisma.TenantDefaultArgs<ExtArgs>
   invitedBy?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   role?: boolean | Prisma.Invitation$roleArgs<ExtArgs>
@@ -1076,9 +1152,11 @@ export type InvitationSelectScalar = {
   tenantId?: boolean
   invitedById?: boolean
   roleId?: boolean
+  assignedSubject?: boolean
+  metadata?: boolean
 }
 
-export type InvitationOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "tokenHash" | "email" | "type" | "status" | "expiresAt" | "acceptedAt" | "createdAt" | "updatedAt" | "tenantId" | "invitedById" | "roleId", ExtArgs["result"]["invitation"]>
+export type InvitationOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "tokenHash" | "email" | "type" | "status" | "expiresAt" | "acceptedAt" | "createdAt" | "updatedAt" | "tenantId" | "invitedById" | "roleId" | "assignedSubject" | "metadata", ExtArgs["result"]["invitation"]>
 export type InvitationInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   tenant?: boolean | Prisma.TenantDefaultArgs<ExtArgs>
   invitedBy?: boolean | Prisma.UserDefaultArgs<ExtArgs>
@@ -1115,6 +1193,8 @@ export type $InvitationPayload<ExtArgs extends runtime.Types.Extensions.Internal
     tenantId: number
     invitedById: number
     roleId: number | null
+    assignedSubject: runtime.JsonValue | null
+    metadata: runtime.JsonValue | null
   }, ExtArgs["result"]["invitation"]>
   composites: {}
 }
@@ -1553,6 +1633,8 @@ export interface InvitationFieldRefs {
   readonly tenantId: Prisma.FieldRef<"Invitation", 'Int'>
   readonly invitedById: Prisma.FieldRef<"Invitation", 'Int'>
   readonly roleId: Prisma.FieldRef<"Invitation", 'Int'>
+  readonly assignedSubject: Prisma.FieldRef<"Invitation", 'Json'>
+  readonly metadata: Prisma.FieldRef<"Invitation", 'Json'>
 }
     
 

@@ -50,6 +50,31 @@ export type Tenant = Prisma.TenantModel
  */
 export type User = Prisma.UserModel
 /**
+ * Model Teacher
+ * 
+ */
+export type Teacher = Prisma.TeacherModel
+/**
+ * Model Parent
+ * 
+ */
+export type Parent = Prisma.ParentModel
+/**
+ * Model Student
+ * 
+ */
+export type Student = Prisma.StudentModel
+/**
+ * Model ParentStudent
+ * 
+ */
+export type ParentStudent = Prisma.ParentStudentModel
+/**
+ * Model SchoolAdmin
+ * 
+ */
+export type SchoolAdmin = Prisma.SchoolAdminModel
+/**
  * Model PackagePlan
  * 
  */
@@ -79,3 +104,8 @@ export type VerificationToken = Prisma.VerificationTokenModel
  * 
  */
 export type Invitation = Prisma.InvitationModel
+/**
+ * Model SuperAdminUser
+ * 
+ */
+export type SuperAdminUser = Prisma.SuperAdminUserModel

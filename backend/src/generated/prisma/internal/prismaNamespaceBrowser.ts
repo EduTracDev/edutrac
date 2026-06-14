@@ -53,12 +53,18 @@ export const AnyNull = runtime.AnyNull
 export const ModelName = {
   Tenant: 'Tenant',
   User: 'User',
+  Teacher: 'Teacher',
+  Parent: 'Parent',
+  Student: 'Student',
+  ParentStudent: 'ParentStudent',
+  SchoolAdmin: 'SchoolAdmin',
   PackagePlan: 'PackagePlan',
   Subscription: 'Subscription',
   Role: 'Role',
   UserRole: 'UserRole',
   VerificationToken: 'VerificationToken',
-  Invitation: 'Invitation'
+  Invitation: 'Invitation',
+  SuperAdminUser: 'SuperAdminUser'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -102,11 +108,80 @@ export const UserScalarFieldEnum = {
   password_hash: 'password_hash',
   firstName: 'firstName',
   lastName: 'lastName',
-  isActive: 'isActive',
+  status: 'status',
   tenantId: 'tenantId'
 } as const
 
 export type UserScalarFieldEnum = (typeof UserScalarFieldEnum)[keyof typeof UserScalarFieldEnum]
+
+
+export const TeacherScalarFieldEnum = {
+  id: 'id',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt',
+  employeeId: 'employeeId',
+  contactNumber: 'contactNumber',
+  qualifications: 'qualifications',
+  specialization: 'specialization',
+  tenantId: 'tenantId',
+  userId: 'userId'
+} as const
+
+export type TeacherScalarFieldEnum = (typeof TeacherScalarFieldEnum)[keyof typeof TeacherScalarFieldEnum]
+
+
+export const ParentScalarFieldEnum = {
+  id: 'id',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt',
+  contactNumber: 'contactNumber',
+  address: 'address',
+  tenantId: 'tenantId',
+  userId: 'userId'
+} as const
+
+export type ParentScalarFieldEnum = (typeof ParentScalarFieldEnum)[keyof typeof ParentScalarFieldEnum]
+
+
+export const StudentScalarFieldEnum = {
+  id: 'id',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt',
+  studentId: 'studentId',
+  dateOfBirth: 'dateOfBirth',
+  gender: 'gender',
+  address: 'address',
+  contactNumber: 'contactNumber',
+  gradeLevel: 'gradeLevel',
+  userId: 'userId',
+  tenantId: 'tenantId'
+} as const
+
+export type StudentScalarFieldEnum = (typeof StudentScalarFieldEnum)[keyof typeof StudentScalarFieldEnum]
+
+
+export const ParentStudentScalarFieldEnum = {
+  createdAt: 'createdAt',
+  parentId: 'parentId',
+  studentId: 'studentId'
+} as const
+
+export type ParentStudentScalarFieldEnum = (typeof ParentStudentScalarFieldEnum)[keyof typeof ParentStudentScalarFieldEnum]
+
+
+export const SchoolAdminScalarFieldEnum = {
+  id: 'id',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt',
+  employeeId: 'employeeId',
+  contactNumber: 'contactNumber',
+  qualifications: 'qualifications',
+  specialization: 'specialization',
+  tenantId: 'tenantId',
+  userId: 'userId'
+} as const
+
+export type SchoolAdminScalarFieldEnum = (typeof SchoolAdminScalarFieldEnum)[keyof typeof SchoolAdminScalarFieldEnum]
 
 
 export const PackagePlanScalarFieldEnum = {
@@ -186,10 +261,25 @@ export const InvitationScalarFieldEnum = {
   updatedAt: 'updatedAt',
   tenantId: 'tenantId',
   invitedById: 'invitedById',
-  roleId: 'roleId'
+  roleId: 'roleId',
+  assignedSubject: 'assignedSubject',
+  metadata: 'metadata'
 } as const
 
 export type InvitationScalarFieldEnum = (typeof InvitationScalarFieldEnum)[keyof typeof InvitationScalarFieldEnum]
+
+
+export const SuperAdminUserScalarFieldEnum = {
+  id: 'id',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt',
+  email: 'email',
+  password_hash: 'password_hash',
+  firstName: 'firstName',
+  lastName: 'lastName'
+} as const
+
+export type SuperAdminUserScalarFieldEnum = (typeof SuperAdminUserScalarFieldEnum)[keyof typeof SuperAdminUserScalarFieldEnum]
 
 
 export const SortOrder = {
@@ -205,6 +295,14 @@ export const JsonNullValueInput = {
 } as const
 
 export type JsonNullValueInput = (typeof JsonNullValueInput)[keyof typeof JsonNullValueInput]
+
+
+export const NullableJsonNullValueInput = {
+  DbNull: DbNull,
+  JsonNull: JsonNull
+} as const
+
+export type NullableJsonNullValueInput = (typeof NullableJsonNullValueInput)[keyof typeof NullableJsonNullValueInput]
 
 
 export const NullsOrder = {

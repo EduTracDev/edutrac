@@ -43,6 +43,7 @@ export class TenantService {
                 data: {
                     email: params.email,
                     password_hash: params.isOAuth ? null : params.password_hash,
+                    status: params.isOAuth ? 'ACTIVE' : 'DISABLED',
                     tenantId: tenant.id
                 }
             })

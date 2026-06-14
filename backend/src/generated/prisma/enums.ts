@@ -38,3 +38,34 @@ export const InvitationStatus = {
 } as const
 
 export type InvitationStatus = (typeof InvitationStatus)[keyof typeof InvitationStatus]
+
+
+export const TenantStatus = {
+  PENDING_EMAIL_VERIFICATION: 'PENDING_EMAIL_VERIFICATION',
+  ACTIVE: 'ACTIVE',
+  SUSPENDED: 'SUSPENDED',
+  CANCELLED: 'CANCELLED'
+} as const
+
+export type TenantStatus = (typeof TenantStatus)[keyof typeof TenantStatus]
+
+
+export const UserStatus = {
+  INVITED: 'INVITED',
+  ACTIVE: 'ACTIVE',
+  SUSPENDED: 'SUSPENDED',
+  DISABLED: 'DISABLED'
+} as const
+
+export type UserStatus = (typeof UserStatus)[keyof typeof UserStatus]
+
+
+export const SubscriptionStatus = {
+  ACTIVE: 'ACTIVE',
+  CANCELED: 'CANCELED',
+  EXPIRED: 'EXPIRED',
+  TRIAL: 'TRIAL',
+  PAST_DUE: 'PAST_DUE'
+} as const
+
+export type SubscriptionStatus = (typeof SubscriptionStatus)[keyof typeof SubscriptionStatus]
