@@ -32,9 +32,14 @@ export class InvitationService {
                 }
             }
         })
-
         if (existingUser) throw new ConflictException(`A ${dto.invitationType} with this email already exists in your organisation`);
-
+        const tenant = await this.prismaService.tenant.findUnique({
+            where: {
+                id: tenantId
+            }
+        });
+        if(!tenant) throw new BadRequestException('Invalid request');
+        
         const token = this.tokenService.generateToken();
         const tokenHash = this.tokenService.hashToken(token);
 
@@ -47,7 +52,7 @@ export class InvitationService {
             })
             if (!role) {
                 throw new NotFoundException(`${dto.invitationType} role not found`);
-                //Technical debt... Check on this.Perhaps I should create the role instead of throwing error
+                //Technical debt... Perhaps create the role instead of throwing error? Inconsideration
             };
 
             await tx.user.create({
@@ -75,18 +80,17 @@ export class InvitationService {
 
         const invitationUrl = `${process.env.FRONTEND_URL}/invitation/accept?token=${token}`;
         const invitionMailConfig = INVITATION_EMAIL_CONFIG[dto.invitationType];
-        //Technical debt...Try catch block nfor now. Later move to queue based delivery
+        //Technical debt...Try catch block for now. Later move to queue based delivery
         try {
             await this.mailService.sendEmail({
                 to: dto.email,
                 subject: invitionMailConfig.subject,
                 template: invitionMailConfig.template,
-                context: { invitationUrl },
+                context: { invitationUrl, schoolName: tenant.organisation_name },
             });
         } catch(error){
             this.logger.error("email sending failed:", error);
         }
-
         return {
             message: 'Invitation sent successfully',
             userInvitation: userInvitation,
@@ -105,7 +109,6 @@ export class InvitationService {
                 tenant: true
             }
         })
-
         if (!invitation) throw new ForbiddenException('Invalid invitation');
         if (invitation.status !== 'PENDING') throw new ForbiddenException('Invitation already used');
         if (invitation.expiresAt < new Date()) throw new ForbiddenException('Invitation has expired');
@@ -134,18 +137,18 @@ export class InvitationService {
             }
         })
         if (!user) throw new NotFoundException('This account does not exist. Kindly contact the admininstrator for assistance');
-        const password_hash = await argon.hash(dto.password);
+        const password = await argon.hash(dto.password);
         const profileData = {
             firstName: dto.firstName,
             lastName: dto.lastName
         };
         await this.prismaService.$transaction(async (tx) => {
-            await this.activateUser(tx, user, profileData, password_hash);
+            await this.activateUser(tx, user, profileData, password);
             await this.assignRole(tx, invitation, user);
             await this.createProfile(tx, invitation, user);
         });
 
-        const access_token = await this.authService.signToken(user.id, user.email);
+        const access_token = await this.authService.signToken(user.id, user.email, user.tenantId);
         return {
             success: true,
             message: 'Your account has been created',
@@ -186,13 +189,14 @@ export class InvitationService {
             await this.createProfile(tx, invitation, user);
         });
 
-        const access_token = await this.authService.signToken(user.id, user.email);
+        const access_token = await this.authService.signToken(user.id, user.email, user.tenantId);
         return {
             success: true,
             message: 'Your account has been created',
             access_token
         }
     }
+
 
     async resendInvitation(dto: ResendInvitationDto){
         const invitation = await this.prismaService.invitation.findUnique({
@@ -222,13 +226,18 @@ export class InvitationService {
         }
     }
     
-    private async activateUser(tx: Prisma.TransactionClient, user, profileData, password_hash?:string){
+
+    
+/*
+    Helpers
+*/
+    private async activateUser(tx: Prisma.TransactionClient, user, profileData, password?:string){
         await tx.user.update({
             where: {
                 id: user.id,
             },
             data: {
-                password_hash: password_hash ?? null,
+                password: password ?? null,
                 status: 'ACTIVE',
                 emailVerified: true,
                 emailVerifiedAt: new Date(),

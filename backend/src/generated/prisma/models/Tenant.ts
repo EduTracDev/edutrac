@@ -36,7 +36,7 @@ export type TenantSumAggregateOutputType = {
 
 export type TenantMinAggregateOutputType = {
   id: number | null
-  publidId: string | null
+  publicId: string | null
   createdAt: Date | null
   updatedAt: Date | null
   organisation_name: string | null
@@ -51,7 +51,7 @@ export type TenantMinAggregateOutputType = {
 
 export type TenantMaxAggregateOutputType = {
   id: number | null
-  publidId: string | null
+  publicId: string | null
   createdAt: Date | null
   updatedAt: Date | null
   organisation_name: string | null
@@ -66,7 +66,7 @@ export type TenantMaxAggregateOutputType = {
 
 export type TenantCountAggregateOutputType = {
   id: number
-  publidId: number
+  publicId: number
   createdAt: number
   updatedAt: number
   organisation_name: number
@@ -91,7 +91,7 @@ export type TenantSumAggregateInputType = {
 
 export type TenantMinAggregateInputType = {
   id?: true
-  publidId?: true
+  publicId?: true
   createdAt?: true
   updatedAt?: true
   organisation_name?: true
@@ -106,7 +106,7 @@ export type TenantMinAggregateInputType = {
 
 export type TenantMaxAggregateInputType = {
   id?: true
-  publidId?: true
+  publicId?: true
   createdAt?: true
   updatedAt?: true
   organisation_name?: true
@@ -121,7 +121,7 @@ export type TenantMaxAggregateInputType = {
 
 export type TenantCountAggregateInputType = {
   id?: true
-  publidId?: true
+  publicId?: true
   createdAt?: true
   updatedAt?: true
   organisation_name?: true
@@ -223,7 +223,7 @@ export type TenantGroupByArgs<ExtArgs extends runtime.Types.Extensions.InternalA
 
 export type TenantGroupByOutputType = {
   id: number
-  publidId: string
+  publicId: string
   createdAt: Date
   updatedAt: Date
   organisation_name: string
@@ -261,7 +261,7 @@ export type TenantWhereInput = {
   OR?: Prisma.TenantWhereInput[]
   NOT?: Prisma.TenantWhereInput | Prisma.TenantWhereInput[]
   id?: Prisma.IntFilter<"Tenant"> | number
-  publidId?: Prisma.StringFilter<"Tenant"> | string
+  publicId?: Prisma.StringFilter<"Tenant"> | string
   createdAt?: Prisma.DateTimeFilter<"Tenant"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Tenant"> | Date | string
   organisation_name?: Prisma.StringFilter<"Tenant"> | string
@@ -284,7 +284,7 @@ export type TenantWhereInput = {
 
 export type TenantOrderByWithRelationInput = {
   id?: Prisma.SortOrder
-  publidId?: Prisma.SortOrder
+  publicId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   organisation_name?: Prisma.SortOrder
@@ -307,7 +307,7 @@ export type TenantOrderByWithRelationInput = {
 
 export type TenantWhereUniqueInput = Prisma.AtLeast<{
   id?: number
-  publidId?: string
+  publicId?: string
   slug?: string
   AND?: Prisma.TenantWhereInput | Prisma.TenantWhereInput[]
   OR?: Prisma.TenantWhereInput[]
@@ -329,11 +329,11 @@ export type TenantWhereUniqueInput = Prisma.AtLeast<{
   schoolAdmins?: Prisma.SchoolAdminListRelationFilter
   subscription?: Prisma.XOR<Prisma.SubscriptionNullableScalarRelationFilter, Prisma.SubscriptionWhereInput> | null
   invitations?: Prisma.InvitationListRelationFilter
-}, "id" | "publidId" | "slug">
+}, "id" | "publicId" | "slug">
 
 export type TenantOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
-  publidId?: Prisma.SortOrder
+  publicId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   organisation_name?: Prisma.SortOrder
@@ -356,7 +356,7 @@ export type TenantScalarWhereWithAggregatesInput = {
   OR?: Prisma.TenantScalarWhereWithAggregatesInput[]
   NOT?: Prisma.TenantScalarWhereWithAggregatesInput | Prisma.TenantScalarWhereWithAggregatesInput[]
   id?: Prisma.IntWithAggregatesFilter<"Tenant"> | number
-  publidId?: Prisma.StringWithAggregatesFilter<"Tenant"> | string
+  publicId?: Prisma.StringWithAggregatesFilter<"Tenant"> | string
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"Tenant"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"Tenant"> | Date | string
   organisation_name?: Prisma.StringWithAggregatesFilter<"Tenant"> | string
@@ -370,7 +370,7 @@ export type TenantScalarWhereWithAggregatesInput = {
 }
 
 export type TenantCreateInput = {
-  publidId?: string
+  publicId?: string
   createdAt?: Date | string
   updatedAt?: Date | string
   organisation_name: string
@@ -393,7 +393,7 @@ export type TenantCreateInput = {
 
 export type TenantUncheckedCreateInput = {
   id?: number
-  publidId?: string
+  publicId?: string
   createdAt?: Date | string
   updatedAt?: Date | string
   organisation_name: string
@@ -415,7 +415,7 @@ export type TenantUncheckedCreateInput = {
 }
 
 export type TenantUpdateInput = {
-  publidId?: Prisma.StringFieldUpdateOperationsInput | string
+  publicId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   organisation_name?: Prisma.StringFieldUpdateOperationsInput | string
@@ -438,7 +438,7 @@ export type TenantUpdateInput = {
 
 export type TenantUncheckedUpdateInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
-  publidId?: Prisma.StringFieldUpdateOperationsInput | string
+  publicId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   organisation_name?: Prisma.StringFieldUpdateOperationsInput | string
@@ -461,7 +461,7 @@ export type TenantUncheckedUpdateInput = {
 
 export type TenantCreateManyInput = {
   id?: number
-  publidId?: string
+  publicId?: string
   createdAt?: Date | string
   updatedAt?: Date | string
   organisation_name: string
@@ -475,7 +475,7 @@ export type TenantCreateManyInput = {
 }
 
 export type TenantUpdateManyMutationInput = {
-  publidId?: Prisma.StringFieldUpdateOperationsInput | string
+  publicId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   organisation_name?: Prisma.StringFieldUpdateOperationsInput | string
@@ -490,7 +490,7 @@ export type TenantUpdateManyMutationInput = {
 
 export type TenantUncheckedUpdateManyInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
-  publidId?: Prisma.StringFieldUpdateOperationsInput | string
+  publicId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   organisation_name?: Prisma.StringFieldUpdateOperationsInput | string
@@ -505,7 +505,7 @@ export type TenantUncheckedUpdateManyInput = {
 
 export type TenantCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
-  publidId?: Prisma.SortOrder
+  publicId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   organisation_name?: Prisma.SortOrder
@@ -524,7 +524,7 @@ export type TenantAvgOrderByAggregateInput = {
 
 export type TenantMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
-  publidId?: Prisma.SortOrder
+  publicId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   organisation_name?: Prisma.SortOrder
@@ -539,7 +539,7 @@ export type TenantMaxOrderByAggregateInput = {
 
 export type TenantMinOrderByAggregateInput = {
   id?: Prisma.SortOrder
-  publidId?: Prisma.SortOrder
+  publicId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   organisation_name?: Prisma.SortOrder
@@ -702,7 +702,7 @@ export type TenantUpdateOneRequiredWithoutInvitationsNestedInput = {
 }
 
 export type TenantCreateWithoutUsersInput = {
-  publidId?: string
+  publicId?: string
   createdAt?: Date | string
   updatedAt?: Date | string
   organisation_name: string
@@ -724,7 +724,7 @@ export type TenantCreateWithoutUsersInput = {
 
 export type TenantUncheckedCreateWithoutUsersInput = {
   id?: number
-  publidId?: string
+  publicId?: string
   createdAt?: Date | string
   updatedAt?: Date | string
   organisation_name: string
@@ -761,7 +761,7 @@ export type TenantUpdateToOneWithWhereWithoutUsersInput = {
 }
 
 export type TenantUpdateWithoutUsersInput = {
-  publidId?: Prisma.StringFieldUpdateOperationsInput | string
+  publicId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   organisation_name?: Prisma.StringFieldUpdateOperationsInput | string
@@ -783,7 +783,7 @@ export type TenantUpdateWithoutUsersInput = {
 
 export type TenantUncheckedUpdateWithoutUsersInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
-  publidId?: Prisma.StringFieldUpdateOperationsInput | string
+  publicId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   organisation_name?: Prisma.StringFieldUpdateOperationsInput | string
@@ -804,7 +804,7 @@ export type TenantUncheckedUpdateWithoutUsersInput = {
 }
 
 export type TenantCreateWithoutTeachersInput = {
-  publidId?: string
+  publicId?: string
   createdAt?: Date | string
   updatedAt?: Date | string
   organisation_name: string
@@ -826,7 +826,7 @@ export type TenantCreateWithoutTeachersInput = {
 
 export type TenantUncheckedCreateWithoutTeachersInput = {
   id?: number
-  publidId?: string
+  publicId?: string
   createdAt?: Date | string
   updatedAt?: Date | string
   organisation_name: string
@@ -863,7 +863,7 @@ export type TenantUpdateToOneWithWhereWithoutTeachersInput = {
 }
 
 export type TenantUpdateWithoutTeachersInput = {
-  publidId?: Prisma.StringFieldUpdateOperationsInput | string
+  publicId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   organisation_name?: Prisma.StringFieldUpdateOperationsInput | string
@@ -885,7 +885,7 @@ export type TenantUpdateWithoutTeachersInput = {
 
 export type TenantUncheckedUpdateWithoutTeachersInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
-  publidId?: Prisma.StringFieldUpdateOperationsInput | string
+  publicId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   organisation_name?: Prisma.StringFieldUpdateOperationsInput | string
@@ -906,7 +906,7 @@ export type TenantUncheckedUpdateWithoutTeachersInput = {
 }
 
 export type TenantCreateWithoutParentsInput = {
-  publidId?: string
+  publicId?: string
   createdAt?: Date | string
   updatedAt?: Date | string
   organisation_name: string
@@ -928,7 +928,7 @@ export type TenantCreateWithoutParentsInput = {
 
 export type TenantUncheckedCreateWithoutParentsInput = {
   id?: number
-  publidId?: string
+  publicId?: string
   createdAt?: Date | string
   updatedAt?: Date | string
   organisation_name: string
@@ -965,7 +965,7 @@ export type TenantUpdateToOneWithWhereWithoutParentsInput = {
 }
 
 export type TenantUpdateWithoutParentsInput = {
-  publidId?: Prisma.StringFieldUpdateOperationsInput | string
+  publicId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   organisation_name?: Prisma.StringFieldUpdateOperationsInput | string
@@ -987,7 +987,7 @@ export type TenantUpdateWithoutParentsInput = {
 
 export type TenantUncheckedUpdateWithoutParentsInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
-  publidId?: Prisma.StringFieldUpdateOperationsInput | string
+  publicId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   organisation_name?: Prisma.StringFieldUpdateOperationsInput | string
@@ -1008,7 +1008,7 @@ export type TenantUncheckedUpdateWithoutParentsInput = {
 }
 
 export type TenantCreateWithoutStudentsInput = {
-  publidId?: string
+  publicId?: string
   createdAt?: Date | string
   updatedAt?: Date | string
   organisation_name: string
@@ -1030,7 +1030,7 @@ export type TenantCreateWithoutStudentsInput = {
 
 export type TenantUncheckedCreateWithoutStudentsInput = {
   id?: number
-  publidId?: string
+  publicId?: string
   createdAt?: Date | string
   updatedAt?: Date | string
   organisation_name: string
@@ -1067,7 +1067,7 @@ export type TenantUpdateToOneWithWhereWithoutStudentsInput = {
 }
 
 export type TenantUpdateWithoutStudentsInput = {
-  publidId?: Prisma.StringFieldUpdateOperationsInput | string
+  publicId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   organisation_name?: Prisma.StringFieldUpdateOperationsInput | string
@@ -1089,7 +1089,7 @@ export type TenantUpdateWithoutStudentsInput = {
 
 export type TenantUncheckedUpdateWithoutStudentsInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
-  publidId?: Prisma.StringFieldUpdateOperationsInput | string
+  publicId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   organisation_name?: Prisma.StringFieldUpdateOperationsInput | string
@@ -1110,7 +1110,7 @@ export type TenantUncheckedUpdateWithoutStudentsInput = {
 }
 
 export type TenantCreateWithoutSchoolAdminsInput = {
-  publidId?: string
+  publicId?: string
   createdAt?: Date | string
   updatedAt?: Date | string
   organisation_name: string
@@ -1132,7 +1132,7 @@ export type TenantCreateWithoutSchoolAdminsInput = {
 
 export type TenantUncheckedCreateWithoutSchoolAdminsInput = {
   id?: number
-  publidId?: string
+  publicId?: string
   createdAt?: Date | string
   updatedAt?: Date | string
   organisation_name: string
@@ -1169,7 +1169,7 @@ export type TenantUpdateToOneWithWhereWithoutSchoolAdminsInput = {
 }
 
 export type TenantUpdateWithoutSchoolAdminsInput = {
-  publidId?: Prisma.StringFieldUpdateOperationsInput | string
+  publicId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   organisation_name?: Prisma.StringFieldUpdateOperationsInput | string
@@ -1191,7 +1191,7 @@ export type TenantUpdateWithoutSchoolAdminsInput = {
 
 export type TenantUncheckedUpdateWithoutSchoolAdminsInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
-  publidId?: Prisma.StringFieldUpdateOperationsInput | string
+  publicId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   organisation_name?: Prisma.StringFieldUpdateOperationsInput | string
@@ -1212,7 +1212,7 @@ export type TenantUncheckedUpdateWithoutSchoolAdminsInput = {
 }
 
 export type TenantCreateWithoutSubscriptionInput = {
-  publidId?: string
+  publicId?: string
   createdAt?: Date | string
   updatedAt?: Date | string
   organisation_name: string
@@ -1234,7 +1234,7 @@ export type TenantCreateWithoutSubscriptionInput = {
 
 export type TenantUncheckedCreateWithoutSubscriptionInput = {
   id?: number
-  publidId?: string
+  publicId?: string
   createdAt?: Date | string
   updatedAt?: Date | string
   organisation_name: string
@@ -1271,7 +1271,7 @@ export type TenantUpdateToOneWithWhereWithoutSubscriptionInput = {
 }
 
 export type TenantUpdateWithoutSubscriptionInput = {
-  publidId?: Prisma.StringFieldUpdateOperationsInput | string
+  publicId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   organisation_name?: Prisma.StringFieldUpdateOperationsInput | string
@@ -1293,7 +1293,7 @@ export type TenantUpdateWithoutSubscriptionInput = {
 
 export type TenantUncheckedUpdateWithoutSubscriptionInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
-  publidId?: Prisma.StringFieldUpdateOperationsInput | string
+  publicId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   organisation_name?: Prisma.StringFieldUpdateOperationsInput | string
@@ -1314,7 +1314,7 @@ export type TenantUncheckedUpdateWithoutSubscriptionInput = {
 }
 
 export type TenantCreateWithoutRolesInput = {
-  publidId?: string
+  publicId?: string
   createdAt?: Date | string
   updatedAt?: Date | string
   organisation_name: string
@@ -1336,7 +1336,7 @@ export type TenantCreateWithoutRolesInput = {
 
 export type TenantUncheckedCreateWithoutRolesInput = {
   id?: number
-  publidId?: string
+  publicId?: string
   createdAt?: Date | string
   updatedAt?: Date | string
   organisation_name: string
@@ -1373,7 +1373,7 @@ export type TenantUpdateToOneWithWhereWithoutRolesInput = {
 }
 
 export type TenantUpdateWithoutRolesInput = {
-  publidId?: Prisma.StringFieldUpdateOperationsInput | string
+  publicId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   organisation_name?: Prisma.StringFieldUpdateOperationsInput | string
@@ -1395,7 +1395,7 @@ export type TenantUpdateWithoutRolesInput = {
 
 export type TenantUncheckedUpdateWithoutRolesInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
-  publidId?: Prisma.StringFieldUpdateOperationsInput | string
+  publicId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   organisation_name?: Prisma.StringFieldUpdateOperationsInput | string
@@ -1416,7 +1416,7 @@ export type TenantUncheckedUpdateWithoutRolesInput = {
 }
 
 export type TenantCreateWithoutInvitationsInput = {
-  publidId?: string
+  publicId?: string
   createdAt?: Date | string
   updatedAt?: Date | string
   organisation_name: string
@@ -1438,7 +1438,7 @@ export type TenantCreateWithoutInvitationsInput = {
 
 export type TenantUncheckedCreateWithoutInvitationsInput = {
   id?: number
-  publidId?: string
+  publicId?: string
   createdAt?: Date | string
   updatedAt?: Date | string
   organisation_name: string
@@ -1475,7 +1475,7 @@ export type TenantUpdateToOneWithWhereWithoutInvitationsInput = {
 }
 
 export type TenantUpdateWithoutInvitationsInput = {
-  publidId?: Prisma.StringFieldUpdateOperationsInput | string
+  publicId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   organisation_name?: Prisma.StringFieldUpdateOperationsInput | string
@@ -1497,7 +1497,7 @@ export type TenantUpdateWithoutInvitationsInput = {
 
 export type TenantUncheckedUpdateWithoutInvitationsInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
-  publidId?: Prisma.StringFieldUpdateOperationsInput | string
+  publicId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   organisation_name?: Prisma.StringFieldUpdateOperationsInput | string
@@ -1604,7 +1604,7 @@ export type TenantCountOutputTypeCountInvitationsArgs<ExtArgs extends runtime.Ty
 
 export type TenantSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
-  publidId?: boolean
+  publicId?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   organisation_name?: boolean
@@ -1628,7 +1628,7 @@ export type TenantSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs =
 
 export type TenantSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
-  publidId?: boolean
+  publicId?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   organisation_name?: boolean
@@ -1643,7 +1643,7 @@ export type TenantSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extens
 
 export type TenantSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
-  publidId?: boolean
+  publicId?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   organisation_name?: boolean
@@ -1658,7 +1658,7 @@ export type TenantSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extens
 
 export type TenantSelectScalar = {
   id?: boolean
-  publidId?: boolean
+  publicId?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   organisation_name?: boolean
@@ -1671,7 +1671,7 @@ export type TenantSelectScalar = {
   status?: boolean
 }
 
-export type TenantOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "publidId" | "createdAt" | "updatedAt" | "organisation_name" | "slug" | "logoUrl" | "contactPhone" | "contactAddress" | "contactEmail" | "isActive" | "status", ExtArgs["result"]["tenant"]>
+export type TenantOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "publicId" | "createdAt" | "updatedAt" | "organisation_name" | "slug" | "logoUrl" | "contactPhone" | "contactAddress" | "contactEmail" | "isActive" | "status", ExtArgs["result"]["tenant"]>
 export type TenantInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   users?: boolean | Prisma.Tenant$usersArgs<ExtArgs>
   roles?: boolean | Prisma.Tenant$rolesArgs<ExtArgs>
@@ -1700,7 +1700,7 @@ export type $TenantPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: number
-    publidId: string
+    publicId: string
     createdAt: Date
     updatedAt: Date
     organisation_name: string
@@ -2143,7 +2143,7 @@ export interface Prisma__TenantClient<T, Null = never, ExtArgs extends runtime.T
  */
 export interface TenantFieldRefs {
   readonly id: Prisma.FieldRef<"Tenant", 'Int'>
-  readonly publidId: Prisma.FieldRef<"Tenant", 'String'>
+  readonly publicId: Prisma.FieldRef<"Tenant", 'String'>
   readonly createdAt: Prisma.FieldRef<"Tenant", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"Tenant", 'DateTime'>
   readonly organisation_name: Prisma.FieldRef<"Tenant", 'String'>

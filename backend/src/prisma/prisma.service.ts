@@ -29,9 +29,18 @@ export class PrismaService extends PrismaClient{
     //To whomever may service this code in my absence, do not use this unless you fully understand the impact. Never use this in production database facing service
     cleanDb(){
         return this.$transaction([
+            this.userRole.deleteMany(),
+            //this.rolePermission.deleteMany(),
+            this.invitation.deleteMany(),
+            this.verificationToken.deleteMany(),
+            //this.teacher.deleteMany(),
+            //this.parent.deleteMany(),
+            //this.student.deleteMany(),
+            //this.schoolAdmin.deleteMany(),
             this.user.deleteMany(),
-            this.tenant.deleteMany(),
             this.role.deleteMany(),
+            this.subscription.deleteMany(),
+            this.tenant.deleteMany(),
         ])
     }
 }

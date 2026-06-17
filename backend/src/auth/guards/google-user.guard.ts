@@ -6,27 +6,21 @@ import { AuthGuard } from '@nestjs/passport';
 import { OAuthStateService } from '../services/oauthstate.service';
 
 @Injectable()
-export class GoogleUserGuard extends AuthGuard(
-  'google',
-) {
-  constructor(
-    private readonly oauthStateService: OAuthStateService,
-  ) {
+export class GoogleUserGuard extends AuthGuard( 'google' ) {
+  constructor(private oauthstateservice: OAuthStateService) {
     super();
   }
 
   async canActivate(context: ExecutionContext) {
     const req = context.switchToHttp().getRequest();
+    const host = req.headers['x-forwarded-host'] || req.get('host');
+    
+    const rawStatePayload = {
+      action: 'user_login',
+      tenantDomain: host,
+    };
 
-    const host =
-      req.headers['x-forwarded-host'] ||
-      req.get('host');
-
-    req.query.state =
-      this.oauthStateService.sign({
-        action: 'user_login',
-        tenantDomain: host,
-      });
+    req.oauthStatePayload = rawStatePayload;
 
     return super.canActivate(context) as Promise<boolean>;
   }
@@ -34,8 +28,7 @@ export class GoogleUserGuard extends AuthGuard(
   getAuthenticateOptions(context: ExecutionContext) {
     const req = context.switchToHttp().getRequest();
 
-    return {
-      state: req.query.state,
-    };
+    const state = this.oauthstateservice.sign(req.oauthStatePayload)
+    return { state };
   }
 }

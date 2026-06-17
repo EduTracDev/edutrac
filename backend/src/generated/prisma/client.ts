@@ -109,3 +109,18 @@ export type Invitation = Prisma.InvitationModel
  * 
  */
 export type SuperAdminUser = Prisma.SuperAdminUserModel
+/**
+ * Model Permission
+ * 
+ */
+export type Permission = Prisma.PermissionModel
+/**
+ * Model RolePermission
+ * 
+ */
+export type RolePermission = Prisma.RolePermissionModel
+/**
+ * Model Attendance
+ * 
+ */
+export type Attendance = Prisma.AttendanceModel

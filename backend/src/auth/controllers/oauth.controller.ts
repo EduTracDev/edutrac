@@ -1,15 +1,9 @@
-import {
-  Controller,
-  Get,
-  UseGuards,
-  Req,
-  Res,
-} from '@nestjs/common';
+import { Controller, Get, Req, Res, UseGuards, Query } from '@nestjs/common';
 import { AuthService } from '../services/auth.service';
 import { OAuthStateService } from '../services/oauthstate.service';
 import { AuthGuard } from '@nestjs/passport';
-
-
+import { GoogleTenantGuard } from '../guards/google-tenant.guard';
+import { GoogleUserGuard } from '../guards/google-user.guard';
 
 @Controller('auth')
 export class OAuthController {
@@ -18,50 +12,31 @@ export class OAuthController {
     private readonly oauthStateService: OAuthStateService,
   ) {}
 
+/*
+  @Req() req, @Query('organisation_name') organisation_name: string, @Query('tenantDomain') tenantDomain: string, @Query('packagePlanId') packagePlanId: string
+*/
+  @Get('google/tenant-register')  //tenant guard interceptor
+  @UseGuards(GoogleTenantGuard)
+  googleTenantRegister(){}
+
+
+  @UseGuards(AuthGuard('google'))  //GoogleStrategy interceptor
   @Get('google/callback')
-  @UseGuards(AuthGuard('google'))
-  async callback(
-    @Req() req,
-    @Res() res,
-  ) {
+  async googleCallback( @Req() req, @Res() res ) {
     try {
-      const state =
-        this.oauthStateService.verify(
-          req.query.state,
-        );
+      const user = req.user;
+      const state = this.oauthStateService.verify( req.query.state );
+      const tokens = await this.authService.signToken(user.id, user.email, user.tenantId);
 
-      const socialUser = req.user;
-
-      let tokens;
-
-      if (
-        state.action ===
-        'register_tenant'
-      ) {
-        tokens =
-          await this.authService.registerTenantViaGoogle({
-            email: socialUser.email,
-            firstName: socialUser.firstName,
-            lastName: socialUser.lastName,
-            organisation_name: state.organisation_name,
-            domain: state.tenantDomain,
-            packagePlanId: state.packagePlanId,
-          });
-      } else {
-        tokens =
-          await this.authService.signInUserViaGoogle(
-            socialUser,
-            state.tenantDomain,
-          );
-      }
-
-      return res.redirect(
-        `https://${state.tenantDomain}/auth/callback?token=${tokens.access_token}`,
-      );
+      const redirectUrl = state.action === 'register_tenant' ? `https://${state.tenantDomain}/auth/google/callback?access_token=${tokens.access_token}` : `https://${state.tenantDomain}/auth/google/callback?token=${tokens.access_token}`;
+      return res.redirect(redirectUrl);
     } catch (err) {
-      return res.status(400).json({
-        message: err.message,
-      });
+      console.error('Google OAuth Callback Error:', err);
+      return res.redirect('/auth/error');
     }
   }
+
+  @Get('google/login-user')
+  @UseGuards(GoogleUserGuard)
+  async googleLoginUser(){}
 }

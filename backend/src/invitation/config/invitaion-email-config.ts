@@ -1,18 +1,18 @@
 export const INVITATION_EMAIL_CONFIG = {
   TEACHER: {
     subject: 'Teacher Invitation',
-    template: 'invitation/teacher',
+    template: 'invitations/teacher-invitation',
   },
   PARENT: {
     subject: 'Parent Invitation',
-    template: 'invitation/parent',
+    template: 'invitations/parent-invitation',
   },
   STUDENT: {
     subject: 'Student Invitation',
-    template: 'invitation/student',
+    template: 'invitations/student',
   },
   ADMIN: {
     subject: 'Admin Invitation',
-    template: 'invitation/admin',
+    template: 'invitations/school-admin-invitation',
   },
 } as const;

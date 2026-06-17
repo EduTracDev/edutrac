@@ -64,7 +64,10 @@ export const ModelName = {
   UserRole: 'UserRole',
   VerificationToken: 'VerificationToken',
   Invitation: 'Invitation',
-  SuperAdminUser: 'SuperAdminUser'
+  SuperAdminUser: 'SuperAdminUser',
+  Permission: 'Permission',
+  RolePermission: 'RolePermission',
+  Attendance: 'Attendance'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -82,7 +85,7 @@ export type TransactionIsolationLevel = (typeof TransactionIsolationLevel)[keyof
 
 export const TenantScalarFieldEnum = {
   id: 'id',
-  publidId: 'publidId',
+  publicId: 'publicId',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt',
   organisation_name: 'organisation_name',
@@ -105,7 +108,7 @@ export const UserScalarFieldEnum = {
   email: 'email',
   emailVerified: 'emailVerified',
   emailVerifiedAt: 'emailVerifiedAt',
-  password_hash: 'password_hash',
+  password: 'password',
   firstName: 'firstName',
   lastName: 'lastName',
   status: 'status',
@@ -274,12 +277,40 @@ export const SuperAdminUserScalarFieldEnum = {
   createdAt: 'createdAt',
   updatedAt: 'updatedAt',
   email: 'email',
-  password_hash: 'password_hash',
+  password: 'password',
   firstName: 'firstName',
   lastName: 'lastName'
 } as const
 
 export type SuperAdminUserScalarFieldEnum = (typeof SuperAdminUserScalarFieldEnum)[keyof typeof SuperAdminUserScalarFieldEnum]
+
+
+export const PermissionScalarFieldEnum = {
+  id: 'id',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt',
+  name: 'name',
+  description: 'description'
+} as const
+
+export type PermissionScalarFieldEnum = (typeof PermissionScalarFieldEnum)[keyof typeof PermissionScalarFieldEnum]
+
+
+export const RolePermissionScalarFieldEnum = {
+  roleId: 'roleId',
+  permissionId: 'permissionId',
+  createdAt: 'createdAt'
+} as const
+
+export type RolePermissionScalarFieldEnum = (typeof RolePermissionScalarFieldEnum)[keyof typeof RolePermissionScalarFieldEnum]
+
+
+export const AttendanceScalarFieldEnum = {
+  id: 'id',
+  createdAt: 'createdAt'
+} as const
+
+export type AttendanceScalarFieldEnum = (typeof AttendanceScalarFieldEnum)[keyof typeof AttendanceScalarFieldEnum]
 
 
 export const SortOrder = {

@@ -10,8 +10,4 @@ export class VerifyAccountDto{
     @IsString()
     @IsNotEmpty()
     token: string;
-
-    @IsString()
-    @IsNotEmpty()
-    redirectUrl?: string;
 }TenantModule

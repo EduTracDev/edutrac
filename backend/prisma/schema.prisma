@@ -26,7 +26,7 @@ model Tenant{
   contactPhone String?
   contactAddress String?
   contactEmail String
-  isActive Boolean @default(true)
+  isActive Boolean @default(false)
   status TenantStatus @default(PENDING_EMAIL_VERIFICATION)
   users User[]
   roles Role[]
@@ -212,6 +212,7 @@ model Role {
   tenant Tenant @relation(fields: [tenantId], references: [id])
   userRoles UserRole[]
   invitations Invitation[]
+  rolePermission RolePermission[]
 
   @@unique([id, tenantId, name])
   @@map("roles")
@@ -357,4 +358,9 @@ model RolePermission{
   @@id([roleId, permissionId])
 
   @@map("role_permissions")
+}
+
+model Attendance{
+  id Int @id @default(autoincrement())
+  createdAt DateTime @default(now())
 }

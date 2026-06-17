@@ -1,17 +1,24 @@
 import {Injectable} from '@nestjs/common';
+import {OAuth2Client} from 'google-auth-library';
+import { UnauthorizedException } from '@nestjs/common';
 
 @Injectable()
 export class GoogleAuthService{
     constructor(){}
-
     async verifyGoogleToken(googleToken: string){
-        const res = await fetch('https://www.googleapis.com/oauth2/v3/userinfo', {
-            headers: {
-                Authorization: `Bearer ${googleToken}`
-            }
-        });
-        if(!res.ok) return null;
+        try {
+            const client = new OAuth2Client(process.env.GOOGLE_CLIENT_ID);
+            const ticket = await client.verifyIdToken({
+                idToken: googleToken,
+                audience: process.env.GOOGLE_CLIENT_ID,
+            });
 
-        return res.json();
+            const payload = ticket.getPayload();
+            if(!payload) throw new UnauthorizedException("Invalid google token"); 
+            const { given_name, family_name, email, sub } = payload;
+            return { given_name, family_name, email, sub };
+        } catch(error){
+            throw new UnauthorizedException('Google authentication failed');
+        }
     }
 }
