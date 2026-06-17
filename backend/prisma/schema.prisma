@@ -1,12 +1,8 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
-// Get a free hosted Postgres database in seconds: `npx create-db`
-
 generator client {
   provider = "prisma-client"
   importFileExtension = ""
   output   = "../src/generated/prisma"
+  moduleFormat = "cjs"
 }
 
 datasource db {
@@ -15,17 +11,351 @@ datasource db {
 
 model Tenant{
   id Int @id @default(autoincrement())
+  publicId String @unique @default(uuid())
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
   organisation_name String
+  slug String @unique
+  logoUrl String?
+  contactPhone String?
+  contactAddress String?
+  contactEmail String
+  isActive Boolean @default(false)
+  status TenantStatus @default(PENDING_EMAIL_VERIFICATION)
+  users User[]
+  roles Role[]
+  teachers Teacher[]
+  parents Parent[]
+  students Student[]
+  schoolAdmins SchoolAdmin[]
+  subscription Subscription?
+  invitations Invitation[]
+
+  @@map("tenants")
 }
 
 model User{
   id Int @id @default(autoincrement())
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+  email String
+  emailVerified Boolean @default(false)
+  emailVerifiedAt DateTime?
+  password String?
+  firstName String?
+  lastName String?
+  status UserStatus @default(DISABLED)
+  userRoles UserRole[]
+  verificationTokens VerificationToken[]
+  sentInvitations Invitation[] @relation("UserSentInvitations")
+  teacher Teacher?
+  parent Parent?
+  student Student?
+  schoolAdmin SchoolAdmin?
 
-  email String @unique
-  password_hash String
+  tenantId Int
+  tenant Tenant @relation(fields: [tenantId], references: [id])
+  
+  @@unique([id, tenantId])
+  @@unique([email, tenantId])
+  @@map("users")
+}
+
+model Teacher{
+  id Int @id @default(autoincrement())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  employeeId String
+  contactNumber String?
+  qualifications String?
+  specialization String?
+
+  tenantId Int
+  tenant Tenant @relation(fields: [tenantId], references:[id])
+  userId Int
+  user User @relation(fields: [userId, tenantId], references: [id, tenantId])
+
+  @@unique([employeeId, tenantId])
+  @@unique([userId, tenantId])
+
+  @@map("teachers")
+}
+
+model Parent{
+  id Int @id @default(autoincrement())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  contactNumber String?
+  address String?
+  studentLinks ParentStudent[]
+
+  tenantId Int
+  tenant Tenant @relation(fields: [tenantId], references: [id])
+  userId Int
+  user User @relation(fields:[userId, tenantId], references:[id, tenantId])
+  
+  @@unique([userId, tenantId])
+
+  @@map("parents")
+}
+
+model Student{
+  id Int @id @default(autoincrement())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  studentId String
+  dateOfBirth DateTime?
+  gender String?
+  address String?
+  contactNumber String?
+  gradeLevel String?
+  parentLinks ParentStudent[]
+
+  userId Int
+  user User @relation(fields:[userId, tenantId], references:[id, tenantId])
+  tenantId Int
+  tenant Tenant @relation(fields:[tenantId], references:[id])
+
+  @@unique([studentId, tenantId])
+  @@unique([userId, tenantId])
+
+  @@map("students")
+}
+
+model ParentStudent{
+  createdAt DateTime @default(now())
+  
+  parentId Int
+  parent Parent @relation(fields:[parentId], references:[id])
+  
+  studentId Int
+  student Student @relation(fields:[studentId], references:[id])
+  
+  @@id([parentId, studentId])
+  
+  @@map("parent_students")
+}
+
+model SchoolAdmin{
+  id Int @id @default(autoincrement())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  employeeId String
+  contactNumber String?
+  qualifications String?
+  specialization String?
+
+  tenantId Int
+  tenant Tenant @relation(fields:[tenantId], references:[id])
+  userId Int
+  user User @relation(fields:[userId, tenantId], references:[id, tenantId])
+  
+  @@unique([userId, tenantId])
+
+  @@unique([employeeId, tenantId])
+
+  @@map("schooladmins")
+}
+
+model PackagePlan{
+  id Int @id @default(autoincrement())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  
+  name String @unique
+  features Json
+  actual_price Float
+  discount Float
+  subscriptions Subscription[]
+
+  maxUsers Int
+  maxRoles Int?
+  maxStorageMb Int?
+  allowsAdvancedAnalytics Boolean @default(false)
+
+  @@map("package_plans")
+}
+
+model Subscription{
+  id Int @id @default(autoincrement())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  tenant Tenant @relation(fields: [tenantId], references:[id], onDelete:Cascade)
+  tenantId Int @unique
+
+  packagePlanId Int
+  packagePlan PackagePlan @relation(fields: [packagePlanId], references: [id])
+
+  status SubscriptionStatus
+  startedAt DateTime @default(now())
+  endsAt DateTime?
+  
+  @@map("subscriptions")
+}
+
+model Role {
+  id Int @id @default(autoincrement())
+  tenantId Int
+  name String
+  description String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  tenant Tenant @relation(fields: [tenantId], references: [id])
+  userRoles UserRole[]
+  invitations Invitation[]
+  rolePermission RolePermission[]
+
+  @@unique([id, tenantId, name])
+  @@map("roles")
+}
+
+model UserRole{
+  userId Int
+  roleId Int
+  createdAt DateTime @default(now())
+
+  user User @relation(fields:[userId], references: [id])
+  role Role @relation(fields: [roleId], references: [id])
+
+  @@unique([userId, roleId])
+  @@map("userRoles")
+}
+
+model VerificationToken {
+  id         Int      @id @default(autoincrement())
+  tokenHash  String   @unique
+  type       TokenType
+  expiresAt  DateTime
+  usedAt     DateTime?
+  createdAt  DateTime @default(now())
+
+  userId     Int
+  user       User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([tokenHash])
+}
+
+model Invitation {
+  id            Int      @id @default(autoincrement())
+  tokenHash     String   @unique
+
+  email         String
+  type          InvitationType
+
+  status        InvitationStatus @default(PENDING)
+
+  expiresAt     DateTime
+  acceptedAt    DateTime?
+
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  tenantId      Int
+  tenant        Tenant @relation(fields: [tenantId], references: [id], onDelete: Cascade)
+
+  invitedById   Int
+  invitedBy     User @relation("UserSentInvitations",fields: [invitedById], references: [id])
+
+  roleId        Int?
+  role          Role? @relation(fields: [roleId], references: [id])
+
+  assignedSubject Json?
+  metadata Json?
+
+  @@index([tenantId])
+  @@index([invitedById])
+  @@index([roleId])
+  @@index([email])
+  @@index([tokenHash])
+}
+
+
+//ENUMS
+enum TokenType {
+  EMAIL_VERIFICATION
+  PASSWORD_RESET
+  TEACHER_INVITATION
+  PARENT_INVITATION
+  STUDENT_INVITATION
+}
+
+enum InvitationType {
+  TEACHER
+  STUDENT
+  PARENT
+  ADMIN
+}
+
+enum InvitationStatus {
+  PENDING
+  ACCEPTED
+  EXPIRED
+  CANCELLED
+}
+
+enum TenantStatus{
+  PENDING_EMAIL_VERIFICATION
+  ACTIVE
+  SUSPENDED
+  CANCELLED
+}
+
+enum UserStatus{
+  INVITED
+  ACTIVE
+  SUSPENDED
+  DISABLED
+}
+
+enum SubscriptionStatus{
+  ACTIVE
+  CANCELED
+  EXPIRED
+  TRIAL
+  PAST_DUE
+}
+
+
+//Edutrac SAAS admin
+model SuperAdminUser{
+  id Int @id @default(autoincrement())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  email String
+  password String
+  firstName String?
+  lastName String?
+}
+
+model Permission{
+  id Int @id @default(autoincrement())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  name String @unique
+  description String?
+
+  rolePermission RolePermission[]
+
+  @@map("permissions")
+}
+
+model RolePermission{
+  roleId Int
+  permissionId Int
+  createdAt DateTime @default(now())
+  role Role @relation(fields:[roleId], references:[id])
+  permission Permission @relation(fields:[permissionId], references:[id])
+
+  @@id([roleId, permissionId])
+
+  @@map("role_permissions")
+}
+
+model Attendance{
+  id Int @id @default(autoincrement())
+  createdAt DateTime @default(now())
 }

@@ -1,0 +1,50 @@
+import { PrismaClient } from '../src/generated/prisma/client';
+import {PrismaBetterSqlite3} from '@prisma/adapter-better-sqlite3';
+import { PrismaNeon } from '@prisma/adapter-neon';
+import {Permissions, PackagePlans} from '../src/core/rbac/constants';
+import * as dotenv from 'dotenv'
+
+
+dotenv.config();
+
+const adapter = new PrismaNeon({connectionString: `${process.env.DATABASE_URL}`});
+const prisma = new PrismaClient({
+  adapter
+})
+// const prisma = new PrismaClient({
+//   adapter: new PrismaBetterSqlite3({
+//     url: "file:./dev.db",
+//   }),
+// });
+
+async function main() {
+  await prisma.packagePlan.createMany({
+    data: PackagePlans.map((plan) => ({
+      ...plan,
+      features: JSON.parse(plan.features),
+    })),
+  });
+
+
+  for (const permission of Permissions) {
+    await prisma.permission.upsert({
+      where: {
+        name: permission,
+      },
+      update: {},
+      create: {
+        name: permission,
+      },
+    });
+  }
+}
+
+main()
+  .then(async () => {
+    await prisma.$disconnect();
+  })
+  .catch(async (e) => {
+    console.error(e);
+    await prisma.$disconnect();
+    process.exit(1);
+  });

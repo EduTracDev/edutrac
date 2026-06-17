@@ -9,7 +9,63 @@
 * 🟢 You can import this file directly.
 */
 
+export const TokenType = {
+  EMAIL_VERIFICATION: 'EMAIL_VERIFICATION',
+  PASSWORD_RESET: 'PASSWORD_RESET',
+  TEACHER_INVITATION: 'TEACHER_INVITATION',
+  PARENT_INVITATION: 'PARENT_INVITATION',
+  STUDENT_INVITATION: 'STUDENT_INVITATION'
+} as const
+
+export type TokenType = (typeof TokenType)[keyof typeof TokenType]
 
 
-// This file is empty because there are no enums in the schema.
-export {}
+export const InvitationType = {
+  TEACHER: 'TEACHER',
+  STUDENT: 'STUDENT',
+  PARENT: 'PARENT',
+  ADMIN: 'ADMIN'
+} as const
+
+export type InvitationType = (typeof InvitationType)[keyof typeof InvitationType]
+
+
+export const InvitationStatus = {
+  PENDING: 'PENDING',
+  ACCEPTED: 'ACCEPTED',
+  EXPIRED: 'EXPIRED',
+  CANCELLED: 'CANCELLED'
+} as const
+
+export type InvitationStatus = (typeof InvitationStatus)[keyof typeof InvitationStatus]
+
+
+export const TenantStatus = {
+  PENDING_EMAIL_VERIFICATION: 'PENDING_EMAIL_VERIFICATION',
+  ACTIVE: 'ACTIVE',
+  SUSPENDED: 'SUSPENDED',
+  CANCELLED: 'CANCELLED'
+} as const
+
+export type TenantStatus = (typeof TenantStatus)[keyof typeof TenantStatus]
+
+
+export const UserStatus = {
+  INVITED: 'INVITED',
+  ACTIVE: 'ACTIVE',
+  SUSPENDED: 'SUSPENDED',
+  DISABLED: 'DISABLED'
+} as const
+
+export type UserStatus = (typeof UserStatus)[keyof typeof UserStatus]
+
+
+export const SubscriptionStatus = {
+  ACTIVE: 'ACTIVE',
+  CANCELED: 'CANCELED',
+  EXPIRED: 'EXPIRED',
+  TRIAL: 'TRIAL',
+  PAST_DUE: 'PAST_DUE'
+} as const
+
+export type SubscriptionStatus = (typeof SubscriptionStatus)[keyof typeof SubscriptionStatus]

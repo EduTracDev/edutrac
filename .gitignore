@@ -21,6 +21,7 @@ yarn-error.log*
 frontend/.env
 backend/.env
 
+
 # IDE and editor files
 .vscode/
 .idea/
@@ -78,3 +79,6 @@ next-env.d.ts
 
 #prod specs
 /backend/prod-specs
+
+#text files
+*.txt
