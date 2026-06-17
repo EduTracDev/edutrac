@@ -1397,6 +1397,7 @@ export type PackagePlanCreateManyArgs<ExtArgs extends runtime.Types.Extensions.I
    * The data used to create many PackagePlans.
    */
   data: Prisma.PackagePlanCreateManyInput | Prisma.PackagePlanCreateManyInput[]
+  skipDuplicates?: boolean
 }
 
 /**
@@ -1415,6 +1416,7 @@ export type PackagePlanCreateManyAndReturnArgs<ExtArgs extends runtime.Types.Ext
    * The data used to create many PackagePlans.
    */
   data: Prisma.PackagePlanCreateManyInput | Prisma.PackagePlanCreateManyInput[]
+  skipDuplicates?: boolean
 }
 
 /**

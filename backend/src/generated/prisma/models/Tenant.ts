@@ -2388,6 +2388,7 @@ export type TenantCreateManyArgs<ExtArgs extends runtime.Types.Extensions.Intern
    * The data used to create many Tenants.
    */
   data: Prisma.TenantCreateManyInput | Prisma.TenantCreateManyInput[]
+  skipDuplicates?: boolean
 }
 
 /**
@@ -2406,6 +2407,7 @@ export type TenantCreateManyAndReturnArgs<ExtArgs extends runtime.Types.Extensio
    * The data used to create many Tenants.
    */
   data: Prisma.TenantCreateManyInput | Prisma.TenantCreateManyInput[]
+  skipDuplicates?: boolean
 }
 
 /**

@@ -945,6 +945,7 @@ export type AttendanceCreateManyArgs<ExtArgs extends runtime.Types.Extensions.In
    * The data used to create many Attendances.
    */
   data: Prisma.AttendanceCreateManyInput | Prisma.AttendanceCreateManyInput[]
+  skipDuplicates?: boolean
 }
 
 /**
@@ -963,6 +964,7 @@ export type AttendanceCreateManyAndReturnArgs<ExtArgs extends runtime.Types.Exte
    * The data used to create many Attendances.
    */
   data: Prisma.AttendanceCreateManyInput | Prisma.AttendanceCreateManyInput[]
+  skipDuplicates?: boolean
 }
 
 /**

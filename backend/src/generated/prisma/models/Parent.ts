@@ -553,6 +553,7 @@ export type ParentCreateOrConnectWithoutTenantInput = {
 
 export type ParentCreateManyTenantInputEnvelope = {
   data: Prisma.ParentCreateManyTenantInput | Prisma.ParentCreateManyTenantInput[]
+  skipDuplicates?: boolean
 }
 
 export type ParentUpsertWithWhereUniqueWithoutTenantInput = {
@@ -1504,6 +1505,7 @@ export type ParentCreateManyArgs<ExtArgs extends runtime.Types.Extensions.Intern
    * The data used to create many Parents.
    */
   data: Prisma.ParentCreateManyInput | Prisma.ParentCreateManyInput[]
+  skipDuplicates?: boolean
 }
 
 /**
@@ -1522,6 +1524,7 @@ export type ParentCreateManyAndReturnArgs<ExtArgs extends runtime.Types.Extensio
    * The data used to create many Parents.
    */
   data: Prisma.ParentCreateManyInput | Prisma.ParentCreateManyInput[]
+  skipDuplicates?: boolean
   /**
    * Choose, which related nodes to fetch as well
    */

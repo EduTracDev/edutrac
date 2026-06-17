@@ -538,6 +538,7 @@ export type RoleCreateOrConnectWithoutTenantInput = {
 
 export type RoleCreateManyTenantInputEnvelope = {
   data: Prisma.RoleCreateManyTenantInput | Prisma.RoleCreateManyTenantInput[]
+  skipDuplicates?: boolean
 }
 
 export type RoleUpsertWithWhereUniqueWithoutTenantInput = {
@@ -1568,6 +1569,7 @@ export type RoleCreateManyArgs<ExtArgs extends runtime.Types.Extensions.Internal
    * The data used to create many Roles.
    */
   data: Prisma.RoleCreateManyInput | Prisma.RoleCreateManyInput[]
+  skipDuplicates?: boolean
 }
 
 /**
@@ -1586,6 +1588,7 @@ export type RoleCreateManyAndReturnArgs<ExtArgs extends runtime.Types.Extensions
    * The data used to create many Roles.
    */
   data: Prisma.RoleCreateManyInput | Prisma.RoleCreateManyInput[]
+  skipDuplicates?: boolean
   /**
    * Choose, which related nodes to fetch as well
    */

@@ -1085,6 +1085,7 @@ export type SuperAdminUserCreateManyArgs<ExtArgs extends runtime.Types.Extension
    * The data used to create many SuperAdminUsers.
    */
   data: Prisma.SuperAdminUserCreateManyInput | Prisma.SuperAdminUserCreateManyInput[]
+  skipDuplicates?: boolean
 }
 
 /**
@@ -1103,6 +1104,7 @@ export type SuperAdminUserCreateManyAndReturnArgs<ExtArgs extends runtime.Types.
    * The data used to create many SuperAdminUsers.
    */
   data: Prisma.SuperAdminUserCreateManyInput | Prisma.SuperAdminUserCreateManyInput[]
+  skipDuplicates?: boolean
 }
 
 /**

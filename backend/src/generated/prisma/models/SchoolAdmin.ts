@@ -579,6 +579,7 @@ export type SchoolAdminCreateOrConnectWithoutTenantInput = {
 
 export type SchoolAdminCreateManyTenantInputEnvelope = {
   data: Prisma.SchoolAdminCreateManyTenantInput | Prisma.SchoolAdminCreateManyTenantInput[]
+  skipDuplicates?: boolean
 }
 
 export type SchoolAdminUpsertWithWhereUniqueWithoutTenantInput = {
@@ -1465,6 +1466,7 @@ export type SchoolAdminCreateManyArgs<ExtArgs extends runtime.Types.Extensions.I
    * The data used to create many SchoolAdmins.
    */
   data: Prisma.SchoolAdminCreateManyInput | Prisma.SchoolAdminCreateManyInput[]
+  skipDuplicates?: boolean
 }
 
 /**
@@ -1483,6 +1485,7 @@ export type SchoolAdminCreateManyAndReturnArgs<ExtArgs extends runtime.Types.Ext
    * The data used to create many SchoolAdmins.
    */
   data: Prisma.SchoolAdminCreateManyInput | Prisma.SchoolAdminCreateManyInput[]
+  skipDuplicates?: boolean
   /**
    * Choose, which related nodes to fetch as well
    */

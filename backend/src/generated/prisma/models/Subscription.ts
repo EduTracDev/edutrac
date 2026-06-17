@@ -601,6 +601,7 @@ export type SubscriptionCreateOrConnectWithoutPackagePlanInput = {
 
 export type SubscriptionCreateManyPackagePlanInputEnvelope = {
   data: Prisma.SubscriptionCreateManyPackagePlanInput | Prisma.SubscriptionCreateManyPackagePlanInput[]
+  skipDuplicates?: boolean
 }
 
 export type SubscriptionUpsertWithWhereUniqueWithoutPackagePlanInput = {
@@ -1420,6 +1421,7 @@ export type SubscriptionCreateManyArgs<ExtArgs extends runtime.Types.Extensions.
    * The data used to create many Subscriptions.
    */
   data: Prisma.SubscriptionCreateManyInput | Prisma.SubscriptionCreateManyInput[]
+  skipDuplicates?: boolean
 }
 
 /**
@@ -1438,6 +1440,7 @@ export type SubscriptionCreateManyAndReturnArgs<ExtArgs extends runtime.Types.Ex
    * The data used to create many Subscriptions.
    */
   data: Prisma.SubscriptionCreateManyInput | Prisma.SubscriptionCreateManyInput[]
+  skipDuplicates?: boolean
   /**
    * Choose, which related nodes to fetch as well
    */

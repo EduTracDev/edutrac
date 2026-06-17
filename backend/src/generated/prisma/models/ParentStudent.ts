@@ -432,6 +432,7 @@ export type ParentStudentCreateOrConnectWithoutParentInput = {
 
 export type ParentStudentCreateManyParentInputEnvelope = {
   data: Prisma.ParentStudentCreateManyParentInput | Prisma.ParentStudentCreateManyParentInput[]
+  skipDuplicates?: boolean
 }
 
 export type ParentStudentUpsertWithWhereUniqueWithoutParentInput = {
@@ -476,6 +477,7 @@ export type ParentStudentCreateOrConnectWithoutStudentInput = {
 
 export type ParentStudentCreateManyStudentInputEnvelope = {
   data: Prisma.ParentStudentCreateManyStudentInput | Prisma.ParentStudentCreateManyStudentInput[]
+  skipDuplicates?: boolean
 }
 
 export type ParentStudentUpsertWithWhereUniqueWithoutStudentInput = {
@@ -1252,6 +1254,7 @@ export type ParentStudentCreateManyArgs<ExtArgs extends runtime.Types.Extensions
    * The data used to create many ParentStudents.
    */
   data: Prisma.ParentStudentCreateManyInput | Prisma.ParentStudentCreateManyInput[]
+  skipDuplicates?: boolean
 }
 
 /**
@@ -1270,6 +1273,7 @@ export type ParentStudentCreateManyAndReturnArgs<ExtArgs extends runtime.Types.E
    * The data used to create many ParentStudents.
    */
   data: Prisma.ParentStudentCreateManyInput | Prisma.ParentStudentCreateManyInput[]
+  skipDuplicates?: boolean
   /**
    * Choose, which related nodes to fetch as well
    */

@@ -579,6 +579,7 @@ export type TeacherCreateOrConnectWithoutTenantInput = {
 
 export type TeacherCreateManyTenantInputEnvelope = {
   data: Prisma.TeacherCreateManyTenantInput | Prisma.TeacherCreateManyTenantInput[]
+  skipDuplicates?: boolean
 }
 
 export type TeacherUpsertWithWhereUniqueWithoutTenantInput = {
@@ -1465,6 +1466,7 @@ export type TeacherCreateManyArgs<ExtArgs extends runtime.Types.Extensions.Inter
    * The data used to create many Teachers.
    */
   data: Prisma.TeacherCreateManyInput | Prisma.TeacherCreateManyInput[]
+  skipDuplicates?: boolean
 }
 
 /**
@@ -1483,6 +1485,7 @@ export type TeacherCreateManyAndReturnArgs<ExtArgs extends runtime.Types.Extensi
    * The data used to create many Teachers.
    */
   data: Prisma.TeacherCreateManyInput | Prisma.TeacherCreateManyInput[]
+  skipDuplicates?: boolean
   /**
    * Choose, which related nodes to fetch as well
    */

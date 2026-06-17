@@ -478,6 +478,7 @@ export type VerificationTokenCreateOrConnectWithoutUserInput = {
 
 export type VerificationTokenCreateManyUserInputEnvelope = {
   data: Prisma.VerificationTokenCreateManyUserInput | Prisma.VerificationTokenCreateManyUserInput[]
+  skipDuplicates?: boolean
 }
 
 export type VerificationTokenUpsertWithWhereUniqueWithoutUserInput = {
@@ -1278,6 +1279,7 @@ export type VerificationTokenCreateManyArgs<ExtArgs extends runtime.Types.Extens
    * The data used to create many VerificationTokens.
    */
   data: Prisma.VerificationTokenCreateManyInput | Prisma.VerificationTokenCreateManyInput[]
+  skipDuplicates?: boolean
 }
 
 /**
@@ -1296,6 +1298,7 @@ export type VerificationTokenCreateManyAndReturnArgs<ExtArgs extends runtime.Typ
    * The data used to create many VerificationTokens.
    */
   data: Prisma.VerificationTokenCreateManyInput | Prisma.VerificationTokenCreateManyInput[]
+  skipDuplicates?: boolean
   /**
    * Choose, which related nodes to fetch as well
    */

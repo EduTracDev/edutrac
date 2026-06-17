@@ -1065,6 +1065,11 @@
   dependencies:
     "@tybys/wasm-util" "^0.10.1"
 
+"@neondatabase/serverless@>0.6.0 <2", "@neondatabase/serverless@^1.1.0":
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/@neondatabase/serverless/-/serverless-1.1.0.tgz#35046d1125932153dd306bd3d7c269306914e005"
+  integrity sha512-r3ZZhRjEcfEdKIZnoB1RusNgvHuaBRqfCzV4Gi+5A9yUX0S4HTws/ASWqt13wL4y4I+0rqsWGdA2w7EQXHi3+Q==
+
 "@nestjs-modules/mailer@^2.3.6":
   version "2.3.6"
   resolved "https://registry.npmjs.org/@nestjs-modules/mailer/-/mailer-2.3.6.tgz"
@@ -1239,6 +1244,15 @@
   dependencies:
     "@prisma/driver-adapter-utils" "7.8.0"
     better-sqlite3 "^12.6.0"
+
+"@prisma/adapter-neon@^7.8.0":
+  version "7.8.0"
+  resolved "https://registry.yarnpkg.com/@prisma/adapter-neon/-/adapter-neon-7.8.0.tgz#f1d8df4adf5b51d24e5811fc6bb89ca897bff3ff"
+  integrity sha512-9MoOjRuY53sQNyji87u1NivsK0tIacoUE3PqTxdG95b7ORn1pzwribH2z83j4Vh3eb9nQ/UC+MTfVW7jCFnXlA==
+  dependencies:
+    "@neondatabase/serverless" ">0.6.0 <2"
+    "@prisma/driver-adapter-utils" "7.8.0"
+    postgres-array "3.0.4"
 
 "@prisma/adapter-pg@^7.8.0":
   version "7.8.0"
@@ -1771,6 +1785,13 @@
   version "13.15.10"
   resolved "https://registry.npmjs.org/@types/validator/-/validator-13.15.10.tgz"
   integrity sha512-T8L6i7wCuyoK8A/ZeLYt1+q0ty3Zb9+qbSSvrIVitzT3YjZqkTZ40IbRsPanlB4h1QB3JVL1SYCdR6ngtFYcuA==
+
+"@types/ws@^8.18.1":
+  version "8.18.1"
+  resolved "https://registry.yarnpkg.com/@types/ws/-/ws-8.18.1.tgz#48464e4bf2ddfd17db13d845467f6070ffea4aa9"
+  integrity sha512-ThVF6DCVhA8kUGy+aazFQ4kXQ7E1Ty7A3ypFOe0IcJV8O/M511G99AW24irKrW56Wt44yG9+ij8FaqoBGkuBXg==
+  dependencies:
+    "@types/node" "*"
 
 "@types/yargs-parser@*":
   version "21.0.3"
@@ -8128,6 +8149,11 @@ write-file-atomic@^5.0.1:
   dependencies:
     imurmurhash "^0.1.4"
     signal-exit "^4.0.1"
+
+ws@^8.21.0:
+  version "8.21.0"
+  resolved "https://registry.yarnpkg.com/ws/-/ws-8.21.0.tgz#012e413fc07429945121b0c153158c4343086951"
+  integrity sha512-Vsp28b7DRcimFQvrqu2Wek3z1iYxDCWqHYB8Qsnk/S4RfaCQzPGPyBNuVjJV3cd6UiKtUtp6sNM77gWvzcCH+g==
 
 xtend@^4.0.0:
   version "4.0.2"
