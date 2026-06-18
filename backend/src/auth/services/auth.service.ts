@@ -83,6 +83,7 @@ export class AuthService {
 
     async registerTenantViaGoogle(profile: any, state: any) {
         try {
+            if (!profile || !state) throw new BadRequestException("Required fields missing");
             const existingTenant = await this.prismaService.tenant.findUnique({
                 where: {
                     slug: state.tenantDomain,
