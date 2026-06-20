@@ -1,18 +1,24 @@
 "use client";
 
+import React, { useState, Suspense } from "react";
 import Link from "next/link";
 import { AuthRoutes } from "@/routes/auth.routes";
-import { Suspense } from "react";
-import { useSearchParams } from "next/navigation";
+import { useSearchParams, useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { RegisterFormData, registerSchema } from "@/utils/validation";
 import Image from "next/image";
+import { Eye, EyeOff } from "lucide-react"; // Import eye icons
 
 function SignUpContent() {
+  const router = useRouter();
   const searchParams = useSearchParams();
-  const role = searchParams.get("role") || "parent";
+  const role = searchParams.get("role") || "school-admin";
   const school = searchParams.get("school") || "EduTrac";
+
+  // Password visibility states
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
   const {
     register,
@@ -20,10 +26,13 @@ function SignUpContent() {
     formState: { errors, isSubmitting },
   } = useForm<RegisterFormData>({
     resolver: yupResolver(registerSchema),
+    mode: "onTouched", // Validates as the user moves between input fields
   });
 
   const onSubmit = async (data: RegisterFormData) => {
     console.log("Attempting Registration:", data);
+    await new Promise((resolve) => setTimeout(resolve, 800));
+    router.push(`${AuthRoutes.login.replace('/login', '/verify-email')}?role=${role}&school=${encodeURIComponent(school)}`);
   };
 
   return (
@@ -104,16 +113,25 @@ function SignUpContent() {
                 <label className="text-xs font-bold text-[#1E1E2F]">
                   Password
                 </label>
-                <input
-                  {...register("password")}
-                  type="password"
-                  placeholder="Enter your Password"
-                  className={`w-full px-4 py-2.5 border rounded-lg text-xs transition-all focus:outline-none placeholder-gray-300 text-gray-700 ${
-                    errors.password
-                      ? "border-red-400 focus:border-red-500 bg-red-50/10"
-                      : "border-gray-200 focus:border-gray-400 bg-white"
-                  }`}
-                />
+                <div className="relative">
+                  <input
+                    {...register("password")}
+                    type={showPassword ? "text" : "password"}
+                    placeholder="Enter your Password"
+                    className={`w-full pl-4 pr-10 py-2.5 border rounded-lg text-xs transition-all focus:outline-none placeholder-gray-300 text-gray-700 ${
+                      errors.password
+                        ? "border-red-400 focus:border-red-500 bg-red-50/10"
+                        : "border-gray-200 focus:border-gray-400 bg-white"
+                    }`}
+                  />
+                  <button
+                    type="button"
+                    onClick={() => setShowPassword(!showPassword)}
+                    className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600 focus:outline-none"
+                  >
+                    {showPassword ? <EyeOff size={16} /> : <Eye size={16} />}
+                  </button>
+                </div>
                 {errors.password && (
                   <p className="text-[11px] font-medium text-red-500 mt-0.5">
                     {errors.password.message}
@@ -126,16 +144,25 @@ function SignUpContent() {
                 <label className="text-xs font-bold text-[#1E1E2F]">
                   Confirm Password
                 </label>
-                <input
-                  {...register("confirmPassword")}
-                  type="password"
-                  placeholder="Enter your Password"
-                  className={`w-full px-4 py-2.5 border rounded-lg text-xs transition-all focus:outline-none placeholder-gray-300 text-gray-700 ${
-                    errors.confirmPassword
-                      ? "border-red-400 focus:border-red-500 bg-red-50/10"
-                      : "border-gray-200 focus:border-gray-400 bg-white"
-                  }`}
-                />
+                <div className="relative">
+                  <input
+                    {...register("confirmPassword")}
+                    type={showConfirmPassword ? "text" : "password"}
+                    placeholder="Enter your Password"
+                    className={`w-full pl-4 pr-10 py-2.5 border rounded-lg text-xs transition-all focus:outline-none placeholder-gray-300 text-gray-700 ${
+                      errors.confirmPassword
+                        ? "border-red-400 focus:border-red-500 bg-red-50/10"
+                        : "border-gray-200 focus:border-gray-400 bg-white"
+                    }`}
+                  />
+                  <button
+                    type="button"
+                    onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+                    className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600 focus:outline-none"
+                  >
+                    {showConfirmPassword ? <EyeOff size={16} /> : <Eye size={16} />}
+                  </button>
+                </div>
                 {errors.confirmPassword && (
                   <p className="text-[11px] font-medium text-red-500 mt-0.5">
                     {errors.confirmPassword.message}
@@ -149,8 +176,8 @@ function SignUpContent() {
             <button
               type="submit"
               disabled={isSubmitting}
-              className={`w-full py-3.5 font-bold rounded-xl text-sm transition-colors mt-4 disabled:opacity-60 ${
-                isSubmitting || Object.keys(errors).length > 0
+              className={`w-full py-3.5 cursor-pointer font-bold rounded-xl text-sm transition-colors mt-4 disabled:opacity-60 disabled:cursor-not-allowed ${
+                isSubmitting
                   ? "bg-[#E2E4E9] text-[#1E1E2F]"
                   : "bg-[#923CF9] text-white hover:bg-[#7e2ed4]"
               }`}
@@ -195,15 +222,12 @@ function SignUpContent() {
 
       {/* Right Side: Feature Preview Panel */}
       <div className="hidden lg:col-span-5 bg-[#923CF9] lg:flex flex-col justify-center items-start p-16 relative overflow-hidden">
-        
-        {/* Branding Head Text */}
         <div className="max-w-md text-white mb-10 z-10">
           <h2 className="text-[24px] xl:text-[30px] font-bold leading-tight">
             Join Edutrac, A Modern tools for Smarter classrooms.
           </h2>
         </div>
 
-        {/* Dynamic Presentation Card Graphic Stack */}
         <div className="w-full max-w-sm mx-auto">
           <Image
             src="/signupImg.png"
@@ -213,7 +237,6 @@ function SignUpContent() {
             className="object-cover"
           />
         </div>
-        
       </div>
     </div>
   );

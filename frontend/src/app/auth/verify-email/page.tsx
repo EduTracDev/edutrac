@@ -6,13 +6,14 @@ import Image from "next/image";
 import { useForm } from "react-hook-form";
 import { ChevronLeft } from "lucide-react";
 import { AuthRoutes } from "@/routes/auth.routes";
-import { useSearchParams } from "next/navigation";
+import { useSearchParams, useRouter } from "next/navigation";
 
 interface VerifyEmailData {
   email: string;
 }
 
 function VerifyEmailContent() {
+  const router = useRouter();
 const searchParams = useSearchParams();
   const role = searchParams.get("role") || "parent";
   const school = searchParams.get("school") || "EduTrac";
@@ -26,6 +27,8 @@ const searchParams = useSearchParams();
   const onSubmit = async (data: VerifyEmailData) => {
     console.log("Sending verification link to:", data.email);
     // Integration logic goes here
+    await new Promise((resolve) => setTimeout(resolve, 800));
+    router.push("/onboarding");
   };
 
   return (
