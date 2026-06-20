@@ -14,7 +14,7 @@ interface VerifyEmailData {
 
 function VerifyEmailContent() {
   const router = useRouter();
-const searchParams = useSearchParams();
+  const searchParams = useSearchParams();
   const role = searchParams.get("role") || "parent";
   const school = searchParams.get("school") || "EduTrac";
 
@@ -33,7 +33,7 @@ const searchParams = useSearchParams();
 
   return (
     <div className="min-h-screen grid grid-cols-1 lg:grid-cols-12 font-sans bg-white">
-      
+
       {/* Left Column Graphic panel (Hidden on Mobile view) */}
       <div className="hidden lg:col-span-5 bg-[#A361FF] lg:flex flex-col justify-center items-center relative overflow-hidden">
         {/* Decorative concentric rings design mimicking the screenshot */}
@@ -41,17 +41,17 @@ const searchParams = useSearchParams();
           <div className="w-[320px] h-[320px] rounded-full bg-white/5 border border-white/10 flex items-center justify-center">
             <div className="w-[200px] h-[200px] rounded-full bg-white/5 border border-white/10 flex items-center justify-center">
               {/* Centered Large Visual Lock Vector Icon */}
-              <svg 
-                className="w-20 h-20 text-white/30" 
-                fill="none" 
-                stroke="currentColor" 
-                strokeWidth="1.5" 
+              <svg
+                className="w-20 h-20 text-white/30"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="1.5"
                 viewBox="0 0 24 24"
               >
-                <path 
-                  strokeLinecap="round" 
-                  strokeLinejoin="round" 
-                  d="M16.5 10.5V6.75a4.5 4.5 0 10-9 0v3.75m-.75 11.25h10.5a2.25 2.25 0 002.25-2.25v-6.75a2.25 2.25 0 00-2.25-2.25H6.75a2.25 2.25 0 00-2.25 2.25v6.75a2.25 2.25 0 002.25 2.25z" 
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="M16.5 10.5V6.75a4.5 4.5 0 10-9 0v3.75m-.75 11.25h10.5a2.25 2.25 0 002.25-2.25v-6.75a2.25 2.25 0 00-2.25-2.25H6.75a2.25 2.25 0 00-2.25 2.25v6.75a2.25 2.25 0 002.25 2.25z"
                 />
                 <circle cx="12" cy="16" r="1.5" fill="currentColor" className="text-white/30" />
               </svg>
@@ -62,7 +62,7 @@ const searchParams = useSearchParams();
 
       {/* Right Column Form Structure */}
       <div className="lg:col-span-7 flex flex-col justify-between min-h-screen px-6 py-8 sm:px-16 md:px-24 xl:px-32">
-        
+
         {/* Top Right Header Section */}
         <div className="w-full flex justify-end">
           <Image src="/logo.png" alt="Edutrac Logo" width={140} height={32} className="object-contain" />
@@ -70,8 +70,8 @@ const searchParams = useSearchParams();
 
         {/* Input Interface Wrapper Box */}
         <div className="w-full max-w-md mx-auto my-auto py-10">
-          
-          <Link 
+
+          <Link
             href={AuthRoutes.login + `?role=${role}&school=${school}`}
             className="inline-flex items-center gap-1 text-xs font-semibold text-gray-500 hover:text-gray-800 mb-4 transition-colors"
           >
@@ -89,14 +89,14 @@ const searchParams = useSearchParams();
           </div>
 
           <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
-            
+
             {/* Custom Field style replicating overlapping float border notation layout */}
             <div className="relative group">
               <label className="absolute -top-2.5 left-3 bg-white px-1.5 text-xs font-semibold text-gray-500 transition-colors group-focus-within:text-[#923CF9]">
                 Email
               </label>
               <input
-                {...register("email", { 
+                {...register("email", {
                   required: "Email address is required",
                   pattern: {
                     value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
@@ -105,11 +105,10 @@ const searchParams = useSearchParams();
                 })}
                 type="email"
                 defaultValue="john.doe@gmail.com"
-                className={`w-full px-4 py-3.5 border rounded-xl text-sm text-[#1E1E2F] font-medium bg-white focus:outline-none transition-all ${
-                  errors.email 
-                    ? "border-red-400 focus:border-red-500" 
+                className={`w-full px-4 py-3.5 border rounded-xl text-sm text-[#1E1E2F] font-medium bg-white focus:outline-none transition-all ${errors.email
+                    ? "border-red-400 focus:border-red-500"
                     : "border-gray-300 focus:border-gray-500"
-                }`}
+                  }`}
               />
               {errors.email && (
                 <p className="text-xs font-medium text-red-500 mt-1.5 pl-1">
