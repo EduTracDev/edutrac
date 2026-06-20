@@ -33,14 +33,14 @@ export const loginSchema = yup
 
 export const registerSchema = yup.object().shape({
   schoolName: yup.string().required("School name is required"),
-  adminName: yup.string().required("Full name is required"),
+  // adminName: yup.string().required("Full name is required"),
   email: emailSchema,
   password: passwordSchema,
   confirmPassword: yup
     .string()
     .oneOf([yup.ref("password")], "Passwords do not match")
     .required("Please confirm your password"),
-  plan: yup.string().oneOf(["basic", "pro", "enterprise"]).required(),
+  // plan: yup.string().oneOf(["basic", "pro", "enterprise"]).required(),
 });
 
 export const profileSchema = yup.object().shape({
