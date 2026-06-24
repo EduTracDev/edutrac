@@ -1,4 +1,4 @@
-import { Module } from '@nestjs/common';
+import { MiddlewareConsumer, Module, NestModule } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { AuthModule } from './auth/auth.module';
@@ -20,10 +20,50 @@ import { CommunicationModule } from './communication/communication.module';
 import { MailModule } from './mail/mail.module';
 import { PackagePlanModule } from './package-plan/package-plan.module';
 import { InvitationModule } from './invitation/invitation.module';
+import { TenantMiddleware } from './core/middleware/tenant.middleware';
+import { enValidationSchema } from './core/config/env.validation';
+import { ThrottlerGuard, ThrottlerModule } from '@nestjs/throttler';
+import { APP_GUARD } from '@nestjs/core';
+
 
 @Module({
-  imports: [AuthModule, PrismaModule, ConfigModule.forRoot({isGlobal: true}), TenantModule, UserModule, TeacherModule, ParentModule, StudentModule, CourseModule, EnrollmentModule, AttendanceModule, SubscriptionModule, CommunicationModule, MailModule, PackagePlanModule, InvitationModule],
-  controllers: [AppController, TeacherController, AdminController, ParentController],
-  providers: [AppService],
+  imports: [
+    AuthModule,
+    PrismaModule,
+    ConfigModule.forRoot({ isGlobal: true, validationSchema: enValidationSchema }),
+    ThrottlerModule.forRoot([{
+      ttl: 60,
+      limit: 20,
+    }]),
+    TenantModule,
+    UserModule,
+    TeacherModule,
+    ParentModule,
+    StudentModule,
+    CourseModule,
+    EnrollmentModule,
+    AttendanceModule,
+    SubscriptionModule,
+    CommunicationModule,
+    MailModule,
+    PackagePlanModule,
+    InvitationModule,
+  ],
+  controllers: [
+    AppController,
+    TeacherController,
+    AdminController,
+    ParentController,
+  ],
+  providers: [AppService, {
+    provide: APP_GUARD,
+    useClass: ThrottlerGuard
+  }],
 })
-export class AppModule {}
+export class AppModule implements NestModule {
+  configure(consumer: MiddlewareConsumer) {
+    consumer.apply(TenantMiddleware)
+    .exclude('/auth/register', '/auth/verify-account', '/auth/google/register', '/auth/google/callback', '/auth/resend-verification-email', '/tenant/onboarding')
+    .forRoutes('*');
+  }
+}

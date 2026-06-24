@@ -1,21 +1,26 @@
 import { PrismaClient } from '../src/generated/prisma/client';
-import {PrismaBetterSqlite3} from '@prisma/adapter-better-sqlite3';
 import { PrismaNeon } from '@prisma/adapter-neon';
 import {Permissions, PackagePlans} from '../src/core/rbac/constants';
 import * as dotenv from 'dotenv'
+import { Pool } from 'pg';
+import { PrismaPg } from '@prisma/adapter-pg';
+
 
 
 dotenv.config();
-
-const adapter = new PrismaNeon({connectionString: `${process.env.DATABASE_URL}`});
+let adapter;
+if(process.env.DB_TYPE === 'neonpsql') {
+  adapter = new PrismaNeon({connectionString: `${process.env.DATABASE_URL}`});
+}
+if(process.env.DB_TYPE === 'postgresql'){
+  const pool = new Pool({
+    connectionString: process.env['LOCAL_DATABASE_URL'],
+  });
+  adapter = new PrismaPg(pool);
+}
 const prisma = new PrismaClient({
   adapter
 })
-// const prisma = new PrismaClient({
-//   adapter: new PrismaBetterSqlite3({
-//     url: "file:./dev.db",
-//   }),
-// });
 
 async function main() {
   await prisma.packagePlan.createMany({
@@ -24,7 +29,8 @@ async function main() {
       features: JSON.parse(plan.features),
     })),
   });
-
+// await prisma.packagePlan.deleteMany();
+// await prisma.permission.deleteMany();
 
   for (const permission of Permissions) {
     await prisma.permission.upsert({

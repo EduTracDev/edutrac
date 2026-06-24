@@ -4,31 +4,37 @@ import { OAuthStateService } from '../services/oauthstate.service';
 import { AuthGuard } from '@nestjs/passport';
 import { GoogleTenantGuard } from '../guards/google-tenant.guard';
 import { GoogleUserGuard } from '../guards/google-user.guard';
+import { ConfigService } from '@nestjs/config';
 
 @Controller('auth')
 export class OAuthController {
   constructor(
     private readonly authService: AuthService,
     private readonly oauthStateService: OAuthStateService,
+    private readonly config: ConfigService
   ) {}
 
-/*
-  @Req() req, @Query('organisation_name') organisation_name: string, @Query('tenantDomain') tenantDomain: string, @Query('packagePlanId') packagePlanId: string
-*/
-  @Get('google/tenant-register')  //tenant guard interceptor
+
+  @Get('google/register') //tenant guard interceptor
   @UseGuards(GoogleTenantGuard)
-  googleTenantRegister(){}
+  googleTenantRegister() {}
 
-
-  @UseGuards(AuthGuard('google'))  //GoogleStrategy interceptor
+  @UseGuards(AuthGuard('google')) //GoogleStrategy interceptor
   @Get('google/callback')
-  async googleCallback( @Req() req, @Res() res ) {
+  async googleCallback(@Req() req, @Res() res) {
     try {
       const user = req.user;
-      const state = this.oauthStateService.verify( req.query.state );
-      const tokens = await this.authService.signToken(user.id, user.email, user.tenantId);
+      const state = this.oauthStateService.verify(req.query.state);
+      const tokens = await this.authService.signToken(
+        user.id,
+        user.email,
+        user.tenantId,
+      );
 
-      const redirectUrl = state.action === 'register_tenant' ? `https://${state.tenantDomain}/auth/google/callback?access_token=${tokens.access_token}` : `https://${state.tenantDomain}/auth/google/callback?token=${tokens.access_token}`;
+      const redirectUrl =
+        state.action === 'register_tenant'
+          ? `${this.config.get('FRONTEND_URL')}/auth/google/callback?access_token=${tokens.access_token}`
+          : `https://${state.tenantDomain}.edutrac.com/auth/google/callback?token=${tokens.access_token}`;
       return res.redirect(redirectUrl);
     } catch (err) {
       console.error('Google OAuth Callback Error:', err);
@@ -36,7 +42,7 @@ export class OAuthController {
     }
   }
 
-  @Get('google/login-user')
+  @Get('google/signin')
   @UseGuards(GoogleUserGuard)
-  async googleLoginUser(){}
+  async googleLoginUser() {}
 }

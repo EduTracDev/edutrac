@@ -1,3 +1,1 @@
-export class EditTenantDto{
-    
-}
+export class EditTenantDto {}

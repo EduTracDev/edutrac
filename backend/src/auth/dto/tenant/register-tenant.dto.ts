@@ -1,30 +1,29 @@
 import { IsString, IsEmail, MinLength, IsNotEmpty } from 'class-validator';
 
-export class RegisterTenantDto{
-    @IsEmail()
-    @IsNotEmpty()
-    email: string
+export class RegisterTenantDto {
+  @IsEmail()
+  @IsNotEmpty()
+  email: string;
 
-    @IsString()
-    @MinLength(8)
-    password: string
+  @IsString()
+  @MinLength(8)
+  password: string;
 
-    @IsString()
-    @MinLength(8)
-    passwordConfirm: string
+  @IsString()
+  @MinLength(8)
+  passwordConfirm: string;
 
-    @IsNotEmpty()
-    @IsString()
-    organisation_name: string
+  @IsNotEmpty()
+  @IsString()
+  school_name: string;
 
-    @IsNotEmpty()
-    packagePlanId: number
+  @IsNotEmpty()
+  packagePlanId: number;
 }
 
-export class BrandingSetupDto{
-    
+export class BrandingSetupDto {
+  tenantDomain: string;
+  logo: string; ///image file in actual sense
 }
 
-export class CompleteSetupDto{
-
-}
+export class CompleteSetupDto {}

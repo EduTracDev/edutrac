@@ -3,7 +3,7 @@ import { JwtService } from '@nestjs/jwt';
 
 @Injectable()
 export class OAuthStateService {
-  constructor( private readonly jwtService: JwtService ) {}
+  constructor(private readonly jwtService: JwtService) {}
 
   sign(payload: any) {
     return this.jwtService.sign(payload, {
@@ -12,7 +12,7 @@ export class OAuthStateService {
     });
   }
 
-  verify(state: string):any {
+  verify(state: string): any {
     return this.jwtService.verify(state, {
       secret: process.env.OAUTH_STATE_SECRET,
     });

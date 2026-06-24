@@ -14,16 +14,18 @@ model Tenant{
   publicId String @unique @default(uuid())
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+  createdById Int?
+  createdBy User? @relation("TenantCreator", fields: [createdById], references: [id])
 
-  organisation_name String
-  slug String @unique
+  school_name String
+  domain String? @unique
   logoUrl String?
   contactPhone String?
   contactAddress String?
   contactEmail String
   isActive Boolean @default(false)
   status TenantStatus @default(PENDING_EMAIL_VERIFICATION)
-  users User[]
+  users User[] @relation("TenantMembers")
   roles Role[]
   teachers Teacher[]
   parents Parent[]
@@ -37,6 +39,7 @@ model Tenant{
 
 model User{
   id Int @id @default(autoincrement())
+  publicId String @unique @default(uuid())
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
   email String
@@ -55,8 +58,10 @@ model User{
   schoolAdmin SchoolAdmin?
 
   tenantId Int
-  tenant Tenant @relation(fields: [tenantId], references: [id])
+  tenant Tenant @relation("TenantMembers", fields: [tenantId], references: [id])
   
+  createdTenants Tenant[] @relation("TenantCreator")
+
   @@unique([id, tenantId])
   @@unique([email, tenantId])
   @@map("users")
@@ -64,6 +69,7 @@ model User{
 
 model Teacher{
   id Int @id @default(autoincrement())
+  publicId String @unique @default(uuid())
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
@@ -85,6 +91,7 @@ model Teacher{
 
 model Parent{
   id Int @id @default(autoincrement())
+  publicId String @unique @default(uuid())
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
   contactNumber String?
@@ -103,6 +110,7 @@ model Parent{
 
 model Student{
   id Int @id @default(autoincrement())
+  publicId String @unique @default(uuid())
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
   studentId String
@@ -140,6 +148,7 @@ model ParentStudent{
 
 model SchoolAdmin{
   id Int @id @default(autoincrement())
+  publicId String @unique @default(uuid())
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
   employeeId String
@@ -165,6 +174,7 @@ model PackagePlan{
   updatedAt DateTime @updatedAt
   
   name String @unique
+  description String
   features Json
   actual_price Float
   discount Float
@@ -180,6 +190,7 @@ model PackagePlan{
 
 model Subscription{
   id Int @id @default(autoincrement())
+  publicId String @unique @default(uuid())
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
@@ -198,6 +209,7 @@ model Subscription{
 
 model Role {
   id Int @id @default(autoincrement())
+  publicId String @unique @default(uuid())
   tenantId Int
   name String
   description String?
@@ -240,28 +252,29 @@ model VerificationToken {
 }
 
 model Invitation {
-  id            Int      @id @default(autoincrement())
-  tokenHash     String   @unique
+  id Int @id @default(autoincrement())
+  publicId String @unique @default(uuid())
+  tokenHash String @unique
 
-  email         String
-  type          InvitationType
+  email String
+  type InvitationType
 
-  status        InvitationStatus @default(PENDING)
+  status InvitationStatus @default(PENDING)
 
-  expiresAt     DateTime
-  acceptedAt    DateTime?
+  expiresAt DateTime
+  acceptedAt DateTime?
 
-  createdAt     DateTime @default(now())
-  updatedAt     DateTime @updatedAt
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 
-  tenantId      Int
-  tenant        Tenant @relation(fields: [tenantId], references: [id], onDelete: Cascade)
+  tenantId Int
+  tenant Tenant @relation(fields: [tenantId], references: [id], onDelete: Cascade)
 
-  invitedById   Int
-  invitedBy     User @relation("UserSentInvitations",fields: [invitedById], references: [id])
+  invitedById Int
+  invitedBy User @relation("UserSentInvitations",fields: [invitedById], references: [id])
 
-  roleId        Int?
-  role          Role? @relation(fields: [roleId], references: [id])
+  roleId Int?
+  role Role? @relation(fields: [roleId], references: [id])
 
   assignedSubject Json?
   metadata Json?
@@ -323,6 +336,7 @@ enum SubscriptionStatus{
 //Edutrac SAAS admin
 model SuperAdminUser{
   id Int @id @default(autoincrement())
+  publicId String @unique @default(uuid())
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
   email String
@@ -333,6 +347,7 @@ model SuperAdminUser{
 
 model Permission{
   id Int @id @default(autoincrement())
+  publicId String @unique @default(uuid())
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
   name String @unique
@@ -357,5 +372,6 @@ model RolePermission{
 
 model Attendance{
   id Int @id @default(autoincrement())
+  publicId String @unique @default(uuid())
   createdAt DateTime @default(now())
 }
