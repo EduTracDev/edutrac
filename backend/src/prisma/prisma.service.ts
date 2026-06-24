@@ -2,51 +2,51 @@ import { Injectable } from '@nestjs/common';
 import { PrismaClient } from '../generated/prisma/client';
 import { Pool } from 'pg';
 import { PrismaPg } from '@prisma/adapter-pg';
-import { PrismaBetterSqlite3 } from '@prisma/adapter-better-sqlite3';
-import Database from 'better-sqlite3';
-import { PrismaNeon } from '@prisma/adapter-neon'
-
+import { PrismaNeon } from '@prisma/adapter-neon';
 
 @Injectable()
-export class PrismaService extends PrismaClient{
-    constructor(){
-        let adapter;
-        if (process.env.DB_TYPE === "neonpsql"){
-            const connectionString = `${process.env.DATABASE_URL}`;
-            adapter = new PrismaNeon({connectionString});
-        }
-        if (process.env.DB_TYPE === "postgresql"){
-            const pool = new Pool({
-                connectionString: process.env["DATABASE_URL"]
-            })
-            adapter = new PrismaPg(pool)
-        } 
-        if (process.env.DB_TYPE === "sqlite"){
-            const rawUrl = 'file:./dev.db';
-            const filePath = rawUrl.replace('file:', '');
-            const db = new Database(filePath);
-            adapter = new PrismaBetterSqlite3({url:rawUrl});
-        }
-        super({
-            adapter
-        });
-    }
+export class PrismaService extends PrismaClient {
+  constructor() {
+    const db_type = process.env.DB_TYPE;
+    if (!db_type) throw new Error('DB_TYPE environment variable is not configured');
+    if(db_type !== 'neonpsql' && db_type !== 'postgresql') throw new Error('DB_TYPE environment variable is misconfigured');
+    
+    const databaseUrl = process.env.DATABASE_URL;
+    if (!databaseUrl) throw new Error('DATABASE_URL is not configured');
 
-    //To whomever may service this code in my absence, do not use this unless you fully understand the impact. Never use this in production database facing service
-    cleanDb(){
-        return this.$transaction([
-            this.userRole.deleteMany(),
-            //this.rolePermission.deleteMany(),
-            this.invitation.deleteMany(),
-            this.verificationToken.deleteMany(),
-            //this.teacher.deleteMany(),
-            //this.parent.deleteMany(),
-            //this.student.deleteMany(),
-            //this.schoolAdmin.deleteMany(),
-            this.user.deleteMany(),
-            this.role.deleteMany(),
-            this.subscription.deleteMany(),
-            this.tenant.deleteMany(),
-        ])
+    let adapter;
+    if (db_type === 'neonpsql') {
+      const connectionString = databaseUrl;
+      adapter = new PrismaNeon({ connectionString });
     }
+    if (db_type === 'postgresql') {
+      const pool = new Pool({
+        connectionString: process.env['LOCAL_DATABASE_URL'],
+      });
+      adapter = new PrismaPg(pool);
+    }
+    
+    super({
+      adapter,
+    });
+  }
+
+  //To whomever may service this code in my absence, do not use this unless you fully understand the impact. Never use this in production database facing service
+  cleanDb() {
+    if (process.env.NODE_ENV === 'production') return 'This action cannot be carried out in production'
+    return this.$transaction([
+      this.userRole.deleteMany(),
+      //this.rolePermission.deleteMany(),
+      this.invitation.deleteMany(),
+      this.verificationToken.deleteMany(),
+      this.teacher.deleteMany(),
+      this.parent.deleteMany(),
+      this.student.deleteMany(),
+      this.schoolAdmin.deleteMany(),
+      this.user.deleteMany(),
+      this.role.deleteMany(),
+      this.subscription.deleteMany(),
+      this.tenant.deleteMany(),
+    ]);
+  }
 }

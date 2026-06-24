@@ -54,6 +54,8 @@
     "class-validator": "^0.15.1",
     "dotenv-cli": "^11.0.0",
     "google-auth-library": "^10.7.0",
+    "helmet": "^8.2.0",
+    "joi": "^18.2.3",
     "nodemailer": "^8.0.9",
     "passport": "^0.7.0",
     "passport-google-oauth20": "^2.0.0",

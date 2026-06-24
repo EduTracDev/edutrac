@@ -1,23 +1,21 @@
-import {
-  ExecutionContext,
-  Injectable,
-} from '@nestjs/common';
+import { ExecutionContext, Injectable, BadRequestException } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
 import { OAuthStateService } from '../services/oauthstate.service';
 
+
 @Injectable()
-export class GoogleUserGuard extends AuthGuard( 'google' ) {
+export class GoogleUserGuard extends AuthGuard('google') {
   constructor(private oauthstateservice: OAuthStateService) {
     super();
   }
 
   async canActivate(context: ExecutionContext) {
     const req = context.switchToHttp().getRequest();
-    const host = req.headers['x-forwarded-host'] || req.get('host');
-    
+    const tenantDomain = req?.tenant['domain'];
+    if(!tenantDomain) throw new BadRequestException('Invalid request. No tenant in request context');
     const rawStatePayload = {
       action: 'user_login',
-      tenantDomain: host,
+      tenantDomain,
     };
 
     req.oauthStatePayload = rawStatePayload;
@@ -28,7 +26,7 @@ export class GoogleUserGuard extends AuthGuard( 'google' ) {
   getAuthenticateOptions(context: ExecutionContext) {
     const req = context.switchToHttp().getRequest();
 
-    const state = this.oauthstateservice.sign(req.oauthStatePayload)
+    const state = this.oauthstateservice.sign(req.oauthStatePayload);
     return { state };
   }
 }

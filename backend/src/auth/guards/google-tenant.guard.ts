@@ -4,7 +4,7 @@ import { OAuthStateService } from '../services/oauthstate.service';
 
 @Injectable()
 export class GoogleTenantGuard extends AuthGuard('google') {
-  constructor(private oauthstateService:OAuthStateService) {
+  constructor(private oauthstateService: OAuthStateService) {
     super();
   }
 
@@ -12,8 +12,7 @@ export class GoogleTenantGuard extends AuthGuard('google') {
     const req = context.switchToHttp().getRequest();
     const rawStatePayload = {
       action: 'register_tenant',
-      organisation_name: req.query.organisation_name,
-      tenantDomain: req.query.tenantDomain,
+      school_name: req.query.school_name,
       packagePlanId: req.query.packagePlanId,
     };
 
