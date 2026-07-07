@@ -1,9 +1,9 @@
 "use client";
 
 import { use, useState } from "react";
-import { 
-  Layers, 
-  Users, 
+import {
+  Layers,
+  Users,
   BarChart3,
   CheckCircle2,
   ArrowRight,
@@ -33,11 +33,7 @@ export default function SchoolLandingPage({ params }: PageProps) {
 
   return (
     <div className="min-h-screen text-slate-900 --font-source-sans selection:bg-purple-200">
-      
-      {/* 1. Global Navigation Bar */}
       <SchoolNav slug={slug} schoolName={schoolName} />
-
-      {/* 2. Hero Section */}
       <section className="relative overflow-hidden pt-20 pb-16 px-6 bg-gradient-to-b from-purple-50/30 via-[#F8FAFC] to-white">
         <div className="max-w-4xl mx-auto text-center space-y-6">
           <h1 className="font-source-sans text-4xl sm:text-5xl md:text-6xl font-black tracking-tight text-slate-900 leading-[1.15]">
@@ -78,7 +74,7 @@ export default function SchoolLandingPage({ params }: PageProps) {
       {/* 4. Target Personas Segments (Ref: Includes Addition from Screenshot 2026-07-06 at 10.09.54.jpg) */}
       <section id="portals" className="pt-10 pb-14 px-6 bg-[#F6F7F8]">
         <div className="max-w-5xl mx-auto space-y-32">
-          
+
           <div className="text-center max-w-2xl mx-auto space-y-4">
             <h2 className="text-3xl sm:text-4xl font-black text-slate-900">The Reliable Management software Designed for:</h2>
             <p className="text-sm sm:text-base text-slate-500 font-medium">Discover how our solution enhances productivity, simplifies workflows, and delivers exceptional value.</p>
@@ -101,12 +97,12 @@ export default function SchoolLandingPage({ params }: PageProps) {
           {/* Teachers Segment */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
             <img src="./soft2.png" alt="Teacher Interface" className="order-2 md:order-1 flex items-center justify-center text-slate-400" />
-            <div className="space-y-6 bg-white p-8 md:p-12 rounded-[22px] border border-slate-100 shadow-sm">
-              <h3 className="text-2xl font-black text-slate-900">For teachers</h3>
-              <p className="text-sm text-slate-500 font-medium leading-relaxed">Edutrac provides a comprehensive management system that helps you efficiently streamline operations and reduce resources and costs within your school organization.</p>
-              <ul className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-2 text-sm text-slate-600 font-semibold">
+            <div className="space-y-6 order-2 md:order-1 bg-white p-8 md:p-12 rounded-[22px] border border-slate-100">
+              <h3 className="text-2xl font-normal text-slate-900">For teachers</h3>
+              <p className="text-sm text-slate-500 font-normal leading-relaxed">Edutrac provides a comprehensive management system that helps you efficiently streamline operations and reduce resources and costs within your school organization.</p>
+              <ul className="grid grid-cols-1 sm:grid-cols-1 gap-3 pt-2 text-sm text-slate-600 font-normal">
                 {["Performance report", "Fees management", "Calendar events", "Attendance", "Assignment", "Lesson note"].map((item) => (
-                  <li key={item} className="flex items-center gap-2.5"><CheckCircle2 size={16} className="text-[#923CF9] shrink-0" /><span>{item}</span></li>
+                  <li key={item} className="flex items-center gap-2.5"><span>{item}</span></li>
                 ))}
               </ul>
             </div>
@@ -115,26 +111,26 @@ export default function SchoolLandingPage({ params }: PageProps) {
           {/* Parents Segment */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
             <div className="space-y-6 order-2 md:order-1 bg-white p-8 md:p-12 rounded-[40px] border border-slate-100 shadow-sm">
-              <h3 className="text-2xl font-black text-slate-900">For parents</h3>
-              <p className="text-sm text-slate-500 font-medium leading-relaxed">Edutrac provides a comprehensive management system that helps you efficiently streamline operations and reduce resources and costs within your school organization.</p>
-              <ul className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-2 text-sm text-slate-600 font-semibold">
+              <h3 className="text-2xl font-normal text-slate-900">For parents</h3>
+              <p className="text-sm text-slate-500 font-normal leading-relaxed">Edutrac provides a comprehensive management system that helps you efficiently streamline operations and reduce resources and costs within your school organization.</p>
+              <ul className="grid grid-cols-1 sm:grid-cols-1 gap-3 pt-2 text-sm text-slate-600 font-normal">
                 {["Profile management", "Fees management", "Two-way communication", "Performance reports", "In-app support", "Calendar event"].map((item) => (
-                  <li key={item} className="flex items-center gap-2.5"><CheckCircle2 size={16} className="text-emerald-600 shrink-0" /><span>{item}</span></li>
+                  <li key={item} className="flex items-center gap-2.5"><span>{item}</span></li>
                 ))}
               </ul>
             </div>
-            <div className="w-full aspect-[4/3] bg-slate-200 rounded-[40px] order-1 md:order-2 flex items-center justify-center text-slate-400 text-sm font-medium shadow-inner">[ Parent Interface View ]</div>
+            <img src="./soft3.png" alt="Parent Interface" className="order-1 md:order-2 flex items-center justify-center text-slate-400" />
           </div>
 
-          {/* Students Segment (Ref: Screenshot 2026-07-06 at 10.09.54.jpg) */}
+          {/* Students Segment */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
-            <div className="w-full aspect-[4/3] bg-slate-200 rounded-[40px] flex items-center justify-center text-slate-400 text-sm font-medium shadow-inner">[ Student Interface View ]</div>
+            <img src="./soft4.png" alt="Student Interface" className="order-1 md:order-2 flex items-center justify-center text-slate-400" />
             <div className="space-y-6 bg-white p-8 md:p-12 rounded-[40px] border border-slate-100 shadow-sm">
-              <h3 className="text-2xl font-black text-slate-900">For students</h3>
-              <p className="text-sm text-slate-500 font-medium leading-relaxed">Edutrac provides a comprehensive management system that helps you efficiently streamline operations and reduce resources and costs within your school organization.</p>
-              <ul className="grid grid-cols-1 gap-3 pt-2 text-sm text-slate-600 font-semibold">
+              <h3 className="text-2xl font-normal text-slate-900">For students</h3>
+              <p className="text-sm text-slate-500 font-normal leading-relaxed">Edutrac provides a comprehensive management system that helps you efficiently streamline operations and reduce resources and costs within your school organization.</p>
+              <ul className="grid grid-cols-1 gap-3 pt-2 text-sm text-slate-600 font-normal">
                 {["Learning materials", "Assignment", "Performance charts"].map((item) => (
-                  <li key={item} className="flex items-center gap-2.5"><CheckCircle2 size={16} className="text-purple-600 shrink-0" /><span>{item}</span></li>
+                  <li key={item} className="flex items-center gap-2.5"><span>{item}</span></li>
                 ))}
               </ul>
             </div>
@@ -150,25 +146,42 @@ export default function SchoolLandingPage({ params }: PageProps) {
         </div>
       </section>
 
-      {/* 6. Support Invitation Section (Ref: Screenshot 2026-07-06 at 10.10.24.jpg) */}
-      <section className="pb-15 px-6 text-center space-y-6 max-w-4xl mx-auto">
+      {/* 6. Support Invitation Section */}
+      <section className="pb-15 px-6 text-center space-y-4 max-w-4xl mx-auto">
+        {/* Overlapping Team Avatars */}
         <div className="flex justify-center -space-x-3 overflow-hidden">
-          {[1, 2, 3].map((num) => (
-            <div key={num} className="inline-block h-12 w-12 rounded-full ring-4 ring-white bg-slate-200 flex items-center justify-center text-xs font-bold text-slate-400">
-              U{num}
+          {[
+            "./avatar1.png",
+            "./avatar2.png",
+            "./avatar3.png"
+          ].map((url, index) => (
+            <div
+              key={index}
+              className="relative inline-block h-12 w-12 rounded-full overflow-hidden bg-slate-100"
+            >
+              <img
+                src={url}
+                alt={`Support team member ${index + 1}`}
+                className="w-full h-full object-cover"
+              />
             </div>
           ))}
         </div>
+
         <h3 className="text-2xl font-black text-[#923CF9]">Still have questions?</h3>
-        <p className="text-sm text-slate-500 font-medium max-w-md mx-auto">Can't find the answer you're looking for? Please chat to our friendly team.</p>
+        <p className="text-sm text-slate-500 font-medium max-w-4xl mx-auto">
+          Can't find the answer you're looking for? Please chat to our friendly team.
+        </p>
+
         <div className="pt-2">
-          <button onClick={() => handlePortalRedirect("admin")} className="inline-flex items-center gap-3 bg-[#923CF9] hover:bg-purple-700 text-white font-black text-xs uppercase tracking-widest py-4 px-8 rounded-full shadow-lg shadow-purple-100 transition-all hover:scale-[1.02]">
-            Get Started <span className="p-1 bg-white rounded-full text-[#923CF9]"><ArrowRight size={14} /></span>
+          <button onClick={() => handlePortalRedirect("admin")} className="inline-flex items-center gap-3 bg-[#923CF9] hover:bg-purple-700 text-white font-black text-xs tracking-widest pl-8 rounded-full shadow-lg shadow-purple-100 transition-all hover:scale-[1.02]">
+            Get Started <span className="p-4 bg-white rounded-full text-[#923CF9]"><ArrowRight size={14} /></span>
           </button>
+
         </div>
       </section>
 
-      {/* 7. Request Live Demo Visual Banner (Ref: Screenshot 2026-07-06 at 10.10.24.jpg) */}
+      {/* 7. Request Live Demo Visual Banner */}
       <section className="mt-12 mb-0 max-w-7xl lg:mx-auto bg-[#923CF6] text-white overflow-hidden">
         <div className="grid grid-cols-1 lg:grid-cols-12 items-center">
           <div className="p-8 sm:p-12 md:p-16 lg:col-span-6 space-y-6">
@@ -183,7 +196,7 @@ export default function SchoolLandingPage({ params }: PageProps) {
               </button>
             </div>
           </div>
-          <img src="./live-demo.png" alt="Demo Banner" className="lg:col-span-6 w-300 object-cover" /> 
+          <img src="./live-demo.png" alt="Demo Banner" className="lg:col-span-6 w-300 object-cover" />
         </div>
       </section>
 
@@ -192,23 +205,23 @@ export default function SchoolLandingPage({ params }: PageProps) {
         <div className="bg-[#923CF9] mt-12 max-w-6xl mx-auto rounded-[32px] p-8 md:p-12 text-center text-white space-y-8 relative overflow-hidden">
           <div className="absolute top-0 left-0 w-32 h-32 bg-white/5 rounded-full -translate-x-12 -translate-y-12 border border-white/10" />
           <div className="absolute bottom-0 right-0 w-40 h-40 bg-white/5 rounded-full translate-x-12 translate-y-12 border border-white/10" />
-          
+
           <h3 className="text-2xl sm:text-3xl font-black tracking-tight relative z-10">Subscribe to our newsletter</h3>
-          
+
           <form onSubmit={(e) => e.preventDefault()} className="max-w-3xl mx-auto flex flex-col md:flex-row gap-4 relative z-10">
-            <input 
-              type="text" 
+            <input
+              type="text"
               placeholder="First name"
               value={firstName}
               onChange={(e) => setFirstName(e.target.value)}
               className="flex-1 px-5 py-4 border border-white rounded-2xl text-white placeholder-white font-medium focus:outline-none focus:border-white transition-all text-sm"
             />
-            <input 
-              type="email" 
+            <input
+              type="email"
               placeholder="Email address"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              className="flex-1 px-5 py-4 border border-white rounded-2xl text-white placeholder-white/60 font-medium focus:outline-none focus:border-white transition-all text-sm"
+              className="flex-1 px-5 py-4 border border-white rounded-2xl text-white placeholder-white font-medium focus:outline-none focus:border-white transition-all text-sm"
             />
             <button type="submit" className="px-8 py-4 bg-slate-950 hover:bg-slate-900 text-white text-sm font-bold rounded-2xl transition-all shadow-md shrink-0">
               Subscribe Now
@@ -216,10 +229,7 @@ export default function SchoolLandingPage({ params }: PageProps) {
           </form>
         </div>
       </section>
-
-      {/* 9. Multi-Column Expanded Corporate Footer (Ref: Screenshot 2026-07-06 at 10.10.46.png) */}
       <SchoolFooter />
-
     </div>
   );
 }
