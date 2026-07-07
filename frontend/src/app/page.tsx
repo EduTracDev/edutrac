@@ -60,7 +60,7 @@ export default function HomePage() {
       description:
         "Unify student records, classes, communication, and reporting in one smart, easy-to-use platform—for teachers, students, parents, and admins.",
       buttonText: "Get Started",
-      buttonLink: OnboardingRoutes.plan,
+      buttonLink: AuthRoutes.register,
     },
     chooseUs: {
       badge: "WHY CHOOSE US",
@@ -94,12 +94,12 @@ export default function HomePage() {
     },
     navigation: {
       buttonText: "Sign Up",
-      buttonLink: OnboardingRoutes.plan,
+      buttonLink: AuthRoutes.register,
     },
     joinUs: {
       topBanner: {
         title: "Small. Tailor EduTrac to Your Needs.",
-        joinLink: OnboardingRoutes.plan,
+        joinLink: AuthRoutes.register,
         videoLink: "#",
       },
       whyChooseUs: {

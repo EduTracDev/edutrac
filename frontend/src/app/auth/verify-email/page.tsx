@@ -28,7 +28,7 @@ function VerifyEmailContent() {
     console.log("Sending verification link to:", data.email);
     // Integration logic goes here
     await new Promise((resolve) => setTimeout(resolve, 800));
-    router.push("/onboarding");
+    router.push("/onboarding/plan");
   };
 
   return (
