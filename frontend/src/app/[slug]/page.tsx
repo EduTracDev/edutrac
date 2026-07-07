@@ -95,13 +95,13 @@ export default function SchoolLandingPage({ params }: PageProps) {
                 ))}
               </ul>
             </div>
-            <img src="./soft1.png" alt="Admin Interface" className=" order-1 md:order-2 flex items-center justify-center text-slate-400" />
+            <img src="./soft1.png" alt="Admin Interface" className="order-1 md:order-2 flex items-center justify-center text-slate-400" />
           </div>
 
           {/* Teachers Segment */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
-            <img src="./teacher-interface.png" alt="Teacher Interface" className="w-full aspect-[4/3] rounded-[40px] order-1 md:order-2 flex items-center justify-center text-slate-400 text-sm font-medium shadow-inner" />
-            <div className="space-y-6 bg-white p-8 md:p-12 rounded-[40px] border border-slate-100 shadow-sm">
+            <img src="./soft2.png" alt="Teacher Interface" className="order-2 md:order-1 flex items-center justify-center text-slate-400" />
+            <div className="space-y-6 bg-white p-8 md:p-12 rounded-[22px] border border-slate-100 shadow-sm">
               <h3 className="text-2xl font-black text-slate-900">For teachers</h3>
               <p className="text-sm text-slate-500 font-medium leading-relaxed">Edutrac provides a comprehensive management system that helps you efficiently streamline operations and reduce resources and costs within your school organization.</p>
               <ul className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-2 text-sm text-slate-600 font-semibold">
@@ -151,7 +151,7 @@ export default function SchoolLandingPage({ params }: PageProps) {
       </section>
 
       {/* 6. Support Invitation Section (Ref: Screenshot 2026-07-06 at 10.10.24.jpg) */}
-      <section className="py-20 px-6 text-center space-y-6 max-w-4xl mx-auto">
+      <section className="pb-15 px-6 text-center space-y-6 max-w-4xl mx-auto">
         <div className="flex justify-center -space-x-3 overflow-hidden">
           {[1, 2, 3].map((num) => (
             <div key={num} className="inline-block h-12 w-12 rounded-full ring-4 ring-white bg-slate-200 flex items-center justify-center text-xs font-bold text-slate-400">
@@ -169,7 +169,7 @@ export default function SchoolLandingPage({ params }: PageProps) {
       </section>
 
       {/* 7. Request Live Demo Visual Banner (Ref: Screenshot 2026-07-06 at 10.10.24.jpg) */}
-      <section className="mx-6 my-12 max-w-7xl lg:mx-auto bg-gradient-to-br from-[#923CF9] to-purple-700 rounded-[48px] text-white overflow-hidden shadow-xl shadow-purple-100">
+      <section className="mt-12 mb-0 max-w-7xl lg:mx-auto bg-[#923CF6] text-white overflow-hidden">
         <div className="grid grid-cols-1 lg:grid-cols-12 items-center">
           <div className="p-8 sm:p-12 md:p-16 lg:col-span-6 space-y-6">
             <p className="text-xs font-black uppercase tracking-widest text-purple-200">Get A Demo</p>
@@ -183,15 +183,13 @@ export default function SchoolLandingPage({ params }: PageProps) {
               </button>
             </div>
           </div>
-          <div className="lg:col-span-6 h-64 lg:h-full min-h-[350px] bg-white/10 flex items-center justify-center text-purple-200 text-sm font-medium">
-            [ Interactive Workspace Concept Mockup Graphic ]
-          </div>
+          <img src="./live-demo.png" alt="Demo Banner" className="lg:col-span-6 w-300 object-cover" /> 
         </div>
       </section>
 
       {/* 8. Integrated Newsletter Container Area (Ref: Screenshot 2026-07-06 at 10.10.46.png) */}
-      <section className="px-6 mt-24 max-w-6xl mx-auto">
-        <div className="bg-[#923CF9] rounded-[32px] p-8 md:p-12 text-center text-white space-y-8 relative overflow-hidden shadow-lg">
+      <section className="p-8 bg-[#F8F6F9]">
+        <div className="bg-[#923CF9] mt-12 max-w-6xl mx-auto rounded-[32px] p-8 md:p-12 text-center text-white space-y-8 relative overflow-hidden">
           <div className="absolute top-0 left-0 w-32 h-32 bg-white/5 rounded-full -translate-x-12 -translate-y-12 border border-white/10" />
           <div className="absolute bottom-0 right-0 w-40 h-40 bg-white/5 rounded-full translate-x-12 translate-y-12 border border-white/10" />
           
@@ -203,14 +201,14 @@ export default function SchoolLandingPage({ params }: PageProps) {
               placeholder="First name"
               value={firstName}
               onChange={(e) => setFirstName(e.target.value)}
-              className="flex-1 px-5 py-4 bg-white/10 border border-white/20 rounded-2xl text-white placeholder-white/60 font-medium focus:outline-none focus:border-white transition-all text-sm"
+              className="flex-1 px-5 py-4 border border-white rounded-2xl text-white placeholder-white font-medium focus:outline-none focus:border-white transition-all text-sm"
             />
             <input 
               type="email" 
               placeholder="Email address"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              className="flex-1 px-5 py-4 bg-white/10 border border-white/20 rounded-2xl text-white placeholder-white/60 font-medium focus:outline-none focus:border-white transition-all text-sm"
+              className="flex-1 px-5 py-4 border border-white rounded-2xl text-white placeholder-white/60 font-medium focus:outline-none focus:border-white transition-all text-sm"
             />
             <button type="submit" className="px-8 py-4 bg-slate-950 hover:bg-slate-900 text-white text-sm font-bold rounded-2xl transition-all shadow-md shrink-0">
               Subscribe Now
