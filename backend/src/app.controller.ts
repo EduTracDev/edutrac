@@ -4,9 +4,21 @@ import { AppService } from './app.service';
 @Controller()
 export class AppController {
   constructor(private readonly appService: AppService) {}
+  @Get()
+  root() {
+    return {
+      status: 'ok',
+      service: 'edutrac-api',
+    };
+  }
 
   @Get()
-  getHello(): string {
-    return this.appService.getHello();
+  edutrac(){
+    return {
+      success: true,
+      message: "Edutrac API",
+      data: null,
+      error: null
+    }
   }
 }

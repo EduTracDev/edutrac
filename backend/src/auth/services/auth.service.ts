@@ -122,7 +122,7 @@ export class AuthService {
 
   async registerTenantViaGoogle(profile: any, state: any) {
     try {
-      await this.prismaService.cleanDb();
+      //await this.prismaService.cleanDb();
       if (!profile || !state) throw new BadRequestException('Required fields missing');
             
       const existingTenantOwner = await this.prismaService.tenant.findFirst({
@@ -180,16 +180,11 @@ export class AuthService {
   //abcschools.edutrac.com
   async signInUserViaGoogle(profile: any, state: any) {
     try {
-      const tenant = await this.prismaService.tenant.findFirst({
+      const tenant = await this.prismaService.tenant.findUnique({
         where: {
-          school_name: "Silverlite Montessori",
+          id: state.tenantId,
         },
       });
-      // const tenant = await this.prismaService.tenant.findUnique({
-      //   where: {
-      //     domain: state.tenantDomain,
-      //   },
-      // });
       if (!tenant) throw new NotFoundException('Invalid request. Contact your schools administrator to ensure this service still exists');
 
       const user = await this.prismaService.user.findFirst({
@@ -238,20 +233,20 @@ export class AuthService {
           emailVerifiedAt: new Date(),
         },
       });
-      await tx.tenant.update({
+      const updatedTenant = await tx.tenant.update({
         where: {
           id: verificationToken.user.tenantId,
         },
         data: {
           isActive: true,
-          status: 'ACTIVE',
+          status: 'ONBOARDING',
         },
       });
       await tx.schoolAdmin.create({
         data: {
           userId: verificationToken.user.id,
           tenantId: verificationToken.user.tenantId,
-          employeeId: 'emp-tye17',
+          employeeId: `${updatedTenant.school_name.toLowerCase().slice(0, 3)}-${verificationToken.user.publicId}.slice(0, 6)`,
         },
       });
       await tx.verificationToken.delete({

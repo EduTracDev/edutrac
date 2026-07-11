@@ -16,10 +16,12 @@ import {
 } from '../dto';
 import { Tenant } from 'src/core/decorators/get-tenant.decorator';
 import { Throttle } from '@nestjs/throttler';
+import { AllowIncompleteOnboarding } from 'src/onboarding/decorators/skip-onboarding.decorator';
 
 //abcschools.edutrac.com
 //Get the tenantDomain from req host
 @Controller('/auth')
+@AllowIncompleteOnboarding()
 export class UserAuthController {
   constructor(private authService: AuthService) {}
   

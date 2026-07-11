@@ -8,7 +8,7 @@ import { TenantModule } from './tenant/tenant.module';
 import { UserModule } from './user/user.module';
 import { TeacherController } from './teacher/teacher.controller';
 import { AdminController } from './admin/admin.controller';
-import { ParentController } from './parent/parent.controller';
+import { ParentController } from './parent/controllers/parent.controller';
 import { TeacherModule } from './teacher/teacher.module';
 import { ParentModule } from './parent/parent.module';
 import { StudentModule } from './student/student.module';
@@ -24,6 +24,10 @@ import { TenantMiddleware } from './core/middleware/tenant.middleware';
 import { enValidationSchema } from './core/config/env.validation';
 import { ThrottlerGuard, ThrottlerModule } from '@nestjs/throttler';
 import { APP_GUARD } from '@nestjs/core';
+import { OnboardingModule } from './onboarding/onboarding.module';
+import { UploadsModule } from './uploads/uploads.module';
+import { CloudinaryModule } from './cloudinary/cloudinary.module';
+import { OnboardingGuard } from './onboarding/guards/onboarding.guard';
 
 
 @Module({
@@ -48,6 +52,9 @@ import { APP_GUARD } from '@nestjs/core';
     MailModule,
     PackagePlanModule,
     InvitationModule,
+    OnboardingModule,
+    UploadsModule,
+    CloudinaryModule,
   ],
   controllers: [
     AppController,
@@ -55,15 +62,22 @@ import { APP_GUARD } from '@nestjs/core';
     AdminController,
     ParentController,
   ],
-  providers: [AppService, {
-    provide: APP_GUARD,
-    useClass: ThrottlerGuard
-  }],
+  providers: [
+    AppService,
+    {
+      provide: APP_GUARD,
+      useClass: ThrottlerGuard
+    },
+    {
+      provide: APP_GUARD,
+      useClass: OnboardingGuard
+    }
+  ],
 })
 export class AppModule implements NestModule {
   configure(consumer: MiddlewareConsumer) {
     consumer.apply(TenantMiddleware)
-    .exclude('/auth/register', '/auth/verify-account', '/auth/google/register', '/auth/google/callback', '/auth/resend-verification-email', '/tenant/onboarding')
-    .forRoutes('*');
+      .exclude('/auth/register', '/auth/verify-account', '/auth/google/register', '/auth/google/callback', '/auth/resend-verification-email', '/tenant/onboarding')
+      .forRoutes('*');
   }
 }

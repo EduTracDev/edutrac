@@ -19,12 +19,13 @@ model Tenant{
 
   school_name String
   domain String? @unique
-  logoUrl String?
   contactPhone String?
   contactAddress String?
   contactEmail String
   isActive Boolean @default(false)
   status TenantStatus @default(PENDING_EMAIL_VERIFICATION)
+  onboardingStep Int @default(0)
+  onboardingCompleted Boolean @default(false)
   users User[] @relation("TenantMembers")
   roles Role[]
   teachers Teacher[]
@@ -33,8 +34,42 @@ model Tenant{
   schoolAdmins SchoolAdmin[]
   subscription Subscription?
   invitations Invitation[]
+  website TenantWebsite?
 
   @@map("tenants")
+}
+
+model TenantWebsite {
+  id Int @id @default(autoincrement())
+  tenantId Int @unique
+  tenant Tenant @relation(fields: [tenantId], references:[id], onDelete: Cascade)
+  themeColor String?
+  logoUrl String?
+  primaryBannerUrl String?
+  secondaryBannerUrl String?
+  bannerTitle String?
+  bannerSubtitle String?
+  bannerDescription String?
+  gallery TenantWebsiteGallery[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("tenant_websites")
+}
+
+model TenantWebsiteGallery{
+  id Int @id @default(autoincrement())
+  websiteId Int
+  website TenantWebsite @relation(fields: [websiteId], references: [id], onDelete: Cascade)
+  imageUrl String
+  publicId String
+  caption String?
+  displayOrder Int @default(0)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt  
+
+  @@map("tenant_website_gallery")
 }
 
 model User{
@@ -312,6 +347,7 @@ enum InvitationStatus {
 
 enum TenantStatus{
   PENDING_EMAIL_VERIFICATION
+  ONBOARDING
   ACTIVE
   SUSPENDED
   CANCELLED

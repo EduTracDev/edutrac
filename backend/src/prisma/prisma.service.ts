@@ -7,19 +7,16 @@ import { PrismaNeon } from '@prisma/adapter-neon';
 @Injectable()
 export class PrismaService extends PrismaClient {
   constructor() {
-    const db_type = process.env.DB_TYPE;
-    if (!db_type) throw new Error('DB_TYPE environment variable is not configured');
-    if(db_type !== 'neonpsql' && db_type !== 'postgresql') throw new Error('DB_TYPE environment variable is misconfigured');
-    
+    const NODE_ENV = process.env.NODE_ENV;
     const databaseUrl = process.env.DATABASE_URL;
     if (!databaseUrl) throw new Error('DATABASE_URL is not configured');
 
     let adapter;
-    if (db_type === 'neonpsql') {
+    if (NODE_ENV === 'production') {
       const connectionString = databaseUrl;
       adapter = new PrismaNeon({ connectionString });
     }
-    if (db_type === 'postgresql') {
+    if (NODE_ENV === 'development') {
       const pool = new Pool({
         connectionString: process.env['LOCAL_DATABASE_URL'],
       });

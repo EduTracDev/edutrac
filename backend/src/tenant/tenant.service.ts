@@ -1,9 +1,11 @@
-import { Injectable } from '@nestjs/common';
+import { ForbiddenException, Injectable } from '@nestjs/common';
 import { PrismaService } from '../prisma/prisma.service';
 import { RolesService } from '../auth/services/roles.service';
 import { BadRequestException, InternalServerErrorException } from '@nestjs/common';
 import { ConflictException } from '@nestjs/common';
 import { Prisma } from 'src/generated/prisma/client';
+import { UploadUrls } from 'src/core/types/onboarding.types';
+import { OnboardingUpdateDto } from 'src/onboarding/dto';
 
 @Injectable()
 export class TenantService {
@@ -99,4 +101,6 @@ export class TenantService {
       throw error;
     }
   }
+
+  //suspendTenant activateTenant cancelTenant
 }

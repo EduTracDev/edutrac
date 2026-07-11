@@ -9,10 +9,11 @@ import { PrismaPg } from '@prisma/adapter-pg';
 
 dotenv.config();
 let adapter;
-if(process.env.DB_TYPE === 'neonpsql') {
+const NODE_ENV = process.env.NODE_ENV;
+if(NODE_ENV === 'production') {
   adapter = new PrismaNeon({connectionString: `${process.env.DATABASE_URL}`});
 }
-if(process.env.DB_TYPE === 'postgresql'){
+if(NODE_ENV === 'development'){
   const pool = new Pool({
     connectionString: process.env['LOCAL_DATABASE_URL'],
   });
