@@ -1,49 +1,57 @@
 "use client";
 
 import { use, useState } from "react";
-import {
-  Layers,
-  Users,
-  BarChart3,
-  CheckCircle2,
-  ArrowRight,
-  BookOpen,
-} from "lucide-react";
+import { ArrowRight } from "lucide-react";
 import { SchoolFooter } from "@/modules/landing/components/SchoolFooter";
 import { SchoolNav } from "@/modules/landing/components/SchoolNav";
+import { useSchoolProfile } from "@/modules/shared/lib/useSchoolProfile";
 import router from "next/router";
 
 interface PageProps {
   params: Promise<{ slug: string }>;
 }
 
+const DEFAULT_HERO_TITLE = "Streamline education from classroom to district";
+const DEFAULT_HERO_SUBTITLE =
+  "Connect your entire educational community with EduTrac's all-in-one platform for attendance, assessment, communication, and analytics.";
+
 export default function SchoolLandingPage({ params }: PageProps) {
   const { slug } = use(params);
   const [email, setEmail] = useState("");
   const [firstName, setFirstName] = useState("");
+  const profile = useSchoolProfile(slug);
 
-  const schoolName = slug
+  const fallbackName = slug
     .split("-")
     .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
     .join(" ");
+
+  const schoolName = profile?.name || fallbackName;
+  const heroTitle = profile?.heroTitle || DEFAULT_HERO_TITLE;
+  const heroSubtitle = profile?.heroSubtitle || DEFAULT_HERO_SUBTITLE;
+
+  const segmentImage = (key: "admin" | "teacher" | "parent" | "student", fallback: string) =>
+    profile?.segmentImages?.[key] || fallback;
 
   const handlePortalRedirect = (role: string) => {
     router.push(`/auth/login?role=${role}&school=${slug}`);
   };
 
+  const heroImageUrl = profile?.heroImageUrl || "./employees.png";
+
   return (
     <div className="min-h-screen text-slate-900 --font-source-sans selection:bg-purple-200">
-      <SchoolNav slug={slug} schoolName={schoolName} />
+      <SchoolNav slug={slug} schoolName={schoolName} logoUrl={profile?.logoUrl ?? null} />
       <section className="relative overflow-hidden pt-20 pb-16 px-6 bg-gradient-to-b from-purple-50/30 via-[#F8FAFC] to-white">
         <div className="max-w-4xl mx-auto text-center space-y-6">
           <h1 className="font-source-sans text-4xl sm:text-5xl md:text-6xl font-black tracking-tight text-slate-900 leading-[1.15]">
-            Streamline education from classroom to district
+            {heroTitle}
           </h1>
           <p className="text-base sm:text-lg text-slate-500 max-w-2xl mx-auto font-medium">
-            Connect your entire educational community with EduTrac's all-in-one platform for attendance, assessment, communication, and analytics.
+            {heroSubtitle}
           </p>
         </div>
-        <img src="./employees.png" alt="employees" className="max-w-5xl mx-auto mt-16 shadow-2xl shadow-purple-100 border-purple-100/50 bg-slate-100 flex items-center justify-center text-slate-400 text-sm font-medium" />
+        <img src={heroImageUrl} alt="employees" className="max-w-5xl mx-auto mt-16 shadow-2xl shadow-purple-100 border-purple-100/50 bg-slate-100 flex items-center justify-center text-slate-400 text-sm font-medium" />
       </section>
 
       {/* 3. Why Educators Choose EduTrac */}
@@ -71,7 +79,7 @@ export default function SchoolLandingPage({ params }: PageProps) {
         </div>
       </section>
 
-      {/* 4. Target Personas Segments (Ref: Includes Addition from Screenshot 2026-07-06 at 10.09.54.jpg) */}
+      {/* 4. Target Personas Segments */}
       <section id="portals" className="pt-10 pb-14 px-6 bg-[#F6F7F8]">
         <div className="max-w-5xl mx-auto space-y-32">
 
@@ -91,12 +99,12 @@ export default function SchoolLandingPage({ params }: PageProps) {
                 ))}
               </ul>
             </div>
-            <img src="./soft1.png" alt="Admin Interface" className="order-1 md:order-2 flex items-center justify-center text-slate-400" />
+            <img src={segmentImage("admin", "./soft1.png")} alt="Admin Interface" className="order-1 md:order-2 flex items-center justify-center text-slate-400 rounded-2xl object-cover" />
           </div>
 
           {/* Teachers Segment */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
-            <img src="./soft2.png" alt="Teacher Interface" className="order-2 md:order-1 flex items-center justify-center text-slate-400" />
+            <img src={segmentImage("teacher", "./soft2.png")} alt="Teacher Interface" className="order-2 md:order-1 flex items-center justify-center text-slate-400 rounded-2xl object-cover" />
             <div className="space-y-6 order-2 md:order-1 bg-white p-8 md:p-12 rounded-[22px] border border-slate-100">
               <h3 className="text-2xl font-normal text-slate-900">For teachers</h3>
               <p className="text-sm text-slate-500 font-normal leading-relaxed">Edutrac provides a comprehensive management system that helps you efficiently streamline operations and reduce resources and costs within your school organization.</p>
@@ -119,12 +127,12 @@ export default function SchoolLandingPage({ params }: PageProps) {
                 ))}
               </ul>
             </div>
-            <img src="./soft3.png" alt="Parent Interface" className="order-1 md:order-2 flex items-center justify-center text-slate-400" />
+            <img src={segmentImage("parent", "./soft3.png")} alt="Parent Interface" className="order-1 md:order-2 flex items-center justify-center text-slate-400 rounded-2xl object-cover" />
           </div>
 
           {/* Students Segment */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
-            <img src="./soft4.png" alt="Student Interface" className="order-1 md:order-2 flex items-center justify-center text-slate-400" />
+            <img src={segmentImage("student", "./soft4.png")} alt="Student Interface" className="order-1 md:order-2 flex items-center justify-center text-slate-400 rounded-2xl object-cover" />
             <div className="space-y-6 bg-white p-8 md:p-12 rounded-[40px] border border-slate-100 shadow-sm">
               <h3 className="text-2xl font-normal text-slate-900">For students</h3>
               <p className="text-sm text-slate-500 font-normal leading-relaxed">Edutrac provides a comprehensive management system that helps you efficiently streamline operations and reduce resources and costs within your school organization.</p>
@@ -139,7 +147,7 @@ export default function SchoolLandingPage({ params }: PageProps) {
         </div>
       </section>
 
-      {/* 5. Custom Workflow Horizontal Diagram (Ref: Screenshot 2026-07-06 at 10.09.54.jpg) */}
+      {/* 5. Custom Workflow Horizontal Diagram */}
       <section id="workflow" className="pb-15 px-6 bg-white overflow-hidden">
         <div className="max-w-6xl mx-auto">
           <img src="./school-iterate.png" alt="workflow diagram" />
@@ -200,7 +208,7 @@ export default function SchoolLandingPage({ params }: PageProps) {
         </div>
       </section>
 
-      {/* 8. Integrated Newsletter Container Area (Ref: Screenshot 2026-07-06 at 10.10.46.png) */}
+      {/* 8. Integrated Newsletter Container Area */}
       <section className="p-8 bg-[#F8F6F9]">
         <div className="bg-[#923CF9] mt-12 max-w-6xl mx-auto rounded-[32px] p-8 md:p-12 text-center text-white space-y-8 relative overflow-hidden">
           <div className="absolute top-0 left-0 w-32 h-32 bg-white/5 rounded-full -translate-x-12 -translate-y-12 border border-white/10" />
@@ -229,7 +237,7 @@ export default function SchoolLandingPage({ params }: PageProps) {
           </form>
         </div>
       </section>
-      <SchoolFooter />
+      <SchoolFooter logoUrl={profile?.logoUrl ?? null} />
     </div>
   );
 }

@@ -8,9 +8,10 @@ import Link from "next/link";
 interface SchoolNavProps {
   slug: string;
   schoolName: string;
+  logoUrl?: string | null;
 }
 
-export const SchoolNav = ({ slug, schoolName }: SchoolNavProps) => {
+export const SchoolNav = ({ slug, schoolName, logoUrl }: SchoolNavProps) => {
   const router = useRouter();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
@@ -29,9 +30,18 @@ export const SchoolNav = ({ slug, schoolName }: SchoolNavProps) => {
       <div className="max-w-6xl mx-auto flex items-center justify-between">
         {/* School Identity */}
         <div className="flex items-center gap-3">
-          <div className="w-10 h-10 bg-gradient-to-tr from-[#923CF9] to-purple-400 rounded-xl flex items-center justify-center text-white font-black text-lg shadow-md shadow-purple-100">
-            {schoolName.charAt(0)}
-          </div>
+          {logoUrl ? (
+            // eslint-disable-next-line @next/next/no-img-element
+            <img
+              src={logoUrl}
+              alt={`${schoolName} logo`}
+              className="w-10 h-10"
+            />
+          ) : (
+            <div className="w-10 h-10 bg-gradient-to-tr from-[#923CF9] to-purple-400 rounded-xl flex items-center justify-center text-white font-black text-lg shadow-md shadow-purple-100">
+              {schoolName.charAt(0)}
+            </div>
+          )}
           <span className="font-black text-xl tracking-tight text-slate-900">{schoolName}</span>
         </div>
 
