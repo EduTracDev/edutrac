@@ -3,21 +3,30 @@
 import { Twitter, Facebook, Instagram, Github } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
-import logo from "@/modules/shared/assets/images/logo.png";
+import staticLogo from "@/modules/shared/assets/images/logo.png";
 
-export const SchoolFooter = () => {
+interface SchoolFooterProps {
+  logoUrl?: string | null;
+}
+
+export const SchoolFooter = ({ logoUrl }: SchoolFooterProps) => {
     return (
         <footer className="bg-[#F8F6F9] pt-20 pb-10 px-6">
             <div className="max-w-6xl mx-auto grid grid-cols-1 sm:grid-cols-2 md:grid-cols-12 gap-10 md:gap-6 mb-16">
                 <div className="md:col-span-4 space-y-4">
                     <div className="flex items-center">
-                        <Image
-                            src={logo}
-                            alt="EduTrac Logo"
-                            width={140}
-                            height={40}
-                            priority
-                        />
+                        {logoUrl ? (
+                            // eslint-disable-next-line @next/next/no-img-element
+                            <img src={logoUrl} alt="School Logo" width={140} height={40} className="object-contain" />
+                        ) : (
+                            <Image
+                                src={staticLogo}
+                                alt="EduTrac Logo"
+                                width={140}
+                                height={40}
+                                priority
+                            />
+                        )}
                     </div>
                     <p className="text-sm text-slate-400 font-medium leading-relaxed max-w-xs">
                         Clarity gives you the blocks and components you need to create a truly professional website.
