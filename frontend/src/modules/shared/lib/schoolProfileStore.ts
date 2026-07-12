@@ -17,6 +17,10 @@ export interface SchoolBrandProfile {
     heroTitle: string;
     heroSubtitle: string;
     heroImageUrl: string | null;
+    footerTitle: string;
+    yourHistory: string;
+    yourVision: string;
+    yourMission: string;
     segmentImages: SchoolSegmentImages;
 }
 
@@ -69,6 +73,10 @@ export function saveSchoolProfile(
         heroTitle: "",
         heroSubtitle: "",
         heroImageUrl: null,
+        footerTitle: "",
+        yourHistory: "",
+        yourVision: "",
+        yourMission: "",
         segmentImages: EMPTY_SEGMENTS,
     };
 
