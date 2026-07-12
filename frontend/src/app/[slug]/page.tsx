@@ -1,6 +1,6 @@
 "use client";
 
-import { use, useState } from "react";
+import { use, useState, useEffect } from "react";
 import { ArrowRight } from "lucide-react";
 import { SchoolFooter } from "@/modules/landing/components/SchoolFooter";
 import { SchoolNav } from "@/modules/landing/components/SchoolNav";
@@ -20,6 +20,12 @@ export default function SchoolLandingPage({ params }: PageProps) {
   const [email, setEmail] = useState("");
   const [firstName, setFirstName] = useState("");
   const profile = useSchoolProfile(slug);
+
+  useEffect(() => {
+    const primary = profile?.themeColor || "#923CF9";
+    document.documentElement.style.setProperty("--color-dynamic-brand", primary);
+    document.documentElement.style.setProperty("--color-dynamic-brand-hover", primary + "CC");
+  }, [profile?.themeColor]);
 
   const fallbackName = slug
     .split("-")
@@ -43,37 +49,39 @@ export default function SchoolLandingPage({ params }: PageProps) {
     <div className="min-h-screen text-slate-900 --font-source-sans selection:bg-purple-200">
       <SchoolNav slug={slug} schoolName={schoolName} logoUrl={profile?.logoUrl ?? null} />
       <section className="relative overflow-hidden pt-20 pb-16 px-6 bg-gradient-to-b from-purple-50/30 via-[#F8FAFC] to-white">
-        <div className="max-w-4xl mx-auto text-center space-y-6">
-          <h1 className="font-source-sans text-4xl sm:text-5xl md:text-6xl font-black tracking-tight text-slate-900 leading-[1.15]">
-            {heroTitle}
-          </h1>
-          <p className="text-base sm:text-lg text-slate-500 max-w-2xl mx-auto font-medium">
-            {heroSubtitle}
-          </p>
+        <div className="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+          <div className="text-center lg:text-left space-y-6">
+            <h1 className="font-source-sans text-4xl sm:text-5xl md:text-6xl font-black tracking-tight text-slate-900 leading-[1.15]">
+              {heroTitle}
+            </h1>
+            <p className="text-base sm:text-lg text-slate-500 max-w-2xl mx-auto lg:mx-0 font-medium">
+              {heroSubtitle}
+            </p>
+          </div>
+          <img
+            src={heroImageUrl}
+            alt="employees"
+            className="w-full rounded-3xl shadow-2xl shadow-purple-100 border border-purple-100/50 bg-slate-100 object-cover"
+          />
         </div>
-        <img src={heroImageUrl} alt="employees" className="max-w-5xl mx-auto mt-16 shadow-2xl shadow-purple-100 border-purple-100/50 bg-slate-100 flex items-center justify-center text-slate-400 text-sm font-medium" />
       </section>
 
       {/* 3. Why Educators Choose EduTrac */}
       <section id="features" className="pt-8 pb-12 px-6 bg-[#F6F7F8]">
         <div className="text-center max-w-3xl mx-auto mb-7 space-y-2">
-          <h2 className="text-3xl sm:text-4xl font-black text-slate-900">Why educators choose EduTrac?</h2>
-          <p className="text-sm sm:text-base text-slate-500 font-medium">Discover how our solution enhances productivity, simplifies workflows, and delivers exceptional value.</p>
+          <h2 className="text-3xl sm:text-4xl font-black text-slate-900">Why Choose {schoolName}</h2>
         </div>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-12 max-w-6xl mx-auto">
           <div className="p-8 bg-white border border-slate-100 rounded-[12px] shadow-sm hover:shadow-xl transition-all">
-            <img src="./misc-icon1.png" alt="Simplified Workflow" className="w-10 h-10 mb-6" />
-            <h3 className="text-xl font-black text-slate-900 mb-3">Simplified Workflow</h3>
+            <h3 className="text-xl font-black text-slate-900 mb-3">Our History</h3>
             <p className="text-sm text-slate-500 font-medium leading-relaxed">Attendance, grading, and parent communication all in one place saving you hours each week.</p>
           </div>
           <div className="p-8 bg-white border border-slate-100 rounded-[12px] shadow-sm hover:shadow-xl transition-all">
-            <img src="./misc-icon2.png" alt="Reach Everyone" className="w-12 h-12 mb-6" />
-            <h3 className="text-xl font-black text-slate-900 mb-3">Reach Everyone</h3>
+            <h3 className="text-xl font-black text-slate-900 mb-3">Our Vision</h3>
             <p className="text-sm text-slate-500 font-medium leading-relaxed">Connect with students and Parents through their preferred devices and languages with 99% engagement rates.</p>
           </div>
           <div className="p-8 bg-white border border-slate-100 rounded-[12px] shadow-sm hover:shadow-xl transition-all">
-            <img src="./misc-icon3.png" alt="Actionable Insights" className="w-12 h-12 mb-6" />
-            <h3 className="text-xl font-black text-slate-900 mb-3">Actionable Insights</h3>
+            <h3 className="text-xl font-black text-slate-900 mb-3">Our Mission</h3>
             <p className="text-sm text-slate-500 font-medium leading-relaxed">Track student progress and engagement with easy-to-understand analytics.</p>
           </div>
         </div>
@@ -81,81 +89,47 @@ export default function SchoolLandingPage({ params }: PageProps) {
 
       {/* 4. Target Personas Segments */}
       <section id="portals" className="pt-10 pb-14 px-6 bg-[#F6F7F8]">
-        <div className="max-w-5xl mx-auto space-y-32">
+        <div className="max-w-6xl mx-auto space-y-12">
 
           <div className="text-center max-w-2xl mx-auto space-y-4">
-            <h2 className="text-3xl sm:text-4xl font-black text-slate-900">The Reliable Management software Designed for:</h2>
-            <p className="text-sm sm:text-base text-slate-500 font-medium">Discover how our solution enhances productivity, simplifies workflows, and delivers exceptional value.</p>
+            <h2 className="text-3xl sm:text-4xl font-black text-slate-900">Our School Gallery</h2>
           </div>
 
-          {/* Admin Segment */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
-            <div className="space-y-6 order-2 md:order-1 bg-white p-8 md:p-12 rounded-[22px] border border-slate-100">
-              <h3 className="text-2xl font-normal text-slate-900">School Administrator</h3>
-              <p className="text-sm text-slate-500 font-normal leading-relaxed">Edutrac provides a comprehensive management system that helps you efficiently streamline operations and reduce resources and costs within your school organization.</p>
-              <ul className="grid grid-cols-1 sm:grid-cols-1 gap-3 pt-2 text-sm text-slate-600 font-normal">
-                {["Reporting/Analytics", "Fees management", "Messaging system", "Calendar event", "Computer based test (CBT)", "Report card builders"].map((item) => (
-                  <li key={item} className="flex items-center gap-2.5"><span>{item}</span></li>
-                ))}
-              </ul>
-            </div>
-            <img src={segmentImage("admin", "./soft1.png")} alt="Admin Interface" className="order-1 md:order-2 flex items-center justify-center text-slate-400 rounded-2xl object-cover" />
-          </div>
-
-          {/* Teachers Segment */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
-            <img src={segmentImage("teacher", "./soft2.png")} alt="Teacher Interface" className="order-2 md:order-1 flex items-center justify-center text-slate-400 rounded-2xl object-cover" />
-            <div className="space-y-6 order-2 md:order-1 bg-white p-8 md:p-12 rounded-[22px] border border-slate-100">
-              <h3 className="text-2xl font-normal text-slate-900">For teachers</h3>
-              <p className="text-sm text-slate-500 font-normal leading-relaxed">Edutrac provides a comprehensive management system that helps you efficiently streamline operations and reduce resources and costs within your school organization.</p>
-              <ul className="grid grid-cols-1 sm:grid-cols-1 gap-3 pt-2 text-sm text-slate-600 font-normal">
-                {["Performance report", "Fees management", "Calendar events", "Attendance", "Assignment", "Lesson note"].map((item) => (
-                  <li key={item} className="flex items-center gap-2.5"><span>{item}</span></li>
-                ))}
-              </ul>
-            </div>
-          </div>
-
-          {/* Parents Segment */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
-            <div className="space-y-6 order-2 md:order-1 bg-white p-8 md:p-12 rounded-[40px] border border-slate-100 shadow-sm">
-              <h3 className="text-2xl font-normal text-slate-900">For parents</h3>
-              <p className="text-sm text-slate-500 font-normal leading-relaxed">Edutrac provides a comprehensive management system that helps you efficiently streamline operations and reduce resources and costs within your school organization.</p>
-              <ul className="grid grid-cols-1 sm:grid-cols-1 gap-3 pt-2 text-sm text-slate-600 font-normal">
-                {["Profile management", "Fees management", "Two-way communication", "Performance reports", "In-app support", "Calendar event"].map((item) => (
-                  <li key={item} className="flex items-center gap-2.5"><span>{item}</span></li>
-                ))}
-              </ul>
-            </div>
-            <img src={segmentImage("parent", "./soft3.png")} alt="Parent Interface" className="order-1 md:order-2 flex items-center justify-center text-slate-400 rounded-2xl object-cover" />
-          </div>
-
-          {/* Students Segment */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
-            <img src={segmentImage("student", "./soft4.png")} alt="Student Interface" className="order-1 md:order-2 flex items-center justify-center text-slate-400 rounded-2xl object-cover" />
-            <div className="space-y-6 bg-white p-8 md:p-12 rounded-[40px] border border-slate-100 shadow-sm">
-              <h3 className="text-2xl font-normal text-slate-900">For students</h3>
-              <p className="text-sm text-slate-500 font-normal leading-relaxed">Edutrac provides a comprehensive management system that helps you efficiently streamline operations and reduce resources and costs within your school organization.</p>
-              <ul className="grid grid-cols-1 gap-3 pt-2 text-sm text-slate-600 font-normal">
-                {["Learning materials", "Assignment", "Performance charts"].map((item) => (
-                  <li key={item} className="flex items-center gap-2.5"><span>{item}</span></li>
-                ))}
-              </ul>
-            </div>
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
+            <img
+              src={segmentImage("admin", "./soft1.png")}
+              alt="Admin Interface"
+              className="w-full aspect-square object-cover rounded-2xl border border-slate-100 shadow-sm"
+            />
+            <img
+              src={segmentImage("teacher", "./soft2.png")}
+              alt="Teacher Interface"
+              className="w-full aspect-square object-cover rounded-2xl border border-slate-100 shadow-sm"
+            />
+            <img
+              src={segmentImage("parent", "./soft3.png")}
+              alt="Parent Interface"
+              className="w-full aspect-square object-cover rounded-2xl border border-slate-100 shadow-sm"
+            />
+            <img
+              src={segmentImage("student", "./soft4.png")}
+              alt="Student Interface"
+              className="w-full aspect-square object-cover rounded-2xl border border-slate-100 shadow-sm"
+            />
           </div>
 
         </div>
       </section>
 
       {/* 5. Custom Workflow Horizontal Diagram */}
-      <section id="workflow" className="pb-15 px-6 bg-white overflow-hidden">
+      {/* <section id="workflow" className="pb-15 px-6 bg-white overflow-hidden">
         <div className="max-w-6xl mx-auto">
           <img src="./school-iterate.png" alt="workflow diagram" />
         </div>
-      </section>
+      </section> */}
 
       {/* 6. Support Invitation Section */}
-      <section className="pb-15 px-6 text-center space-y-4 max-w-4xl mx-auto">
+      <section className="pt-15 pb-15 px-6 text-center space-y-4 max-w-4xl mx-auto">
         {/* Overlapping Team Avatars */}
         <div className="flex justify-center -space-x-3 overflow-hidden">
           {[
@@ -176,41 +150,23 @@ export default function SchoolLandingPage({ params }: PageProps) {
           ))}
         </div>
 
-        <h3 className="text-2xl font-black text-[#923CF9]">Still have questions?</h3>
+        <h3 className="text-2xl font-black text-[var(--color-dynamic-brand)]">Still have questions?</h3>
         <p className="text-sm text-slate-500 font-medium max-w-4xl mx-auto">
           Can't find the answer you're looking for? Please chat to our friendly team.
         </p>
 
         <div className="pt-2">
-          <button onClick={() => handlePortalRedirect("admin")} className="inline-flex items-center gap-3 bg-[#923CF9] hover:bg-purple-700 text-white font-black text-xs tracking-widest pl-8 rounded-full shadow-lg shadow-purple-100 transition-all hover:scale-[1.02]">
-            Get Started <span className="p-4 bg-white rounded-full text-[#923CF9]"><ArrowRight size={14} /></span>
+          <button onClick={() => handlePortalRedirect("admin")} className="inline-flex items-center gap-3 bg-[var(--color-dynamic-brand)] hover:bg-[var(--color-dynamic-brand-hover)] text-white font-black text-xs tracking-widest pl-8 rounded-full shadow-lg shadow-purple-100 transition-all hover:scale-[1.02]">
+            Get Started <span className="p-4 bg-white rounded-full text-[var(--color-dynamic-brand)]"><ArrowRight size={14} /></span>
           </button>
 
         </div>
       </section>
 
-      {/* 7. Request Live Demo Visual Banner */}
-      <section className="mt-12 mb-0 max-w-7xl lg:mx-auto bg-[#923CF6] text-white overflow-hidden">
-        <div className="grid grid-cols-1 lg:grid-cols-12 items-center">
-          <div className="p-8 sm:p-12 md:p-16 lg:col-span-6 space-y-6">
-            <p className="text-xs font-black uppercase tracking-widest text-purple-200">Get A Demo</p>
-            <h2 className="text-3xl sm:text-4xl md:text-5xl font-black tracking-tight leading-none">Manage Your School Data and Operations Today</h2>
-            <p className="text-sm text-purple-100 leading-relaxed font-medium">
-              Request a free, personalized demo, and discover how Edutrac empowers your school with tools that save time, improve communication, and drive success.
-            </p>
-            <div className="pt-4">
-              <button className="px-6 py-3.5 bg-transparent border-2 border-white text-white font-bold rounded-2xl text-sm transition-all hover:bg-white hover:text-[#923CF9]">
-                Request Live Demo
-              </button>
-            </div>
-          </div>
-          <img src="./live-demo.png" alt="Demo Banner" className="lg:col-span-6 w-300 object-cover" />
-        </div>
-      </section>
 
       {/* 8. Integrated Newsletter Container Area */}
       <section className="p-8 bg-[#F8F6F9]">
-        <div className="bg-[#923CF9] mt-12 max-w-6xl mx-auto rounded-[32px] p-8 md:p-12 text-center text-white space-y-8 relative overflow-hidden">
+        <div className="bg-[var(--color-dynamic-brand)] mt-12 max-w-6xl mx-auto rounded-[32px] p-8 md:p-12 text-center text-white space-y-8 relative overflow-hidden">
           <div className="absolute top-0 left-0 w-32 h-32 bg-white/5 rounded-full -translate-x-12 -translate-y-12 border border-white/10" />
           <div className="absolute bottom-0 right-0 w-40 h-40 bg-white/5 rounded-full translate-x-12 translate-y-12 border border-white/10" />
 
@@ -237,7 +193,7 @@ export default function SchoolLandingPage({ params }: PageProps) {
           </form>
         </div>
       </section>
-      <SchoolFooter logoUrl={profile?.logoUrl ?? null} />
+      <SchoolFooter schoolName={schoolName} logoUrl={profile?.logoUrl ?? null} />
     </div>
   );
 }

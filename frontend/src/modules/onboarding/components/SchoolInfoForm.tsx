@@ -60,6 +60,10 @@ export const SchoolInfoForm = ({
 
   const [heroTitle, setHeroTitle] = useState<string>("Streamline education from classroom to district");
   const [heroSubtitle, setHeroSubtitle] = useState<string>("Connect your entire educational community with EduTrac's all-in-one platform.");
+  const [footerTitle, setFooterTitle] = useState<string>("");
+  const [yourHistory, setYourHistory] = useState<string>("");
+  const [yourVision, setYourVision] = useState<string>("");
+  const [yourMission, setYourMission] = useState<string>("");
 
   const banner1Ref = useRef<HTMLInputElement>(null);
   const banner2Ref = useRef<HTMLInputElement>(null);
@@ -114,6 +118,10 @@ export const SchoolInfoForm = ({
       heroTitle,
       heroSubtitle,
       heroImageUrl,
+      footerTitle,
+      yourHistory,
+      yourVision,
+      yourMission,
       segmentImages,
     });
   }, [
@@ -126,6 +134,10 @@ export const SchoolInfoForm = ({
     heroTitle,
     heroSubtitle,
     heroImageUrl,
+    footerTitle,
+    yourHistory,
+    yourVision,
+    yourMission,
     segmentImages,
   ]);
 
@@ -224,7 +236,7 @@ export const SchoolInfoForm = ({
             <input
               type="text"
               placeholder="e.g. GreenTree Academy"
-              className="w-full pl-12 pr-4 py-4 bg-slate-50 border border-slate-100 rounded-2xl text-sm font-bold focus:outline-none focus:border-[#923CF9] transition-all"
+              className="w-full pl-12 pr-4 py-4 bg-slate-50 border border-slate-100 rounded-2xl text-sm font-bold focus:outline-none focus:border-[var(--color-dynamic-brand)] transition-all"
               onChange={(e) => setFormData({ ...formData, name: e.target.value })}
             />
           </div>
@@ -238,7 +250,7 @@ export const SchoolInfoForm = ({
           </p>
           <div className="flex items-center gap-1 text-sm font-bold">
             <span className="text-slate-500">edutrac.app/</span>
-            <span className="text-purple-400">{formData.slug || "your-school"}</span>
+            <span className="text-[var(--color-dynamic-brand)]">{formData.slug || "your-school"}</span>
           </div>
         </div>
 
@@ -251,7 +263,7 @@ export const SchoolInfoForm = ({
             <textarea
               rows={2}
               placeholder="Full address of the main campus"
-              className="w-full pl-12 pr-4 py-4 bg-slate-50 border border-slate-100 rounded-2xl text-sm font-bold focus:outline-none focus:border-[#923CF9] transition-all resize-none"
+              className="w-full pl-12 pr-4 py-4 bg-slate-50 border border-slate-100 rounded-2xl text-sm font-bold focus:outline-none focus:border-[var(--color-dynamic-brand)] transition-all resize-none"
               onChange={(e) => setFormData({ ...formData, address: e.target.value })}
             />
           </div>
@@ -266,7 +278,7 @@ export const SchoolInfoForm = ({
             <input
               type="tel"
               placeholder="+234..."
-              className="w-full pl-12 pr-4 py-4 bg-slate-50 border border-slate-100 rounded-2xl text-sm font-bold focus:outline-none focus:border-[#923CF9] transition-all"
+              className="w-full pl-12 pr-4 py-4 bg-slate-50 border border-slate-100 rounded-2xl text-sm font-bold focus:outline-none focus:border-[var(--color-dynamic-brand)] transition-all"
               onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
             />
           </div>
@@ -278,7 +290,7 @@ export const SchoolInfoForm = ({
         <div className="border-t border-slate-100 pt-10 space-y-8">
           <div className="flex items-center justify-between bg-slate-50 p-4 rounded-xl">
             <span className="text-xs font-bold text-slate-500">Additional Setup Progress:</span>
-            <span className="text-xs font-black text-[#923CF9]">Step {currentStep === 1 ? 1 : currentStep - 1} of 4</span>
+            <span className="text-xs font-black text-[var(--color-dynamic-brand)]">Step {currentStep === 1 ? 1 : currentStep - 1} of 4</span>
           </div>
 
           {/* VIEW STEP 1: Core Institutional Details Setup Section */}
@@ -308,7 +320,7 @@ export const SchoolInfoForm = ({
 
                   <div className="space-y-1">
                     <label className="text-[11px] font-bold text-gray-500 uppercase">Primary Banner Image</label>
-                    <div onClick={() => banner1Ref.current?.click()} className="border border-gray-200 rounded-xl px-4 py-3 flex items-center justify-between cursor-pointer hover:bg-gray-50 transition-all">
+                    <div onClick={() => banner1Ref.current?.click()} className="border border-gray-200 rounded-xl px-4 py-3 flex items-center justify-between cursor-pointer hover:border-[var(--color-dynamic-brand)] transition-all">
                       <span className="text-xs text-gray-400 truncate">{banner1 ? "Primary Image Loaded" : "Upload Image"}</span>
                       <UploadCloud size={14} className="text-gray-400" />
                     </div>
@@ -317,7 +329,7 @@ export const SchoolInfoForm = ({
 
                   <div className="space-y-1">
                     <label className="text-[11px] font-bold text-gray-500 uppercase">Secondary Banner Image</label>
-                    <div onClick={() => banner2Ref.current?.click()} className="border border-gray-200 rounded-xl px-4 py-3 flex items-center justify-between cursor-pointer hover:bg-gray-50 transition-all">
+                    <div onClick={() => banner2Ref.current?.click()} className="border border-gray-200 rounded-xl px-4 py-3 flex items-center justify-between cursor-pointer hover:border-[var(--color-dynamic-brand)] transition-all">
                       <span className="text-xs text-gray-400 truncate">{banner2 ? "Secondary Image Loaded" : "Upload Image"}</span>
                       <UploadCloud size={14} className="text-gray-400" />
                     </div>
@@ -326,7 +338,7 @@ export const SchoolInfoForm = ({
                 </div>
 
                 <div className="pt-2 text-center">
-                  <button type="button" onClick={() => setShowLogoModal(true)} className="text-xs font-bold text-[#923CF9] hover:underline">
+                  <button type="button" onClick={() => setShowLogoModal(true)} className="text-xs font-bold text-[var(--color-dynamic-brand)] hover:underline">
                     Configure School Brand Logo Asset &rarr;
                   </button>
                 </div>
@@ -352,12 +364,32 @@ export const SchoolInfoForm = ({
 
                 <div className="space-y-1">
                   <label className="text-[11px] font-bold text-gray-500">Banner Title</label>
-                  <input type="text" value={heroTitle} onChange={(e) => setHeroTitle(e.target.value)} className="w-full px-3 py-2 border border-gray-200 rounded-xl text-xs focus:outline-none focus:border-[#923CF9]" />
+                  <input type="text" value={heroTitle} onChange={(e) => setHeroTitle(e.target.value)} className="w-full px-3 py-2 border border-gray-200 rounded-xl text-xs focus:outline-none focus:border-[var(--color-dynamic-brand)]" />
                 </div>
 
                 <div className="space-y-1">
                   <label className="text-[11px] font-bold text-gray-500">Banner Subtitle Description</label>
-                  <textarea rows={3} value={heroSubtitle} onChange={(e) => setHeroSubtitle(e.target.value)} className="w-full px-3 py-2 border border-gray-200 rounded-xl text-xs focus:outline-none focus:border-[#923CF9] resize-none" />
+                  <textarea rows={3} value={heroSubtitle} onChange={(e) => setHeroSubtitle(e.target.value)} className="w-full px-3 py-2 border border-gray-200 rounded-xl text-xs focus:outline-none focus:border-[var(--color-dynamic-brand)] resize-none" />
+                </div>
+
+                <div className="space-y-1">
+                  <label className="text-[11px] font-bold text-gray-500">Footer Title</label>
+                  <input type="text" value={footerTitle} onChange={(e) => setFooterTitle(e.target.value)} className="w-full px-3 py-2 border border-gray-200 rounded-xl text-xs focus:outline-none focus:border-[var(--color-dynamic-brand)] resize-none" />
+                </div>
+
+                <div className="space-y-1">
+                  <label className="text-[11px] font-bold text-gray-500">Your History</label>
+                  <input type="text" value={yourHistory} onChange={(e) => setYourHistory(e.target.value)} className="w-full px-3 py-2 border border-gray-200 rounded-xl text-xs focus:outline-none focus:border-[var(--color-dynamic-brand)] resize-none" />
+                </div>
+
+                <div className="space-y-1">
+                  <label className="text-[11px] font-bold text-gray-500">Your Vision</label>
+                  <input type="text" value={yourVision} onChange={(e) => setYourVision(e.target.value)} className="w-full px-3 py-2 border border-gray-200 rounded-xl text-xs focus:outline-none focus:border-[var(--color-dynamic-brand)] resize-none" />
+                </div>
+
+                <div className="space-y-1">
+                  <label className="text-[11px] font-bold text-gray-500">Your Mission</label>
+                  <input type="text" value={yourMission} onChange={(e) => setYourMission(e.target.value)} className="w-full px-3 py-2 border border-gray-200 rounded-xl text-xs focus:outline-none focus:border-[var(--color-dynamic-brand)] resize-none" />
                 </div>
               </div>
 
@@ -379,6 +411,7 @@ export const SchoolInfoForm = ({
                     <div className="p-6 text-center space-y-4">
                       <h2 className="text-lg font-black text-gray-900">{heroTitle}</h2>
                       <p className="text-[11px] text-gray-500 max-w-sm mx-auto">{heroSubtitle}</p>
+                      <p className="text-[11px] text-gray-500 max-w-sm mx-auto">{footerTitle}</p>
                     </div>
                   </div>
                 </div>
@@ -400,7 +433,7 @@ export const SchoolInfoForm = ({
                     <label className="text-[11px] font-bold text-gray-500 uppercase">{label}</label>
                     <div
                       onClick={() => ref.current?.click()}
-                      className="aspect-video bg-gray-50/50 border-2 border-dashed border-gray-200 hover:border-[#923CF9] rounded-2xl overflow-hidden relative flex flex-col items-center justify-center cursor-pointer transition-all"
+                      className="aspect-video bg-gray-50/50 border-2 border-dashed border-gray-200 hover:border-[var(--color-dynamic-brand)] rounded-2xl overflow-hidden relative flex flex-col items-center justify-center cursor-pointer transition-all"
                     >
                       {segmentImages[key] ? (
                         // eslint-disable-next-line @next/next/no-img-element
@@ -431,7 +464,7 @@ export const SchoolInfoForm = ({
       <button
         disabled={!isBasicComplete}
         onClick={handleActionClick}
-        className="w-full py-5 bg-[#923CF9] text-white rounded-[24px] text-[10px] font-black uppercase tracking-[0.2em] shadow-xl shadow-purple-100 transition-all hover:scale-[1.01] active:scale-95 disabled:opacity-30 flex items-center justify-center gap-2"
+        className="w-full py-5 bg-[var(--color-dynamic-brand)] text-white rounded-[24px] text-[10px] font-black uppercase tracking-[0.2em] shadow-xl shadow-purple-100 transition-all hover:scale-[1.01] active:scale-95 disabled:opacity-30 flex items-center justify-center gap-2"
       >
         {currentStep < 5 ? (
           <>Next Configuration Step <ArrowRight size={14} /></>
