@@ -13,9 +13,9 @@ interface PageProps {
 
 const DEFAULT_HERO_TITLE = "";
 const DEFAULT_HERO_SUBTITLE = "";
-  const DEFAULT_HISTORY = "";
-  const DEFAULT_VISION = "";
-  const DEFAULT_MISSION = "";
+const DEFAULT_HISTORY = "";
+const DEFAULT_VISION = "";
+const DEFAULT_MISSION = "";
 
 export default function SchoolLandingPage({ params }: PageProps) {
   const { slug } = use(params);
@@ -198,7 +198,7 @@ export default function SchoolLandingPage({ params }: PageProps) {
           </form>
         </div>
       </section>
-      <SchoolFooter schoolName={schoolName} logoUrl={profile?.logoUrl ?? null} />
+      <SchoolFooter address={profile?.address ?? null} footerTitle={profile?.footerTitle ?? null} schoolName={schoolName} logoUrl={profile?.logoUrl ?? null} />
     </div>
   );
 }
