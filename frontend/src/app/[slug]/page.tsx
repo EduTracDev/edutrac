@@ -11,9 +11,11 @@ interface PageProps {
   params: Promise<{ slug: string }>;
 }
 
-const DEFAULT_HERO_TITLE = "Streamline education from classroom to district";
-const DEFAULT_HERO_SUBTITLE =
-  "Connect your entire educational community with EduTrac's all-in-one platform for attendance, assessment, communication, and analytics.";
+const DEFAULT_HERO_TITLE = "";
+const DEFAULT_HERO_SUBTITLE = "";
+const DEFAULT_HISTORY = "";
+const DEFAULT_VISION = "";
+const DEFAULT_MISSION = "";
 
 export default function SchoolLandingPage({ params }: PageProps) {
   const { slug } = use(params);
@@ -35,6 +37,9 @@ export default function SchoolLandingPage({ params }: PageProps) {
   const schoolName = profile?.name || fallbackName;
   const heroTitle = profile?.heroTitle || DEFAULT_HERO_TITLE;
   const heroSubtitle = profile?.heroSubtitle || DEFAULT_HERO_SUBTITLE;
+  const yourHistory = profile?.yourHistory || DEFAULT_HISTORY;
+  const yourVision = profile?.yourVision || DEFAULT_VISION;
+  const yourMission = profile?.yourMission || DEFAULT_MISSION;
 
   const segmentImage = (key: "admin" | "teacher" | "parent" | "student", fallback: string) =>
     profile?.segmentImages?.[key] || fallback;
@@ -74,15 +79,15 @@ export default function SchoolLandingPage({ params }: PageProps) {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-12 max-w-6xl mx-auto">
           <div className="p-8 bg-white border border-slate-100 rounded-[12px] shadow-sm hover:shadow-xl transition-all">
             <h3 className="text-xl font-black text-slate-900 mb-3">Our History</h3>
-            <p className="text-sm text-slate-500 font-medium leading-relaxed">Attendance, grading, and parent communication all in one place saving you hours each week.</p>
+            <p className="text-sm text-slate-500 font-medium leading-relaxed">{yourHistory}</p>
           </div>
           <div className="p-8 bg-white border border-slate-100 rounded-[12px] shadow-sm hover:shadow-xl transition-all">
             <h3 className="text-xl font-black text-slate-900 mb-3">Our Vision</h3>
-            <p className="text-sm text-slate-500 font-medium leading-relaxed">Connect with students and Parents through their preferred devices and languages with 99% engagement rates.</p>
+            <p className="text-sm text-slate-500 font-medium leading-relaxed">{yourVision}</p>
           </div>
           <div className="p-8 bg-white border border-slate-100 rounded-[12px] shadow-sm hover:shadow-xl transition-all">
             <h3 className="text-xl font-black text-slate-900 mb-3">Our Mission</h3>
-            <p className="text-sm text-slate-500 font-medium leading-relaxed">Track student progress and engagement with easy-to-understand analytics.</p>
+            <p className="text-sm text-slate-500 font-medium leading-relaxed">{yourMission}</p>
           </div>
         </div>
       </section>
@@ -193,7 +198,7 @@ export default function SchoolLandingPage({ params }: PageProps) {
           </form>
         </div>
       </section>
-      <SchoolFooter schoolName={schoolName} logoUrl={profile?.logoUrl ?? null} />
+      <SchoolFooter address={profile?.address ?? null} footerTitle={profile?.footerTitle ?? null} schoolName={schoolName} logoUrl={profile?.logoUrl ?? null} />
     </div>
   );
 }

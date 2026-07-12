@@ -6,15 +6,15 @@ import Link from "next/link";
 import staticLogo from "@/modules/shared/assets/images/logo.png";
 
 interface SchoolFooterProps {
-  logoUrl?: string | null;
-  schoolName: string;
+    logoUrl?: string | null;
+    schoolName: string;
+    address?: string | null;
+    footerTitle?: string | null;
 }
 
 const FOOTER_TITLE = "";
 
-export const SchoolFooter = ({ logoUrl, schoolName }: SchoolFooterProps) => {
-    const footerTitle = FOOTER_TITLE;
-
+export const SchoolFooter = ({ logoUrl, schoolName, address, footerTitle }: SchoolFooterProps) => {
     return (
         <footer className="bg-[#F8F6F9] pt-20 pb-10 px-6">
             <div className="max-w-6xl mx-auto grid grid-cols-1 sm:grid-cols-2 md:grid-cols-12 gap-10 md:gap-6 mb-16">
@@ -33,9 +33,16 @@ export const SchoolFooter = ({ logoUrl, schoolName }: SchoolFooterProps) => {
                             />
                         )}
                     </div>
-                    <p className="text-sm text-slate-400 font-medium leading-relaxed max-w-xs">
-                        {footerTitle}
-                    </p>
+                    {address && (
+                        <p className="text-sm text-slate-500 font-semibold leading-relaxed max-w-xs">
+                            {address}
+                        </p>
+                    )}
+                    {footerTitle && (
+                        <p className="text-sm text-slate-400 font-medium leading-relaxed max-w-xs">
+                            {footerTitle}
+                        </p>
+                    )}
                     {/* <div className="flex items-center gap-3 pt-2">
                         <Link href="#" className="p-2 text-slate-400 border border-slate-400 rounded-full hover:bg-[#923CF9] hover:text-white"><Twitter size={18} /></Link>
                         <Link href="#" className="p-2 text-slate-400 border border-slate-400 rounded-full hover:bg-[#923CF9] hover:text-white"><Facebook size={18} /></Link>
