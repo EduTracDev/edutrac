@@ -412,6 +412,9 @@ export const SchoolInfoForm = ({
                       <h2 className="text-lg font-black text-gray-900">{heroTitle}</h2>
                       <p className="text-[11px] text-gray-500 max-w-sm mx-auto">{heroSubtitle}</p>
                       <p className="text-[11px] text-gray-500 max-w-sm mx-auto">{footerTitle}</p>
+                      <p className="text-[11px] text-gray-500 max-w-sm mx-auto">{yourHistory}</p>
+                      <p className="text-[11px] text-gray-500 max-w-sm mx-auto">{yourVision}</p>
+                      <p className="text-[11px] text-gray-500 max-w-sm mx-auto">{yourMission}</p>
                     </div>
                   </div>
                 </div>
