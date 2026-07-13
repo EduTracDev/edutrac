@@ -44,16 +44,25 @@ export default function SchoolLandingPage({ params }: PageProps) {
   const segmentImage = (key: "admin" | "teacher" | "parent" | "student", fallback: string) =>
     profile?.segmentImages?.[key] || fallback;
 
-  const handlePortalRedirect = (role: string) => {
-    router.push(`/auth/login?role=${role}&school=${slug}`);
-  };
+  // const handlePortalRedirect = (role: string) => {
+  //   router.push(`/auth/login?role=${role}&school=${slug}`);
+  // };
 
   const heroImageUrl = profile?.heroImageUrl || "./employees.png";
+
+  function buildWhatsAppLink(phone?: string | null): string | null {
+    if (!phone) return null;
+    const digitsOnly = phone.replace(/[^\d]/g, ""); // strip spaces, dashes, +, parens
+    if (!digitsOnly) return null;
+    return `https://wa.me/${digitsOnly}`;
+  }
+
+  const whatsappLink = buildWhatsAppLink(profile?.phone);
 
   return (
     <div className="min-h-screen text-slate-900 --font-source-sans selection:bg-purple-200">
       <SchoolNav slug={slug} schoolName={schoolName} logoUrl={profile?.logoUrl ?? null} />
-      <section className="relative overflow-hidden pt-20 pb-16 px-6 bg-gradient-to-b from-purple-50/30 via-[#F8FAFC] to-white">
+      <section className="relative overflow-hidden pt-8 pb-16 px-6 bg-gradient-to-b from-purple-50/30 via-[#F8FAFC] to-white">
         <div className="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
           <div className="text-center lg:text-left space-y-6">
             <h1 className="font-source-sans text-4xl sm:text-5xl md:text-6xl font-black tracking-tight text-slate-900 leading-[1.15]">
@@ -66,7 +75,7 @@ export default function SchoolLandingPage({ params }: PageProps) {
           <img
             src={heroImageUrl}
             alt="employees"
-            className="w-full rounded-3xl shadow-2xl shadow-purple-100 border border-purple-100/50 bg-slate-100 object-cover"
+            className="w-full object-cover"
           />
         </div>
       </section>
@@ -135,7 +144,6 @@ export default function SchoolLandingPage({ params }: PageProps) {
 
       {/* 6. Support Invitation Section */}
       <section className="pt-15 pb-15 px-6 text-center space-y-4 max-w-4xl mx-auto">
-        {/* Overlapping Team Avatars */}
         <div className="flex justify-center -space-x-3 overflow-hidden">
           {[
             "./avatar1.png",
@@ -161,10 +169,23 @@ export default function SchoolLandingPage({ params }: PageProps) {
         </p>
 
         <div className="pt-2">
-          <button onClick={() => handlePortalRedirect("admin")} className="inline-flex items-center gap-3 bg-[var(--color-dynamic-brand)] hover:bg-[var(--color-dynamic-brand-hover)] text-white font-black text-xs tracking-widest pl-8 rounded-full shadow-lg shadow-purple-100 transition-all hover:scale-[1.02]">
-            Get Started <span className="p-4 bg-white rounded-full text-[var(--color-dynamic-brand)]"><ArrowRight size={14} /></span>
-          </button>
-
+          {whatsappLink ? (
+            <a
+              href={whatsappLink}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-3 bg-[var(--color-dynamic-brand)] hover:bg-[var(--color-dynamic-brand-hover)] text-white font-black text-xs tracking-widest pl-8 rounded-full shadow-lg shadow-purple-100 transition-all hover:scale-[1.02]"
+            >
+              Contact Us  <span className="p-4 bg-white rounded-full text-[var(--color-dynamic-brand)]"><ArrowRight size={14} /></span>
+            </a>
+          ) : (
+            <button
+              disabled
+              className="inline-flex items-center gap-3 bg-[var(--color-dynamic-brand)] hover:bg-[var(--color-dynamic-brand-hover)] text-white font-black text-xs tracking-widest pl-8 rounded-full shadow-lg shadow-purple-100 transition-all hover:scale-[1.02]"
+            >
+              Contact Us <span className="p-4 bg-white rounded-full text-[var(--color-dynamic-brand)]"><ArrowRight size={14} /></span>
+            </button>
+          )}
         </div>
       </section>
 
