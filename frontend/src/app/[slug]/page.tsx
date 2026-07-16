@@ -5,7 +5,6 @@ import { ArrowRight } from "lucide-react";
 import { SchoolFooter } from "@/modules/landing/components/SchoolFooter";
 import { SchoolNav } from "@/modules/landing/components/SchoolNav";
 import { useSchoolProfile } from "@/modules/shared/lib/useSchoolProfile";
-import router from "next/router";
 
 interface PageProps {
   params: Promise<{ slug: string }>;
@@ -43,10 +42,6 @@ export default function SchoolLandingPage({ params }: PageProps) {
 
   const segmentImage = (key: "admin" | "teacher" | "parent" | "student", fallback: string) =>
     profile?.segmentImages?.[key] || fallback;
-
-  // const handlePortalRedirect = (role: string) => {
-  //   router.push(`/auth/login?role=${role}&school=${slug}`);
-  // };
 
   const heroImageUrl = profile?.heroImageUrl || "./employees.png";
 

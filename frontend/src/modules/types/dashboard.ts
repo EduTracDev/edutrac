@@ -282,6 +282,15 @@ export interface Ward {
 }
 
 export interface School {
+  heroTitle: string;
+  heroSubtitle: string;
+  yourHistory: string;
+  yourVision: string;
+  yourMission: string;
+  heroImageUrl(heroImageUrl: any, arg1: string): unknown;
+  segmentImages: any;
+  themeColor: string;
+  footerTitle: import("react").JSX.Element;
   name: string;
   slug: string;
   address: string;
