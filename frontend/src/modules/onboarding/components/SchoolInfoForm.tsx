@@ -201,7 +201,24 @@ export const SchoolInfoForm = ({
   };
 
   const handleSubmit = () => {
-    onNext({ ...formData, logo: attachments[0] });
+    const schoolPayload = {
+      name: formData.name,
+      slug: formData.slug,
+      address: formData.address,
+      phone: formData.phone,
+      logo: attachments[0]!,
+      heroTitle,
+      heroSubtitle,
+      yourHistory,
+      yourVision,
+      yourMission,
+      heroImageUrl: heroImageUrl as unknown as any,
+      segmentImages,
+      themeColor: selectedColor,
+      footerTitle: <>{footerTitle}</>,
+    } as unknown as SchoolType;
+
+    onNext(schoolPayload);
   };
 
   const segmentSlots: { key: keyof SchoolSegmentImages; label: string; ref: React.RefObject<HTMLInputElement | null> }[] = [

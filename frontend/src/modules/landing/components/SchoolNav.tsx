@@ -14,7 +14,6 @@ export const SchoolNav = ({ slug, schoolName, logoUrl }: SchoolNavProps) => {
   const router = useRouter();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
-
   const handlePortalsClick = () => {
     router.push(`/${slug}/login`);
   };
