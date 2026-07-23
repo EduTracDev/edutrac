@@ -10,14 +10,12 @@ export class CloudinaryService {
         private readonly cloudinary: typeof Cloudinary,
     ) {}
 
-    async uploadImage(file: Express.Multer.File): Promise<CloudinaryUploadResult> {
-        if (!file) {
-            throw new BadRequestException('No file uploaded.');
-        }
+    async uploadImage(file: Express.Multer.File, uploadFolder: string): Promise<CloudinaryUploadResult> {
+        if (!file) throw new BadRequestException('No file uploaded.');
 
         return new Promise((resolve, reject) => {
             const uploadStream = this.cloudinary.uploader.upload_stream({
-                folder: 'edutrac/onboarding',
+                folder: uploadFolder,
                 resource_type: 'image',
                 overwrite: false,
                 unique_filename: true,

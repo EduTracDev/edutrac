@@ -28,6 +28,7 @@ import { OnboardingModule } from './onboarding/onboarding.module';
 import { UploadsModule } from './uploads/uploads.module';
 import { CloudinaryModule } from './cloudinary/cloudinary.module';
 import { OnboardingGuard } from './onboarding/guards/onboarding.guard';
+import { ClassModule } from './class/class.module';
 
 
 @Module({
@@ -55,6 +56,7 @@ import { OnboardingGuard } from './onboarding/guards/onboarding.guard';
     OnboardingModule,
     UploadsModule,
     CloudinaryModule,
+    ClassModule,
   ],
   controllers: [
     AppController,
@@ -77,7 +79,7 @@ import { OnboardingGuard } from './onboarding/guards/onboarding.guard';
 export class AppModule implements NestModule {
   configure(consumer: MiddlewareConsumer) {
     consumer.apply(TenantMiddleware)
-      .exclude('/auth/register', '/auth/verify-account', '/auth/google/register', '/auth/google/callback', '/auth/resend-verification-email', '/tenant/onboarding')
+      .exclude('/auth', '/auth/register', '/auth/verify-account', '/auth/google/register', '/auth/google/callback', '/auth/resend-verification-email', '/onboarding')
       .forRoutes('*');
   }
 }

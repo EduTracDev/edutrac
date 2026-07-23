@@ -62,10 +62,4 @@ export class UserAuthController {
     const tenantId = tenant['id']
     return this.authService.forgotPassword(dto, tenantId);
   }
-
-  @Post('me')
-  async me(@Tenant() tenant, @Query('userPublicId') userPublicId: string) {
-    const tenantId = tenant['id'];
-    return this.authService.getUserInfo(tenantId, userPublicId);
-  }
 }

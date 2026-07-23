@@ -38,18 +38,21 @@ export type ParentStudentSumAggregateOutputType = {
 
 export type ParentStudentMinAggregateOutputType = {
   createdAt: Date | null
+  relationship: string | null
   parentId: number | null
   studentId: number | null
 }
 
 export type ParentStudentMaxAggregateOutputType = {
   createdAt: Date | null
+  relationship: string | null
   parentId: number | null
   studentId: number | null
 }
 
 export type ParentStudentCountAggregateOutputType = {
   createdAt: number
+  relationship: number
   parentId: number
   studentId: number
   _all: number
@@ -68,18 +71,21 @@ export type ParentStudentSumAggregateInputType = {
 
 export type ParentStudentMinAggregateInputType = {
   createdAt?: true
+  relationship?: true
   parentId?: true
   studentId?: true
 }
 
 export type ParentStudentMaxAggregateInputType = {
   createdAt?: true
+  relationship?: true
   parentId?: true
   studentId?: true
 }
 
 export type ParentStudentCountAggregateInputType = {
   createdAt?: true
+  relationship?: true
   parentId?: true
   studentId?: true
   _all?: true
@@ -173,6 +179,7 @@ export type ParentStudentGroupByArgs<ExtArgs extends runtime.Types.Extensions.In
 
 export type ParentStudentGroupByOutputType = {
   createdAt: Date
+  relationship: string | null
   parentId: number
   studentId: number
   _count: ParentStudentCountAggregateOutputType | null
@@ -202,6 +209,7 @@ export type ParentStudentWhereInput = {
   OR?: Prisma.ParentStudentWhereInput[]
   NOT?: Prisma.ParentStudentWhereInput | Prisma.ParentStudentWhereInput[]
   createdAt?: Prisma.DateTimeFilter<"ParentStudent"> | Date | string
+  relationship?: Prisma.StringNullableFilter<"ParentStudent"> | string | null
   parentId?: Prisma.IntFilter<"ParentStudent"> | number
   studentId?: Prisma.IntFilter<"ParentStudent"> | number
   parent?: Prisma.XOR<Prisma.ParentScalarRelationFilter, Prisma.ParentWhereInput>
@@ -210,6 +218,7 @@ export type ParentStudentWhereInput = {
 
 export type ParentStudentOrderByWithRelationInput = {
   createdAt?: Prisma.SortOrder
+  relationship?: Prisma.SortOrderInput | Prisma.SortOrder
   parentId?: Prisma.SortOrder
   studentId?: Prisma.SortOrder
   parent?: Prisma.ParentOrderByWithRelationInput
@@ -222,6 +231,7 @@ export type ParentStudentWhereUniqueInput = Prisma.AtLeast<{
   OR?: Prisma.ParentStudentWhereInput[]
   NOT?: Prisma.ParentStudentWhereInput | Prisma.ParentStudentWhereInput[]
   createdAt?: Prisma.DateTimeFilter<"ParentStudent"> | Date | string
+  relationship?: Prisma.StringNullableFilter<"ParentStudent"> | string | null
   parentId?: Prisma.IntFilter<"ParentStudent"> | number
   studentId?: Prisma.IntFilter<"ParentStudent"> | number
   parent?: Prisma.XOR<Prisma.ParentScalarRelationFilter, Prisma.ParentWhereInput>
@@ -230,6 +240,7 @@ export type ParentStudentWhereUniqueInput = Prisma.AtLeast<{
 
 export type ParentStudentOrderByWithAggregationInput = {
   createdAt?: Prisma.SortOrder
+  relationship?: Prisma.SortOrderInput | Prisma.SortOrder
   parentId?: Prisma.SortOrder
   studentId?: Prisma.SortOrder
   _count?: Prisma.ParentStudentCountOrderByAggregateInput
@@ -244,46 +255,54 @@ export type ParentStudentScalarWhereWithAggregatesInput = {
   OR?: Prisma.ParentStudentScalarWhereWithAggregatesInput[]
   NOT?: Prisma.ParentStudentScalarWhereWithAggregatesInput | Prisma.ParentStudentScalarWhereWithAggregatesInput[]
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"ParentStudent"> | Date | string
+  relationship?: Prisma.StringNullableWithAggregatesFilter<"ParentStudent"> | string | null
   parentId?: Prisma.IntWithAggregatesFilter<"ParentStudent"> | number
   studentId?: Prisma.IntWithAggregatesFilter<"ParentStudent"> | number
 }
 
 export type ParentStudentCreateInput = {
   createdAt?: Date | string
+  relationship?: string | null
   parent: Prisma.ParentCreateNestedOneWithoutStudentLinksInput
   student: Prisma.StudentCreateNestedOneWithoutParentLinksInput
 }
 
 export type ParentStudentUncheckedCreateInput = {
   createdAt?: Date | string
+  relationship?: string | null
   parentId: number
   studentId: number
 }
 
 export type ParentStudentUpdateInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  relationship?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   parent?: Prisma.ParentUpdateOneRequiredWithoutStudentLinksNestedInput
   student?: Prisma.StudentUpdateOneRequiredWithoutParentLinksNestedInput
 }
 
 export type ParentStudentUncheckedUpdateInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  relationship?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   parentId?: Prisma.IntFieldUpdateOperationsInput | number
   studentId?: Prisma.IntFieldUpdateOperationsInput | number
 }
 
 export type ParentStudentCreateManyInput = {
   createdAt?: Date | string
+  relationship?: string | null
   parentId: number
   studentId: number
 }
 
 export type ParentStudentUpdateManyMutationInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  relationship?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type ParentStudentUncheckedUpdateManyInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  relationship?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   parentId?: Prisma.IntFieldUpdateOperationsInput | number
   studentId?: Prisma.IntFieldUpdateOperationsInput | number
 }
@@ -305,6 +324,7 @@ export type ParentStudentParentIdStudentIdCompoundUniqueInput = {
 
 export type ParentStudentCountOrderByAggregateInput = {
   createdAt?: Prisma.SortOrder
+  relationship?: Prisma.SortOrder
   parentId?: Prisma.SortOrder
   studentId?: Prisma.SortOrder
 }
@@ -316,12 +336,14 @@ export type ParentStudentAvgOrderByAggregateInput = {
 
 export type ParentStudentMaxOrderByAggregateInput = {
   createdAt?: Prisma.SortOrder
+  relationship?: Prisma.SortOrder
   parentId?: Prisma.SortOrder
   studentId?: Prisma.SortOrder
 }
 
 export type ParentStudentMinOrderByAggregateInput = {
   createdAt?: Prisma.SortOrder
+  relationship?: Prisma.SortOrder
   parentId?: Prisma.SortOrder
   studentId?: Prisma.SortOrder
 }
@@ -417,11 +439,13 @@ export type ParentStudentUncheckedUpdateManyWithoutStudentNestedInput = {
 
 export type ParentStudentCreateWithoutParentInput = {
   createdAt?: Date | string
+  relationship?: string | null
   student: Prisma.StudentCreateNestedOneWithoutParentLinksInput
 }
 
 export type ParentStudentUncheckedCreateWithoutParentInput = {
   createdAt?: Date | string
+  relationship?: string | null
   studentId: number
 }
 
@@ -456,17 +480,20 @@ export type ParentStudentScalarWhereInput = {
   OR?: Prisma.ParentStudentScalarWhereInput[]
   NOT?: Prisma.ParentStudentScalarWhereInput | Prisma.ParentStudentScalarWhereInput[]
   createdAt?: Prisma.DateTimeFilter<"ParentStudent"> | Date | string
+  relationship?: Prisma.StringNullableFilter<"ParentStudent"> | string | null
   parentId?: Prisma.IntFilter<"ParentStudent"> | number
   studentId?: Prisma.IntFilter<"ParentStudent"> | number
 }
 
 export type ParentStudentCreateWithoutStudentInput = {
   createdAt?: Date | string
+  relationship?: string | null
   parent: Prisma.ParentCreateNestedOneWithoutStudentLinksInput
 }
 
 export type ParentStudentUncheckedCreateWithoutStudentInput = {
   createdAt?: Date | string
+  relationship?: string | null
   parentId: number
 }
 
@@ -498,41 +525,49 @@ export type ParentStudentUpdateManyWithWhereWithoutStudentInput = {
 
 export type ParentStudentCreateManyParentInput = {
   createdAt?: Date | string
+  relationship?: string | null
   studentId: number
 }
 
 export type ParentStudentUpdateWithoutParentInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  relationship?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   student?: Prisma.StudentUpdateOneRequiredWithoutParentLinksNestedInput
 }
 
 export type ParentStudentUncheckedUpdateWithoutParentInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  relationship?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   studentId?: Prisma.IntFieldUpdateOperationsInput | number
 }
 
 export type ParentStudentUncheckedUpdateManyWithoutParentInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  relationship?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   studentId?: Prisma.IntFieldUpdateOperationsInput | number
 }
 
 export type ParentStudentCreateManyStudentInput = {
   createdAt?: Date | string
+  relationship?: string | null
   parentId: number
 }
 
 export type ParentStudentUpdateWithoutStudentInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  relationship?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   parent?: Prisma.ParentUpdateOneRequiredWithoutStudentLinksNestedInput
 }
 
 export type ParentStudentUncheckedUpdateWithoutStudentInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  relationship?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   parentId?: Prisma.IntFieldUpdateOperationsInput | number
 }
 
 export type ParentStudentUncheckedUpdateManyWithoutStudentInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  relationship?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   parentId?: Prisma.IntFieldUpdateOperationsInput | number
 }
 
@@ -540,6 +575,7 @@ export type ParentStudentUncheckedUpdateManyWithoutStudentInput = {
 
 export type ParentStudentSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   createdAt?: boolean
+  relationship?: boolean
   parentId?: boolean
   studentId?: boolean
   parent?: boolean | Prisma.ParentDefaultArgs<ExtArgs>
@@ -548,6 +584,7 @@ export type ParentStudentSelect<ExtArgs extends runtime.Types.Extensions.Interna
 
 export type ParentStudentSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   createdAt?: boolean
+  relationship?: boolean
   parentId?: boolean
   studentId?: boolean
   parent?: boolean | Prisma.ParentDefaultArgs<ExtArgs>
@@ -556,6 +593,7 @@ export type ParentStudentSelectCreateManyAndReturn<ExtArgs extends runtime.Types
 
 export type ParentStudentSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   createdAt?: boolean
+  relationship?: boolean
   parentId?: boolean
   studentId?: boolean
   parent?: boolean | Prisma.ParentDefaultArgs<ExtArgs>
@@ -564,11 +602,12 @@ export type ParentStudentSelectUpdateManyAndReturn<ExtArgs extends runtime.Types
 
 export type ParentStudentSelectScalar = {
   createdAt?: boolean
+  relationship?: boolean
   parentId?: boolean
   studentId?: boolean
 }
 
-export type ParentStudentOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"createdAt" | "parentId" | "studentId", ExtArgs["result"]["parentStudent"]>
+export type ParentStudentOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"createdAt" | "relationship" | "parentId" | "studentId", ExtArgs["result"]["parentStudent"]>
 export type ParentStudentInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   parent?: boolean | Prisma.ParentDefaultArgs<ExtArgs>
   student?: boolean | Prisma.StudentDefaultArgs<ExtArgs>
@@ -590,6 +629,7 @@ export type $ParentStudentPayload<ExtArgs extends runtime.Types.Extensions.Inter
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     createdAt: Date
+    relationship: string | null
     parentId: number
     studentId: number
   }, ExtArgs["result"]["parentStudent"]>
@@ -1018,6 +1058,7 @@ export interface Prisma__ParentStudentClient<T, Null = never, ExtArgs extends ru
  */
 export interface ParentStudentFieldRefs {
   readonly createdAt: Prisma.FieldRef<"ParentStudent", 'DateTime'>
+  readonly relationship: Prisma.FieldRef<"ParentStudent", 'String'>
   readonly parentId: Prisma.FieldRef<"ParentStudent", 'Int'>
   readonly studentId: Prisma.FieldRef<"ParentStudent", 'Int'>
 }

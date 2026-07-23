@@ -49,9 +49,8 @@ export class AuthService {
 
   async registerTenantViaEmailPassword(dto: RegisterTenantDto) {
     try {
-      if (dto.password !== dto.passwordConfirm)
-        throw new BadRequestException('Passwords do not match');
-      
+      if (dto.password !== dto.passwordConfirm) throw new BadRequestException('Passwords do not match');
+      //await this.prismaService.cleanDb();
       const hash = await argon.hash(dto.password);
       const existingTenantOwner = await this.prismaService.tenant.findFirst({
         where: {
@@ -64,7 +63,7 @@ export class AuthService {
           publicId: true,
           school_name: true,
         }
-      })
+      });
       if (existingTenantOwner) throw new ConflictException('This email is already registered on this platform');
       const result = await this.tenantService.createTenant({
         school_name: dto.school_name.toLowerCase(),
@@ -110,8 +109,8 @@ export class AuthService {
           },
         },
       });
-      if (!user) throw new ForbiddenException('Incorrect credentials');
-
+      if (!user) throw new BadRequestException('Incorrect credentials');
+      
       const passwordVerified = await argon.verify(user.password!, dto.password);
       if (!passwordVerified) throw new ForbiddenException('incorrect credentials');
       return this.signToken(user.id, user.email, user.tenantId);
@@ -148,9 +147,9 @@ export class AuthService {
         isOAuth: true,
       });
       if (!result) throw new InternalServerErrorException('Tenant and user creation failed');
-      console.log("result:", result);
       return result.user;
     } catch (error) {
+      console.error("error:", error?.message ?? error);
       if (error instanceof Prisma.PrismaClientKnownRequestError) {
         if (error.code === 'P2002') {
           throw new ConflictException('Tenant slug already exists');
@@ -255,9 +254,11 @@ export class AuthService {
         },
       });
     });
+    const token = await this.signToken(verificationToken.user.id, verificationToken.user.email, verificationToken.user.tenantId);
     return {
       success: true,
       message: 'email verification successful',
+      data: token
     };
   }
 

@@ -306,6 +306,10 @@ export type TenantWhereInput = {
   subscription?: Prisma.XOR<Prisma.SubscriptionNullableScalarRelationFilter, Prisma.SubscriptionWhereInput> | null
   invitations?: Prisma.InvitationListRelationFilter
   website?: Prisma.XOR<Prisma.TenantWebsiteNullableScalarRelationFilter, Prisma.TenantWebsiteWhereInput> | null
+  academicSessions?: Prisma.AcademicSessionListRelationFilter
+  classes?: Prisma.SchoolClassListRelationFilter
+  subjects?: Prisma.SubjectListRelationFilter
+  announcements?: Prisma.AnnouncementListRelationFilter
 }
 
 export type TenantOrderByWithRelationInput = {
@@ -333,6 +337,10 @@ export type TenantOrderByWithRelationInput = {
   subscription?: Prisma.SubscriptionOrderByWithRelationInput
   invitations?: Prisma.InvitationOrderByRelationAggregateInput
   website?: Prisma.TenantWebsiteOrderByWithRelationInput
+  academicSessions?: Prisma.AcademicSessionOrderByRelationAggregateInput
+  classes?: Prisma.SchoolClassOrderByRelationAggregateInput
+  subjects?: Prisma.SubjectOrderByRelationAggregateInput
+  announcements?: Prisma.AnnouncementOrderByRelationAggregateInput
 }
 
 export type TenantWhereUniqueInput = Prisma.AtLeast<{
@@ -363,6 +371,10 @@ export type TenantWhereUniqueInput = Prisma.AtLeast<{
   subscription?: Prisma.XOR<Prisma.SubscriptionNullableScalarRelationFilter, Prisma.SubscriptionWhereInput> | null
   invitations?: Prisma.InvitationListRelationFilter
   website?: Prisma.XOR<Prisma.TenantWebsiteNullableScalarRelationFilter, Prisma.TenantWebsiteWhereInput> | null
+  academicSessions?: Prisma.AcademicSessionListRelationFilter
+  classes?: Prisma.SchoolClassListRelationFilter
+  subjects?: Prisma.SubjectListRelationFilter
+  announcements?: Prisma.AnnouncementListRelationFilter
 }, "id" | "publicId" | "domain">
 
 export type TenantOrderByWithAggregationInput = {
@@ -430,6 +442,10 @@ export type TenantCreateInput = {
   subscription?: Prisma.SubscriptionCreateNestedOneWithoutTenantInput
   invitations?: Prisma.InvitationCreateNestedManyWithoutTenantInput
   website?: Prisma.TenantWebsiteCreateNestedOneWithoutTenantInput
+  academicSessions?: Prisma.AcademicSessionCreateNestedManyWithoutTenantInput
+  classes?: Prisma.SchoolClassCreateNestedManyWithoutTenantInput
+  subjects?: Prisma.SubjectCreateNestedManyWithoutTenantInput
+  announcements?: Prisma.AnnouncementCreateNestedManyWithoutTenantInput
 }
 
 export type TenantUncheckedCreateInput = {
@@ -456,6 +472,10 @@ export type TenantUncheckedCreateInput = {
   subscription?: Prisma.SubscriptionUncheckedCreateNestedOneWithoutTenantInput
   invitations?: Prisma.InvitationUncheckedCreateNestedManyWithoutTenantInput
   website?: Prisma.TenantWebsiteUncheckedCreateNestedOneWithoutTenantInput
+  academicSessions?: Prisma.AcademicSessionUncheckedCreateNestedManyWithoutTenantInput
+  classes?: Prisma.SchoolClassUncheckedCreateNestedManyWithoutTenantInput
+  subjects?: Prisma.SubjectUncheckedCreateNestedManyWithoutTenantInput
+  announcements?: Prisma.AnnouncementUncheckedCreateNestedManyWithoutTenantInput
 }
 
 export type TenantUpdateInput = {
@@ -481,6 +501,10 @@ export type TenantUpdateInput = {
   subscription?: Prisma.SubscriptionUpdateOneWithoutTenantNestedInput
   invitations?: Prisma.InvitationUpdateManyWithoutTenantNestedInput
   website?: Prisma.TenantWebsiteUpdateOneWithoutTenantNestedInput
+  academicSessions?: Prisma.AcademicSessionUpdateManyWithoutTenantNestedInput
+  classes?: Prisma.SchoolClassUpdateManyWithoutTenantNestedInput
+  subjects?: Prisma.SubjectUpdateManyWithoutTenantNestedInput
+  announcements?: Prisma.AnnouncementUpdateManyWithoutTenantNestedInput
 }
 
 export type TenantUncheckedUpdateInput = {
@@ -507,6 +531,10 @@ export type TenantUncheckedUpdateInput = {
   subscription?: Prisma.SubscriptionUncheckedUpdateOneWithoutTenantNestedInput
   invitations?: Prisma.InvitationUncheckedUpdateManyWithoutTenantNestedInput
   website?: Prisma.TenantWebsiteUncheckedUpdateOneWithoutTenantNestedInput
+  academicSessions?: Prisma.AcademicSessionUncheckedUpdateManyWithoutTenantNestedInput
+  classes?: Prisma.SchoolClassUncheckedUpdateManyWithoutTenantNestedInput
+  subjects?: Prisma.SubjectUncheckedUpdateManyWithoutTenantNestedInput
+  announcements?: Prisma.AnnouncementUncheckedUpdateManyWithoutTenantNestedInput
 }
 
 export type TenantCreateManyInput = {
@@ -840,6 +868,62 @@ export type TenantUpdateOneRequiredWithoutInvitationsNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.TenantUpdateToOneWithWhereWithoutInvitationsInput, Prisma.TenantUpdateWithoutInvitationsInput>, Prisma.TenantUncheckedUpdateWithoutInvitationsInput>
 }
 
+export type TenantCreateNestedOneWithoutAcademicSessionsInput = {
+  create?: Prisma.XOR<Prisma.TenantCreateWithoutAcademicSessionsInput, Prisma.TenantUncheckedCreateWithoutAcademicSessionsInput>
+  connectOrCreate?: Prisma.TenantCreateOrConnectWithoutAcademicSessionsInput
+  connect?: Prisma.TenantWhereUniqueInput
+}
+
+export type TenantUpdateOneRequiredWithoutAcademicSessionsNestedInput = {
+  create?: Prisma.XOR<Prisma.TenantCreateWithoutAcademicSessionsInput, Prisma.TenantUncheckedCreateWithoutAcademicSessionsInput>
+  connectOrCreate?: Prisma.TenantCreateOrConnectWithoutAcademicSessionsInput
+  upsert?: Prisma.TenantUpsertWithoutAcademicSessionsInput
+  connect?: Prisma.TenantWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.TenantUpdateToOneWithWhereWithoutAcademicSessionsInput, Prisma.TenantUpdateWithoutAcademicSessionsInput>, Prisma.TenantUncheckedUpdateWithoutAcademicSessionsInput>
+}
+
+export type TenantCreateNestedOneWithoutClassesInput = {
+  create?: Prisma.XOR<Prisma.TenantCreateWithoutClassesInput, Prisma.TenantUncheckedCreateWithoutClassesInput>
+  connectOrCreate?: Prisma.TenantCreateOrConnectWithoutClassesInput
+  connect?: Prisma.TenantWhereUniqueInput
+}
+
+export type TenantUpdateOneRequiredWithoutClassesNestedInput = {
+  create?: Prisma.XOR<Prisma.TenantCreateWithoutClassesInput, Prisma.TenantUncheckedCreateWithoutClassesInput>
+  connectOrCreate?: Prisma.TenantCreateOrConnectWithoutClassesInput
+  upsert?: Prisma.TenantUpsertWithoutClassesInput
+  connect?: Prisma.TenantWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.TenantUpdateToOneWithWhereWithoutClassesInput, Prisma.TenantUpdateWithoutClassesInput>, Prisma.TenantUncheckedUpdateWithoutClassesInput>
+}
+
+export type TenantCreateNestedOneWithoutSubjectsInput = {
+  create?: Prisma.XOR<Prisma.TenantCreateWithoutSubjectsInput, Prisma.TenantUncheckedCreateWithoutSubjectsInput>
+  connectOrCreate?: Prisma.TenantCreateOrConnectWithoutSubjectsInput
+  connect?: Prisma.TenantWhereUniqueInput
+}
+
+export type TenantUpdateOneRequiredWithoutSubjectsNestedInput = {
+  create?: Prisma.XOR<Prisma.TenantCreateWithoutSubjectsInput, Prisma.TenantUncheckedCreateWithoutSubjectsInput>
+  connectOrCreate?: Prisma.TenantCreateOrConnectWithoutSubjectsInput
+  upsert?: Prisma.TenantUpsertWithoutSubjectsInput
+  connect?: Prisma.TenantWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.TenantUpdateToOneWithWhereWithoutSubjectsInput, Prisma.TenantUpdateWithoutSubjectsInput>, Prisma.TenantUncheckedUpdateWithoutSubjectsInput>
+}
+
+export type TenantCreateNestedOneWithoutAnnouncementsInput = {
+  create?: Prisma.XOR<Prisma.TenantCreateWithoutAnnouncementsInput, Prisma.TenantUncheckedCreateWithoutAnnouncementsInput>
+  connectOrCreate?: Prisma.TenantCreateOrConnectWithoutAnnouncementsInput
+  connect?: Prisma.TenantWhereUniqueInput
+}
+
+export type TenantUpdateOneRequiredWithoutAnnouncementsNestedInput = {
+  create?: Prisma.XOR<Prisma.TenantCreateWithoutAnnouncementsInput, Prisma.TenantUncheckedCreateWithoutAnnouncementsInput>
+  connectOrCreate?: Prisma.TenantCreateOrConnectWithoutAnnouncementsInput
+  upsert?: Prisma.TenantUpsertWithoutAnnouncementsInput
+  connect?: Prisma.TenantWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.TenantUpdateToOneWithWhereWithoutAnnouncementsInput, Prisma.TenantUpdateWithoutAnnouncementsInput>, Prisma.TenantUncheckedUpdateWithoutAnnouncementsInput>
+}
+
 export type TenantCreateWithoutWebsiteInput = {
   publicId?: string
   createdAt?: Date | string
@@ -862,6 +946,10 @@ export type TenantCreateWithoutWebsiteInput = {
   schoolAdmins?: Prisma.SchoolAdminCreateNestedManyWithoutTenantInput
   subscription?: Prisma.SubscriptionCreateNestedOneWithoutTenantInput
   invitations?: Prisma.InvitationCreateNestedManyWithoutTenantInput
+  academicSessions?: Prisma.AcademicSessionCreateNestedManyWithoutTenantInput
+  classes?: Prisma.SchoolClassCreateNestedManyWithoutTenantInput
+  subjects?: Prisma.SubjectCreateNestedManyWithoutTenantInput
+  announcements?: Prisma.AnnouncementCreateNestedManyWithoutTenantInput
 }
 
 export type TenantUncheckedCreateWithoutWebsiteInput = {
@@ -887,6 +975,10 @@ export type TenantUncheckedCreateWithoutWebsiteInput = {
   schoolAdmins?: Prisma.SchoolAdminUncheckedCreateNestedManyWithoutTenantInput
   subscription?: Prisma.SubscriptionUncheckedCreateNestedOneWithoutTenantInput
   invitations?: Prisma.InvitationUncheckedCreateNestedManyWithoutTenantInput
+  academicSessions?: Prisma.AcademicSessionUncheckedCreateNestedManyWithoutTenantInput
+  classes?: Prisma.SchoolClassUncheckedCreateNestedManyWithoutTenantInput
+  subjects?: Prisma.SubjectUncheckedCreateNestedManyWithoutTenantInput
+  announcements?: Prisma.AnnouncementUncheckedCreateNestedManyWithoutTenantInput
 }
 
 export type TenantCreateOrConnectWithoutWebsiteInput = {
@@ -927,6 +1019,10 @@ export type TenantUpdateWithoutWebsiteInput = {
   schoolAdmins?: Prisma.SchoolAdminUpdateManyWithoutTenantNestedInput
   subscription?: Prisma.SubscriptionUpdateOneWithoutTenantNestedInput
   invitations?: Prisma.InvitationUpdateManyWithoutTenantNestedInput
+  academicSessions?: Prisma.AcademicSessionUpdateManyWithoutTenantNestedInput
+  classes?: Prisma.SchoolClassUpdateManyWithoutTenantNestedInput
+  subjects?: Prisma.SubjectUpdateManyWithoutTenantNestedInput
+  announcements?: Prisma.AnnouncementUpdateManyWithoutTenantNestedInput
 }
 
 export type TenantUncheckedUpdateWithoutWebsiteInput = {
@@ -952,6 +1048,10 @@ export type TenantUncheckedUpdateWithoutWebsiteInput = {
   schoolAdmins?: Prisma.SchoolAdminUncheckedUpdateManyWithoutTenantNestedInput
   subscription?: Prisma.SubscriptionUncheckedUpdateOneWithoutTenantNestedInput
   invitations?: Prisma.InvitationUncheckedUpdateManyWithoutTenantNestedInput
+  academicSessions?: Prisma.AcademicSessionUncheckedUpdateManyWithoutTenantNestedInput
+  classes?: Prisma.SchoolClassUncheckedUpdateManyWithoutTenantNestedInput
+  subjects?: Prisma.SubjectUncheckedUpdateManyWithoutTenantNestedInput
+  announcements?: Prisma.AnnouncementUncheckedUpdateManyWithoutTenantNestedInput
 }
 
 export type TenantCreateWithoutUsersInput = {
@@ -976,6 +1076,10 @@ export type TenantCreateWithoutUsersInput = {
   subscription?: Prisma.SubscriptionCreateNestedOneWithoutTenantInput
   invitations?: Prisma.InvitationCreateNestedManyWithoutTenantInput
   website?: Prisma.TenantWebsiteCreateNestedOneWithoutTenantInput
+  academicSessions?: Prisma.AcademicSessionCreateNestedManyWithoutTenantInput
+  classes?: Prisma.SchoolClassCreateNestedManyWithoutTenantInput
+  subjects?: Prisma.SubjectCreateNestedManyWithoutTenantInput
+  announcements?: Prisma.AnnouncementCreateNestedManyWithoutTenantInput
 }
 
 export type TenantUncheckedCreateWithoutUsersInput = {
@@ -1001,6 +1105,10 @@ export type TenantUncheckedCreateWithoutUsersInput = {
   subscription?: Prisma.SubscriptionUncheckedCreateNestedOneWithoutTenantInput
   invitations?: Prisma.InvitationUncheckedCreateNestedManyWithoutTenantInput
   website?: Prisma.TenantWebsiteUncheckedCreateNestedOneWithoutTenantInput
+  academicSessions?: Prisma.AcademicSessionUncheckedCreateNestedManyWithoutTenantInput
+  classes?: Prisma.SchoolClassUncheckedCreateNestedManyWithoutTenantInput
+  subjects?: Prisma.SubjectUncheckedCreateNestedManyWithoutTenantInput
+  announcements?: Prisma.AnnouncementUncheckedCreateNestedManyWithoutTenantInput
 }
 
 export type TenantCreateOrConnectWithoutUsersInput = {
@@ -1030,6 +1138,10 @@ export type TenantCreateWithoutCreatedByInput = {
   subscription?: Prisma.SubscriptionCreateNestedOneWithoutTenantInput
   invitations?: Prisma.InvitationCreateNestedManyWithoutTenantInput
   website?: Prisma.TenantWebsiteCreateNestedOneWithoutTenantInput
+  academicSessions?: Prisma.AcademicSessionCreateNestedManyWithoutTenantInput
+  classes?: Prisma.SchoolClassCreateNestedManyWithoutTenantInput
+  subjects?: Prisma.SubjectCreateNestedManyWithoutTenantInput
+  announcements?: Prisma.AnnouncementCreateNestedManyWithoutTenantInput
 }
 
 export type TenantUncheckedCreateWithoutCreatedByInput = {
@@ -1055,6 +1167,10 @@ export type TenantUncheckedCreateWithoutCreatedByInput = {
   subscription?: Prisma.SubscriptionUncheckedCreateNestedOneWithoutTenantInput
   invitations?: Prisma.InvitationUncheckedCreateNestedManyWithoutTenantInput
   website?: Prisma.TenantWebsiteUncheckedCreateNestedOneWithoutTenantInput
+  academicSessions?: Prisma.AcademicSessionUncheckedCreateNestedManyWithoutTenantInput
+  classes?: Prisma.SchoolClassUncheckedCreateNestedManyWithoutTenantInput
+  subjects?: Prisma.SubjectUncheckedCreateNestedManyWithoutTenantInput
+  announcements?: Prisma.AnnouncementUncheckedCreateNestedManyWithoutTenantInput
 }
 
 export type TenantCreateOrConnectWithoutCreatedByInput = {
@@ -1100,6 +1216,10 @@ export type TenantUpdateWithoutUsersInput = {
   subscription?: Prisma.SubscriptionUpdateOneWithoutTenantNestedInput
   invitations?: Prisma.InvitationUpdateManyWithoutTenantNestedInput
   website?: Prisma.TenantWebsiteUpdateOneWithoutTenantNestedInput
+  academicSessions?: Prisma.AcademicSessionUpdateManyWithoutTenantNestedInput
+  classes?: Prisma.SchoolClassUpdateManyWithoutTenantNestedInput
+  subjects?: Prisma.SubjectUpdateManyWithoutTenantNestedInput
+  announcements?: Prisma.AnnouncementUpdateManyWithoutTenantNestedInput
 }
 
 export type TenantUncheckedUpdateWithoutUsersInput = {
@@ -1125,6 +1245,10 @@ export type TenantUncheckedUpdateWithoutUsersInput = {
   subscription?: Prisma.SubscriptionUncheckedUpdateOneWithoutTenantNestedInput
   invitations?: Prisma.InvitationUncheckedUpdateManyWithoutTenantNestedInput
   website?: Prisma.TenantWebsiteUncheckedUpdateOneWithoutTenantNestedInput
+  academicSessions?: Prisma.AcademicSessionUncheckedUpdateManyWithoutTenantNestedInput
+  classes?: Prisma.SchoolClassUncheckedUpdateManyWithoutTenantNestedInput
+  subjects?: Prisma.SubjectUncheckedUpdateManyWithoutTenantNestedInput
+  announcements?: Prisma.AnnouncementUncheckedUpdateManyWithoutTenantNestedInput
 }
 
 export type TenantUpsertWithWhereUniqueWithoutCreatedByInput = {
@@ -1185,6 +1309,10 @@ export type TenantCreateWithoutTeachersInput = {
   subscription?: Prisma.SubscriptionCreateNestedOneWithoutTenantInput
   invitations?: Prisma.InvitationCreateNestedManyWithoutTenantInput
   website?: Prisma.TenantWebsiteCreateNestedOneWithoutTenantInput
+  academicSessions?: Prisma.AcademicSessionCreateNestedManyWithoutTenantInput
+  classes?: Prisma.SchoolClassCreateNestedManyWithoutTenantInput
+  subjects?: Prisma.SubjectCreateNestedManyWithoutTenantInput
+  announcements?: Prisma.AnnouncementCreateNestedManyWithoutTenantInput
 }
 
 export type TenantUncheckedCreateWithoutTeachersInput = {
@@ -1210,6 +1338,10 @@ export type TenantUncheckedCreateWithoutTeachersInput = {
   subscription?: Prisma.SubscriptionUncheckedCreateNestedOneWithoutTenantInput
   invitations?: Prisma.InvitationUncheckedCreateNestedManyWithoutTenantInput
   website?: Prisma.TenantWebsiteUncheckedCreateNestedOneWithoutTenantInput
+  academicSessions?: Prisma.AcademicSessionUncheckedCreateNestedManyWithoutTenantInput
+  classes?: Prisma.SchoolClassUncheckedCreateNestedManyWithoutTenantInput
+  subjects?: Prisma.SubjectUncheckedCreateNestedManyWithoutTenantInput
+  announcements?: Prisma.AnnouncementUncheckedCreateNestedManyWithoutTenantInput
 }
 
 export type TenantCreateOrConnectWithoutTeachersInput = {
@@ -1250,6 +1382,10 @@ export type TenantUpdateWithoutTeachersInput = {
   subscription?: Prisma.SubscriptionUpdateOneWithoutTenantNestedInput
   invitations?: Prisma.InvitationUpdateManyWithoutTenantNestedInput
   website?: Prisma.TenantWebsiteUpdateOneWithoutTenantNestedInput
+  academicSessions?: Prisma.AcademicSessionUpdateManyWithoutTenantNestedInput
+  classes?: Prisma.SchoolClassUpdateManyWithoutTenantNestedInput
+  subjects?: Prisma.SubjectUpdateManyWithoutTenantNestedInput
+  announcements?: Prisma.AnnouncementUpdateManyWithoutTenantNestedInput
 }
 
 export type TenantUncheckedUpdateWithoutTeachersInput = {
@@ -1275,6 +1411,10 @@ export type TenantUncheckedUpdateWithoutTeachersInput = {
   subscription?: Prisma.SubscriptionUncheckedUpdateOneWithoutTenantNestedInput
   invitations?: Prisma.InvitationUncheckedUpdateManyWithoutTenantNestedInput
   website?: Prisma.TenantWebsiteUncheckedUpdateOneWithoutTenantNestedInput
+  academicSessions?: Prisma.AcademicSessionUncheckedUpdateManyWithoutTenantNestedInput
+  classes?: Prisma.SchoolClassUncheckedUpdateManyWithoutTenantNestedInput
+  subjects?: Prisma.SubjectUncheckedUpdateManyWithoutTenantNestedInput
+  announcements?: Prisma.AnnouncementUncheckedUpdateManyWithoutTenantNestedInput
 }
 
 export type TenantCreateWithoutParentsInput = {
@@ -1299,6 +1439,10 @@ export type TenantCreateWithoutParentsInput = {
   subscription?: Prisma.SubscriptionCreateNestedOneWithoutTenantInput
   invitations?: Prisma.InvitationCreateNestedManyWithoutTenantInput
   website?: Prisma.TenantWebsiteCreateNestedOneWithoutTenantInput
+  academicSessions?: Prisma.AcademicSessionCreateNestedManyWithoutTenantInput
+  classes?: Prisma.SchoolClassCreateNestedManyWithoutTenantInput
+  subjects?: Prisma.SubjectCreateNestedManyWithoutTenantInput
+  announcements?: Prisma.AnnouncementCreateNestedManyWithoutTenantInput
 }
 
 export type TenantUncheckedCreateWithoutParentsInput = {
@@ -1324,6 +1468,10 @@ export type TenantUncheckedCreateWithoutParentsInput = {
   subscription?: Prisma.SubscriptionUncheckedCreateNestedOneWithoutTenantInput
   invitations?: Prisma.InvitationUncheckedCreateNestedManyWithoutTenantInput
   website?: Prisma.TenantWebsiteUncheckedCreateNestedOneWithoutTenantInput
+  academicSessions?: Prisma.AcademicSessionUncheckedCreateNestedManyWithoutTenantInput
+  classes?: Prisma.SchoolClassUncheckedCreateNestedManyWithoutTenantInput
+  subjects?: Prisma.SubjectUncheckedCreateNestedManyWithoutTenantInput
+  announcements?: Prisma.AnnouncementUncheckedCreateNestedManyWithoutTenantInput
 }
 
 export type TenantCreateOrConnectWithoutParentsInput = {
@@ -1364,6 +1512,10 @@ export type TenantUpdateWithoutParentsInput = {
   subscription?: Prisma.SubscriptionUpdateOneWithoutTenantNestedInput
   invitations?: Prisma.InvitationUpdateManyWithoutTenantNestedInput
   website?: Prisma.TenantWebsiteUpdateOneWithoutTenantNestedInput
+  academicSessions?: Prisma.AcademicSessionUpdateManyWithoutTenantNestedInput
+  classes?: Prisma.SchoolClassUpdateManyWithoutTenantNestedInput
+  subjects?: Prisma.SubjectUpdateManyWithoutTenantNestedInput
+  announcements?: Prisma.AnnouncementUpdateManyWithoutTenantNestedInput
 }
 
 export type TenantUncheckedUpdateWithoutParentsInput = {
@@ -1389,6 +1541,10 @@ export type TenantUncheckedUpdateWithoutParentsInput = {
   subscription?: Prisma.SubscriptionUncheckedUpdateOneWithoutTenantNestedInput
   invitations?: Prisma.InvitationUncheckedUpdateManyWithoutTenantNestedInput
   website?: Prisma.TenantWebsiteUncheckedUpdateOneWithoutTenantNestedInput
+  academicSessions?: Prisma.AcademicSessionUncheckedUpdateManyWithoutTenantNestedInput
+  classes?: Prisma.SchoolClassUncheckedUpdateManyWithoutTenantNestedInput
+  subjects?: Prisma.SubjectUncheckedUpdateManyWithoutTenantNestedInput
+  announcements?: Prisma.AnnouncementUncheckedUpdateManyWithoutTenantNestedInput
 }
 
 export type TenantCreateWithoutStudentsInput = {
@@ -1413,6 +1569,10 @@ export type TenantCreateWithoutStudentsInput = {
   subscription?: Prisma.SubscriptionCreateNestedOneWithoutTenantInput
   invitations?: Prisma.InvitationCreateNestedManyWithoutTenantInput
   website?: Prisma.TenantWebsiteCreateNestedOneWithoutTenantInput
+  academicSessions?: Prisma.AcademicSessionCreateNestedManyWithoutTenantInput
+  classes?: Prisma.SchoolClassCreateNestedManyWithoutTenantInput
+  subjects?: Prisma.SubjectCreateNestedManyWithoutTenantInput
+  announcements?: Prisma.AnnouncementCreateNestedManyWithoutTenantInput
 }
 
 export type TenantUncheckedCreateWithoutStudentsInput = {
@@ -1438,6 +1598,10 @@ export type TenantUncheckedCreateWithoutStudentsInput = {
   subscription?: Prisma.SubscriptionUncheckedCreateNestedOneWithoutTenantInput
   invitations?: Prisma.InvitationUncheckedCreateNestedManyWithoutTenantInput
   website?: Prisma.TenantWebsiteUncheckedCreateNestedOneWithoutTenantInput
+  academicSessions?: Prisma.AcademicSessionUncheckedCreateNestedManyWithoutTenantInput
+  classes?: Prisma.SchoolClassUncheckedCreateNestedManyWithoutTenantInput
+  subjects?: Prisma.SubjectUncheckedCreateNestedManyWithoutTenantInput
+  announcements?: Prisma.AnnouncementUncheckedCreateNestedManyWithoutTenantInput
 }
 
 export type TenantCreateOrConnectWithoutStudentsInput = {
@@ -1478,6 +1642,10 @@ export type TenantUpdateWithoutStudentsInput = {
   subscription?: Prisma.SubscriptionUpdateOneWithoutTenantNestedInput
   invitations?: Prisma.InvitationUpdateManyWithoutTenantNestedInput
   website?: Prisma.TenantWebsiteUpdateOneWithoutTenantNestedInput
+  academicSessions?: Prisma.AcademicSessionUpdateManyWithoutTenantNestedInput
+  classes?: Prisma.SchoolClassUpdateManyWithoutTenantNestedInput
+  subjects?: Prisma.SubjectUpdateManyWithoutTenantNestedInput
+  announcements?: Prisma.AnnouncementUpdateManyWithoutTenantNestedInput
 }
 
 export type TenantUncheckedUpdateWithoutStudentsInput = {
@@ -1503,6 +1671,10 @@ export type TenantUncheckedUpdateWithoutStudentsInput = {
   subscription?: Prisma.SubscriptionUncheckedUpdateOneWithoutTenantNestedInput
   invitations?: Prisma.InvitationUncheckedUpdateManyWithoutTenantNestedInput
   website?: Prisma.TenantWebsiteUncheckedUpdateOneWithoutTenantNestedInput
+  academicSessions?: Prisma.AcademicSessionUncheckedUpdateManyWithoutTenantNestedInput
+  classes?: Prisma.SchoolClassUncheckedUpdateManyWithoutTenantNestedInput
+  subjects?: Prisma.SubjectUncheckedUpdateManyWithoutTenantNestedInput
+  announcements?: Prisma.AnnouncementUncheckedUpdateManyWithoutTenantNestedInput
 }
 
 export type TenantCreateWithoutSchoolAdminsInput = {
@@ -1527,6 +1699,10 @@ export type TenantCreateWithoutSchoolAdminsInput = {
   subscription?: Prisma.SubscriptionCreateNestedOneWithoutTenantInput
   invitations?: Prisma.InvitationCreateNestedManyWithoutTenantInput
   website?: Prisma.TenantWebsiteCreateNestedOneWithoutTenantInput
+  academicSessions?: Prisma.AcademicSessionCreateNestedManyWithoutTenantInput
+  classes?: Prisma.SchoolClassCreateNestedManyWithoutTenantInput
+  subjects?: Prisma.SubjectCreateNestedManyWithoutTenantInput
+  announcements?: Prisma.AnnouncementCreateNestedManyWithoutTenantInput
 }
 
 export type TenantUncheckedCreateWithoutSchoolAdminsInput = {
@@ -1552,6 +1728,10 @@ export type TenantUncheckedCreateWithoutSchoolAdminsInput = {
   subscription?: Prisma.SubscriptionUncheckedCreateNestedOneWithoutTenantInput
   invitations?: Prisma.InvitationUncheckedCreateNestedManyWithoutTenantInput
   website?: Prisma.TenantWebsiteUncheckedCreateNestedOneWithoutTenantInput
+  academicSessions?: Prisma.AcademicSessionUncheckedCreateNestedManyWithoutTenantInput
+  classes?: Prisma.SchoolClassUncheckedCreateNestedManyWithoutTenantInput
+  subjects?: Prisma.SubjectUncheckedCreateNestedManyWithoutTenantInput
+  announcements?: Prisma.AnnouncementUncheckedCreateNestedManyWithoutTenantInput
 }
 
 export type TenantCreateOrConnectWithoutSchoolAdminsInput = {
@@ -1592,6 +1772,10 @@ export type TenantUpdateWithoutSchoolAdminsInput = {
   subscription?: Prisma.SubscriptionUpdateOneWithoutTenantNestedInput
   invitations?: Prisma.InvitationUpdateManyWithoutTenantNestedInput
   website?: Prisma.TenantWebsiteUpdateOneWithoutTenantNestedInput
+  academicSessions?: Prisma.AcademicSessionUpdateManyWithoutTenantNestedInput
+  classes?: Prisma.SchoolClassUpdateManyWithoutTenantNestedInput
+  subjects?: Prisma.SubjectUpdateManyWithoutTenantNestedInput
+  announcements?: Prisma.AnnouncementUpdateManyWithoutTenantNestedInput
 }
 
 export type TenantUncheckedUpdateWithoutSchoolAdminsInput = {
@@ -1617,6 +1801,10 @@ export type TenantUncheckedUpdateWithoutSchoolAdminsInput = {
   subscription?: Prisma.SubscriptionUncheckedUpdateOneWithoutTenantNestedInput
   invitations?: Prisma.InvitationUncheckedUpdateManyWithoutTenantNestedInput
   website?: Prisma.TenantWebsiteUncheckedUpdateOneWithoutTenantNestedInput
+  academicSessions?: Prisma.AcademicSessionUncheckedUpdateManyWithoutTenantNestedInput
+  classes?: Prisma.SchoolClassUncheckedUpdateManyWithoutTenantNestedInput
+  subjects?: Prisma.SubjectUncheckedUpdateManyWithoutTenantNestedInput
+  announcements?: Prisma.AnnouncementUncheckedUpdateManyWithoutTenantNestedInput
 }
 
 export type TenantCreateWithoutSubscriptionInput = {
@@ -1641,6 +1829,10 @@ export type TenantCreateWithoutSubscriptionInput = {
   schoolAdmins?: Prisma.SchoolAdminCreateNestedManyWithoutTenantInput
   invitations?: Prisma.InvitationCreateNestedManyWithoutTenantInput
   website?: Prisma.TenantWebsiteCreateNestedOneWithoutTenantInput
+  academicSessions?: Prisma.AcademicSessionCreateNestedManyWithoutTenantInput
+  classes?: Prisma.SchoolClassCreateNestedManyWithoutTenantInput
+  subjects?: Prisma.SubjectCreateNestedManyWithoutTenantInput
+  announcements?: Prisma.AnnouncementCreateNestedManyWithoutTenantInput
 }
 
 export type TenantUncheckedCreateWithoutSubscriptionInput = {
@@ -1666,6 +1858,10 @@ export type TenantUncheckedCreateWithoutSubscriptionInput = {
   schoolAdmins?: Prisma.SchoolAdminUncheckedCreateNestedManyWithoutTenantInput
   invitations?: Prisma.InvitationUncheckedCreateNestedManyWithoutTenantInput
   website?: Prisma.TenantWebsiteUncheckedCreateNestedOneWithoutTenantInput
+  academicSessions?: Prisma.AcademicSessionUncheckedCreateNestedManyWithoutTenantInput
+  classes?: Prisma.SchoolClassUncheckedCreateNestedManyWithoutTenantInput
+  subjects?: Prisma.SubjectUncheckedCreateNestedManyWithoutTenantInput
+  announcements?: Prisma.AnnouncementUncheckedCreateNestedManyWithoutTenantInput
 }
 
 export type TenantCreateOrConnectWithoutSubscriptionInput = {
@@ -1706,6 +1902,10 @@ export type TenantUpdateWithoutSubscriptionInput = {
   schoolAdmins?: Prisma.SchoolAdminUpdateManyWithoutTenantNestedInput
   invitations?: Prisma.InvitationUpdateManyWithoutTenantNestedInput
   website?: Prisma.TenantWebsiteUpdateOneWithoutTenantNestedInput
+  academicSessions?: Prisma.AcademicSessionUpdateManyWithoutTenantNestedInput
+  classes?: Prisma.SchoolClassUpdateManyWithoutTenantNestedInput
+  subjects?: Prisma.SubjectUpdateManyWithoutTenantNestedInput
+  announcements?: Prisma.AnnouncementUpdateManyWithoutTenantNestedInput
 }
 
 export type TenantUncheckedUpdateWithoutSubscriptionInput = {
@@ -1731,6 +1931,10 @@ export type TenantUncheckedUpdateWithoutSubscriptionInput = {
   schoolAdmins?: Prisma.SchoolAdminUncheckedUpdateManyWithoutTenantNestedInput
   invitations?: Prisma.InvitationUncheckedUpdateManyWithoutTenantNestedInput
   website?: Prisma.TenantWebsiteUncheckedUpdateOneWithoutTenantNestedInput
+  academicSessions?: Prisma.AcademicSessionUncheckedUpdateManyWithoutTenantNestedInput
+  classes?: Prisma.SchoolClassUncheckedUpdateManyWithoutTenantNestedInput
+  subjects?: Prisma.SubjectUncheckedUpdateManyWithoutTenantNestedInput
+  announcements?: Prisma.AnnouncementUncheckedUpdateManyWithoutTenantNestedInput
 }
 
 export type TenantCreateWithoutRolesInput = {
@@ -1755,6 +1959,10 @@ export type TenantCreateWithoutRolesInput = {
   subscription?: Prisma.SubscriptionCreateNestedOneWithoutTenantInput
   invitations?: Prisma.InvitationCreateNestedManyWithoutTenantInput
   website?: Prisma.TenantWebsiteCreateNestedOneWithoutTenantInput
+  academicSessions?: Prisma.AcademicSessionCreateNestedManyWithoutTenantInput
+  classes?: Prisma.SchoolClassCreateNestedManyWithoutTenantInput
+  subjects?: Prisma.SubjectCreateNestedManyWithoutTenantInput
+  announcements?: Prisma.AnnouncementCreateNestedManyWithoutTenantInput
 }
 
 export type TenantUncheckedCreateWithoutRolesInput = {
@@ -1780,6 +1988,10 @@ export type TenantUncheckedCreateWithoutRolesInput = {
   subscription?: Prisma.SubscriptionUncheckedCreateNestedOneWithoutTenantInput
   invitations?: Prisma.InvitationUncheckedCreateNestedManyWithoutTenantInput
   website?: Prisma.TenantWebsiteUncheckedCreateNestedOneWithoutTenantInput
+  academicSessions?: Prisma.AcademicSessionUncheckedCreateNestedManyWithoutTenantInput
+  classes?: Prisma.SchoolClassUncheckedCreateNestedManyWithoutTenantInput
+  subjects?: Prisma.SubjectUncheckedCreateNestedManyWithoutTenantInput
+  announcements?: Prisma.AnnouncementUncheckedCreateNestedManyWithoutTenantInput
 }
 
 export type TenantCreateOrConnectWithoutRolesInput = {
@@ -1820,6 +2032,10 @@ export type TenantUpdateWithoutRolesInput = {
   subscription?: Prisma.SubscriptionUpdateOneWithoutTenantNestedInput
   invitations?: Prisma.InvitationUpdateManyWithoutTenantNestedInput
   website?: Prisma.TenantWebsiteUpdateOneWithoutTenantNestedInput
+  academicSessions?: Prisma.AcademicSessionUpdateManyWithoutTenantNestedInput
+  classes?: Prisma.SchoolClassUpdateManyWithoutTenantNestedInput
+  subjects?: Prisma.SubjectUpdateManyWithoutTenantNestedInput
+  announcements?: Prisma.AnnouncementUpdateManyWithoutTenantNestedInput
 }
 
 export type TenantUncheckedUpdateWithoutRolesInput = {
@@ -1845,6 +2061,10 @@ export type TenantUncheckedUpdateWithoutRolesInput = {
   subscription?: Prisma.SubscriptionUncheckedUpdateOneWithoutTenantNestedInput
   invitations?: Prisma.InvitationUncheckedUpdateManyWithoutTenantNestedInput
   website?: Prisma.TenantWebsiteUncheckedUpdateOneWithoutTenantNestedInput
+  academicSessions?: Prisma.AcademicSessionUncheckedUpdateManyWithoutTenantNestedInput
+  classes?: Prisma.SchoolClassUncheckedUpdateManyWithoutTenantNestedInput
+  subjects?: Prisma.SubjectUncheckedUpdateManyWithoutTenantNestedInput
+  announcements?: Prisma.AnnouncementUncheckedUpdateManyWithoutTenantNestedInput
 }
 
 export type TenantCreateWithoutInvitationsInput = {
@@ -1869,6 +2089,10 @@ export type TenantCreateWithoutInvitationsInput = {
   schoolAdmins?: Prisma.SchoolAdminCreateNestedManyWithoutTenantInput
   subscription?: Prisma.SubscriptionCreateNestedOneWithoutTenantInput
   website?: Prisma.TenantWebsiteCreateNestedOneWithoutTenantInput
+  academicSessions?: Prisma.AcademicSessionCreateNestedManyWithoutTenantInput
+  classes?: Prisma.SchoolClassCreateNestedManyWithoutTenantInput
+  subjects?: Prisma.SubjectCreateNestedManyWithoutTenantInput
+  announcements?: Prisma.AnnouncementCreateNestedManyWithoutTenantInput
 }
 
 export type TenantUncheckedCreateWithoutInvitationsInput = {
@@ -1894,6 +2118,10 @@ export type TenantUncheckedCreateWithoutInvitationsInput = {
   schoolAdmins?: Prisma.SchoolAdminUncheckedCreateNestedManyWithoutTenantInput
   subscription?: Prisma.SubscriptionUncheckedCreateNestedOneWithoutTenantInput
   website?: Prisma.TenantWebsiteUncheckedCreateNestedOneWithoutTenantInput
+  academicSessions?: Prisma.AcademicSessionUncheckedCreateNestedManyWithoutTenantInput
+  classes?: Prisma.SchoolClassUncheckedCreateNestedManyWithoutTenantInput
+  subjects?: Prisma.SubjectUncheckedCreateNestedManyWithoutTenantInput
+  announcements?: Prisma.AnnouncementUncheckedCreateNestedManyWithoutTenantInput
 }
 
 export type TenantCreateOrConnectWithoutInvitationsInput = {
@@ -1934,6 +2162,10 @@ export type TenantUpdateWithoutInvitationsInput = {
   schoolAdmins?: Prisma.SchoolAdminUpdateManyWithoutTenantNestedInput
   subscription?: Prisma.SubscriptionUpdateOneWithoutTenantNestedInput
   website?: Prisma.TenantWebsiteUpdateOneWithoutTenantNestedInput
+  academicSessions?: Prisma.AcademicSessionUpdateManyWithoutTenantNestedInput
+  classes?: Prisma.SchoolClassUpdateManyWithoutTenantNestedInput
+  subjects?: Prisma.SubjectUpdateManyWithoutTenantNestedInput
+  announcements?: Prisma.AnnouncementUpdateManyWithoutTenantNestedInput
 }
 
 export type TenantUncheckedUpdateWithoutInvitationsInput = {
@@ -1959,6 +2191,530 @@ export type TenantUncheckedUpdateWithoutInvitationsInput = {
   schoolAdmins?: Prisma.SchoolAdminUncheckedUpdateManyWithoutTenantNestedInput
   subscription?: Prisma.SubscriptionUncheckedUpdateOneWithoutTenantNestedInput
   website?: Prisma.TenantWebsiteUncheckedUpdateOneWithoutTenantNestedInput
+  academicSessions?: Prisma.AcademicSessionUncheckedUpdateManyWithoutTenantNestedInput
+  classes?: Prisma.SchoolClassUncheckedUpdateManyWithoutTenantNestedInput
+  subjects?: Prisma.SubjectUncheckedUpdateManyWithoutTenantNestedInput
+  announcements?: Prisma.AnnouncementUncheckedUpdateManyWithoutTenantNestedInput
+}
+
+export type TenantCreateWithoutAcademicSessionsInput = {
+  publicId?: string
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  school_name: string
+  domain?: string | null
+  contactPhone?: string | null
+  contactAddress?: string | null
+  contactEmail: string
+  isActive?: boolean
+  status?: $Enums.TenantStatus
+  onboardingStep?: number
+  onboardingCompleted?: boolean
+  createdBy?: Prisma.UserCreateNestedOneWithoutCreatedTenantsInput
+  users?: Prisma.UserCreateNestedManyWithoutTenantInput
+  roles?: Prisma.RoleCreateNestedManyWithoutTenantInput
+  teachers?: Prisma.TeacherCreateNestedManyWithoutTenantInput
+  parents?: Prisma.ParentCreateNestedManyWithoutTenantInput
+  students?: Prisma.StudentCreateNestedManyWithoutTenantInput
+  schoolAdmins?: Prisma.SchoolAdminCreateNestedManyWithoutTenantInput
+  subscription?: Prisma.SubscriptionCreateNestedOneWithoutTenantInput
+  invitations?: Prisma.InvitationCreateNestedManyWithoutTenantInput
+  website?: Prisma.TenantWebsiteCreateNestedOneWithoutTenantInput
+  classes?: Prisma.SchoolClassCreateNestedManyWithoutTenantInput
+  subjects?: Prisma.SubjectCreateNestedManyWithoutTenantInput
+  announcements?: Prisma.AnnouncementCreateNestedManyWithoutTenantInput
+}
+
+export type TenantUncheckedCreateWithoutAcademicSessionsInput = {
+  id?: number
+  publicId?: string
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  createdById?: number | null
+  school_name: string
+  domain?: string | null
+  contactPhone?: string | null
+  contactAddress?: string | null
+  contactEmail: string
+  isActive?: boolean
+  status?: $Enums.TenantStatus
+  onboardingStep?: number
+  onboardingCompleted?: boolean
+  users?: Prisma.UserUncheckedCreateNestedManyWithoutTenantInput
+  roles?: Prisma.RoleUncheckedCreateNestedManyWithoutTenantInput
+  teachers?: Prisma.TeacherUncheckedCreateNestedManyWithoutTenantInput
+  parents?: Prisma.ParentUncheckedCreateNestedManyWithoutTenantInput
+  students?: Prisma.StudentUncheckedCreateNestedManyWithoutTenantInput
+  schoolAdmins?: Prisma.SchoolAdminUncheckedCreateNestedManyWithoutTenantInput
+  subscription?: Prisma.SubscriptionUncheckedCreateNestedOneWithoutTenantInput
+  invitations?: Prisma.InvitationUncheckedCreateNestedManyWithoutTenantInput
+  website?: Prisma.TenantWebsiteUncheckedCreateNestedOneWithoutTenantInput
+  classes?: Prisma.SchoolClassUncheckedCreateNestedManyWithoutTenantInput
+  subjects?: Prisma.SubjectUncheckedCreateNestedManyWithoutTenantInput
+  announcements?: Prisma.AnnouncementUncheckedCreateNestedManyWithoutTenantInput
+}
+
+export type TenantCreateOrConnectWithoutAcademicSessionsInput = {
+  where: Prisma.TenantWhereUniqueInput
+  create: Prisma.XOR<Prisma.TenantCreateWithoutAcademicSessionsInput, Prisma.TenantUncheckedCreateWithoutAcademicSessionsInput>
+}
+
+export type TenantUpsertWithoutAcademicSessionsInput = {
+  update: Prisma.XOR<Prisma.TenantUpdateWithoutAcademicSessionsInput, Prisma.TenantUncheckedUpdateWithoutAcademicSessionsInput>
+  create: Prisma.XOR<Prisma.TenantCreateWithoutAcademicSessionsInput, Prisma.TenantUncheckedCreateWithoutAcademicSessionsInput>
+  where?: Prisma.TenantWhereInput
+}
+
+export type TenantUpdateToOneWithWhereWithoutAcademicSessionsInput = {
+  where?: Prisma.TenantWhereInput
+  data: Prisma.XOR<Prisma.TenantUpdateWithoutAcademicSessionsInput, Prisma.TenantUncheckedUpdateWithoutAcademicSessionsInput>
+}
+
+export type TenantUpdateWithoutAcademicSessionsInput = {
+  publicId?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  school_name?: Prisma.StringFieldUpdateOperationsInput | string
+  domain?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  contactPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  contactAddress?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  contactEmail?: Prisma.StringFieldUpdateOperationsInput | string
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  status?: Prisma.EnumTenantStatusFieldUpdateOperationsInput | $Enums.TenantStatus
+  onboardingStep?: Prisma.IntFieldUpdateOperationsInput | number
+  onboardingCompleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdBy?: Prisma.UserUpdateOneWithoutCreatedTenantsNestedInput
+  users?: Prisma.UserUpdateManyWithoutTenantNestedInput
+  roles?: Prisma.RoleUpdateManyWithoutTenantNestedInput
+  teachers?: Prisma.TeacherUpdateManyWithoutTenantNestedInput
+  parents?: Prisma.ParentUpdateManyWithoutTenantNestedInput
+  students?: Prisma.StudentUpdateManyWithoutTenantNestedInput
+  schoolAdmins?: Prisma.SchoolAdminUpdateManyWithoutTenantNestedInput
+  subscription?: Prisma.SubscriptionUpdateOneWithoutTenantNestedInput
+  invitations?: Prisma.InvitationUpdateManyWithoutTenantNestedInput
+  website?: Prisma.TenantWebsiteUpdateOneWithoutTenantNestedInput
+  classes?: Prisma.SchoolClassUpdateManyWithoutTenantNestedInput
+  subjects?: Prisma.SubjectUpdateManyWithoutTenantNestedInput
+  announcements?: Prisma.AnnouncementUpdateManyWithoutTenantNestedInput
+}
+
+export type TenantUncheckedUpdateWithoutAcademicSessionsInput = {
+  id?: Prisma.IntFieldUpdateOperationsInput | number
+  publicId?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  createdById?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  school_name?: Prisma.StringFieldUpdateOperationsInput | string
+  domain?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  contactPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  contactAddress?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  contactEmail?: Prisma.StringFieldUpdateOperationsInput | string
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  status?: Prisma.EnumTenantStatusFieldUpdateOperationsInput | $Enums.TenantStatus
+  onboardingStep?: Prisma.IntFieldUpdateOperationsInput | number
+  onboardingCompleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  users?: Prisma.UserUncheckedUpdateManyWithoutTenantNestedInput
+  roles?: Prisma.RoleUncheckedUpdateManyWithoutTenantNestedInput
+  teachers?: Prisma.TeacherUncheckedUpdateManyWithoutTenantNestedInput
+  parents?: Prisma.ParentUncheckedUpdateManyWithoutTenantNestedInput
+  students?: Prisma.StudentUncheckedUpdateManyWithoutTenantNestedInput
+  schoolAdmins?: Prisma.SchoolAdminUncheckedUpdateManyWithoutTenantNestedInput
+  subscription?: Prisma.SubscriptionUncheckedUpdateOneWithoutTenantNestedInput
+  invitations?: Prisma.InvitationUncheckedUpdateManyWithoutTenantNestedInput
+  website?: Prisma.TenantWebsiteUncheckedUpdateOneWithoutTenantNestedInput
+  classes?: Prisma.SchoolClassUncheckedUpdateManyWithoutTenantNestedInput
+  subjects?: Prisma.SubjectUncheckedUpdateManyWithoutTenantNestedInput
+  announcements?: Prisma.AnnouncementUncheckedUpdateManyWithoutTenantNestedInput
+}
+
+export type TenantCreateWithoutClassesInput = {
+  publicId?: string
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  school_name: string
+  domain?: string | null
+  contactPhone?: string | null
+  contactAddress?: string | null
+  contactEmail: string
+  isActive?: boolean
+  status?: $Enums.TenantStatus
+  onboardingStep?: number
+  onboardingCompleted?: boolean
+  createdBy?: Prisma.UserCreateNestedOneWithoutCreatedTenantsInput
+  users?: Prisma.UserCreateNestedManyWithoutTenantInput
+  roles?: Prisma.RoleCreateNestedManyWithoutTenantInput
+  teachers?: Prisma.TeacherCreateNestedManyWithoutTenantInput
+  parents?: Prisma.ParentCreateNestedManyWithoutTenantInput
+  students?: Prisma.StudentCreateNestedManyWithoutTenantInput
+  schoolAdmins?: Prisma.SchoolAdminCreateNestedManyWithoutTenantInput
+  subscription?: Prisma.SubscriptionCreateNestedOneWithoutTenantInput
+  invitations?: Prisma.InvitationCreateNestedManyWithoutTenantInput
+  website?: Prisma.TenantWebsiteCreateNestedOneWithoutTenantInput
+  academicSessions?: Prisma.AcademicSessionCreateNestedManyWithoutTenantInput
+  subjects?: Prisma.SubjectCreateNestedManyWithoutTenantInput
+  announcements?: Prisma.AnnouncementCreateNestedManyWithoutTenantInput
+}
+
+export type TenantUncheckedCreateWithoutClassesInput = {
+  id?: number
+  publicId?: string
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  createdById?: number | null
+  school_name: string
+  domain?: string | null
+  contactPhone?: string | null
+  contactAddress?: string | null
+  contactEmail: string
+  isActive?: boolean
+  status?: $Enums.TenantStatus
+  onboardingStep?: number
+  onboardingCompleted?: boolean
+  users?: Prisma.UserUncheckedCreateNestedManyWithoutTenantInput
+  roles?: Prisma.RoleUncheckedCreateNestedManyWithoutTenantInput
+  teachers?: Prisma.TeacherUncheckedCreateNestedManyWithoutTenantInput
+  parents?: Prisma.ParentUncheckedCreateNestedManyWithoutTenantInput
+  students?: Prisma.StudentUncheckedCreateNestedManyWithoutTenantInput
+  schoolAdmins?: Prisma.SchoolAdminUncheckedCreateNestedManyWithoutTenantInput
+  subscription?: Prisma.SubscriptionUncheckedCreateNestedOneWithoutTenantInput
+  invitations?: Prisma.InvitationUncheckedCreateNestedManyWithoutTenantInput
+  website?: Prisma.TenantWebsiteUncheckedCreateNestedOneWithoutTenantInput
+  academicSessions?: Prisma.AcademicSessionUncheckedCreateNestedManyWithoutTenantInput
+  subjects?: Prisma.SubjectUncheckedCreateNestedManyWithoutTenantInput
+  announcements?: Prisma.AnnouncementUncheckedCreateNestedManyWithoutTenantInput
+}
+
+export type TenantCreateOrConnectWithoutClassesInput = {
+  where: Prisma.TenantWhereUniqueInput
+  create: Prisma.XOR<Prisma.TenantCreateWithoutClassesInput, Prisma.TenantUncheckedCreateWithoutClassesInput>
+}
+
+export type TenantUpsertWithoutClassesInput = {
+  update: Prisma.XOR<Prisma.TenantUpdateWithoutClassesInput, Prisma.TenantUncheckedUpdateWithoutClassesInput>
+  create: Prisma.XOR<Prisma.TenantCreateWithoutClassesInput, Prisma.TenantUncheckedCreateWithoutClassesInput>
+  where?: Prisma.TenantWhereInput
+}
+
+export type TenantUpdateToOneWithWhereWithoutClassesInput = {
+  where?: Prisma.TenantWhereInput
+  data: Prisma.XOR<Prisma.TenantUpdateWithoutClassesInput, Prisma.TenantUncheckedUpdateWithoutClassesInput>
+}
+
+export type TenantUpdateWithoutClassesInput = {
+  publicId?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  school_name?: Prisma.StringFieldUpdateOperationsInput | string
+  domain?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  contactPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  contactAddress?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  contactEmail?: Prisma.StringFieldUpdateOperationsInput | string
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  status?: Prisma.EnumTenantStatusFieldUpdateOperationsInput | $Enums.TenantStatus
+  onboardingStep?: Prisma.IntFieldUpdateOperationsInput | number
+  onboardingCompleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdBy?: Prisma.UserUpdateOneWithoutCreatedTenantsNestedInput
+  users?: Prisma.UserUpdateManyWithoutTenantNestedInput
+  roles?: Prisma.RoleUpdateManyWithoutTenantNestedInput
+  teachers?: Prisma.TeacherUpdateManyWithoutTenantNestedInput
+  parents?: Prisma.ParentUpdateManyWithoutTenantNestedInput
+  students?: Prisma.StudentUpdateManyWithoutTenantNestedInput
+  schoolAdmins?: Prisma.SchoolAdminUpdateManyWithoutTenantNestedInput
+  subscription?: Prisma.SubscriptionUpdateOneWithoutTenantNestedInput
+  invitations?: Prisma.InvitationUpdateManyWithoutTenantNestedInput
+  website?: Prisma.TenantWebsiteUpdateOneWithoutTenantNestedInput
+  academicSessions?: Prisma.AcademicSessionUpdateManyWithoutTenantNestedInput
+  subjects?: Prisma.SubjectUpdateManyWithoutTenantNestedInput
+  announcements?: Prisma.AnnouncementUpdateManyWithoutTenantNestedInput
+}
+
+export type TenantUncheckedUpdateWithoutClassesInput = {
+  id?: Prisma.IntFieldUpdateOperationsInput | number
+  publicId?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  createdById?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  school_name?: Prisma.StringFieldUpdateOperationsInput | string
+  domain?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  contactPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  contactAddress?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  contactEmail?: Prisma.StringFieldUpdateOperationsInput | string
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  status?: Prisma.EnumTenantStatusFieldUpdateOperationsInput | $Enums.TenantStatus
+  onboardingStep?: Prisma.IntFieldUpdateOperationsInput | number
+  onboardingCompleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  users?: Prisma.UserUncheckedUpdateManyWithoutTenantNestedInput
+  roles?: Prisma.RoleUncheckedUpdateManyWithoutTenantNestedInput
+  teachers?: Prisma.TeacherUncheckedUpdateManyWithoutTenantNestedInput
+  parents?: Prisma.ParentUncheckedUpdateManyWithoutTenantNestedInput
+  students?: Prisma.StudentUncheckedUpdateManyWithoutTenantNestedInput
+  schoolAdmins?: Prisma.SchoolAdminUncheckedUpdateManyWithoutTenantNestedInput
+  subscription?: Prisma.SubscriptionUncheckedUpdateOneWithoutTenantNestedInput
+  invitations?: Prisma.InvitationUncheckedUpdateManyWithoutTenantNestedInput
+  website?: Prisma.TenantWebsiteUncheckedUpdateOneWithoutTenantNestedInput
+  academicSessions?: Prisma.AcademicSessionUncheckedUpdateManyWithoutTenantNestedInput
+  subjects?: Prisma.SubjectUncheckedUpdateManyWithoutTenantNestedInput
+  announcements?: Prisma.AnnouncementUncheckedUpdateManyWithoutTenantNestedInput
+}
+
+export type TenantCreateWithoutSubjectsInput = {
+  publicId?: string
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  school_name: string
+  domain?: string | null
+  contactPhone?: string | null
+  contactAddress?: string | null
+  contactEmail: string
+  isActive?: boolean
+  status?: $Enums.TenantStatus
+  onboardingStep?: number
+  onboardingCompleted?: boolean
+  createdBy?: Prisma.UserCreateNestedOneWithoutCreatedTenantsInput
+  users?: Prisma.UserCreateNestedManyWithoutTenantInput
+  roles?: Prisma.RoleCreateNestedManyWithoutTenantInput
+  teachers?: Prisma.TeacherCreateNestedManyWithoutTenantInput
+  parents?: Prisma.ParentCreateNestedManyWithoutTenantInput
+  students?: Prisma.StudentCreateNestedManyWithoutTenantInput
+  schoolAdmins?: Prisma.SchoolAdminCreateNestedManyWithoutTenantInput
+  subscription?: Prisma.SubscriptionCreateNestedOneWithoutTenantInput
+  invitations?: Prisma.InvitationCreateNestedManyWithoutTenantInput
+  website?: Prisma.TenantWebsiteCreateNestedOneWithoutTenantInput
+  academicSessions?: Prisma.AcademicSessionCreateNestedManyWithoutTenantInput
+  classes?: Prisma.SchoolClassCreateNestedManyWithoutTenantInput
+  announcements?: Prisma.AnnouncementCreateNestedManyWithoutTenantInput
+}
+
+export type TenantUncheckedCreateWithoutSubjectsInput = {
+  id?: number
+  publicId?: string
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  createdById?: number | null
+  school_name: string
+  domain?: string | null
+  contactPhone?: string | null
+  contactAddress?: string | null
+  contactEmail: string
+  isActive?: boolean
+  status?: $Enums.TenantStatus
+  onboardingStep?: number
+  onboardingCompleted?: boolean
+  users?: Prisma.UserUncheckedCreateNestedManyWithoutTenantInput
+  roles?: Prisma.RoleUncheckedCreateNestedManyWithoutTenantInput
+  teachers?: Prisma.TeacherUncheckedCreateNestedManyWithoutTenantInput
+  parents?: Prisma.ParentUncheckedCreateNestedManyWithoutTenantInput
+  students?: Prisma.StudentUncheckedCreateNestedManyWithoutTenantInput
+  schoolAdmins?: Prisma.SchoolAdminUncheckedCreateNestedManyWithoutTenantInput
+  subscription?: Prisma.SubscriptionUncheckedCreateNestedOneWithoutTenantInput
+  invitations?: Prisma.InvitationUncheckedCreateNestedManyWithoutTenantInput
+  website?: Prisma.TenantWebsiteUncheckedCreateNestedOneWithoutTenantInput
+  academicSessions?: Prisma.AcademicSessionUncheckedCreateNestedManyWithoutTenantInput
+  classes?: Prisma.SchoolClassUncheckedCreateNestedManyWithoutTenantInput
+  announcements?: Prisma.AnnouncementUncheckedCreateNestedManyWithoutTenantInput
+}
+
+export type TenantCreateOrConnectWithoutSubjectsInput = {
+  where: Prisma.TenantWhereUniqueInput
+  create: Prisma.XOR<Prisma.TenantCreateWithoutSubjectsInput, Prisma.TenantUncheckedCreateWithoutSubjectsInput>
+}
+
+export type TenantUpsertWithoutSubjectsInput = {
+  update: Prisma.XOR<Prisma.TenantUpdateWithoutSubjectsInput, Prisma.TenantUncheckedUpdateWithoutSubjectsInput>
+  create: Prisma.XOR<Prisma.TenantCreateWithoutSubjectsInput, Prisma.TenantUncheckedCreateWithoutSubjectsInput>
+  where?: Prisma.TenantWhereInput
+}
+
+export type TenantUpdateToOneWithWhereWithoutSubjectsInput = {
+  where?: Prisma.TenantWhereInput
+  data: Prisma.XOR<Prisma.TenantUpdateWithoutSubjectsInput, Prisma.TenantUncheckedUpdateWithoutSubjectsInput>
+}
+
+export type TenantUpdateWithoutSubjectsInput = {
+  publicId?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  school_name?: Prisma.StringFieldUpdateOperationsInput | string
+  domain?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  contactPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  contactAddress?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  contactEmail?: Prisma.StringFieldUpdateOperationsInput | string
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  status?: Prisma.EnumTenantStatusFieldUpdateOperationsInput | $Enums.TenantStatus
+  onboardingStep?: Prisma.IntFieldUpdateOperationsInput | number
+  onboardingCompleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdBy?: Prisma.UserUpdateOneWithoutCreatedTenantsNestedInput
+  users?: Prisma.UserUpdateManyWithoutTenantNestedInput
+  roles?: Prisma.RoleUpdateManyWithoutTenantNestedInput
+  teachers?: Prisma.TeacherUpdateManyWithoutTenantNestedInput
+  parents?: Prisma.ParentUpdateManyWithoutTenantNestedInput
+  students?: Prisma.StudentUpdateManyWithoutTenantNestedInput
+  schoolAdmins?: Prisma.SchoolAdminUpdateManyWithoutTenantNestedInput
+  subscription?: Prisma.SubscriptionUpdateOneWithoutTenantNestedInput
+  invitations?: Prisma.InvitationUpdateManyWithoutTenantNestedInput
+  website?: Prisma.TenantWebsiteUpdateOneWithoutTenantNestedInput
+  academicSessions?: Prisma.AcademicSessionUpdateManyWithoutTenantNestedInput
+  classes?: Prisma.SchoolClassUpdateManyWithoutTenantNestedInput
+  announcements?: Prisma.AnnouncementUpdateManyWithoutTenantNestedInput
+}
+
+export type TenantUncheckedUpdateWithoutSubjectsInput = {
+  id?: Prisma.IntFieldUpdateOperationsInput | number
+  publicId?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  createdById?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  school_name?: Prisma.StringFieldUpdateOperationsInput | string
+  domain?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  contactPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  contactAddress?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  contactEmail?: Prisma.StringFieldUpdateOperationsInput | string
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  status?: Prisma.EnumTenantStatusFieldUpdateOperationsInput | $Enums.TenantStatus
+  onboardingStep?: Prisma.IntFieldUpdateOperationsInput | number
+  onboardingCompleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  users?: Prisma.UserUncheckedUpdateManyWithoutTenantNestedInput
+  roles?: Prisma.RoleUncheckedUpdateManyWithoutTenantNestedInput
+  teachers?: Prisma.TeacherUncheckedUpdateManyWithoutTenantNestedInput
+  parents?: Prisma.ParentUncheckedUpdateManyWithoutTenantNestedInput
+  students?: Prisma.StudentUncheckedUpdateManyWithoutTenantNestedInput
+  schoolAdmins?: Prisma.SchoolAdminUncheckedUpdateManyWithoutTenantNestedInput
+  subscription?: Prisma.SubscriptionUncheckedUpdateOneWithoutTenantNestedInput
+  invitations?: Prisma.InvitationUncheckedUpdateManyWithoutTenantNestedInput
+  website?: Prisma.TenantWebsiteUncheckedUpdateOneWithoutTenantNestedInput
+  academicSessions?: Prisma.AcademicSessionUncheckedUpdateManyWithoutTenantNestedInput
+  classes?: Prisma.SchoolClassUncheckedUpdateManyWithoutTenantNestedInput
+  announcements?: Prisma.AnnouncementUncheckedUpdateManyWithoutTenantNestedInput
+}
+
+export type TenantCreateWithoutAnnouncementsInput = {
+  publicId?: string
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  school_name: string
+  domain?: string | null
+  contactPhone?: string | null
+  contactAddress?: string | null
+  contactEmail: string
+  isActive?: boolean
+  status?: $Enums.TenantStatus
+  onboardingStep?: number
+  onboardingCompleted?: boolean
+  createdBy?: Prisma.UserCreateNestedOneWithoutCreatedTenantsInput
+  users?: Prisma.UserCreateNestedManyWithoutTenantInput
+  roles?: Prisma.RoleCreateNestedManyWithoutTenantInput
+  teachers?: Prisma.TeacherCreateNestedManyWithoutTenantInput
+  parents?: Prisma.ParentCreateNestedManyWithoutTenantInput
+  students?: Prisma.StudentCreateNestedManyWithoutTenantInput
+  schoolAdmins?: Prisma.SchoolAdminCreateNestedManyWithoutTenantInput
+  subscription?: Prisma.SubscriptionCreateNestedOneWithoutTenantInput
+  invitations?: Prisma.InvitationCreateNestedManyWithoutTenantInput
+  website?: Prisma.TenantWebsiteCreateNestedOneWithoutTenantInput
+  academicSessions?: Prisma.AcademicSessionCreateNestedManyWithoutTenantInput
+  classes?: Prisma.SchoolClassCreateNestedManyWithoutTenantInput
+  subjects?: Prisma.SubjectCreateNestedManyWithoutTenantInput
+}
+
+export type TenantUncheckedCreateWithoutAnnouncementsInput = {
+  id?: number
+  publicId?: string
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  createdById?: number | null
+  school_name: string
+  domain?: string | null
+  contactPhone?: string | null
+  contactAddress?: string | null
+  contactEmail: string
+  isActive?: boolean
+  status?: $Enums.TenantStatus
+  onboardingStep?: number
+  onboardingCompleted?: boolean
+  users?: Prisma.UserUncheckedCreateNestedManyWithoutTenantInput
+  roles?: Prisma.RoleUncheckedCreateNestedManyWithoutTenantInput
+  teachers?: Prisma.TeacherUncheckedCreateNestedManyWithoutTenantInput
+  parents?: Prisma.ParentUncheckedCreateNestedManyWithoutTenantInput
+  students?: Prisma.StudentUncheckedCreateNestedManyWithoutTenantInput
+  schoolAdmins?: Prisma.SchoolAdminUncheckedCreateNestedManyWithoutTenantInput
+  subscription?: Prisma.SubscriptionUncheckedCreateNestedOneWithoutTenantInput
+  invitations?: Prisma.InvitationUncheckedCreateNestedManyWithoutTenantInput
+  website?: Prisma.TenantWebsiteUncheckedCreateNestedOneWithoutTenantInput
+  academicSessions?: Prisma.AcademicSessionUncheckedCreateNestedManyWithoutTenantInput
+  classes?: Prisma.SchoolClassUncheckedCreateNestedManyWithoutTenantInput
+  subjects?: Prisma.SubjectUncheckedCreateNestedManyWithoutTenantInput
+}
+
+export type TenantCreateOrConnectWithoutAnnouncementsInput = {
+  where: Prisma.TenantWhereUniqueInput
+  create: Prisma.XOR<Prisma.TenantCreateWithoutAnnouncementsInput, Prisma.TenantUncheckedCreateWithoutAnnouncementsInput>
+}
+
+export type TenantUpsertWithoutAnnouncementsInput = {
+  update: Prisma.XOR<Prisma.TenantUpdateWithoutAnnouncementsInput, Prisma.TenantUncheckedUpdateWithoutAnnouncementsInput>
+  create: Prisma.XOR<Prisma.TenantCreateWithoutAnnouncementsInput, Prisma.TenantUncheckedCreateWithoutAnnouncementsInput>
+  where?: Prisma.TenantWhereInput
+}
+
+export type TenantUpdateToOneWithWhereWithoutAnnouncementsInput = {
+  where?: Prisma.TenantWhereInput
+  data: Prisma.XOR<Prisma.TenantUpdateWithoutAnnouncementsInput, Prisma.TenantUncheckedUpdateWithoutAnnouncementsInput>
+}
+
+export type TenantUpdateWithoutAnnouncementsInput = {
+  publicId?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  school_name?: Prisma.StringFieldUpdateOperationsInput | string
+  domain?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  contactPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  contactAddress?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  contactEmail?: Prisma.StringFieldUpdateOperationsInput | string
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  status?: Prisma.EnumTenantStatusFieldUpdateOperationsInput | $Enums.TenantStatus
+  onboardingStep?: Prisma.IntFieldUpdateOperationsInput | number
+  onboardingCompleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdBy?: Prisma.UserUpdateOneWithoutCreatedTenantsNestedInput
+  users?: Prisma.UserUpdateManyWithoutTenantNestedInput
+  roles?: Prisma.RoleUpdateManyWithoutTenantNestedInput
+  teachers?: Prisma.TeacherUpdateManyWithoutTenantNestedInput
+  parents?: Prisma.ParentUpdateManyWithoutTenantNestedInput
+  students?: Prisma.StudentUpdateManyWithoutTenantNestedInput
+  schoolAdmins?: Prisma.SchoolAdminUpdateManyWithoutTenantNestedInput
+  subscription?: Prisma.SubscriptionUpdateOneWithoutTenantNestedInput
+  invitations?: Prisma.InvitationUpdateManyWithoutTenantNestedInput
+  website?: Prisma.TenantWebsiteUpdateOneWithoutTenantNestedInput
+  academicSessions?: Prisma.AcademicSessionUpdateManyWithoutTenantNestedInput
+  classes?: Prisma.SchoolClassUpdateManyWithoutTenantNestedInput
+  subjects?: Prisma.SubjectUpdateManyWithoutTenantNestedInput
+}
+
+export type TenantUncheckedUpdateWithoutAnnouncementsInput = {
+  id?: Prisma.IntFieldUpdateOperationsInput | number
+  publicId?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  createdById?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  school_name?: Prisma.StringFieldUpdateOperationsInput | string
+  domain?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  contactPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  contactAddress?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  contactEmail?: Prisma.StringFieldUpdateOperationsInput | string
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  status?: Prisma.EnumTenantStatusFieldUpdateOperationsInput | $Enums.TenantStatus
+  onboardingStep?: Prisma.IntFieldUpdateOperationsInput | number
+  onboardingCompleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  users?: Prisma.UserUncheckedUpdateManyWithoutTenantNestedInput
+  roles?: Prisma.RoleUncheckedUpdateManyWithoutTenantNestedInput
+  teachers?: Prisma.TeacherUncheckedUpdateManyWithoutTenantNestedInput
+  parents?: Prisma.ParentUncheckedUpdateManyWithoutTenantNestedInput
+  students?: Prisma.StudentUncheckedUpdateManyWithoutTenantNestedInput
+  schoolAdmins?: Prisma.SchoolAdminUncheckedUpdateManyWithoutTenantNestedInput
+  subscription?: Prisma.SubscriptionUncheckedUpdateOneWithoutTenantNestedInput
+  invitations?: Prisma.InvitationUncheckedUpdateManyWithoutTenantNestedInput
+  website?: Prisma.TenantWebsiteUncheckedUpdateOneWithoutTenantNestedInput
+  academicSessions?: Prisma.AcademicSessionUncheckedUpdateManyWithoutTenantNestedInput
+  classes?: Prisma.SchoolClassUncheckedUpdateManyWithoutTenantNestedInput
+  subjects?: Prisma.SubjectUncheckedUpdateManyWithoutTenantNestedInput
 }
 
 export type TenantCreateManyCreatedByInput = {
@@ -1999,6 +2755,10 @@ export type TenantUpdateWithoutCreatedByInput = {
   subscription?: Prisma.SubscriptionUpdateOneWithoutTenantNestedInput
   invitations?: Prisma.InvitationUpdateManyWithoutTenantNestedInput
   website?: Prisma.TenantWebsiteUpdateOneWithoutTenantNestedInput
+  academicSessions?: Prisma.AcademicSessionUpdateManyWithoutTenantNestedInput
+  classes?: Prisma.SchoolClassUpdateManyWithoutTenantNestedInput
+  subjects?: Prisma.SubjectUpdateManyWithoutTenantNestedInput
+  announcements?: Prisma.AnnouncementUpdateManyWithoutTenantNestedInput
 }
 
 export type TenantUncheckedUpdateWithoutCreatedByInput = {
@@ -2024,6 +2784,10 @@ export type TenantUncheckedUpdateWithoutCreatedByInput = {
   subscription?: Prisma.SubscriptionUncheckedUpdateOneWithoutTenantNestedInput
   invitations?: Prisma.InvitationUncheckedUpdateManyWithoutTenantNestedInput
   website?: Prisma.TenantWebsiteUncheckedUpdateOneWithoutTenantNestedInput
+  academicSessions?: Prisma.AcademicSessionUncheckedUpdateManyWithoutTenantNestedInput
+  classes?: Prisma.SchoolClassUncheckedUpdateManyWithoutTenantNestedInput
+  subjects?: Prisma.SubjectUncheckedUpdateManyWithoutTenantNestedInput
+  announcements?: Prisma.AnnouncementUncheckedUpdateManyWithoutTenantNestedInput
 }
 
 export type TenantUncheckedUpdateManyWithoutCreatedByInput = {
@@ -2055,6 +2819,10 @@ export type TenantCountOutputType = {
   students: number
   schoolAdmins: number
   invitations: number
+  academicSessions: number
+  classes: number
+  subjects: number
+  announcements: number
 }
 
 export type TenantCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -2065,6 +2833,10 @@ export type TenantCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions
   students?: boolean | TenantCountOutputTypeCountStudentsArgs
   schoolAdmins?: boolean | TenantCountOutputTypeCountSchoolAdminsArgs
   invitations?: boolean | TenantCountOutputTypeCountInvitationsArgs
+  academicSessions?: boolean | TenantCountOutputTypeCountAcademicSessionsArgs
+  classes?: boolean | TenantCountOutputTypeCountClassesArgs
+  subjects?: boolean | TenantCountOutputTypeCountSubjectsArgs
+  announcements?: boolean | TenantCountOutputTypeCountAnnouncementsArgs
 }
 
 /**
@@ -2126,6 +2898,34 @@ export type TenantCountOutputTypeCountInvitationsArgs<ExtArgs extends runtime.Ty
   where?: Prisma.InvitationWhereInput
 }
 
+/**
+ * TenantCountOutputType without action
+ */
+export type TenantCountOutputTypeCountAcademicSessionsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.AcademicSessionWhereInput
+}
+
+/**
+ * TenantCountOutputType without action
+ */
+export type TenantCountOutputTypeCountClassesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.SchoolClassWhereInput
+}
+
+/**
+ * TenantCountOutputType without action
+ */
+export type TenantCountOutputTypeCountSubjectsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.SubjectWhereInput
+}
+
+/**
+ * TenantCountOutputType without action
+ */
+export type TenantCountOutputTypeCountAnnouncementsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.AnnouncementWhereInput
+}
+
 
 export type TenantSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
@@ -2152,6 +2952,10 @@ export type TenantSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs =
   subscription?: boolean | Prisma.Tenant$subscriptionArgs<ExtArgs>
   invitations?: boolean | Prisma.Tenant$invitationsArgs<ExtArgs>
   website?: boolean | Prisma.Tenant$websiteArgs<ExtArgs>
+  academicSessions?: boolean | Prisma.Tenant$academicSessionsArgs<ExtArgs>
+  classes?: boolean | Prisma.Tenant$classesArgs<ExtArgs>
+  subjects?: boolean | Prisma.Tenant$subjectsArgs<ExtArgs>
+  announcements?: boolean | Prisma.Tenant$announcementsArgs<ExtArgs>
   _count?: boolean | Prisma.TenantCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["tenant"]>
 
@@ -2220,6 +3024,10 @@ export type TenantInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs 
   subscription?: boolean | Prisma.Tenant$subscriptionArgs<ExtArgs>
   invitations?: boolean | Prisma.Tenant$invitationsArgs<ExtArgs>
   website?: boolean | Prisma.Tenant$websiteArgs<ExtArgs>
+  academicSessions?: boolean | Prisma.Tenant$academicSessionsArgs<ExtArgs>
+  classes?: boolean | Prisma.Tenant$classesArgs<ExtArgs>
+  subjects?: boolean | Prisma.Tenant$subjectsArgs<ExtArgs>
+  announcements?: boolean | Prisma.Tenant$announcementsArgs<ExtArgs>
   _count?: boolean | Prisma.TenantCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type TenantIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -2242,6 +3050,10 @@ export type $TenantPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs
     subscription: Prisma.$SubscriptionPayload<ExtArgs> | null
     invitations: Prisma.$InvitationPayload<ExtArgs>[]
     website: Prisma.$TenantWebsitePayload<ExtArgs> | null
+    academicSessions: Prisma.$AcademicSessionPayload<ExtArgs>[]
+    classes: Prisma.$SchoolClassPayload<ExtArgs>[]
+    subjects: Prisma.$SubjectPayload<ExtArgs>[]
+    announcements: Prisma.$AnnouncementPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: number
@@ -2662,6 +3474,10 @@ export interface Prisma__TenantClient<T, Null = never, ExtArgs extends runtime.T
   subscription<T extends Prisma.Tenant$subscriptionArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Tenant$subscriptionArgs<ExtArgs>>): Prisma.Prisma__SubscriptionClient<runtime.Types.Result.GetResult<Prisma.$SubscriptionPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   invitations<T extends Prisma.Tenant$invitationsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Tenant$invitationsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$InvitationPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   website<T extends Prisma.Tenant$websiteArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Tenant$websiteArgs<ExtArgs>>): Prisma.Prisma__TenantWebsiteClient<runtime.Types.Result.GetResult<Prisma.$TenantWebsitePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+  academicSessions<T extends Prisma.Tenant$academicSessionsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Tenant$academicSessionsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$AcademicSessionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  classes<T extends Prisma.Tenant$classesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Tenant$classesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$SchoolClassPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  subjects<T extends Prisma.Tenant$subjectsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Tenant$subjectsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$SubjectPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  announcements<T extends Prisma.Tenant$announcementsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Tenant$announcementsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$AnnouncementPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -3328,6 +4144,102 @@ export type Tenant$websiteArgs<ExtArgs extends runtime.Types.Extensions.Internal
    */
   include?: Prisma.TenantWebsiteInclude<ExtArgs> | null
   where?: Prisma.TenantWebsiteWhereInput
+}
+
+/**
+ * Tenant.academicSessions
+ */
+export type Tenant$academicSessionsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the AcademicSession
+   */
+  select?: Prisma.AcademicSessionSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the AcademicSession
+   */
+  omit?: Prisma.AcademicSessionOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.AcademicSessionInclude<ExtArgs> | null
+  where?: Prisma.AcademicSessionWhereInput
+  orderBy?: Prisma.AcademicSessionOrderByWithRelationInput | Prisma.AcademicSessionOrderByWithRelationInput[]
+  cursor?: Prisma.AcademicSessionWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.AcademicSessionScalarFieldEnum | Prisma.AcademicSessionScalarFieldEnum[]
+}
+
+/**
+ * Tenant.classes
+ */
+export type Tenant$classesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the SchoolClass
+   */
+  select?: Prisma.SchoolClassSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the SchoolClass
+   */
+  omit?: Prisma.SchoolClassOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.SchoolClassInclude<ExtArgs> | null
+  where?: Prisma.SchoolClassWhereInput
+  orderBy?: Prisma.SchoolClassOrderByWithRelationInput | Prisma.SchoolClassOrderByWithRelationInput[]
+  cursor?: Prisma.SchoolClassWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.SchoolClassScalarFieldEnum | Prisma.SchoolClassScalarFieldEnum[]
+}
+
+/**
+ * Tenant.subjects
+ */
+export type Tenant$subjectsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Subject
+   */
+  select?: Prisma.SubjectSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Subject
+   */
+  omit?: Prisma.SubjectOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.SubjectInclude<ExtArgs> | null
+  where?: Prisma.SubjectWhereInput
+  orderBy?: Prisma.SubjectOrderByWithRelationInput | Prisma.SubjectOrderByWithRelationInput[]
+  cursor?: Prisma.SubjectWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.SubjectScalarFieldEnum | Prisma.SubjectScalarFieldEnum[]
+}
+
+/**
+ * Tenant.announcements
+ */
+export type Tenant$announcementsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Announcement
+   */
+  select?: Prisma.AnnouncementSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Announcement
+   */
+  omit?: Prisma.AnnouncementOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.AnnouncementInclude<ExtArgs> | null
+  where?: Prisma.AnnouncementWhereInput
+  orderBy?: Prisma.AnnouncementOrderByWithRelationInput | Prisma.AnnouncementOrderByWithRelationInput[]
+  cursor?: Prisma.AnnouncementWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.AnnouncementScalarFieldEnum | Prisma.AnnouncementScalarFieldEnum[]
 }
 
 /**

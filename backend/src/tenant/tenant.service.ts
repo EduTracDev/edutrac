@@ -1,11 +1,9 @@
-import { ForbiddenException, Injectable } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { PrismaService } from '../prisma/prisma.service';
 import { RolesService } from '../auth/services/roles.service';
 import { BadRequestException, InternalServerErrorException } from '@nestjs/common';
 import { ConflictException } from '@nestjs/common';
 import { Prisma } from 'src/generated/prisma/client';
-import { UploadUrls } from 'src/core/types/onboarding.types';
-import { OnboardingUpdateDto } from 'src/onboarding/dto';
 
 @Injectable()
 export class TenantService {
@@ -89,15 +87,15 @@ export class TenantService {
         };
       });
     } catch (error) {
+      console.error(error?.message ?? error);
       if (error instanceof Prisma.PrismaClientKnownRequestError) {
         switch (error.code) {
           case 'P2002':
             throw new ConflictException('This domain is already taken');
           default:
-            throw new InternalServerErrorException('Database error');
+            throw new InternalServerErrorException('Server DB error');
         }
       }
-
       throw error;
     }
   }

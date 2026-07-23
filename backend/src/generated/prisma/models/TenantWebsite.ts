@@ -44,8 +44,11 @@ export type TenantWebsiteMinAggregateOutputType = {
   primaryBannerUrl: string | null
   secondaryBannerUrl: string | null
   bannerTitle: string | null
-  bannerSubtitle: string | null
   bannerDescription: string | null
+  footerTitle: string | null
+  history: string | null
+  vision: string | null
+  mission: string | null
   createdAt: Date | null
   updatedAt: Date | null
 }
@@ -58,8 +61,11 @@ export type TenantWebsiteMaxAggregateOutputType = {
   primaryBannerUrl: string | null
   secondaryBannerUrl: string | null
   bannerTitle: string | null
-  bannerSubtitle: string | null
   bannerDescription: string | null
+  footerTitle: string | null
+  history: string | null
+  vision: string | null
+  mission: string | null
   createdAt: Date | null
   updatedAt: Date | null
 }
@@ -72,8 +78,11 @@ export type TenantWebsiteCountAggregateOutputType = {
   primaryBannerUrl: number
   secondaryBannerUrl: number
   bannerTitle: number
-  bannerSubtitle: number
   bannerDescription: number
+  footerTitle: number
+  history: number
+  vision: number
+  mission: number
   createdAt: number
   updatedAt: number
   _all: number
@@ -98,8 +107,11 @@ export type TenantWebsiteMinAggregateInputType = {
   primaryBannerUrl?: true
   secondaryBannerUrl?: true
   bannerTitle?: true
-  bannerSubtitle?: true
   bannerDescription?: true
+  footerTitle?: true
+  history?: true
+  vision?: true
+  mission?: true
   createdAt?: true
   updatedAt?: true
 }
@@ -112,8 +124,11 @@ export type TenantWebsiteMaxAggregateInputType = {
   primaryBannerUrl?: true
   secondaryBannerUrl?: true
   bannerTitle?: true
-  bannerSubtitle?: true
   bannerDescription?: true
+  footerTitle?: true
+  history?: true
+  vision?: true
+  mission?: true
   createdAt?: true
   updatedAt?: true
 }
@@ -126,8 +141,11 @@ export type TenantWebsiteCountAggregateInputType = {
   primaryBannerUrl?: true
   secondaryBannerUrl?: true
   bannerTitle?: true
-  bannerSubtitle?: true
   bannerDescription?: true
+  footerTitle?: true
+  history?: true
+  vision?: true
+  mission?: true
   createdAt?: true
   updatedAt?: true
   _all?: true
@@ -227,8 +245,11 @@ export type TenantWebsiteGroupByOutputType = {
   primaryBannerUrl: string | null
   secondaryBannerUrl: string | null
   bannerTitle: string | null
-  bannerSubtitle: string | null
   bannerDescription: string | null
+  footerTitle: string | null
+  history: string | null
+  vision: string | null
+  mission: string | null
   createdAt: Date
   updatedAt: Date
   _count: TenantWebsiteCountAggregateOutputType | null
@@ -264,8 +285,11 @@ export type TenantWebsiteWhereInput = {
   primaryBannerUrl?: Prisma.StringNullableFilter<"TenantWebsite"> | string | null
   secondaryBannerUrl?: Prisma.StringNullableFilter<"TenantWebsite"> | string | null
   bannerTitle?: Prisma.StringNullableFilter<"TenantWebsite"> | string | null
-  bannerSubtitle?: Prisma.StringNullableFilter<"TenantWebsite"> | string | null
   bannerDescription?: Prisma.StringNullableFilter<"TenantWebsite"> | string | null
+  footerTitle?: Prisma.StringNullableFilter<"TenantWebsite"> | string | null
+  history?: Prisma.StringNullableFilter<"TenantWebsite"> | string | null
+  vision?: Prisma.StringNullableFilter<"TenantWebsite"> | string | null
+  mission?: Prisma.StringNullableFilter<"TenantWebsite"> | string | null
   createdAt?: Prisma.DateTimeFilter<"TenantWebsite"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"TenantWebsite"> | Date | string
   tenant?: Prisma.XOR<Prisma.TenantScalarRelationFilter, Prisma.TenantWhereInput>
@@ -280,8 +304,11 @@ export type TenantWebsiteOrderByWithRelationInput = {
   primaryBannerUrl?: Prisma.SortOrderInput | Prisma.SortOrder
   secondaryBannerUrl?: Prisma.SortOrderInput | Prisma.SortOrder
   bannerTitle?: Prisma.SortOrderInput | Prisma.SortOrder
-  bannerSubtitle?: Prisma.SortOrderInput | Prisma.SortOrder
   bannerDescription?: Prisma.SortOrderInput | Prisma.SortOrder
+  footerTitle?: Prisma.SortOrderInput | Prisma.SortOrder
+  history?: Prisma.SortOrderInput | Prisma.SortOrder
+  vision?: Prisma.SortOrderInput | Prisma.SortOrder
+  mission?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   tenant?: Prisma.TenantOrderByWithRelationInput
@@ -299,8 +326,11 @@ export type TenantWebsiteWhereUniqueInput = Prisma.AtLeast<{
   primaryBannerUrl?: Prisma.StringNullableFilter<"TenantWebsite"> | string | null
   secondaryBannerUrl?: Prisma.StringNullableFilter<"TenantWebsite"> | string | null
   bannerTitle?: Prisma.StringNullableFilter<"TenantWebsite"> | string | null
-  bannerSubtitle?: Prisma.StringNullableFilter<"TenantWebsite"> | string | null
   bannerDescription?: Prisma.StringNullableFilter<"TenantWebsite"> | string | null
+  footerTitle?: Prisma.StringNullableFilter<"TenantWebsite"> | string | null
+  history?: Prisma.StringNullableFilter<"TenantWebsite"> | string | null
+  vision?: Prisma.StringNullableFilter<"TenantWebsite"> | string | null
+  mission?: Prisma.StringNullableFilter<"TenantWebsite"> | string | null
   createdAt?: Prisma.DateTimeFilter<"TenantWebsite"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"TenantWebsite"> | Date | string
   tenant?: Prisma.XOR<Prisma.TenantScalarRelationFilter, Prisma.TenantWhereInput>
@@ -315,8 +345,11 @@ export type TenantWebsiteOrderByWithAggregationInput = {
   primaryBannerUrl?: Prisma.SortOrderInput | Prisma.SortOrder
   secondaryBannerUrl?: Prisma.SortOrderInput | Prisma.SortOrder
   bannerTitle?: Prisma.SortOrderInput | Prisma.SortOrder
-  bannerSubtitle?: Prisma.SortOrderInput | Prisma.SortOrder
   bannerDescription?: Prisma.SortOrderInput | Prisma.SortOrder
+  footerTitle?: Prisma.SortOrderInput | Prisma.SortOrder
+  history?: Prisma.SortOrderInput | Prisma.SortOrder
+  vision?: Prisma.SortOrderInput | Prisma.SortOrder
+  mission?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   _count?: Prisma.TenantWebsiteCountOrderByAggregateInput
@@ -337,8 +370,11 @@ export type TenantWebsiteScalarWhereWithAggregatesInput = {
   primaryBannerUrl?: Prisma.StringNullableWithAggregatesFilter<"TenantWebsite"> | string | null
   secondaryBannerUrl?: Prisma.StringNullableWithAggregatesFilter<"TenantWebsite"> | string | null
   bannerTitle?: Prisma.StringNullableWithAggregatesFilter<"TenantWebsite"> | string | null
-  bannerSubtitle?: Prisma.StringNullableWithAggregatesFilter<"TenantWebsite"> | string | null
   bannerDescription?: Prisma.StringNullableWithAggregatesFilter<"TenantWebsite"> | string | null
+  footerTitle?: Prisma.StringNullableWithAggregatesFilter<"TenantWebsite"> | string | null
+  history?: Prisma.StringNullableWithAggregatesFilter<"TenantWebsite"> | string | null
+  vision?: Prisma.StringNullableWithAggregatesFilter<"TenantWebsite"> | string | null
+  mission?: Prisma.StringNullableWithAggregatesFilter<"TenantWebsite"> | string | null
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"TenantWebsite"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"TenantWebsite"> | Date | string
 }
@@ -349,8 +385,11 @@ export type TenantWebsiteCreateInput = {
   primaryBannerUrl?: string | null
   secondaryBannerUrl?: string | null
   bannerTitle?: string | null
-  bannerSubtitle?: string | null
   bannerDescription?: string | null
+  footerTitle?: string | null
+  history?: string | null
+  vision?: string | null
+  mission?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   tenant: Prisma.TenantCreateNestedOneWithoutWebsiteInput
@@ -365,8 +404,11 @@ export type TenantWebsiteUncheckedCreateInput = {
   primaryBannerUrl?: string | null
   secondaryBannerUrl?: string | null
   bannerTitle?: string | null
-  bannerSubtitle?: string | null
   bannerDescription?: string | null
+  footerTitle?: string | null
+  history?: string | null
+  vision?: string | null
+  mission?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   gallery?: Prisma.TenantWebsiteGalleryUncheckedCreateNestedManyWithoutWebsiteInput
@@ -378,8 +420,11 @@ export type TenantWebsiteUpdateInput = {
   primaryBannerUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   secondaryBannerUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   bannerTitle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  bannerSubtitle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   bannerDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  footerTitle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  history?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  vision?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  mission?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   tenant?: Prisma.TenantUpdateOneRequiredWithoutWebsiteNestedInput
@@ -394,8 +439,11 @@ export type TenantWebsiteUncheckedUpdateInput = {
   primaryBannerUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   secondaryBannerUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   bannerTitle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  bannerSubtitle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   bannerDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  footerTitle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  history?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  vision?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  mission?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   gallery?: Prisma.TenantWebsiteGalleryUncheckedUpdateManyWithoutWebsiteNestedInput
@@ -409,8 +457,11 @@ export type TenantWebsiteCreateManyInput = {
   primaryBannerUrl?: string | null
   secondaryBannerUrl?: string | null
   bannerTitle?: string | null
-  bannerSubtitle?: string | null
   bannerDescription?: string | null
+  footerTitle?: string | null
+  history?: string | null
+  vision?: string | null
+  mission?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -421,8 +472,11 @@ export type TenantWebsiteUpdateManyMutationInput = {
   primaryBannerUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   secondaryBannerUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   bannerTitle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  bannerSubtitle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   bannerDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  footerTitle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  history?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  vision?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  mission?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -435,8 +489,11 @@ export type TenantWebsiteUncheckedUpdateManyInput = {
   primaryBannerUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   secondaryBannerUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   bannerTitle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  bannerSubtitle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   bannerDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  footerTitle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  history?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  vision?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  mission?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -454,8 +511,11 @@ export type TenantWebsiteCountOrderByAggregateInput = {
   primaryBannerUrl?: Prisma.SortOrder
   secondaryBannerUrl?: Prisma.SortOrder
   bannerTitle?: Prisma.SortOrder
-  bannerSubtitle?: Prisma.SortOrder
   bannerDescription?: Prisma.SortOrder
+  footerTitle?: Prisma.SortOrder
+  history?: Prisma.SortOrder
+  vision?: Prisma.SortOrder
+  mission?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -473,8 +533,11 @@ export type TenantWebsiteMaxOrderByAggregateInput = {
   primaryBannerUrl?: Prisma.SortOrder
   secondaryBannerUrl?: Prisma.SortOrder
   bannerTitle?: Prisma.SortOrder
-  bannerSubtitle?: Prisma.SortOrder
   bannerDescription?: Prisma.SortOrder
+  footerTitle?: Prisma.SortOrder
+  history?: Prisma.SortOrder
+  vision?: Prisma.SortOrder
+  mission?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -487,8 +550,11 @@ export type TenantWebsiteMinOrderByAggregateInput = {
   primaryBannerUrl?: Prisma.SortOrder
   secondaryBannerUrl?: Prisma.SortOrder
   bannerTitle?: Prisma.SortOrder
-  bannerSubtitle?: Prisma.SortOrder
   bannerDescription?: Prisma.SortOrder
+  footerTitle?: Prisma.SortOrder
+  history?: Prisma.SortOrder
+  vision?: Prisma.SortOrder
+  mission?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -555,8 +621,11 @@ export type TenantWebsiteCreateWithoutTenantInput = {
   primaryBannerUrl?: string | null
   secondaryBannerUrl?: string | null
   bannerTitle?: string | null
-  bannerSubtitle?: string | null
   bannerDescription?: string | null
+  footerTitle?: string | null
+  history?: string | null
+  vision?: string | null
+  mission?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   gallery?: Prisma.TenantWebsiteGalleryCreateNestedManyWithoutWebsiteInput
@@ -569,8 +638,11 @@ export type TenantWebsiteUncheckedCreateWithoutTenantInput = {
   primaryBannerUrl?: string | null
   secondaryBannerUrl?: string | null
   bannerTitle?: string | null
-  bannerSubtitle?: string | null
   bannerDescription?: string | null
+  footerTitle?: string | null
+  history?: string | null
+  vision?: string | null
+  mission?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   gallery?: Prisma.TenantWebsiteGalleryUncheckedCreateNestedManyWithoutWebsiteInput
@@ -598,8 +670,11 @@ export type TenantWebsiteUpdateWithoutTenantInput = {
   primaryBannerUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   secondaryBannerUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   bannerTitle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  bannerSubtitle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   bannerDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  footerTitle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  history?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  vision?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  mission?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   gallery?: Prisma.TenantWebsiteGalleryUpdateManyWithoutWebsiteNestedInput
@@ -612,8 +687,11 @@ export type TenantWebsiteUncheckedUpdateWithoutTenantInput = {
   primaryBannerUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   secondaryBannerUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   bannerTitle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  bannerSubtitle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   bannerDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  footerTitle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  history?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  vision?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  mission?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   gallery?: Prisma.TenantWebsiteGalleryUncheckedUpdateManyWithoutWebsiteNestedInput
@@ -625,8 +703,11 @@ export type TenantWebsiteCreateWithoutGalleryInput = {
   primaryBannerUrl?: string | null
   secondaryBannerUrl?: string | null
   bannerTitle?: string | null
-  bannerSubtitle?: string | null
   bannerDescription?: string | null
+  footerTitle?: string | null
+  history?: string | null
+  vision?: string | null
+  mission?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   tenant: Prisma.TenantCreateNestedOneWithoutWebsiteInput
@@ -640,8 +721,11 @@ export type TenantWebsiteUncheckedCreateWithoutGalleryInput = {
   primaryBannerUrl?: string | null
   secondaryBannerUrl?: string | null
   bannerTitle?: string | null
-  bannerSubtitle?: string | null
   bannerDescription?: string | null
+  footerTitle?: string | null
+  history?: string | null
+  vision?: string | null
+  mission?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -668,8 +752,11 @@ export type TenantWebsiteUpdateWithoutGalleryInput = {
   primaryBannerUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   secondaryBannerUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   bannerTitle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  bannerSubtitle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   bannerDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  footerTitle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  history?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  vision?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  mission?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   tenant?: Prisma.TenantUpdateOneRequiredWithoutWebsiteNestedInput
@@ -683,8 +770,11 @@ export type TenantWebsiteUncheckedUpdateWithoutGalleryInput = {
   primaryBannerUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   secondaryBannerUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   bannerTitle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  bannerSubtitle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   bannerDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  footerTitle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  history?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  vision?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  mission?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -728,8 +818,11 @@ export type TenantWebsiteSelect<ExtArgs extends runtime.Types.Extensions.Interna
   primaryBannerUrl?: boolean
   secondaryBannerUrl?: boolean
   bannerTitle?: boolean
-  bannerSubtitle?: boolean
   bannerDescription?: boolean
+  footerTitle?: boolean
+  history?: boolean
+  vision?: boolean
+  mission?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   tenant?: boolean | Prisma.TenantDefaultArgs<ExtArgs>
@@ -745,8 +838,11 @@ export type TenantWebsiteSelectCreateManyAndReturn<ExtArgs extends runtime.Types
   primaryBannerUrl?: boolean
   secondaryBannerUrl?: boolean
   bannerTitle?: boolean
-  bannerSubtitle?: boolean
   bannerDescription?: boolean
+  footerTitle?: boolean
+  history?: boolean
+  vision?: boolean
+  mission?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   tenant?: boolean | Prisma.TenantDefaultArgs<ExtArgs>
@@ -760,8 +856,11 @@ export type TenantWebsiteSelectUpdateManyAndReturn<ExtArgs extends runtime.Types
   primaryBannerUrl?: boolean
   secondaryBannerUrl?: boolean
   bannerTitle?: boolean
-  bannerSubtitle?: boolean
   bannerDescription?: boolean
+  footerTitle?: boolean
+  history?: boolean
+  vision?: boolean
+  mission?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   tenant?: boolean | Prisma.TenantDefaultArgs<ExtArgs>
@@ -775,13 +874,16 @@ export type TenantWebsiteSelectScalar = {
   primaryBannerUrl?: boolean
   secondaryBannerUrl?: boolean
   bannerTitle?: boolean
-  bannerSubtitle?: boolean
   bannerDescription?: boolean
+  footerTitle?: boolean
+  history?: boolean
+  vision?: boolean
+  mission?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }
 
-export type TenantWebsiteOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "tenantId" | "themeColor" | "logoUrl" | "primaryBannerUrl" | "secondaryBannerUrl" | "bannerTitle" | "bannerSubtitle" | "bannerDescription" | "createdAt" | "updatedAt", ExtArgs["result"]["tenantWebsite"]>
+export type TenantWebsiteOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "tenantId" | "themeColor" | "logoUrl" | "primaryBannerUrl" | "secondaryBannerUrl" | "bannerTitle" | "bannerDescription" | "footerTitle" | "history" | "vision" | "mission" | "createdAt" | "updatedAt", ExtArgs["result"]["tenantWebsite"]>
 export type TenantWebsiteInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   tenant?: boolean | Prisma.TenantDefaultArgs<ExtArgs>
   gallery?: boolean | Prisma.TenantWebsite$galleryArgs<ExtArgs>
@@ -808,8 +910,11 @@ export type $TenantWebsitePayload<ExtArgs extends runtime.Types.Extensions.Inter
     primaryBannerUrl: string | null
     secondaryBannerUrl: string | null
     bannerTitle: string | null
-    bannerSubtitle: string | null
     bannerDescription: string | null
+    footerTitle: string | null
+    history: string | null
+    vision: string | null
+    mission: string | null
     createdAt: Date
     updatedAt: Date
   }, ExtArgs["result"]["tenantWebsite"]>
@@ -1244,8 +1349,11 @@ export interface TenantWebsiteFieldRefs {
   readonly primaryBannerUrl: Prisma.FieldRef<"TenantWebsite", 'String'>
   readonly secondaryBannerUrl: Prisma.FieldRef<"TenantWebsite", 'String'>
   readonly bannerTitle: Prisma.FieldRef<"TenantWebsite", 'String'>
-  readonly bannerSubtitle: Prisma.FieldRef<"TenantWebsite", 'String'>
   readonly bannerDescription: Prisma.FieldRef<"TenantWebsite", 'String'>
+  readonly footerTitle: Prisma.FieldRef<"TenantWebsite", 'String'>
+  readonly history: Prisma.FieldRef<"TenantWebsite", 'String'>
+  readonly vision: Prisma.FieldRef<"TenantWebsite", 'String'>
+  readonly mission: Prisma.FieldRef<"TenantWebsite", 'String'>
   readonly createdAt: Prisma.FieldRef<"TenantWebsite", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"TenantWebsite", 'DateTime'>
 }

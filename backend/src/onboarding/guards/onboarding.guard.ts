@@ -21,7 +21,7 @@ export class OnboardingGuard implements CanActivate {
         const request = context.switchToHttp().getRequest();
         
         const user = request.user;
-        if (!user) return true; //suspicious line
+        if (!user) return true;
         
         const tenant = await this.prismaService.tenant.findUnique({
             where: {
