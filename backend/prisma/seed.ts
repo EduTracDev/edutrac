@@ -6,13 +6,14 @@ import { Pool } from 'pg';
 import { PrismaPg } from '@prisma/adapter-pg';
 
 
-
 dotenv.config();
 let adapter;
-if(process.env.DB_TYPE === 'neonpsql') {
+const NODE_ENV = process.env.NODE_ENV;
+if (NODE_ENV !== 'development' && NODE_ENV !== 'production') throw new Error('Missing or Invalid node environment');
+if(NODE_ENV === 'production') {
   adapter = new PrismaNeon({connectionString: `${process.env.DATABASE_URL}`});
 }
-if(process.env.DB_TYPE === 'postgresql'){
+if(NODE_ENV === 'development'){
   const pool = new Pool({
     connectionString: process.env['LOCAL_DATABASE_URL'],
   });
@@ -23,14 +24,15 @@ const prisma = new PrismaClient({
 })
 
 async function main() {
+  
+//await prisma.packagePlan.deleteMany();
+//await prisma.permission.deleteMany();
   await prisma.packagePlan.createMany({
     data: PackagePlans.map((plan) => ({
       ...plan,
       features: JSON.parse(plan.features),
     })),
   });
-// await prisma.packagePlan.deleteMany();
-// await prisma.permission.deleteMany();
 
   for (const permission of Permissions) {
     await prisma.permission.upsert({

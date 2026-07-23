@@ -87,16 +87,18 @@ export class TenantService {
         };
       });
     } catch (error) {
+      console.error(error?.message ?? error);
       if (error instanceof Prisma.PrismaClientKnownRequestError) {
         switch (error.code) {
           case 'P2002':
             throw new ConflictException('This domain is already taken');
           default:
-            throw new InternalServerErrorException('Database error');
+            throw new InternalServerErrorException('Server DB error');
         }
       }
-
       throw error;
     }
   }
+
+  //suspendTenant activateTenant cancelTenant
 }

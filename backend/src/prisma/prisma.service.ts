@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { BadRequestException, Injectable } from '@nestjs/common';
 import { PrismaClient } from '../generated/prisma/client';
 import { Pool } from 'pg';
 import { PrismaPg } from '@prisma/adapter-pg';
@@ -7,19 +7,16 @@ import { PrismaNeon } from '@prisma/adapter-neon';
 @Injectable()
 export class PrismaService extends PrismaClient {
   constructor() {
-    const db_type = process.env.DB_TYPE;
-    if (!db_type) throw new Error('DB_TYPE environment variable is not configured');
-    if(db_type !== 'neonpsql' && db_type !== 'postgresql') throw new Error('DB_TYPE environment variable is misconfigured');
-    
+    const NODE_ENV = process.env.NODE_ENV;
     const databaseUrl = process.env.DATABASE_URL;
     if (!databaseUrl) throw new Error('DATABASE_URL is not configured');
-
+    
     let adapter;
-    if (db_type === 'neonpsql') {
+    if (NODE_ENV === 'production') {
       const connectionString = databaseUrl;
       adapter = new PrismaNeon({ connectionString });
     }
-    if (db_type === 'postgresql') {
+    if (NODE_ENV === 'development') {
       const pool = new Pool({
         connectionString: process.env['LOCAL_DATABASE_URL'],
       });
@@ -33,10 +30,12 @@ export class PrismaService extends PrismaClient {
 
   //To whomever may service this code in my absence, do not use this unless you fully understand the impact. Never use this in production database facing service
   cleanDb() {
-    if (process.env.NODE_ENV === 'production') return 'This action cannot be carried out in production'
+    //if (process.env.NODE_ENV === 'production') throw new BadRequestException('This action cannot be carried out in production(db_clnup)');
     return this.$transaction([
       this.userRole.deleteMany(),
-      //this.rolePermission.deleteMany(),
+      this.rolePermission.deleteMany(),
+      this.schoolAdmin.deleteMany(),
+      this.packagePlan.deleteMany(),
       this.invitation.deleteMany(),
       this.verificationToken.deleteMany(),
       this.teacher.deleteMany(),

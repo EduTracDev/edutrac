@@ -1,12 +1,13 @@
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import { ValidationPipe } from '@nestjs/common';
-import {GlobalExceptionFilter }from './core/filters/global-exception-filter';
+import { GlobalExceptionFilter } from './core/filters/global-exception-filter';
 import helmet from 'helmet';
-import Express from 'express';
+import { join } from 'path';
+import { NestExpressApplication } from '@nestjs/platform-express';
 
 async function bootstrap() {
-  const app = await NestFactory.create(AppModule);
+  const app = await NestFactory.create<NestExpressApplication>(AppModule);
 
   app.useGlobalFilters(new GlobalExceptionFilter());
   app.setGlobalPrefix('api/v1');
@@ -19,7 +20,7 @@ async function bootstrap() {
         'https://edutrac.com',
       ];
 
-      const isTenantDomain = origin?.endsWith(process.env.TENANT_DOMAIN_SUFFIX);
+      const isTenantDomain = origin?.endsWith(process.env.TENANT_DOMAIN_SUFFIX || '');
 
       if (!origin || allowed.includes(origin) || isTenantDomain) {
         return callback(null, true);
@@ -29,12 +30,17 @@ async function bootstrap() {
     },
     credentials: true,
   });
-  const expressApp = app.getHttpAdapter().getInstance() as Express.Application;  
-  expressApp.set('trust proxy', true);
+  app.set('trust proxy', true);
   app.use(helmet());
+  if (process.env.NODE_ENV !== 'production') {
+    app.useStaticAssets(join(process.cwd(), 'uploads'), {
+      prefix: '/uploads',
+    });
+  }
   app.useGlobalPipes(
     new ValidationPipe({
       whitelist: true,
+      transform: true
     }),
   );
 

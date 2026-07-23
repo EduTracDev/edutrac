@@ -12,10 +12,12 @@ export class GoogleUserGuard extends AuthGuard('google') {
   async canActivate(context: ExecutionContext) {
     const req = context.switchToHttp().getRequest();
     const tenantDomain = req?.tenant['domain'];
+    const tenantId = req.tenant['id'];
     if(!tenantDomain) throw new BadRequestException('Invalid request. No tenant in request context');
     const rawStatePayload = {
       action: 'user_login',
       tenantDomain,
+      tenantId,
     };
 
     req.oauthStatePayload = rawStatePayload;

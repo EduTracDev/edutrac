@@ -321,11 +321,19 @@ export class InvitationService {
         acceptedAt: new Date(),
       },
     });
+    const tenant = await tx.tenant.findUnique({
+      where: {
+        id: invitation.tenantId,
+      },
+    });
+    if (!tenant) throw new NotFoundException('Tenant not found');
+    const school_name = tenant.school_name;
     await this.invitationProfileFactory.create(
       tx,
       invitation.type,
       user.id,
       invitation.tenantId,
+      school_name
     );
   }
 }

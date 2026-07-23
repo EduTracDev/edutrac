@@ -3,6 +3,7 @@ import { MailService } from './mail.service';
 import { MailerModule } from '@nestjs-modules/mailer';
 import { PugAdapter } from '@nestjs-modules/mailer/adapters/pug.adapter';
 import { join } from 'path';
+import 'dotenv/config';
 
 @Module({
   imports: [

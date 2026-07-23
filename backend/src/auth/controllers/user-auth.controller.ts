@@ -16,10 +16,12 @@ import {
 } from '../dto';
 import { Tenant } from 'src/core/decorators/get-tenant.decorator';
 import { Throttle } from '@nestjs/throttler';
+import { AllowIncompleteOnboarding } from 'src/onboarding/decorators/skip-onboarding.decorator';
 
 //abcschools.edutrac.com
 //Get the tenantDomain from req host
 @Controller('/auth')
+@AllowIncompleteOnboarding()
 export class UserAuthController {
   constructor(private authService: AuthService) {}
   
@@ -59,11 +61,5 @@ export class UserAuthController {
   ) {
     const tenantId = tenant['id']
     return this.authService.forgotPassword(dto, tenantId);
-  }
-
-  @Post('me')
-  async me(@Tenant() tenant, @Query('userPublicId') userPublicId: string) {
-    const tenantId = tenant['id'];
-    return this.authService.getUserInfo(tenantId, userPublicId);
   }
 }

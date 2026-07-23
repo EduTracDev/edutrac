@@ -49,9 +49,8 @@ export class AuthService {
 
   async registerTenantViaEmailPassword(dto: RegisterTenantDto) {
     try {
-      if (dto.password !== dto.passwordConfirm)
-        throw new BadRequestException('Passwords do not match');
-      
+      if (dto.password !== dto.passwordConfirm) throw new BadRequestException('Passwords do not match');
+      //await this.prismaService.cleanDb();
       const hash = await argon.hash(dto.password);
       const existingTenantOwner = await this.prismaService.tenant.findFirst({
         where: {
@@ -64,7 +63,7 @@ export class AuthService {
           publicId: true,
           school_name: true,
         }
-      })
+      });
       if (existingTenantOwner) throw new ConflictException('This email is already registered on this platform');
       const result = await this.tenantService.createTenant({
         school_name: dto.school_name.toLowerCase(),
@@ -110,8 +109,8 @@ export class AuthService {
           },
         },
       });
-      if (!user) throw new ForbiddenException('Incorrect credentials');
-
+      if (!user) throw new BadRequestException('Incorrect credentials');
+      
       const passwordVerified = await argon.verify(user.password!, dto.password);
       if (!passwordVerified) throw new ForbiddenException('incorrect credentials');
       return this.signToken(user.id, user.email, user.tenantId);
@@ -122,7 +121,7 @@ export class AuthService {
 
   async registerTenantViaGoogle(profile: any, state: any) {
     try {
-      await this.prismaService.cleanDb();
+      //await this.prismaService.cleanDb();
       if (!profile || !state) throw new BadRequestException('Required fields missing');
             
       const existingTenantOwner = await this.prismaService.tenant.findFirst({
@@ -148,9 +147,9 @@ export class AuthService {
         isOAuth: true,
       });
       if (!result) throw new InternalServerErrorException('Tenant and user creation failed');
-      console.log("result:", result);
       return result.user;
     } catch (error) {
+      console.error("error:", error?.message ?? error);
       if (error instanceof Prisma.PrismaClientKnownRequestError) {
         if (error.code === 'P2002') {
           throw new ConflictException('Tenant slug already exists');
@@ -180,16 +179,11 @@ export class AuthService {
   //abcschools.edutrac.com
   async signInUserViaGoogle(profile: any, state: any) {
     try {
-      const tenant = await this.prismaService.tenant.findFirst({
+      const tenant = await this.prismaService.tenant.findUnique({
         where: {
-          school_name: "Silverlite Montessori",
+          id: state.tenantId,
         },
       });
-      // const tenant = await this.prismaService.tenant.findUnique({
-      //   where: {
-      //     domain: state.tenantDomain,
-      //   },
-      // });
       if (!tenant) throw new NotFoundException('Invalid request. Contact your schools administrator to ensure this service still exists');
 
       const user = await this.prismaService.user.findFirst({
@@ -238,20 +232,20 @@ export class AuthService {
           emailVerifiedAt: new Date(),
         },
       });
-      await tx.tenant.update({
+      const updatedTenant = await tx.tenant.update({
         where: {
           id: verificationToken.user.tenantId,
         },
         data: {
           isActive: true,
-          status: 'ACTIVE',
+          status: 'ONBOARDING',
         },
       });
       await tx.schoolAdmin.create({
         data: {
           userId: verificationToken.user.id,
           tenantId: verificationToken.user.tenantId,
-          employeeId: 'emp-tye17',
+          employeeId: `${updatedTenant.school_name.toLowerCase().slice(0, 3)}-${verificationToken.user.publicId}.slice(0, 6)`,
         },
       });
       await tx.verificationToken.delete({
@@ -260,9 +254,11 @@ export class AuthService {
         },
       });
     });
+    const token = await this.signToken(verificationToken.user.id, verificationToken.user.email, verificationToken.user.tenantId);
     return {
       success: true,
       message: 'email verification successful',
+      data: token
     };
   }
 
