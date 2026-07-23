@@ -4,8 +4,4 @@ export class ResendInvitationDto {
   @IsNumber()
   @IsNotEmpty()
   invitationId: number;
-
-  @IsNumber()
-  @IsNotEmpty()
-  invitedBy: number;
 }

@@ -36,10 +36,7 @@ export class InvitationService {
     private config: ConfigService
   ) {}
 
-  async inviteUser(
-    dto: CreateUserInvitationDto,
-    { tenantId, organisation_name },
-  ) {
+  async inviteUser(dto: CreateUserInvitationDto, tenantId:number, school_name:string, adminUserId: number) {
     const existingUser = await this.prismaService.user.findUnique({
       where: {
         email_tenantId: {
@@ -79,7 +76,7 @@ export class InvitationService {
           type: dto.invitationType,
           expiresAt: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000),
           tenantId,
-          invitedById: dto.adminUserId,
+          invitedById: adminUserId,
           tokenHash,
           roleId: role.id,
         },
@@ -95,7 +92,7 @@ export class InvitationService {
         to: dto.email,
         subject: invitionMailConfig.subject,
         template: invitionMailConfig.template,
-        context: { invitationUrl, schoolName: organisation_name },
+        context: { invitationUrl, schoolName: school_name },
       });
     } catch (error) {
       this.logger.error('email sending failed:', error);
@@ -119,10 +116,8 @@ export class InvitationService {
       },
     });
     if (!invitation) throw new ForbiddenException('Invalid invitation');
-    if (invitation.status !== 'PENDING')
-      throw new ForbiddenException('Invitation already used');
-    if (invitation.expiresAt < new Date())
-      throw new ForbiddenException('Invitation has expired');
+    if (invitation.status !== 'PENDING') throw new ForbiddenException('Invitation already used');
+    if (invitation.expiresAt < new Date()) throw new ForbiddenException('Invitation has expired');
 
     return invitation;
   }
@@ -239,7 +234,7 @@ export class InvitationService {
     };
   }
 
-  async resendInvitation(dto: ResendInvitationDto, { tenantId }) {
+  async resendInvitation(dto: ResendInvitationDto, tenantId: number, adminUserId: number) {
     const invitation = await this.prismaService.invitation.findUnique({
       where: {
         id: dto.invitationId,
@@ -262,7 +257,7 @@ export class InvitationService {
       },
       data: {
         tokenHash,
-        invitedById: dto.invitedBy,
+        invitedById: Number(adminUserId),
         expiresAt: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000),
       },
     });
