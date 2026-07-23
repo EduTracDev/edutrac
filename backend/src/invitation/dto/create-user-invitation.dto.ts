@@ -12,10 +12,6 @@ export class CreateUserInvitationDto {
   @IsNotEmpty()
   email: string;
 
-  @IsNumber()
-  @IsNotEmpty()
-  adminUserId: number;
-
   @IsNotEmpty()
   @IsString()
   @IsEnum(InvitationType)

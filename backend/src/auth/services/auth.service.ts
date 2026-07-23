@@ -258,7 +258,8 @@ export class AuthService {
     return {
       success: true,
       message: 'email verification successful',
-      data: token
+      data: token,
+      error: null
     };
   }
 

@@ -34,19 +34,19 @@ export class CompleteOnboardingWebsiteDto {
 
   @IsString()
   @IsNotEmpty()
-  FooterTitle: string;
+  footerTitle: string;
 
   @IsString()
   @IsNotEmpty()
-  History: string;
+  history: string;
 
   @IsString()
   @IsNotEmpty()
-  Vision: string;
+  vision: string;
 
   @IsString()
   @IsNotEmpty()
-  Mission: string;
+  mission: string;
 }
 
 export class CompleteOnboardingGalleryItemDto {

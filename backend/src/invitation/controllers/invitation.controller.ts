@@ -1,11 +1,4 @@
-import {
-  Controller,
-  Post,
-  Body,
-  Param,
-  ParseIntPipe,
-  Query,
-} from '@nestjs/common';
+import { Controller, Post, Body, Param, ParseIntPipe, Query, Req} from '@nestjs/common';
 import {
   CreateUserInvitationDto,
   AcceptUserInvitationDto,
@@ -14,6 +7,7 @@ import {
 } from '../dto';
 import { InvitationService } from '../services/invitation.service';
 import { Tenant } from 'src/core/decorators/get-tenant.decorator';
+import { UnauthorizedException } from '@nestjs/common';
 
 @Controller('invitation')
 export class InvitationController {
@@ -23,11 +17,10 @@ export class InvitationController {
     send invitaion to Admin, Teacher, Parent
 */
   @Post('')
-  async createInvitation(
-    @Tenant() tenant,
-    @Body() dto: CreateUserInvitationDto,
-  ) {
-    return this.invitationService.inviteUser(dto, tenant);
+  async createInvitation(@Req() req, @Tenant() tenant,@Body() dto: CreateUserInvitationDto) {
+    //Temporary check, permission checks would be implemented shortly
+    if (req.user.userRole !== "Admin") throw new UnauthorizedException("You are unauthorised for this action");
+    return this.invitationService.inviteUser(dto, tenant.id, tenant.school_name, req.user.id);
   }
 
   /*
@@ -58,7 +51,7 @@ export class InvitationController {
   }
 
   @Post('resend')
-  async resendInvitation(@Tenant() tenant, @Body() dto: ResendInvitationDto) {
-    return this.invitationService.resendInvitation(dto, tenant);
+  async resendInvitation(@Req() req, @Tenant() tenant, @Body() dto: ResendInvitationDto) {
+    return this.invitationService.resendInvitation(dto, tenant.id, req.user.id);
   }
 }

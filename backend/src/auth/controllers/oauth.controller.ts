@@ -17,7 +17,9 @@ export class OAuthController {
 
   @Get('google/register') //tenant guard interceptor
   @UseGuards(GoogleTenantGuard)
-  googleTenantRegister() {}
+  googleTenantRegister() {
+    
+  }
 
   @UseGuards(AuthGuard('google')) //GoogleStrategy interceptor
   @Get('google/callback')
@@ -34,8 +36,8 @@ export class OAuthController {
       const redirectUrl =
         state.action === 'register_tenant'
           ? `${this.config.get('FRONTEND_URL')}/auth/google/callback?access_token=${tokens.access_token}`
-          : `https://${state.tenantDomain}.edutrac.com/auth/google/callback?token=${tokens.access_token}`;
-      return res.redirect(redirectUrl);
+          : `${this.config.get('FRONTEND_URL')}/auth/google/callback?domain=${state.tenantDomain}&token=${tokens.access_token}`;  
+          return res.redirect(redirectUrl);
     } catch (err) {
       console.error('Google OAuth Callback Error:', err);
       return res.redirect('/auth/error');
