@@ -18,7 +18,7 @@ import 'dotenv/config';
             pass: process.env['SMTP_PASSWORD'],
           },
           tls: {
-            rejectUnauthorized: process.env.NODE_ENV !== "production",
+            rejectUnauthorized: process.env.NODE_ENV === "production",
           },
         },
         defaults: {

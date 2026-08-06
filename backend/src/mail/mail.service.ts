@@ -34,7 +34,7 @@ export class MailService {
       const response = await this.mailerService.sendMail(sendMailParams);
       this.logger.log('Email sent successfully');
     } catch (err) {
-      this.logger.error('Error while sending mail:', err.message);
+      this.logger.error('Error while sending mail:', err.stack ?? err.message);
     }
   }
 }
