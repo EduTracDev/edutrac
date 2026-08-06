@@ -1,17 +1,24 @@
 "use client";
+import { useState, Suspense } from "react";
 import Link from "next/link";
 import { AuthRoutes } from "@/routes/auth.routes";
-import { Suspense } from "react";
-import { useSearchParams } from "next/navigation";
+import { useSearchParams, useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { LoginFormData, loginSchema } from "@/utils/validation";
 import Image from "next/image";
+import { Eye, EyeOff } from "lucide-react";
+import client from "@/utils/client";
+import { authServices, LoginRequest, LoginResponse } from "@/services/auth.service";
 
 function LoginContent() {
+  const router = useRouter(); 
   const searchParams = useSearchParams();
   const role = searchParams.get("role") || "parent";
   const school = searchParams.get("school") || "EduTrac";
+
+  const [showPassword, setShowPassword] = useState(false);
+  const [apiError, setApiError] = useState<string | null>(null);
 
   const {
     register,
@@ -22,7 +29,41 @@ function LoginContent() {
   });
 
   const onSubmit = async (data: LoginFormData) => {
-    console.log("Attempting Login:", data);
+    setApiError(null);
+
+    try {
+      const response = await client.request<LoginRequest, LoginResponse>({
+        path: authServices.login.path,
+        method: authServices.login.method,
+        data: {
+          email: data.email,
+          password: data.password,
+        },
+      });
+
+      if (response?.accessToken) {
+        document.cookie = `accessToken=${encodeURIComponent(response.accessToken)}; path=/; SameSite=Lax`;
+        if (response.refreshToken) {
+          localStorage.setItem("refreshToken", response.refreshToken);
+        }
+
+        // Redirect based on role or to home dashboard
+        router.push(`/dashboard?role=${role}&school=${encodeURIComponent(school)}`);
+      } else {
+        setApiError(response?.message || "Invalid email or password.");
+      }
+    } catch (error: any) {
+      const errorMessage =
+        error?.response?.data?.message ||
+        error?.message ||
+        "An error occurred during sign in. Please try again.";
+      setApiError(errorMessage);
+    }
+  };
+
+  const handleGoogleAuth = () => {
+    const backendUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000";
+    window.location.href = `${backendUrl}/api/v1/auth/google/login-user`;
   };
 
   return (
@@ -48,6 +89,12 @@ function LoginContent() {
               Sign in to continue manage your school.
             </p>
           </div>
+
+          {apiError && (
+            <div className="mb-4 p-3.5 bg-red-50 border border-red-200 text-red-600 rounded-xl text-xs font-medium">
+              {apiError}
+            </div>
+          )}
 
           <form onSubmit={handleSubmit(onSubmit)} className="space-y-5">
             {/* Email Field */}
@@ -77,16 +124,25 @@ function LoginContent() {
               <label className="text-sm font-semibold text-[#1E1E2F]">
                 Password
               </label>
-              <input
-                {...register("password")}
-                type="password"
-                placeholder="Enter your password"
-                className={`w-full px-4 py-3 border rounded-xl text-sm transition-all focus:outline-none placeholder-gray-300 text-gray-700 ${
-                  errors.password
-                    ? "border-red-400 focus:border-red-500 bg-red-50/10"
-                    : "border-gray-200 focus:border-gray-400 bg-white"
-                }`}
-              />
+              <div className="relative">
+                <input
+                  {...register("password")}
+                  type={showPassword ? "text" : "password"}
+                  placeholder="Enter your password"
+                  className={`w-full pl-4 pr-10 py-3 border rounded-xl text-sm transition-all focus:outline-none placeholder-gray-300 text-gray-700 ${
+                    errors.password
+                      ? "border-red-400 focus:border-red-500 bg-red-50/10"
+                      : "border-gray-200 focus:border-gray-400 bg-white"
+                  }`}
+                />
+                <button
+                  type="button"
+                  onClick={() => setShowPassword(!showPassword)}
+                  className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600 focus:outline-none"
+                >
+                  {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
+                </button>
+              </div>
               {errors.password && (
                 <p className="text-xs font-medium text-red-500 mt-1">
                   {errors.password.message}
@@ -115,7 +171,11 @@ function LoginContent() {
             <button
               type="submit"
               disabled={isSubmitting}
-              className="w-full py-3.5 bg-[#E2E4E9] hover:bg-gray-300 text-[#1E1E2F] font-bold rounded-xl text-sm transition-colors mt-2 disabled:opacity-60"
+              className={`w-full py-3.5 cursor-pointer font-bold rounded-xl text-sm transition-colors mt-2 disabled:opacity-60 disabled:cursor-not-allowed ${
+                isSubmitting
+                  ? "bg-[#E2E4E9] text-[#1E1E2F]"
+                  : "bg-[#923CF9] text-white hover:bg-[#7e2ed4]"
+              }`}
             >
               {isSubmitting ? "Processing..." : "Continue"}
             </button>
@@ -125,6 +185,7 @@ function LoginContent() {
           <div className="grid grid-cols-2 gap-4 mt-5">
             <button
               type="button"
+              onClick={handleGoogleAuth}
               className="flex items-center justify-center gap-2 border border-gray-200 rounded-xl py-3 text-sm font-semibold text-gray-700 hover:bg-gray-50 transition-colors"
             >
               <Image src="/google-icons.svg" alt="Google Icon" width={18} height={18} />
