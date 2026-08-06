@@ -12,20 +12,20 @@ import 'dotenv/config';
         transport: {
           host: process.env['SMTP_HOST'],
           port: Number(process.env['SMTP_PORT']),
-          secure: false,
+          secure: Number(process.env['SMTP_PORT']) === 465,
           auth: {
             user: process.env['SMTP_USER'],
             pass: process.env['SMTP_PASSWORD'],
           },
           tls: {
-            rejectUnauthorized: false,
+            rejectUnauthorized: process.env.NODE_ENV !== "production",
           },
         },
         defaults: {
           from: process.env['SMTP_FROM'],
         },
         template: {
-          dir: join(process.cwd(), 'src/templates'),
+          dir: join(process.cwd(), process.env.NODE_ENV === "production" ? 'dist/src/templates' : 'src/templates'),
           adapter: new PugAdapter(),
           options: {
             strict: true,
