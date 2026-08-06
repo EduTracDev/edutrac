@@ -8,7 +8,9 @@ import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { RegisterFormData, registerSchema } from "@/utils/validation";
 import Image from "next/image";
-import { Eye, EyeOff } from "lucide-react"; // Import eye icons
+import { Eye, EyeOff } from "lucide-react";
+import client from "@/utils/client";
+import { authServices, RegisterRequest, RegisterResponse } from "@/services/auth.service";
 
 function SignUpContent() {
   const router = useRouter();
@@ -16,9 +18,12 @@ function SignUpContent() {
   const role = searchParams.get("role") || "school-admin";
   const school = searchParams.get("school") || "EduTrac";
 
-  // Password visibility states
+  const planIdParam = searchParams.get("packagePlanId");
+  const packagePlanId = planIdParam ? parseInt(planIdParam, 10) : 1;
+
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+  const [apiError, setApiError] = useState<string | null>(null);
 
   const {
     register,
@@ -26,21 +31,49 @@ function SignUpContent() {
     formState: { errors, isSubmitting },
   } = useForm<RegisterFormData>({
     resolver: yupResolver(registerSchema),
-    mode: "onTouched", // Validates as the user moves between input fields
+    mode: "onTouched",
   });
 
   const onSubmit = async (data: RegisterFormData) => {
-    console.log("Attempting Registration:", data);
-    await new Promise((resolve) => setTimeout(resolve, 800));
-    router.push(`${AuthRoutes.login.replace('/login', '/verify-email')}?role=${role}&school=${encodeURIComponent(school)}`);
+    setApiError(null);
+
+    try {
+      const response = await client.request<RegisterRequest, RegisterResponse>({
+        path: authServices.register.path,
+        method: authServices.register.method,
+        data: {
+          email: data.email,
+          password: data.password,
+          passwordConfirm: data.confirmPassword,
+          school_name: data.schoolName,
+          packagePlanId: packagePlanId,
+        },
+      });
+
+      if (response?.success) {
+        router.push(
+          `${AuthRoutes.login.replace('/login', '/verify-email')}?email=${encodeURIComponent(
+            data.email
+          )}&role=${role}&school=${encodeURIComponent(data.schoolName)}`
+        );
+      } else {
+        setApiError(response?.message || "Registration failed. Please try again.");
+      }
+    } catch (error: any) {
+      const errorMessage =
+        error?.response?.data?.message ||
+        error?.message ||
+        "An unexpected error occurred during registration.";
+      setApiError(errorMessage);
+    }
   };
 
   return (
     <div className="min-h-screen grid grid-cols-1 lg:grid-cols-12 font-sans bg-white">
-      
+
       {/* Left Side: Form Container */}
       <div className="lg:col-span-7 flex flex-col justify-between min-h-screen px-6 py-8 sm:px-16 md:px-24 xl:px-32">
-        
+
         {/* Top Branding Header */}
         <div className="flex items-center">
           <Link href="/" className="text-2xl font-bold text-[#923CF9]">
@@ -60,10 +93,10 @@ function SignUpContent() {
           </div>
 
           <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
-            
+
             {/* Form Fields 2x2 Responsive Grid Layout */}
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-4 gap-y-3">
-              
+
               {/* Institution Name */}
               <div className="space-y-1">
                 <label className="text-xs font-bold text-[#1E1E2F]">
@@ -73,11 +106,10 @@ function SignUpContent() {
                   {...register("schoolName")}
                   type="text"
                   placeholder="Enter your Institution name"
-                  className={`w-full px-4 py-2.5 border rounded-lg text-xs transition-all focus:outline-none placeholder-gray-300 text-gray-700 ${
-                    errors.schoolName
+                  className={`w-full px-4 py-2.5 border rounded-lg text-xs transition-all focus:outline-none placeholder-gray-300 text-gray-700 ${errors.schoolName
                       ? "border-red-400 focus:border-red-500 bg-red-50/10"
                       : "border-gray-200 focus:border-gray-400 bg-white"
-                  }`}
+                    }`}
                 />
                 {errors.schoolName && (
                   <p className="text-[11px] font-medium text-red-500 mt-0.5">
@@ -95,11 +127,10 @@ function SignUpContent() {
                   {...register("email")}
                   type="email"
                   placeholder="Enter your organization email"
-                  className={`w-full px-4 py-2.5 border rounded-lg text-xs transition-all focus:outline-none placeholder-gray-300 text-gray-700 ${
-                    errors.email
+                  className={`w-full px-4 py-2.5 border rounded-lg text-xs transition-all focus:outline-none placeholder-gray-300 text-gray-700 ${errors.email
                       ? "border-red-400 focus:border-red-500 bg-red-50/10"
                       : "border-gray-200 focus:border-gray-400 bg-white"
-                  }`}
+                    }`}
                 />
                 {errors.email && (
                   <p className="text-[11px] font-medium text-red-500 mt-0.5">
@@ -118,11 +149,10 @@ function SignUpContent() {
                     {...register("password")}
                     type={showPassword ? "text" : "password"}
                     placeholder="Enter your Password"
-                    className={`w-full pl-4 pr-10 py-2.5 border rounded-lg text-xs transition-all focus:outline-none placeholder-gray-300 text-gray-700 ${
-                      errors.password
+                    className={`w-full pl-4 pr-10 py-2.5 border rounded-lg text-xs transition-all focus:outline-none placeholder-gray-300 text-gray-700 ${errors.password
                         ? "border-red-400 focus:border-red-500 bg-red-50/10"
                         : "border-gray-200 focus:border-gray-400 bg-white"
-                    }`}
+                      }`}
                   />
                   <button
                     type="button"
@@ -149,11 +179,10 @@ function SignUpContent() {
                     {...register("confirmPassword")}
                     type={showConfirmPassword ? "text" : "password"}
                     placeholder="Enter your Password"
-                    className={`w-full pl-4 pr-10 py-2.5 border rounded-lg text-xs transition-all focus:outline-none placeholder-gray-300 text-gray-700 ${
-                      errors.confirmPassword
+                    className={`w-full pl-4 pr-10 py-2.5 border rounded-lg text-xs transition-all focus:outline-none placeholder-gray-300 text-gray-700 ${errors.confirmPassword
                         ? "border-red-400 focus:border-red-500 bg-red-50/10"
                         : "border-gray-200 focus:border-gray-400 bg-white"
-                    }`}
+                      }`}
                   />
                   <button
                     type="button"
@@ -176,11 +205,10 @@ function SignUpContent() {
             <button
               type="submit"
               disabled={isSubmitting}
-              className={`w-full py-3.5 cursor-pointer font-bold rounded-xl text-sm transition-colors mt-4 disabled:opacity-60 disabled:cursor-not-allowed ${
-                isSubmitting
+              className={`w-full py-3.5 cursor-pointer font-bold rounded-xl text-sm transition-colors mt-4 disabled:opacity-60 disabled:cursor-not-allowed ${isSubmitting
                   ? "bg-[#E2E4E9] text-[#1E1E2F]"
                   : "bg-[#923CF9] text-white hover:bg-[#7e2ed4]"
-              }`}
+                }`}
             >
               {isSubmitting ? "Creating account..." : "Continue"}
             </button>

@@ -19,18 +19,18 @@ export interface LoginResponse {
 
 export interface RegisterRequest {
   email: string;
-  phone?: string;
   password: string;
-  name: string;
-  role: string;
+  passwordConfirm: string;
+  school_name: string;
+  packagePlanId: number;
 }
 
 export interface RegisterResponse {
+  success: boolean;
   status: string;
   message: string;
-  user: User;
-  accessToken: string;
-  refreshToken: string;
+  data: unknown | null;
+  error: unknown | null;
 }
 
 export interface RefreshTokenRequest {
