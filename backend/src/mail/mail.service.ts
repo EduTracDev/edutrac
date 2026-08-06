@@ -34,6 +34,13 @@ export class MailService {
       const response = await this.mailerService.sendMail(sendMailParams);
       this.logger.log('Email sent successfully');
     } catch (err) {
+      console.log({
+        host: process.env.SMTP_HOST,
+        port: process.env.SMTP_PORT,
+        secure: Number(process.env.SMTP_PORT) === 465,
+        user: process.env.SMTP_USER,
+      });
+      this.logger.error(err);
       this.logger.error('Error while sending mail:', err.stack ?? err.message);
     }
   }

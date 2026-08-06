@@ -18,8 +18,13 @@ import 'dotenv/config';
             pass: process.env['SMTP_PASSWORD'],
           },
           tls: {
-            rejectUnauthorized: process.env.NODE_ENV === "production",
+            rejectUnauthorized: true,
           },
+          connectionTimeout: 30000,
+          greetingTimeout: 30000,
+          socketTimeout: 30000,
+          logger: true,
+          debug: true,
         },
         defaults: {
           from: process.env['SMTP_FROM'],
