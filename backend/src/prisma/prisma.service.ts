@@ -35,7 +35,7 @@ export class PrismaService extends PrismaClient {
       this.userRole.deleteMany(),
       this.rolePermission.deleteMany(),
       this.schoolAdmin.deleteMany(),
-      this.packagePlan.deleteMany(),
+      // this.packagePlan.deleteMany(),
       this.invitation.deleteMany(),
       this.verificationToken.deleteMany(),
       this.teacher.deleteMany(),

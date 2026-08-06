@@ -99,6 +99,5 @@ export class TenantService {
       throw error;
     }
   }
-
   //suspendTenant activateTenant cancelTenant
 }

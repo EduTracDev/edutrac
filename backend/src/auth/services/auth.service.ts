@@ -414,4 +414,12 @@ export class AuthService {
     if (!user) throw new NotFoundException('User not found');
     return user;
   }
+
+  async cleanDb(){
+      await this.prismaService.cleanDb();
+      return {
+        success: true,
+        message: 'Db cleanup successfull',
+      }
+  }
 }

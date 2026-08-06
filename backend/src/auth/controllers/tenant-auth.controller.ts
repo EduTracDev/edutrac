@@ -10,10 +10,9 @@ export class TenantAuthController {
   constructor(private authService: AuthService) {}
 
   @Throttle({ default: {limit: 2,ttl: 60}})
-  @Get('test')
-  test(@Tenant() tenant) {
-    console.log("Got to the auth controller");
-    return 'testing';
+  @Get('cleanup')
+  test() {
+    return this.authService.cleanDb();
   }
 
   @Throttle({ default: {limit: 5,ttl: 60}})
