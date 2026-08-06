@@ -37,7 +37,7 @@ export class MailService {
       console.log({
         host: process.env.SMTP_HOST,
         port: 587,
-        secure: Number(process.env.SMTP_PORT) === 465,
+        secure: false,
         user: process.env.SMTP_USER,
       });
       this.logger.error(err);
