@@ -13,8 +13,9 @@ export interface LoginResponse {
   status?: string;
   message?: string;
   user?: User;
-  accessToken: string;
-  refreshToken: string;
+  accessToken?: string;
+  access_token?: string;
+  refreshToken?: string;
 }
 
 export interface RegisterRequest {
@@ -31,6 +32,30 @@ export interface RegisterResponse {
   message: string;
   data: unknown | null;
   error: unknown | null;
+}
+
+export interface ResendVerificationEmailRequest {
+  email: string;
+}
+
+export interface ResendVerificationEmailResponse {
+  status?: string;
+  message: string;
+  success?: boolean;
+}
+
+export interface VerifyAccountRequest {
+  email: string;
+  token: string;
+}
+
+export interface VerifyAccountResponse {
+  message: string;
+  success?: boolean;
+  data?: {
+    access_token?: string;
+  } | null;
+  error?: unknown | null;
 }
 
 export interface RefreshTokenRequest {
@@ -61,14 +86,14 @@ export interface FinalizeResetPasswordRequest {
 }
 
 const authEndpoints = {
-  login: { path: `${authRoot}/login`, method: ApiMethods.POST },
+  login: { path: `${authRoot}/signin`, method: ApiMethods.POST },
   register: { path: `${authRoot}/register`, method: ApiMethods.POST },
   refreshToken: { path: `${authRoot}/refresh`, method: ApiMethods.POST },
   resendEmailVerification: {
     path: `${authRoot}/resend-verification`,
     method: ApiMethods.POST,
   },
-  verifyEmail: { path: `${authRoot}/verify-email`, method: ApiMethods.POST },
+  verifyAccount: { path: `${authRoot}/verify-account`, method: ApiMethods.POST },
   initResetPassword: {
     path: `${authRoot}/forgot-password`,
     method: ApiMethods.POST,

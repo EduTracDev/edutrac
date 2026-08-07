@@ -12,7 +12,7 @@ import client from "@/utils/client";
 import { authServices, LoginRequest, LoginResponse } from "@/services/auth.service";
 
 function LoginContent() {
-  const router = useRouter(); 
+  const router = useRouter();
   const searchParams = useSearchParams();
   const role = searchParams.get("role") || "parent";
   const school = searchParams.get("school") || "EduTrac";
@@ -28,12 +28,21 @@ function LoginContent() {
     resolver: yupResolver(loginSchema),
   });
 
+  const domainSlug = school
+    .toLowerCase()
+    .trim()
+    .replace(/\s+/g, "-")
+    .replace(/[^\w\-]+/g, "");
+
   const onSubmit = async (data: LoginFormData) => {
     setApiError(null);
 
     try {
+
+      const requestPath = `${authServices.login.path}?domain=${encodeURIComponent(domainSlug)}`;
+
       const response = await client.request<LoginRequest, LoginResponse>({
-        path: authServices.login.path,
+        path: requestPath,
         method: authServices.login.method,
         data: {
           email: data.email,
@@ -41,8 +50,10 @@ function LoginContent() {
         },
       });
 
-      if (response?.accessToken) {
-        document.cookie = `accessToken=${encodeURIComponent(response.accessToken)}; path=/; SameSite=Lax`;
+      const token = response?.access_token || response?.accessToken;
+
+      if (token) {
+        document.cookie = `accessToken=${encodeURIComponent(token)}; path=/; SameSite=Lax`;
         if (response.refreshToken) {
           localStorage.setItem("refreshToken", response.refreshToken);
         }
@@ -62,24 +73,19 @@ function LoginContent() {
   };
 
   const handleGoogleAuth = () => {
-    const backendUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000";
-    window.location.href = `${backendUrl}/api/v1/auth/google/login-user`;
+    const backendUrl = process.env.NEXT_PUBLIC_API_URL || "https://edutrac.onrender.com";
+    window.location.href = `${backendUrl}/api/v1/auth/google/login-user?domain=${encodeURIComponent(domainSlug)}`;
   };
 
   return (
     <div className="min-h-screen grid grid-cols-1 lg:grid-cols-12 font-sans bg-white">
-      
-      {/* Left Side: Form Container */}
+
       <div className="lg:col-span-7 flex flex-col justify-between min-h-screen px-6 py-8 sm:px-16 md:px-24 xl:px-32">
-        
-        {/* Top Branding Header */}
         <div className="flex items-center">
           <Link href="/" className="text-2xl font-bold text-[#923CF9]">
             <Image src="/logo.png" alt="Edutrac Logo" width={151} height={34} className="inline-block" />
           </Link>
         </div>
-
-        {/* Form Body Wrapper */}
         <div className="w-full max-w-md mx-auto my-auto py-12">
           <div className="mb-8">
             <h1 className="text-2xl font-bold text-[#1E1E2F]">
@@ -97,7 +103,6 @@ function LoginContent() {
           )}
 
           <form onSubmit={handleSubmit(onSubmit)} className="space-y-5">
-            {/* Email Field */}
             <div className="space-y-1.5">
               <label className="text-sm font-semibold text-[#1E1E2F]">
                 Email
@@ -106,11 +111,10 @@ function LoginContent() {
                 {...register("email")}
                 type="email"
                 placeholder="Enter your email"
-                className={`w-full px-4 py-3 border rounded-xl text-sm transition-all focus:outline-none placeholder-gray-300 text-gray-700 ${
-                  errors.email
-                    ? "border-red-400 focus:border-red-500 bg-red-50/10"
-                    : "border-gray-200 focus:border-gray-400 bg-white"
-                }`}
+                className={`w-full px-4 py-3 border rounded-xl text-sm transition-all focus:outline-none placeholder-gray-300 text-gray-700 ${errors.email
+                  ? "border-red-400 focus:border-red-500 bg-red-50/10"
+                  : "border-gray-200 focus:border-gray-400 bg-white"
+                  }`}
               />
               {errors.email && (
                 <p className="text-xs font-medium text-red-500 mt-1">
@@ -129,11 +133,10 @@ function LoginContent() {
                   {...register("password")}
                   type={showPassword ? "text" : "password"}
                   placeholder="Enter your password"
-                  className={`w-full pl-4 pr-10 py-3 border rounded-xl text-sm transition-all focus:outline-none placeholder-gray-300 text-gray-700 ${
-                    errors.password
-                      ? "border-red-400 focus:border-red-500 bg-red-50/10"
-                      : "border-gray-200 focus:border-gray-400 bg-white"
-                  }`}
+                  className={`w-full pl-4 pr-10 py-3 border rounded-xl text-sm transition-all focus:outline-none placeholder-gray-300 text-gray-700 ${errors.password
+                    ? "border-red-400 focus:border-red-500 bg-red-50/10"
+                    : "border-gray-200 focus:border-gray-400 bg-white"
+                    }`}
                 />
                 <button
                   type="button"
@@ -150,7 +153,6 @@ function LoginContent() {
               )}
             </div>
 
-            {/* Remember Me & Forgot Password Section */}
             <div className="flex items-center justify-between text-sm pt-1">
               <label className="flex items-center gap-2 cursor-pointer text-gray-600 font-medium">
                 <input
@@ -171,17 +173,15 @@ function LoginContent() {
             <button
               type="submit"
               disabled={isSubmitting}
-              className={`w-full py-3.5 cursor-pointer font-bold rounded-xl text-sm transition-colors mt-2 disabled:opacity-60 disabled:cursor-not-allowed ${
-                isSubmitting
-                  ? "bg-[#E2E4E9] text-[#1E1E2F]"
-                  : "bg-[#923CF9] text-white hover:bg-[#7e2ed4]"
-              }`}
+              className={`w-full py-3.5 cursor-pointer font-bold rounded-xl text-sm transition-colors mt-2 disabled:opacity-60 disabled:cursor-not-allowed ${isSubmitting
+                ? "bg-[#E2E4E9] text-[#1E1E2F]"
+                : "bg-[#923CF9] text-white hover:bg-[#7e2ed4]"
+                }`}
             >
               {isSubmitting ? "Processing..." : "Continue"}
             </button>
           </form>
 
-          {/* Social Dividers Alternative buttons */}
           <div className="grid grid-cols-2 gap-4 mt-5">
             <button
               type="button"
@@ -204,7 +204,6 @@ function LoginContent() {
           </div>
         </div>
 
-        {/* Footer Links layout */}
         <div className="text-center text-sm text-gray-500 mt-auto">
           Don&apos;t have an account?{" "}
           <Link
@@ -218,7 +217,7 @@ function LoginContent() {
 
       {/* Right Side: Showcase Branding Panel */}
       <div className="hidden lg:col-span-5 bg-[#923CF9] lg:flex flex-col justify-center items-start p-16 xl:p-16 relative overflow-hidden">
-        
+
         {/* Main Header Quote Layout */}
         <div className="max-w-md text-white mb-12 z-10">
           <h2 className="text-3xl xl:text-[30px] font-bold leading-tight">
