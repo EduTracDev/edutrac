@@ -13,12 +13,14 @@ yarn-debug.log*
 yarn-error.log*
 
 # Environment variables
+*.env
 /.env
 .env.local
 .env.production
 .env.development
 frontend/.env
 backend/.env
+
 
 # IDE and editor files
 .vscode/
@@ -74,3 +76,9 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+#prod specs
+/backend/prod-specs
+
+#text files
+*.txt

@@ -1,0 +1,27 @@
+services:
+  dev-db:
+    image: postgres:18
+    container_name: edutrac-dev-db
+    restart: always
+    ports:
+      - 5431:5432
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: edutrac-db
+    volumes:
+      - dev-db-data:/var/lib/postgresql
+
+  test-db:
+    image: postgres:18
+    container_name: edutrac-test-db
+    restart: always
+    ports:
+      - 5437:5432
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: 123testdbpsw
+      POSTGRES_DB: test-db
+        
+volumes:
+  dev-db-data:

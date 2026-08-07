@@ -1,0 +1,782 @@
+generator client {
+  provider = "prisma-client"
+  importFileExtension = ""
+  output   = "../src/generated/prisma"
+  moduleFormat = "cjs"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model Tenant{
+  id Int @id @default(autoincrement())
+  publicId String @unique @default(uuid())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  createdById Int?
+  createdBy User? @relation("TenantCreator", fields: [createdById], references: [id])
+
+  school_name String
+  domain String? @unique
+  contactPhone String?
+  contactAddress String?
+  contactEmail String
+  isActive Boolean @default(false)
+  status TenantStatus @default(PENDING_EMAIL_VERIFICATION)
+  onboardingStep Int @default(0)
+  onboardingCompleted Boolean @default(false)
+  users User[] @relation("TenantMembers")
+  roles Role[]
+  teachers Teacher[]
+  parents Parent[]
+  students Student[]
+  schoolAdmins SchoolAdmin[]
+  subscription Subscription?
+  invitations Invitation[]
+  website TenantWebsite?
+  academicSessions AcademicSession[]
+  classes SchoolClass[]
+  subjects Subject[]
+  announcements Announcement[]
+
+  @@map("tenants")
+}
+
+model TenantWebsite {
+  id Int @id @default(autoincrement())
+  tenantId Int @unique
+  tenant Tenant @relation(fields: [tenantId], references:[id], onDelete: Cascade)
+  themeColor String?
+  logoUrl String?
+  primaryBannerUrl String?
+  secondaryBannerUrl String?
+  bannerTitle String?
+  bannerDescription String?
+  footerTitle String?
+  history String?
+  vision String?
+  mission String?
+  gallery TenantWebsiteGallery[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("tenant_websites")
+}
+
+model TenantWebsiteGallery{
+  id Int @id @default(autoincrement())
+  websiteId Int
+  website TenantWebsite @relation(fields: [websiteId], references: [id], onDelete: Cascade)
+  imageUrl String
+  publicId String
+  caption String?
+  displayOrder Int @default(0)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt  
+
+  @@map("tenant_website_gallery")
+}
+
+model User{
+  id Int @id @default(autoincrement())
+  publicId String @unique @default(uuid())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  email String
+  emailVerified Boolean @default(false)
+  emailVerifiedAt DateTime?
+  password String?
+  firstName String?
+  lastName String?
+  status UserStatus @default(DISABLED)
+  userRoles UserRole[]
+  verificationTokens VerificationToken[]
+  sentInvitations Invitation[] @relation("UserSentInvitations")
+  teacher Teacher?
+  parent Parent?
+  student Student?
+  schoolAdmin SchoolAdmin?
+
+  tenantId Int
+  tenant Tenant @relation("TenantMembers", fields: [tenantId], references: [id])
+  
+  createdTenants Tenant[] @relation("TenantCreator")
+  createdAnnouncements Announcement[] @relation("AnnouncementCreator")
+
+  @@unique([id, tenantId])
+  @@unique([email, tenantId])
+  @@map("users")
+}
+
+model Teacher{
+  id Int @id @default(autoincrement())
+  publicId String @unique @default(uuid())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  employeeId String
+  contactNumber String?
+  qualifications String?
+  specialization String?
+
+  tenantId Int
+  tenant Tenant @relation(fields: [tenantId], references:[id])
+  userId Int
+  user User @relation(fields: [userId, tenantId], references: [id, tenantId])
+  classTeacher SchoolClass[] @relation("ClassTeacher")
+  teacherSubjects TeacherSubject[]
+  attendanceSessions AttendanceSession[]
+  assessments Assessment[]
+  exams Exam[]
+  timetables Timetable[]
+
+  @@unique([employeeId, tenantId])
+  @@unique([userId, tenantId])
+
+  @@map("teachers")
+}
+
+model Parent{
+  id Int @id @default(autoincrement())
+  publicId String @unique @default(uuid())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  contactNumber String?
+  address String?
+  studentLinks ParentStudent[]
+
+  tenantId Int
+  tenant Tenant @relation(fields: [tenantId], references: [id])
+  userId Int
+  user User @relation(fields:[userId, tenantId], references:[id, tenantId])
+  
+  @@unique([userId, tenantId])
+
+  @@map("parents")
+}
+
+model Student{
+  id Int @id @default(autoincrement())
+  publicId String @unique @default(uuid())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  studentId String
+  dateOfBirth DateTime?
+  gender String?
+  address String?
+  contactNumber String?
+  gradeLevel String?
+  parentLinks ParentStudent[]
+
+  userId Int
+  user User @relation(fields:[userId, tenantId], references:[id, tenantId])
+  tenantId Int
+  tenant Tenant @relation(fields:[tenantId], references:[id])
+  enrollments StudentEnrollment[]
+  attendanceRecords AttendanceRecord[]
+  results Result[]
+  
+  @@unique([studentId, tenantId])
+  @@unique([userId, tenantId])
+
+  @@map("students")
+}
+
+model ParentStudent{
+  createdAt DateTime @default(now())
+  relationship String?
+
+  parentId Int
+  parent Parent @relation(fields:[parentId], references:[id])
+  
+  studentId Int
+  student Student @relation(fields:[studentId], references:[id])
+  
+  @@id([parentId, studentId])
+  
+  @@map("parent_students")
+}
+
+model SchoolAdmin{
+  id Int @id @default(autoincrement())
+  publicId String @unique @default(uuid())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  employeeId String
+  contactNumber String?
+  qualifications String?
+  specialization String?
+
+  tenantId Int
+  tenant Tenant @relation(fields:[tenantId], references:[id])
+  userId Int
+  user User @relation(fields:[userId, tenantId], references:[id, tenantId])
+  
+  @@unique([userId, tenantId])
+
+  @@unique([employeeId, tenantId])
+
+  @@map("schooladmins")
+}
+
+model PackagePlan{
+  id Int @id @default(autoincrement())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  
+  name String @unique
+  description String
+  features Json
+  actual_price Float
+  discount Float
+  subscriptions Subscription[]
+
+  maxUsers Int
+  maxRoles Int?
+  maxStorageMb Int?
+  allowsAdvancedAnalytics Boolean @default(false)
+
+  @@map("package_plans")
+}
+
+model Subscription{
+  id Int @id @default(autoincrement())
+  publicId String @unique @default(uuid())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  tenant Tenant @relation(fields: [tenantId], references:[id], onDelete:Cascade)
+  tenantId Int @unique
+
+  packagePlanId Int
+  packagePlan PackagePlan @relation(fields: [packagePlanId], references: [id])
+
+  status SubscriptionStatus
+  startedAt DateTime @default(now())
+  endsAt DateTime?
+  
+  @@map("subscriptions")
+}
+
+model Role {
+  id Int @id @default(autoincrement())
+  publicId String @unique @default(uuid())
+  tenantId Int
+  name String
+  description String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  tenant Tenant @relation(fields: [tenantId], references: [id])
+  userRoles UserRole[]
+  invitations Invitation[]
+  rolePermission RolePermission[]
+
+  @@unique([id, tenantId, name])
+  @@map("roles")
+}
+
+model UserRole{
+  userId Int
+  roleId Int
+  createdAt DateTime @default(now())
+
+  user User @relation(fields:[userId], references: [id])
+  role Role @relation(fields: [roleId], references: [id])
+
+  @@unique([userId, roleId])
+  @@map("userRoles")
+}
+
+model VerificationToken {
+  id         Int      @id @default(autoincrement())
+  tokenHash  String   @unique
+  type       TokenType
+  expiresAt  DateTime
+  usedAt     DateTime?
+  createdAt  DateTime @default(now())
+
+  userId     Int
+  user       User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([tokenHash])
+}
+
+model Invitation {
+  id Int @id @default(autoincrement())
+  publicId String @unique @default(uuid())
+  tokenHash String @unique
+
+  email String
+  type InvitationType
+
+  status InvitationStatus @default(PENDING)
+
+  expiresAt DateTime
+  acceptedAt DateTime?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  tenantId Int
+  tenant Tenant @relation(fields: [tenantId], references: [id], onDelete: Cascade)
+
+  invitedById Int
+  invitedBy User @relation("UserSentInvitations",fields: [invitedById], references: [id])
+
+  roleId Int?
+  role Role? @relation(fields: [roleId], references: [id])
+
+  assignedSubject Json?
+  metadata Json?
+
+  @@index([tenantId])
+  @@index([invitedById])
+  @@index([roleId])
+  @@index([email])
+  @@index([tokenHash])
+}
+
+
+//ENUMS
+enum TokenType {
+  EMAIL_VERIFICATION
+  PASSWORD_RESET
+  TEACHER_INVITATION
+  PARENT_INVITATION
+  STUDENT_INVITATION
+}
+
+enum InvitationType {
+  TEACHER
+  STUDENT
+  PARENT
+  ADMIN
+}
+
+enum InvitationStatus {
+  PENDING
+  ACCEPTED
+  EXPIRED
+  CANCELLED
+}
+
+enum TenantStatus{
+  PENDING_EMAIL_VERIFICATION
+  ONBOARDING
+  ACTIVE
+  SUSPENDED
+  CANCELLED
+}
+
+enum UserStatus{
+  INVITED
+  ACTIVE
+  SUSPENDED
+  DISABLED
+}
+
+enum SubscriptionStatus{
+  ACTIVE
+  CANCELED
+  EXPIRED
+  TRIAL
+  PAST_DUE
+}
+
+
+//Edutrac SAAS admin
+model SuperAdminUser{
+  id Int @id @default(autoincrement())
+  publicId String @unique @default(uuid())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  email String
+  password String
+  firstName String?
+  lastName String?
+}
+
+model Permission{
+  id Int @id @default(autoincrement())
+  publicId String @unique @default(uuid())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  name String @unique
+  description String?
+
+  rolePermission RolePermission[]
+
+  @@map("permissions")
+}
+
+model RolePermission{
+  roleId Int
+  permissionId Int
+  createdAt DateTime @default(now())
+  role Role @relation(fields:[roleId], references:[id])
+  permission Permission @relation(fields:[permissionId], references:[id])
+
+  @@id([roleId, permissionId])
+
+  @@map("role_permissions")
+}
+
+
+model AcademicSession {
+  id Int @id @default(autoincrement())
+  publicId String @unique @default(uuid())
+
+  tenantId Int
+  tenant Tenant @relation(fields: [tenantId], references: [id], onDelete: Cascade)
+
+  name String
+
+  startsAt DateTime
+  endsAt DateTime
+
+  isCurrent Boolean @default(false)
+
+  terms AcademicTerm[]
+  classes SchoolClass[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@unique([tenantId, name])
+}
+
+model AcademicTerm {
+  id Int @id @default(autoincrement())
+  publicId String @unique @default(uuid())
+
+  sessionId Int
+  session AcademicSession @relation(fields: [sessionId], references: [id], onDelete: Cascade)
+
+  name String
+
+  startsAt DateTime
+  endsAt DateTime
+
+  isCurrent Boolean @default(false)
+
+  attendanceSessions AttendanceSession[]
+  assessments Assessment[]
+  exams Exam[]
+  results Result[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@unique([sessionId, name])
+  @@map("academic_terms")
+}
+
+model SchoolClass {
+  id Int @id @default(autoincrement())
+  publicId String @unique @default(uuid())
+
+  tenantId Int
+  tenant Tenant @relation(fields: [tenantId], references: [id])
+
+  sessionId Int
+  session AcademicSession @relation(fields: [sessionId], references: [id])
+
+  name String
+
+  level String?
+
+  capacity Int?
+
+  classTeacherId Int?
+  classTeacher Teacher? @relation("ClassTeacher", fields: [classTeacherId], references: [id])
+
+  enrollments StudentEnrollment[]
+  subjects ClassSubject[]
+  attendanceSessions AttendanceSession[]
+  timetable Timetable[]
+  assessments Assessment[]
+  exams Exam[]
+  results Result[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@unique([tenantId, sessionId, name])
+  @@map("school_classes")
+}
+
+model StudentEnrollment {
+  id Int @id @default(autoincrement())
+  enrolledAt DateTime @default(now())
+  isCurrent Boolean @default(true)
+  leftAt DateTime?
+
+  studentId Int
+  student Student @relation(fields: [studentId], references: [id])
+  classId Int
+  schoolClass SchoolClass @relation(fields: [classId], references: [id])
+
+  @@unique([studentId, classId])
+  @@map("student_enrollments")
+}
+
+model Subject {
+  id Int @id @default(autoincrement())
+  publicId String @unique @default(uuid())
+
+  tenantId Int
+  tenant Tenant @relation(fields: [tenantId], references: [id])
+
+  name String
+
+  code String?
+
+  teachers TeacherSubject[]
+  classes ClassSubject[]
+
+  timetable Timetable[]
+  assessments Assessment[]
+  exams Exam[]
+  results ResultItem[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@unique([tenantId, name])
+  @@unique([tenantId, code])
+  @@map("subjects")
+}
+
+model TeacherSubject {
+  teacherId Int
+  subjectId Int
+  assignedAt DateTime @default(now())
+
+  teacher Teacher @relation(fields: [teacherId], references: [id])
+  subject Subject @relation(fields: [subjectId], references: [id])
+
+  @@id([teacherId, subjectId])
+
+  @@map("teacher_subjects")
+}
+
+model ClassSubject {
+  classId Int
+  subjectId Int
+  assignedAt DateTime @default(now())
+  
+  schoolClass SchoolClass @relation(fields: [classId], references: [id])
+  subject Subject @relation(fields: [subjectId], references: [id])
+
+  @@id([classId, subjectId])
+
+  @@map("class_subjects")
+}
+
+model AttendanceSession {
+  id Int @id @default(autoincrement())
+  publicId String @unique @default(uuid())
+  createdAt DateTime @default(now())
+  date DateTime
+
+  classId Int
+  schoolClass SchoolClass @relation(fields: [classId], references: [id])
+  termId Int
+  term AcademicTerm @relation(fields: [termId], references: [id])
+  teacherId Int
+  teacher Teacher @relation(fields: [teacherId], references: [id])
+
+  records AttendanceRecord[]
+
+  @@index([teacherId])
+  @@index([classId])
+  @@index([termId])
+
+  @@unique([classId, termId, date])
+  @@map("attendance_sessions")
+}
+
+model AttendanceRecord {
+  id Int @id @default(autoincrement())
+
+  attendanceSessionId Int
+  attendanceSession AttendanceSession @relation(fields: [attendanceSessionId], references: [id], onDelete: Cascade)
+
+  studentId Int
+  student Student @relation(fields: [studentId], references: [id])
+
+  status AttendanceStatus
+
+  remark String?
+
+  @@unique([attendanceSessionId, studentId])
+
+  @@map("attendance_records")
+}
+
+model Assessment {
+  id Int @id @default(autoincrement())
+  publicId String @unique @default(uuid())
+  createdAt DateTime @default(now())
+  title String
+  totalMarks Float
+  weight Float
+  termId Int
+
+  term AcademicTerm @relation(fields: [termId], references: [id])
+  subjectId Int
+  subject Subject @relation(fields: [subjectId], references: [id])
+  classId Int
+  schoolClass SchoolClass @relation(fields: [classId], references: [id])
+  teacherId Int
+  teacher Teacher @relation(fields: [teacherId], references: [id])
+
+  @@index([teacherId])
+  @@index([classId])
+  @@index([subjectId])
+
+  @@unique([classId, subjectId, termId, title])
+  @@map("assessments")
+}
+
+model Exam {
+  id Int @id @default(autoincrement())
+  publicId String @unique @default(uuid())
+  createdAt DateTime @default(now())
+  title String
+  totalMarks Float
+
+  termId Int
+  term AcademicTerm @relation(fields: [termId], references: [id])
+  classId Int
+  schoolClass SchoolClass @relation(fields: [classId], references: [id])
+  subjectId Int
+  subject Subject @relation(fields: [subjectId], references: [id])
+  teacherId Int
+  teacher Teacher @relation(fields: [teacherId], references: [id])
+
+  @@index([teacherId])
+  @@index([classId])
+  @@index([subjectId])
+
+  @@unique([classId, subjectId, termId, title])
+  @@map("exams")
+}
+
+model Result {
+  id Int @id @default(autoincrement())
+  publicId String @unique @default(uuid())
+  totalScore Float?
+  average Float?
+  grade String?
+  remark String?
+  createdAt DateTime @default(now())
+
+  studentId Int
+  student Student @relation(fields: [studentId], references: [id])
+  termId Int
+  term AcademicTerm @relation(fields: [termId], references: [id])
+  classId Int
+  schoolClass SchoolClass @relation(fields: [classId], references: [id])
+
+  items ResultItem[]
+
+  @@unique([studentId, termId, classId])
+  @@index([studentId])
+  @@index([termId])
+
+  @@map("results")
+}
+
+model ResultItem {
+  id Int @id @default(autoincrement())
+  assessmentScore Float?
+  examScore Float?
+  totalScore Float?
+  grade String?
+  position Int?
+  remark String?
+
+  resultId Int
+  result Result @relation(fields: [resultId], references: [id], onDelete: Cascade)
+  subjectId Int
+  subject Subject @relation(fields: [subjectId], references: [id])
+
+  @@index([subjectId])
+
+  @@unique([resultId, subjectId])
+  @@map("result_items")
+}
+
+model Timetable {
+  id Int @id @default(autoincrement())
+  publicId String @unique @default(uuid())
+
+  classId Int
+  schoolClass SchoolClass @relation(fields: [classId], references: [id])
+
+  subjectId Int
+  subject Subject @relation(fields: [subjectId], references: [id])
+
+  teacherId Int
+  teacher Teacher @relation(fields: [teacherId], references: [id])
+
+  day DayOfWeek
+  startTime String
+  endTime String
+
+  @@map("timetables")
+}
+
+model Announcement {
+  id Int @id @default(autoincrement())
+  publicId String @unique @default(uuid())
+  createdById Int
+  createdBy User @relation("AnnouncementCreator", fields: [createdById], references: [id])
+  
+  tenantId Int
+  tenant Tenant @relation(fields: [tenantId], references: [id], onDelete: Cascade)
+
+  title String
+
+  content String
+
+  audience AnnouncementAudience
+
+  published Boolean @default(false)
+
+  publishedAt DateTime?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("announcements")
+}
+
+enum AttendanceStatus {
+  PRESENT
+  ABSENT
+  LATE
+  EXCUSED
+}
+
+enum AnnouncementAudience {
+  EVERYONE
+  STUDENTS
+  PARENTS
+  TEACHERS
+  ADMINS
+}
+
+enum DayOfWeek{
+  MONDAY
+  TUESDAY
+  WEDNESDAY
+  THURSDAY
+  FRIDAY
+  SATURDAY
+  SUNDAY
+}
