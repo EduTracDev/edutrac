@@ -79,7 +79,7 @@ import { ClassModule } from './class/class.module';
 export class AppModule implements NestModule {
   configure(consumer: MiddlewareConsumer) {
     consumer.apply(TenantMiddleware)
-      .exclude('/auth', '/auth/cleanup', '/auth/register', '/auth/verify-account', '/auth/google/register', '/auth/google/callback', '/auth/resend-verification-email', '/onboarding')
+      .exclude('/auth', '/auth/cleanup', '/auth/register', '/auth/verify-account', '/auth/google/register', '/auth/google/callback', '/auth/resend-verification-email', '/onboarding', '/pricing')
       .forRoutes('*');
   }
 }

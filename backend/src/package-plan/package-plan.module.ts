@@ -5,5 +5,6 @@ import { PackagePlanService } from './package-plan.service';
 @Module({
   controllers: [PackagePlanController],
   providers: [PackagePlanService],
+  exports: [PackagePlanService],
 })
 export class PackagePlanModule {}
