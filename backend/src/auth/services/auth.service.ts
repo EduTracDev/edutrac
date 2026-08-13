@@ -47,6 +47,16 @@ export class AuthService {
     private oauthStateService: OAuthStateService,
   ) {}
 
+  async cleanup() {
+    await this.prismaService.cleanDb();
+    return {
+      success: true,
+      message: 'Database cleaned successfully',
+      data: null,
+      error: null,
+    }
+  }
+
   async registerTenantViaEmailPassword(dto: RegisterTenantDto) {
     try {
       if (dto.password !== dto.passwordConfirm) throw new BadRequestException('Passwords do not match');

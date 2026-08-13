@@ -8,6 +8,11 @@ export class TenantAuthController {
   constructor(private authService: AuthService) {}
 
   @Throttle({ default: {limit: 5,ttl: 60}})
+  @Post('cleanup')
+  async cleanup() {
+    return this.authService.cleanup();
+  }
+
   @Post('register')
   async registerTenant(@Body() dto: RegisterTenantDto) {
     return this.authService.registerTenantViaEmailPassword(dto);

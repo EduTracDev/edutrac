@@ -18,7 +18,9 @@ async function bootstrap() {
         'https://hoppscotch.io',
         'https://www.edutrac.com',
         'https://edutrac.com',
-        'https://edutrac-lms.vercel.app'
+        'https://edutrac-lms.vercel.app',
+        'http://localhost:3000',
+        'http://localhost:3001'
       ];
 
       const isTenantDomain = origin?.endsWith(process.env.TENANT_DOMAIN_SUFFIX || '');
