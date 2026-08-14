@@ -87,7 +87,7 @@ export default function Navbar({
               Login
             </Link>
             <Link
-              href={AuthRoutes.register}
+              href={buttonLink}
               className="px-6 py-2.5 bg-brand text-white rounded-lg font-semibold transition-all hover:bg-[#7b2dd1] active:scale-95 shadow-md shadow-purple-200"
             >
               {buttonText}
@@ -139,7 +139,7 @@ export default function Navbar({
               Login
             </Link>
             <Link
-              href={AuthRoutes.register}
+              href={buttonLink}
               className="block w-full text-center bg-[#923CF9] text-white py-3 rounded-xl font-bold shadow-lg"
             >
               {buttonText}

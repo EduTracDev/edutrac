@@ -1,6 +1,6 @@
 import { Metadata } from "next";
 import { Box } from "@mui/material";
-import { AuthRoutes } from "@/routes/auth.routes";
+import {LandingRoutes} from "@/routes/landing.routes";
 import Navbar from "@/modules/landing/components/Navbar/Navbar";
 import Hero from "@/modules/landing/components/Hero/Hero";
 import Pricing from "@/modules/landing/components/Pricing/Pricing";
@@ -60,7 +60,7 @@ export default function HomePage() {
       description:
         "Unify student records, classes, communication, and reporting in one smart, easy-to-use platform—for teachers, students, parents, and admins.",
       buttonText: "Get Started",
-      buttonLink: AuthRoutes.register,
+      buttonLink: LandingRoutes.plan ?? "/plan",
     },
     chooseUs: {
       badge: "WHY CHOOSE US",
@@ -94,12 +94,12 @@ export default function HomePage() {
     },
     navigation: {
       buttonText: "Sign Up",
-      buttonLink: AuthRoutes.register,
+      buttonLink: LandingRoutes.plan ?? "/plan",
     },
     joinUs: {
       topBanner: {
         title: "Small. Tailor EduTrac to Your Needs.",
-        joinLink: AuthRoutes.register,
+        joinLink: LandingRoutes.plan ?? "/plan",
         videoLink: "#",
       },
       whyChooseUs: {
@@ -160,6 +160,7 @@ export default function HomePage() {
       description:
         "Join thousands of Learning Platforms already benefiting from EduTrac's powerful features.",
       buttonText: "Start Free Trial",
+      buttonLink: LandingRoutes.plan ?? "/plan",
     },
     faq: [
       {

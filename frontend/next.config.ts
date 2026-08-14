@@ -5,6 +5,16 @@ const nextConfig: NextConfig = {
   /* config options here */
   reactStrictMode: false,
 
+  // Fixes CORS & Ad-blocker issues by proxying API calls through Next.js
+  async rewrites() {
+    return [
+      {
+        source: "/api/v1/:path*",
+        destination: "https://edutrac.onrender.com/api/v1/:path*",
+      },
+    ];
+  },
+
   // This allows production builds to successfully complete
   // even if your project has ESLint errors.
   eslint: {

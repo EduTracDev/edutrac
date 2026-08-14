@@ -199,7 +199,7 @@ function VerifyEmailContent() {
                     },
                   })}
                   type="email"
-                  placeholder="john.doe@gmail.com"
+                  placeholder="Enter your email address"
                   className={`w-full px-4 py-3.5 border rounded-xl text-sm text-[#1E1E2F] font-medium bg-white focus:outline-none transition-all ${
                     errors.email
                       ? "border-red-400 focus:border-red-500"

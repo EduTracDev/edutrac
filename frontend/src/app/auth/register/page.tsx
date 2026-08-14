@@ -64,7 +64,7 @@ function SignUpContent() {
         const verifyUrl = `${AuthRoutes.verifyEmail || "/auth/verify-email"}?email=${encodeURIComponent(
           data.email
         )}&role=${role}&school=${encodeURIComponent(data.schoolName)}`;
-        
+
         router.push(verifyUrl);
       } else {
         setApiError(response?.message || "Registration failed. Please try again.");
@@ -73,7 +73,7 @@ function SignUpContent() {
       const errorMessage =
         error?.response?.data?.message ||
         error?.message ||
-        "An unexpected error occurred during registration.";
+        "An unexpected error occurred during registration. Please check your browser extensions/ad-blockers.";
       setApiError(errorMessage);
     }
   };
@@ -136,10 +136,11 @@ function SignUpContent() {
                   {...register("schoolName")}
                   type="text"
                   placeholder="Enter your Institution name"
-                  className={`w-full px-4 py-2.5 border rounded-lg text-xs transition-all focus:outline-none placeholder-gray-300 text-gray-700 ${errors.schoolName
+                  className={`w-full px-4 py-2.5 border rounded-lg text-xs transition-all focus:outline-none placeholder-gray-300 text-gray-700 ${
+                    errors.schoolName
                       ? "border-red-400 focus:border-red-500 bg-red-50/10"
                       : "border-gray-200 focus:border-gray-400 bg-white"
-                    }`}
+                  }`}
                 />
                 {errors.schoolName && (
                   <p className="text-[11px] font-medium text-red-500 mt-0.5">
@@ -157,10 +158,11 @@ function SignUpContent() {
                   {...register("email")}
                   type="email"
                   placeholder="Enter your organization email"
-                  className={`w-full px-4 py-2.5 border rounded-lg text-xs transition-all focus:outline-none placeholder-gray-300 text-gray-700 ${errors.email
+                  className={`w-full px-4 py-2.5 border rounded-lg text-xs transition-all focus:outline-none placeholder-gray-300 text-gray-700 ${
+                    errors.email
                       ? "border-red-400 focus:border-red-500 bg-red-50/10"
                       : "border-gray-200 focus:border-gray-400 bg-white"
-                    }`}
+                  }`}
                 />
                 {errors.email && (
                   <p className="text-[11px] font-medium text-red-500 mt-0.5">
@@ -179,10 +181,11 @@ function SignUpContent() {
                     {...register("password")}
                     type={showPassword ? "text" : "password"}
                     placeholder="Enter your Password"
-                    className={`w-full pl-4 pr-10 py-2.5 border rounded-lg text-xs transition-all focus:outline-none placeholder-gray-300 text-gray-700 ${errors.password
+                    className={`w-full pl-4 pr-10 py-2.5 border rounded-lg text-xs transition-all focus:outline-none placeholder-gray-300 text-gray-700 ${
+                      errors.password
                         ? "border-red-400 focus:border-red-500 bg-red-50/10"
                         : "border-gray-200 focus:border-gray-400 bg-white"
-                      }`}
+                    }`}
                   />
                   <button
                     type="button"
@@ -209,10 +212,11 @@ function SignUpContent() {
                     {...register("confirmPassword")}
                     type={showConfirmPassword ? "text" : "password"}
                     placeholder="Enter your Password"
-                    className={`w-full pl-4 pr-10 py-2.5 border rounded-lg text-xs transition-all focus:outline-none placeholder-gray-300 text-gray-700 ${errors.confirmPassword
+                    className={`w-full pl-4 pr-10 py-2.5 border rounded-lg text-xs transition-all focus:outline-none placeholder-gray-300 text-gray-700 ${
+                      errors.confirmPassword
                         ? "border-red-400 focus:border-red-500 bg-red-50/10"
                         : "border-gray-200 focus:border-gray-400 bg-white"
-                      }`}
+                    }`}
                   />
                   <button
                     type="button"
@@ -235,10 +239,11 @@ function SignUpContent() {
             <button
               type="submit"
               disabled={isSubmitting}
-              className={`w-full py-3.5 cursor-pointer font-bold rounded-xl text-sm transition-colors mt-4 disabled:opacity-60 disabled:cursor-not-allowed ${isSubmitting
+              className={`w-full py-3.5 cursor-pointer font-bold rounded-xl text-sm transition-colors mt-4 disabled:opacity-60 disabled:cursor-not-allowed ${
+                isSubmitting
                   ? "bg-[#E2E4E9] text-[#1E1E2F]"
                   : "bg-[#923CF9] text-white hover:bg-[#7e2ed4]"
-                }`}
+              }`}
             >
               {isSubmitting ? "Creating account..." : "Continue"}
             </button>
@@ -257,7 +262,6 @@ function SignUpContent() {
 
             <button
               type="button"
-              // onClick={handleFacebookAuth}
               className="cursor-pointer flex items-center justify-center gap-2 border border-gray-200 rounded-xl py-2.5 text-sm font-semibold text-gray-700 hover:bg-gray-50 transition-colors"
             >
               <svg className="w-5 h-5" fill="#1877F2" viewBox="0 0 24 24">
