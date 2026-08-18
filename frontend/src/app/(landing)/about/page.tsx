@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { Metadata } from "next";
 import { Box } from "@mui/material";
-import { AuthRoutes } from "@/routes/auth.routes";
+import { LandingRoutes } from "@/routes/landing.routes";
 import Navbar from "@/modules/landing/components/Navbar/Navbar";
 import AboutSection from "@/modules/landing/components/About/About";
 import FreeTrial from "@/modules/landing/components/FreeTrial/FreeTrial";
@@ -184,7 +184,7 @@ export default function AboutPage() {
   };
   return (
     <Box>
-      <Navbar buttonText="Get Started" buttonLink={AuthRoutes.register} />
+      <Navbar buttonText="Get Started" buttonLink={LandingRoutes.plan ?? "/plan"} />
       <AboutSection
         hero={content.about.hero}
         growth={content.about.growth}

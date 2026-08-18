@@ -11,6 +11,7 @@ import Image from "next/image";
 import { Eye, EyeOff } from "lucide-react";
 import client from "@/utils/client";
 import { authServices, RegisterRequest, RegisterResponse } from "@/services/auth.service";
+import { toast } from "react-hot-toast";
 
 function SignUpContent() {
   const router = useRouter();
@@ -61,6 +62,7 @@ function SignUpContent() {
       });
 
       if (response?.success) {
+        toast.success("Registration successful. Please verify your email to continue.");
         const verifyUrl = `${AuthRoutes.verifyEmail || "/auth/verify-email"}?email=${encodeURIComponent(
           data.email
         )}&role=${role}&school=${encodeURIComponent(data.schoolName)}`;
