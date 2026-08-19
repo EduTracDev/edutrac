@@ -3,9 +3,8 @@
 import { useState, useEffect, useRef } from "react";
 import {
   Globe, MapPin, Phone, School, ArrowRight, Plus, X,
-  UploadCloud, Monitor, Tablet, Smartphone
+  UploadCloud, Monitor, Tablet, Smartphone, Loader2
 } from "lucide-react";
-import { School as SchoolType } from "@/modules/types/dashboard";
 import { FileUploader } from "@/modules/shared/component/FileUploader";
 import { useSchoolTheme } from "@/app/theme";
 import {
@@ -14,6 +13,8 @@ import {
   fileToDataUrl,
   SchoolSegmentImages,
 } from "@/modules/shared/lib/schoolProfileStore";
+import { useAppDispatch, useAppSelector } from "@/redux/store/hooks";
+import { submitOnboarding, selectOnboardingState } from "@/redux/store/slices/onboardingSlice";
 
 const PRESET_COLORS = ["#6366F1", "#D97706", "#EC4899", "#22C55E", "#CDE484"];
 
@@ -24,11 +25,26 @@ const EMPTY_SEGMENT_IMAGES: SchoolSegmentImages = {
   student: null,
 };
 
-export const SchoolInfoForm = ({
-  onNext,
-}: {
-  onNext: (data: SchoolType) => void;
-}) => {
+// Data-URL to File helper function for multi-part file conversion
+const dataURLtoFile = (dataurl: string, filename: string): File => {
+  const arr = dataurl.split(",");
+  const mime = arr[0].match(/:(.*?);/)?.[1] || "image/png";
+  const bstr = atob(arr[1]);
+  let n = bstr.length;
+  const u8arr = new Uint8Array(n);
+  while (n--) {
+    u8arr[n] = bstr.charCodeAt(n);
+  }
+  return new File([u8arr], filename, { type: mime });
+};
+
+interface SchoolInfoFormProps {
+  onSuccess: () => void;
+}
+
+export const SchoolInfoForm = ({ onSuccess }: SchoolInfoFormProps) => {
+  const dispatch = useAppDispatch();
+  const { isLoading, error } = useAppSelector(selectOnboardingState);
   const { setSchoolTheme } = useSchoolTheme();
 
   // Basic Form States
@@ -40,22 +56,21 @@ export const SchoolInfoForm = ({
     phone: "",
   });
 
-  // Localized Multi-Step states extracted from OnboardingComponent
+  // Localized Multi-Step states
   const [currentStep, setCurrentStep] = useState<number>(1);
   const [selectedColor, setSelectedColor] = useState<string>("#6366F1");
   const [showColorPicker, setShowColorPicker] = useState<boolean>(false);
   const [showLogoModal, setShowLogoModal] = useState<boolean>(false);
   const [viewMode, setViewMode] = useState<"desktop" | "tablet" | "mobile">("desktop");
 
+  const [banner1File, setBanner1File] = useState<File | null>(null);
+  const [banner2File, setBanner2File] = useState<File | null>(null);
   const [banner1, setBanner1] = useState<string | null>(null);
   const [banner2, setBanner2] = useState<string | null>(null);
   const [heroImageUrl, setHeroImageUrl] = useState<string | null>(null);
   const [logoName, setLogoName] = useState<string | null>(null);
 
-  // The single source of truth for "the school logo" shown everywhere (nav, footer)
   const [logoUrl, setLogoUrl] = useState<string | null>(null);
-
-  // Step 5: one image per landing-page segment, instead of an unordered gallery
   const [segmentImages, setSegmentImages] = useState<SchoolSegmentImages>(EMPTY_SEGMENT_IMAGES);
 
   const [heroTitle, setHeroTitle] = useState<string>("Streamline education from classroom to district");
@@ -83,7 +98,6 @@ export const SchoolInfoForm = ({
     setFormData((prev) => ({ ...prev, slug: generatedSlug }));
   }, [formData.name]);
 
-  // Keep the primary FileUploader logo in sync with the shared logoUrl
   useEffect(() => {
     let cancelled = false;
     if (attachments[0]) {
@@ -96,11 +110,8 @@ export const SchoolInfoForm = ({
     return () => {
       cancelled = true;
     };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [attachments]);
+  }, [attachments, logoName]);
 
-  // Push every relevant field into the shared store as it changes, so the
-  // landing page / nav / footer (different routes) can pick it up live.
   useEffect(() => {
     const slug = formData.slug || "draft";
 
@@ -141,24 +152,26 @@ export const SchoolInfoForm = ({
     segmentImages,
   ]);
 
-  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>, setTarget: (val: string | null) => void) => {
-    if (e.target.files && e.target.files[0]) {
-      const file = e.target.files[0];
-      setTarget(URL.createObjectURL(file));
-    }
-  };
-
   const handleBanner1Change = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (!file) return;
+    setBanner1File(file);
     setBanner1(URL.createObjectURL(file)); 
     const dataUrl = await fileToDataUrl(file);
     setHeroImageUrl(dataUrl); 
   };
 
+  const handleBanner2Change = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    setBanner2File(file);
+    setBanner2(URL.createObjectURL(file));
+  };
+
   const handleLogoModalUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (!file) return;
+    setAttachments([file]);
     const dataUrl = await fileToDataUrl(file);
     setLogoUrl(dataUrl);
     setLogoName(file.name);
@@ -180,45 +193,55 @@ export const SchoolInfoForm = ({
     setSchoolTheme({ primary: color, primaryHover: color + "CC" });
   };
 
-  // Basic fields complete check
   const isBasicComplete = formData.name && formData.address && formData.phone && attachments.length > 0;
 
-  // The final CTA button triggers this function
   const handleActionClick = () => {
     if (!isBasicComplete) return;
 
     if (currentStep < 5) {
-      // Step 2 is skipped based on instructions (it wasn't requested for relocation here)
       if (currentStep === 1) {
         setCurrentStep(3);
       } else {
         setCurrentStep((prev) => prev + 1);
       }
     } else {
-      // Clickable as "Continue to Preview" only if step is 5 or past 5
       handleSubmit();
     }
   };
 
-  const handleSubmit = () => {
-    const schoolPayload = {
-      name: formData.name,
-      slug: formData.slug,
-      address: formData.address,
-      phone: formData.phone,
-      logo: attachments[0]!,
-      heroTitle,
-      heroSubtitle,
-      yourHistory,
-      yourVision,
-      yourMission,
-      heroImageUrl: heroImageUrl as unknown as any,
-      segmentImages,
-      themeColor: selectedColor,
-      footerTitle: <>{footerTitle}</>,
-    } as unknown as SchoolType;
+  const handleSubmit = async () => {
+    const galleryFiles: File[] = [];
+    Object.entries(segmentImages).forEach(([key, dataUrl]) => {
+      if (dataUrl) {
+        galleryFiles.push(dataURLtoFile(dataUrl, `${key}-segment.png`));
+      }
+    });
 
-    onNext(schoolPayload);
+    const payload = {
+      account: {
+        domain: formData.slug,
+        contactPhone: formData.phone,
+        contactAddress: formData.address,
+      },
+      website: {
+        themeColor: selectedColor,
+        bannerTitle: heroTitle,
+        bannerDescription: heroSubtitle,
+        footerTitle: footerTitle,
+        history: yourHistory,
+        vision: yourVision,
+        mission: yourMission,
+      },
+      logo: attachments[0],
+      primaryBanner: banner1File || undefined,
+      secondaryBanner: banner2File || undefined,
+      gallery: galleryFiles.length > 0 ? galleryFiles : undefined,
+    };
+
+    const resultAction = await dispatch(submitOnboarding(payload));
+    if (submitOnboarding.fulfilled.match(resultAction)) {
+      onSuccess();
+    }
   };
 
   const segmentSlots: { key: keyof SchoolSegmentImages; label: string; ref: React.RefObject<HTMLInputElement | null> }[] = [
@@ -230,6 +253,12 @@ export const SchoolInfoForm = ({
 
   return (
     <div className="max-w-4xl mx-auto space-y-10 relative">
+      {error && (
+        <div className="p-4 bg-red-50 border border-red-200 text-red-600 rounded-2xl text-xs font-bold">
+          {error}
+        </div>
+      )}
+
       {/* Logo Upload Section */}
       <div className="space-y-4">
         <label className="text-[10px] font-black uppercase tracking-widest text-slate-400">
@@ -252,6 +281,7 @@ export const SchoolInfoForm = ({
             <School className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-300" size={18} />
             <input
               type="text"
+              value={formData.name}
               placeholder="e.g. GreenTree Academy"
               className="w-full pl-12 pr-4 py-4 bg-slate-50 border border-slate-100 rounded-2xl text-sm font-bold focus:outline-none focus:border-[var(--color-dynamic-brand)] transition-all"
               onChange={(e) => setFormData({ ...formData, name: e.target.value })}
@@ -279,6 +309,7 @@ export const SchoolInfoForm = ({
             <MapPin className="absolute left-4 top-4 text-slate-300" size={18} />
             <textarea
               rows={2}
+              value={formData.address}
               placeholder="Full address of the main campus"
               className="w-full pl-12 pr-4 py-4 bg-slate-50 border border-slate-100 rounded-2xl text-sm font-bold focus:outline-none focus:border-[var(--color-dynamic-brand)] transition-all resize-none"
               onChange={(e) => setFormData({ ...formData, address: e.target.value })}
@@ -294,6 +325,7 @@ export const SchoolInfoForm = ({
             <Phone className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-300" size={18} />
             <input
               type="tel"
+              value={formData.phone}
               placeholder="+234..."
               className="w-full pl-12 pr-4 py-4 bg-slate-50 border border-slate-100 rounded-2xl text-sm font-bold focus:outline-none focus:border-[var(--color-dynamic-brand)] transition-all"
               onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
@@ -302,15 +334,17 @@ export const SchoolInfoForm = ({
         </div>
       </div>
 
-      {/* --- EXTRA ONBOARDING SECTIONS INTEGRATED HERE --- */}
+      {/* Extra Onboarding Steps */}
       {isBasicComplete && (
         <div className="border-t border-slate-100 pt-10 space-y-8">
           <div className="flex items-center justify-between bg-slate-50 p-4 rounded-xl">
             <span className="text-xs font-bold text-slate-500">Additional Setup Progress:</span>
-            <span className="text-xs font-black text-[var(--color-dynamic-brand)]">Step {currentStep === 1 ? 1 : currentStep - 1} of 4</span>
+            <span className="text-xs font-black text-[var(--color-dynamic-brand)]">
+              Step {currentStep === 1 ? 1 : currentStep - 1} of 4
+            </span>
           </div>
 
-          {/* VIEW STEP 1: Core Institutional Details Setup Section */}
+          {/* VIEW STEP 1 */}
           {currentStep === 1 && (
             <div className="w-full space-y-6 animate-in fade-in duration-200">
               <div className="bg-white p-6 rounded-3xl border border-gray-100 shadow-xs space-y-6">
@@ -350,7 +384,7 @@ export const SchoolInfoForm = ({
                       <span className="text-xs text-gray-400 truncate">{banner2 ? "Secondary Image Loaded" : "Upload Image"}</span>
                       <UploadCloud size={14} className="text-gray-400" />
                     </div>
-                    <input type="file" ref={banner2Ref} className="hidden" accept="image/*" onChange={(e) => handleFileChange(e, setBanner2)} />
+                    <input type="file" ref={banner2Ref} className="hidden" accept="image/*" onChange={handleBanner2Change} />
                   </div>
                 </div>
 
@@ -363,7 +397,7 @@ export const SchoolInfoForm = ({
             </div>
           )}
 
-          {/* VIEW STEP 3: Content Introduction Screen Notice Panels Panel Layout */}
+          {/* VIEW STEP 3 */}
           {currentStep === 3 && (
             <div className="w-full text-center space-y-4 animate-in fade-in duration-200 py-6">
               <h1 className="text-2xl font-black text-[#1E1E2F] tracking-tight leading-tight">Let&apos;s create your school&apos;s landing page</h1>
@@ -373,7 +407,7 @@ export const SchoolInfoForm = ({
             </div>
           )}
 
-          {/* VIEW STEP 4: Split Content Engine With Real-time Device Viewport Emulation Frame */}
+          {/* VIEW STEP 4 */}
           {currentStep === 4 && (
             <div className="w-full grid grid-cols-1 lg:grid-cols-12 gap-6 items-start animate-in fade-in duration-300">
               <div className="lg:col-span-5 bg-white border border-gray-100 rounded-2xl p-5 space-y-5 shadow-xs">
@@ -439,7 +473,7 @@ export const SchoolInfoForm = ({
             </div>
           )}
 
-          {/* VIEW STEP 5: Segment Image Assignment — one image per landing page audience */}
+          {/* VIEW STEP 5 */}
           {currentStep === 5 && (
             <div className="w-full space-y-6 animate-in fade-in duration-200">
               <div className="text-center">
@@ -480,20 +514,22 @@ export const SchoolInfoForm = ({
         </div>
       )}
 
-      {/* Primary Action Control Button */}
+      {/* Primary Action Button */}
       <button
-        disabled={!isBasicComplete}
+        disabled={!isBasicComplete || isLoading}
         onClick={handleActionClick}
         className="w-full py-5 bg-[var(--color-dynamic-brand)] text-white rounded-[24px] text-[10px] font-black uppercase tracking-[0.2em] shadow-xl shadow-purple-100 transition-all hover:scale-[1.01] active:scale-95 disabled:opacity-30 flex items-center justify-center gap-2"
       >
-        {currentStep < 5 ? (
+        {isLoading ? (
+          <>Submitting... <Loader2 size={14} className="animate-spin" /></>
+        ) : currentStep < 5 ? (
           <>Next Configuration Step <ArrowRight size={14} /></>
         ) : (
           <>Continue to Preview <ArrowRight size={14} /></>
         )}
       </button>
 
-      {/* POPUP OVERLAY MODAL 1: Color Picker */}
+      {/* MODAL 1: Color Picker */}
       {showColorPicker && (
         <div className="fixed inset-0 bg-black/40 backdrop-blur-xs z-50 flex items-center justify-center p-4">
           <div className="bg-white rounded-3xl w-full max-w-xs p-5 relative shadow-2xl animate-in zoom-in-95 duration-150">
@@ -510,7 +546,7 @@ export const SchoolInfoForm = ({
         </div>
       )}
 
-      {/* POPUP OVERLAY MODAL 2: Logo Asset Upload */}
+      {/* MODAL 2: Logo Asset Upload */}
       {showLogoModal && (
         <div className="fixed inset-0 bg-black/40 backdrop-blur-xs z-50 flex items-center justify-center p-4">
           <div className="bg-white rounded-2xl w-full max-w-md p-6 relative shadow-2xl">

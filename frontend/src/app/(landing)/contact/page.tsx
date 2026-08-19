@@ -4,7 +4,7 @@ import Box from "@mui/material/Box/Box";
 import Footer from "@/modules/landing/components/Footer/Footer";
 import Navbar from "@/modules/landing/components/Navbar/Navbar";
 import FreeTrial from "@/modules/landing/components/FreeTrial/FreeTrial";
-import { AuthRoutes } from "@/routes/auth.routes";
+import { LandingRoutes } from "@/routes/landing.routes";
 import ContactForm from "@/modules/landing/components/ContactForm";
 
 export const metadata: Metadata = {
@@ -22,7 +22,7 @@ export default function ContactPage() {
   const content = {
     navigation: {
       buttonText: "Sign Up",
-      buttonLink: AuthRoutes.register,
+      buttonLink: LandingRoutes.plan ?? "/plan",
     },
     freeTrial: {
       title: "Ready to Simplify Your School Management?",
@@ -34,7 +34,7 @@ export default function ContactPage() {
   return (
     <Box>
       <ContactForm />
-      <Navbar buttonText="Get Started" buttonLink={AuthRoutes.register} />
+      <Navbar buttonText="Get Started" buttonLink={LandingRoutes.plan ?? "/plan"} />
       <FreeTrial {...content.freeTrial} />
       <Footer />
     </Box>

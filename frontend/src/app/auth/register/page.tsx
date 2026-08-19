@@ -4,43 +4,102 @@ import React, { useState, Suspense } from "react";
 import Link from "next/link";
 import { AuthRoutes } from "@/routes/auth.routes";
 import { useSearchParams, useRouter } from "next/navigation";
-import { useForm } from "react-hook-form";
+import { useForm, useWatch } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { RegisterFormData, registerSchema } from "@/utils/validation";
 import Image from "next/image";
-import { Eye, EyeOff } from "lucide-react"; // Import eye icons
+import { Eye, EyeOff } from "lucide-react";
+import client from "@/utils/client";
+import { authServices, RegisterRequest, RegisterResponse } from "@/services/auth.service";
+import { toast } from "react-hot-toast";
 
 function SignUpContent() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const role = searchParams.get("role") || "school-admin";
-  const school = searchParams.get("school") || "EduTrac";
+  const defaultSchoolName = searchParams.get("school") || "";
 
-  // Password visibility states
+  const planIdParam = searchParams.get("packagePlanId");
+  const packagePlanId = planIdParam ? parseInt(planIdParam, 10) : 1;
+
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+  const [apiError, setApiError] = useState<string | null>(null);
 
   const {
     register,
     handleSubmit,
+    control,
     formState: { errors, isSubmitting },
   } = useForm<RegisterFormData>({
     resolver: yupResolver(registerSchema),
-    mode: "onTouched", // Validates as the user moves between input fields
+    mode: "onTouched",
+    defaultValues: {
+      schoolName: defaultSchoolName,
+    },
+  });
+
+  const currentSchoolName = useWatch({
+    control,
+    name: "schoolName",
+    defaultValue: defaultSchoolName,
   });
 
   const onSubmit = async (data: RegisterFormData) => {
-    console.log("Attempting Registration:", data);
-    await new Promise((resolve) => setTimeout(resolve, 800));
-    router.push(`${AuthRoutes.login.replace('/login', '/verify-email')}?role=${role}&school=${encodeURIComponent(school)}`);
+    setApiError(null);
+
+    try {
+      const response = await client.request<RegisterRequest, RegisterResponse>({
+        path: authServices.register.path,
+        method: authServices.register.method,
+        data: {
+          email: data.email,
+          password: data.password,
+          passwordConfirm: data.confirmPassword,
+          school_name: data.schoolName,
+          packagePlanId: packagePlanId,
+        },
+      });
+
+      if (response?.success) {
+        toast.success("Registration successful. Please verify your email to continue.");
+        const verifyUrl = `${AuthRoutes.verifyEmail || "/auth/verify-email"}?email=${encodeURIComponent(
+          data.email
+        )}&role=${role}&school=${encodeURIComponent(data.schoolName)}`;
+
+        router.push(verifyUrl);
+      } else {
+        setApiError(response?.message || "Registration failed. Please try again.");
+      }
+    } catch (error: any) {
+      const errorMessage =
+        error?.response?.data?.message ||
+        error?.message ||
+        "An unexpected error occurred during registration. Please check your browser extensions/ad-blockers.";
+      setApiError(errorMessage);
+    }
+  };
+
+  const handleGoogleAuth = () => {
+    if (!currentSchoolName) {
+      setApiError("Please enter your Institution name before continuing with Google.");
+      return;
+    }
+
+    const backendUrl = process.env.NEXT_PUBLIC_API_URL || "https://edutrac.onrender.com";
+    const googleAuthUrl = `${backendUrl}/api/v1/auth/google/register?school_name=${encodeURIComponent(
+      currentSchoolName
+    )}&packagePlanId=${packagePlanId}`;
+
+    window.location.href = googleAuthUrl;
   };
 
   return (
     <div className="min-h-screen grid grid-cols-1 lg:grid-cols-12 font-sans bg-white">
-      
+
       {/* Left Side: Form Container */}
       <div className="lg:col-span-7 flex flex-col justify-between min-h-screen px-6 py-8 sm:px-16 md:px-24 xl:px-32">
-        
+
         {/* Top Branding Header */}
         <div className="flex items-center">
           <Link href="/" className="text-2xl font-bold text-[#923CF9]">
@@ -59,11 +118,17 @@ function SignUpContent() {
             </p>
           </div>
 
+          {apiError && (
+            <div className="mb-4 p-3.5 bg-red-50 border border-red-200 text-red-600 rounded-xl text-xs font-medium">
+              {apiError}
+            </div>
+          )}
+
           <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
-            
+
             {/* Form Fields 2x2 Responsive Grid Layout */}
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-4 gap-y-3">
-              
+
               {/* Institution Name */}
               <div className="space-y-1">
                 <label className="text-xs font-bold text-[#1E1E2F]">
@@ -190,7 +255,8 @@ function SignUpContent() {
           <div className="grid grid-cols-2 gap-4 mt-5">
             <button
               type="button"
-              className="flex items-center justify-center gap-2 border border-gray-200 rounded-xl py-2.5 text-sm font-semibold text-gray-700 hover:bg-gray-50 transition-colors"
+              onClick={handleGoogleAuth}
+              className="cursor-pointer flex items-center justify-center gap-2 border border-gray-200 rounded-xl py-2.5 text-sm font-semibold text-gray-700 hover:bg-gray-50 transition-colors"
             >
               <Image src="/google-icons.svg" alt="Google Icon" width={18} height={18} />
               Google
@@ -198,7 +264,7 @@ function SignUpContent() {
 
             <button
               type="button"
-              className="flex items-center justify-center gap-2 border border-gray-200 rounded-xl py-2.5 text-sm font-semibold text-gray-700 hover:bg-gray-50 transition-colors"
+              className="cursor-pointer flex items-center justify-center gap-2 border border-gray-200 rounded-xl py-2.5 text-sm font-semibold text-gray-700 hover:bg-gray-50 transition-colors"
             >
               <svg className="w-5 h-5" fill="#1877F2" viewBox="0 0 24 24">
                 <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z" />
@@ -212,7 +278,7 @@ function SignUpContent() {
         <div className="text-center text-sm text-gray-500 mt-auto">
           Already have an account?{" "}
           <Link
-            href={AuthRoutes.login + `?role=${role}&school=${school}`}
+            href={AuthRoutes.login + `?role=${role}&school=${encodeURIComponent(currentSchoolName)}`}
             className="text-[#1E1E2F] font-bold hover:underline ml-1"
           >
             Sign In

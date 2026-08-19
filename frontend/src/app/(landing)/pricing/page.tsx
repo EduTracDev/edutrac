@@ -6,7 +6,7 @@ import Footer from "@/modules/landing/components/Footer/Footer";
 import Navbar from "@/modules/landing/components/Navbar/Navbar";
 import FreeTrial from "@/modules/landing/components/FreeTrial/FreeTrial";
 import FAQ from "@/modules/landing/components/Faq/Faq";
-import { OnboardingRoutes } from "@/routes/onboardingRoutes";
+import { LandingRoutes } from "@/routes/landing.routes";
 
 export const metadata: Metadata = {
   title: "Pricing | EduTrac – Simple, Straightforward Pricing",
@@ -20,75 +20,6 @@ export const metadata: Metadata = {
 
 export default function PricingPage() {
   const content = {
-    plans: [
-      {
-        id: "free",
-        name: "Free",
-        description: "For new and small schools that need to simplify fees management and efficiently track student progress.",
-        price: "0",
-        period: "Per student per term",
-        buttonText: "Signup for free",
-        features: [
-          "50 students",
-          "Per student per term",
-          "School fees management",
-          "Dashboard",
-          "Student progress report",
-        ],
-      },
-      {
-        id: "basic",
-        name: "Basic",
-        description: "For Growing Schools: Simplify Fee Management, Track Student Progress, and Communicate Efficiently with Parents.",
-        price: "8",
-        saveAmount: "Save $50 a year",
-        isPopular: true,
-        buttonText: "Go to pro",
-        features: [
-          "Unlimited students",
-          "School fees management",
-          "Attendance management",
-          "Dashboard",
-          "Student progress report",
-          "Communication",
-          "Price reduces as the number of students increase",
-        ],
-      },
-      {
-        id: "standard",
-        name: "Standard",
-        description: "Perfect for schools who want to collect and manage fees, conduct CBT Assessments, create and track lesson plans.",
-        price: "16",
-        buttonText: "Go to Business",
-        features: [
-          "Unlimited students",
-          "School fees management",
-          "Attendance management",
-          "Dashboard",
-          "Student progress report",
-          "Communication",
-          "CBT (Quizzes, Assignment, Exams)",
-          "Lesson plan",
-        ],
-      },
-      {
-        id: "premium",
-        name: "Premium",
-        description: "Perfect for schools who want to collect and manage fees, conduct CBT Assessments, create and track lesson plans.",
-        price: "16",
-        buttonText: "Go to Business",
-        features: [
-          "Unlimited students",
-          "School fees management",
-          "Attendance management",
-          "Dashboard",
-          "Student progress report",
-          "Communication",
-          "CBT (Quizzes, Assignment, Exams)",
-          "Lesson plan",
-        ],
-      },
-    ],
     featuresReason: [
       {
         title: "Flexible Billing",
@@ -138,17 +69,17 @@ export default function PricingPage() {
       title: "Ready to Simplify Your School Management?",
       description: "Join thousands of schools already benefiting from EduTrac's powerful features.",
       buttonText: "Start Free Trial",
+      buttonLink: LandingRoutes.plan ?? "/plan",
     },
   };
 
   return (
     <Box>
-      <Navbar buttonText="Get Started" buttonLink={OnboardingRoutes.plan} />
+      <Navbar buttonText="Get Started" buttonLink={LandingRoutes.plan} />
       <PricingGrids
         badge="Save up to 15% by Choosing the premium"
         title="Simple, straightforward pricing"
         subtitle="Choose a pricing plan tailored to your business—and boost your profits"
-        items={content.plans}
         reasons={content.featuresReason}
       />
       <PlanComparison {...content.comparison} />

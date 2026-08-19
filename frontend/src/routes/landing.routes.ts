@@ -4,4 +4,5 @@ export enum LandingRoutes {
   pricing = "/pricing",
   product = "/product",
   contact = "/contact",
+  plan = "/plan",
 }
