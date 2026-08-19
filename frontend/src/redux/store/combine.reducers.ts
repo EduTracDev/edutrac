@@ -1,12 +1,10 @@
 import { combineReducers } from "@reduxjs/toolkit";
-import authReducer, { AuthState } from "./slices/authSlice";
-
-export interface CombinedReducerType {
-  auth: AuthState;
-}
+import authReducer from "./slices/authSlice";
+import onboardingReducer from "./slices/onboardingSlice";
 
 const rootReducer = combineReducers({
   auth: authReducer,
+  onboarding: onboardingReducer,
 });
 
 export default rootReducer;
