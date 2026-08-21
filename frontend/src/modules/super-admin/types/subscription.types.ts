@@ -1,113 +1,105 @@
+export type PlanTier = "Basic" | "Professional" | "Enterprise";
 export type BillingCycle = "Monthly" | "Annual";
+export type InvoiceStatus = "Paid" | "Pending" | "Overdue" | "Cancelled";
 
-export interface SaaSPlan {
+export interface SubscriptionPlan {
   id: string;
-  name: string;
-  priceMonthly: number;
-  priceAnnual: number;
+  name: PlanTier;
+  monthlyPrice: number;
+  annualPrice: number;
   maxStudents: number;
-  maxTeachers: number;
   maxStorageGB: number;
   features: string[];
-  isPopular?: boolean;
 }
 
-export interface SchoolSubscription {
+export interface TenantSubscription {
   id: string;
   schoolId: string;
   schoolName: string;
-  planId: string;
-  planName: string;
+  planTier: PlanTier;
   billingCycle: BillingCycle;
-  status: "Active" | "Past Due" | "Canceled" | "Trialing";
-  currentPeriodEnd: string;
-  studentCount: number;
-  maxStudents: number;
+  amount: number;
+  nextBillingDate: string;
+  autoRenew: boolean;
+  status: "Active" | "Past Due" | "Trialing" | "Cancelled";
 }
 
-export const INITIAL_PLANS: SaaSPlan[] = [
+export interface Invoice {
+  id: string;
+  invoiceNumber: string;
+  schoolName: string;
+  planTier: PlanTier;
+  amount: number;
+  dueDate: string;
+  issueDate: string;
+  status: InvoiceStatus;
+}
+
+export const MOCK_SUBSCRIPTIONS: TenantSubscription[] = [
   {
-    id: "plan_basic",
-    name: "Starter",
-    priceMonthly: 99,
-    priceAnnual: 990,
-    maxStudents: 250,
-    maxTeachers: 20,
-    maxStorageGB: 10,
-    features: [
-      "Core Academics & Attendance",
-      "Parent Portal",
-      "Standard Email Support",
-    ],
+    id: "sub_1",
+    schoolId: "sch_1",
+    schoolName: "Greenwood High",
+    planTier: "Professional",
+    billingCycle: "Annual",
+    amount: 3200,
+    nextBillingDate: "Nov 15, 2026",
+    autoRenew: true,
+    status: "Active",
   },
   {
-    id: "plan_pro",
-    name: "Professional",
-    priceMonthly: 249,
-    priceAnnual: 2490,
-    maxStudents: 1000,
-    maxTeachers: 75,
-    maxStorageGB: 50,
-    isPopular: true,
-    features: [
-      "Core Academics & Attendance",
-      "Parent & Student Portals",
-      "Custom Announcements",
-      "Priority Support & Billing",
-    ],
+    id: "sub_2",
+    schoolId: "sch_2",
+    schoolName: "St. Jude Grammar",
+    planTier: "Enterprise",
+    billingCycle: "Monthly",
+    amount: 550,
+    nextBillingDate: "Sep 01, 2026",
+    autoRenew: true,
+    status: "Active",
   },
   {
-    id: "plan_enterprise",
-    name: "Enterprise",
-    priceMonthly: 599,
-    priceAnnual: 5990,
-    maxStudents: 5000,
-    maxTeachers: 300,
-    maxStorageGB: 250,
-    features: [
-      "All Professional Features",
-      "Dedicated Account Manager",
-      "Custom Domain Support",
-      "Audit Logging & Analytics",
-    ],
+    id: "sub_3",
+    schoolId: "sch_3",
+    schoolName: "Lagos Prep Academy",
+    planTier: "Basic",
+    billingCycle: "Monthly",
+    amount: 150,
+    nextBillingDate: "Aug 22, 2026",
+    autoRenew: false,
+    status: "Past Due",
   },
 ];
 
-export const MOCK_SUBSCRIPTIONS: SchoolSubscription[] = [
+export const MOCK_INVOICES: Invoice[] = [
   {
-    id: "sub_101",
-    schoolId: "sch_1",
+    id: "inv_101",
+    invoiceNumber: "INV-2026-001",
     schoolName: "Greenwood High",
-    planId: "plan_pro",
-    planName: "Professional",
-    billingCycle: "Annual",
-    status: "Active",
-    currentPeriodEnd: "Dec 31, 2026",
-    studentCount: 840,
-    maxStudents: 1000,
+    planTier: "Professional",
+    amount: 3200,
+    issueDate: "Nov 15, 2025",
+    dueDate: "Dec 01, 2025",
+    status: "Paid",
   },
   {
-    id: "sub_102",
-    schoolId: "sch_2",
+    id: "inv_102",
+    invoiceNumber: "INV-2026-042",
     schoolName: "St. Jude Grammar",
-    planId: "plan_basic",
-    planName: "Starter",
-    billingCycle: "Monthly",
-    status: "Past Due",
-    currentPeriodEnd: "Aug 25, 2026",
-    studentCount: 245,
-    maxStudents: 250,
+    planTier: "Enterprise",
+    amount: 550,
+    issueDate: "Aug 01, 2026",
+    dueDate: "Aug 15, 2026",
+    status: "Paid",
   },
   {
-    id: "sub_103",
-    schoolId: "sch_3",
-    schoolName: "Apex International",
-    planId: "plan_enterprise",
-    planName: "Enterprise",
-    billingCycle: "Annual",
-    status: "Active",
-    currentPeriodEnd: "Mar 15, 2027",
-    studentCount: 2100,
-    maxStudents: 5000,
+    id: "inv_103",
+    invoiceNumber: "INV-2026-089",
+    schoolName: "Lagos Prep Academy",
+    planTier: "Basic",
+    amount: 150,
+    issueDate: "Aug 01, 2026",
+    dueDate: "Aug 15, 2026",
+    status: "Overdue",
   },
 ];

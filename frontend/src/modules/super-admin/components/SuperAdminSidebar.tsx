@@ -1,69 +1,180 @@
 "use client";
 
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import Image from "next/image";
+import {
+  LucideIcon,
+  LayoutDashboard,
+  School,
+  Users,
+  ShieldCheck,
+  Megaphone,
+  CreditCard,
+  DollarSign,
+  TrendingUp,
+  Headphones,
+  ClipboardList,
+  Settings,
+} from "lucide-react";
 import { SuperAdminRoutes } from "@/routes/superAdmin.routes";
+import { usePathname } from "next/navigation";
 
-interface NavItem {
-  label: string;
-  href: string;
-  icon: string;
+interface Props {
+  sidebarOpen: boolean;
+  setSidebarOpen: (open: boolean) => void;
 }
 
-const NAV_ITEMS: NavItem[] = [
-  { label: "Dashboard", href: SuperAdminRoutes.dashboard, icon: "📊" },
-  { label: "School Management", href: SuperAdminRoutes.schools, icon: "🏫" },
-  { label: "User Management", href: SuperAdminRoutes.users, icon: "👥" },
-  { label: "Roles & Permissions", href: SuperAdminRoutes.roles, icon: "🛡️" },
-  { label: "Announcements", href: SuperAdminRoutes.announcements, icon: "📢" },
-  { label: "Subscriptions", href: SuperAdminRoutes.subscriptions, icon: "💳" },
-  { label: "Payments & Revenue", href: SuperAdminRoutes.payments, icon: "💰" },
-  { label: "Reports & Analytics", href: SuperAdminRoutes.reports, icon: "📈" },
-  { label: "Support & Issues", href: SuperAdminRoutes.support, icon: "🎫" },
-  { label: "Audit Logs", href: SuperAdminRoutes.auditLogs, icon: "📋" },
-  { label: "System Settings", href: SuperAdminRoutes.settings, icon: "⚙️" },
-];
+type SidebarLink = {
+  name: string;
+  href: string;
+  icon: LucideIcon;
+};
 
-export function SuperAdminSidebar() {
+export default function SuperAdminSidebar({
+  sidebarOpen,
+  setSidebarOpen,
+}: Props) {
   const pathname = usePathname();
+  const links: SidebarLink[] = [
+    {
+      name: "Dashboard",
+      href: SuperAdminRoutes.dashboard,
+      icon: LayoutDashboard,
+    },
+    {
+      name: "School Management",
+      href: SuperAdminRoutes.schools,
+      icon: School,
+    },
+    { name: "User Management", href: SuperAdminRoutes.users, icon: Users },
+    {
+      name: "Roles & Permissions",
+      href: SuperAdminRoutes.roles,
+      icon: ShieldCheck,
+    },
+    {
+      name: "Announcements",
+      href: SuperAdminRoutes.announcements,
+      icon: Megaphone,
+    },
+    {
+      name: "Subscriptions",
+      href: SuperAdminRoutes.subscriptions,
+      icon: CreditCard,
+    },
+    {
+      name: "Payments & Revenue",
+      href: SuperAdminRoutes.payments,
+      icon: DollarSign,
+    },
+    {
+      name: "Reports & Analytics",
+      href: SuperAdminRoutes.reports,
+      icon: TrendingUp,
+    },
+    {
+      name: "Support & Issues",
+      href: SuperAdminRoutes.support,
+      icon: Headphones,
+    },
+    {
+      name: "Audit Logs",
+      href: SuperAdminRoutes.auditLogs,
+      icon: ClipboardList,
+    },
+    {
+      name: "System Settings",
+      href: SuperAdminRoutes.settings,
+      icon: Settings,
+    },
+  ];
 
   return (
-    <aside className="w-64 bg-slate-900 text-slate-300 min-h-screen flex flex-col border-r border-slate-800 shrink-0">
-      <div className="p-6 border-b border-slate-800">
-        <h2 className="text-xl font-bold text-white tracking-tight flex items-center gap-2">
-          <span className="text-indigo-500">EduTrac</span>
-          <span className="text-xs bg-indigo-500/20 text-indigo-400 px-2 py-0.5 rounded border border-indigo-500/30">
-            Super Admin
-          </span>
-        </h2>
-      </div>
+    <>
+      {/* Mobile overlay */}
+      {sidebarOpen && (
+        <div
+          className="fixed inset-0 bg-black/30 z-30 md:hidden"
+          onClick={() => setSidebarOpen(false)}
+          aria-hidden="true"
+        />
+      )}
 
-      <nav className="flex-1 p-4 space-y-1 overflow-y-auto">
-        {NAV_ITEMS.map((item) => {
-          const isActive = pathname === item.href || pathname?.startsWith(`${item.href}/`);
-          return (
-            <Link
-              key={item.href}
-              href={item.href}
-              className={`flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-colors ${
-                isActive
-                  ? "bg-indigo-600 text-white shadow-sm"
-                  : "text-slate-400 hover:bg-slate-800 hover:text-slate-200"
-              }`}
-            >
-              <span className="text-base">{item.icon}</span>
-              <span className="truncate">{item.label}</span>
-            </Link>
-          );
-        })}
-      </nav>
+      <aside
+        className={`
+        bg-white w-64 fixed md:relative z-40
+        h-full transform transition-all duration-300
+        ${sidebarOpen ? "translate-x-0" : "-translate-x-full"}
+        md:translate-x-0
+        `}
+        role="navigation"
+        aria-label="Super Admin navigation"
+      >
+        {/* Logo section */}
+        <div className="flex items-center gap-3 p-6">
+          <Image
+            src="/school-logo.png"
+            alt="EduTrac logo"
+            width={42}
+            height={42}
+            className="rounded-lg"
+          />
 
-      <div className="p-4 border-t border-slate-800">
-        <div className="flex items-center gap-3 px-3 py-2 text-xs text-slate-500">
-          <div className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
-          <span>System Normal v1.0.0</span>
+          <div>
+            <p className="font-semibold text-sm">EduTrac Platform</p>
+            <span className="text-[10px] bg-brand/10 text-brand font-bold px-2 py-0.5 rounded border border-brand/20">
+              Super Admin
+            </span>
+          </div>
         </div>
-      </div>
-    </aside>
+
+        {/* Navigation */}
+        <nav className="p-4 space-y-2 overflow-y-auto max-h-[calc(100vh-100px)]" aria-label="Sidebar">
+          {links.map((link) => {
+            const Icon = link.icon;
+
+            const isActive =
+              pathname === link.href || pathname.startsWith(`${link.href}/`);
+
+            return (
+              <Link
+                key={link.name}
+                href={link.href}
+                className={`
+                flex items-center gap-3 px-4 py-3
+                rounded-xl text-sm font-medium
+                transition-all duration-200
+                focus:outline-none
+                focus:ring-2
+                focus:ring-brand
+                ${
+                  isActive
+                    ? "bg-brand text-white shadow-md"
+                    : `
+                      text-gray-600
+                      hover:bg-[#f4ebff]
+                      hover:text-brand
+                    `
+                }
+                `}
+              >
+                <Icon
+                  size={18}
+                  className={`
+                  ${
+                    isActive
+                      ? "text-white"
+                      : "text-gray-500 group-hover:text-brand"
+                  }
+                  `}
+                />
+
+                {link.name}
+              </Link>
+            );
+          })}
+        </nav>
+      </aside>
+    </>
   );
 }

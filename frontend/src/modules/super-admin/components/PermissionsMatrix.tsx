@@ -1,96 +1,83 @@
 "use client";
 
-import React from "react";
-import { RoleDefinition, PERMISSIONS_LIST, PermissionItem } from "../types/roles.types";
+import React, { useState } from "react";
+import { SYSTEM_PERMISSIONS, GlobalRole } from "../types/rbac.types";
 
-interface PermissionsMatrixProps {
-  selectedRole: RoleDefinition;
-  onPermissionToggle: (permissionId: string) => void;
-  onSave: () => void;
-  isSaving: boolean;
-}
+const ROLE_PERMISSIONS_MAP: Record<GlobalRole, string[]> = {
+  "Super Admin": ["p1", "p2", "p3", "p4", "p5", "p6"],
+  "Support Engineer": ["p1", "p5"],
+  "Billing Manager": ["p3", "p4"],
+  "Auditor": ["p5"],
+};
 
-export function PermissionsMatrix({
-  selectedRole,
-  onPermissionToggle,
-  onSave,
-  isSaving,
-}: PermissionsMatrixProps) {
-  // Group permissions by module
-  const modules = Array.from(new Set(PERMISSIONS_LIST.map((p) => p.module)));
+export function PermissionsMatrix() {
+  const [matrix, setMatrix] = useState<Record<GlobalRole, string[]>>(ROLE_PERMISSIONS_MAP);
+  const roles: GlobalRole[] = ["Super Admin", "Support Engineer", "Billing Manager", "Auditor"];
+
+  const togglePermission = (role: GlobalRole, permId: string) => {
+    if (role === "Super Admin") return; // Super admin permissions remain locked
+    setMatrix((prev) => {
+      const current = prev[role] || [];
+      const updated = current.includes(permId)
+        ? current.filter((id) => id !== permId)
+        : [...current, permId];
+      return { ...prev, [role]: updated };
+    });
+  };
 
   return (
     <div className="bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden">
-      {/* Header */}
-      <div className="p-6 border-b border-slate-200 bg-slate-50 flex justify-between items-center">
+      <div className="p-4 bg-slate-50 border-b border-slate-200 flex justify-between items-center">
         <div>
-          <div className="flex items-center gap-2">
-            <h2 className="text-lg font-bold text-slate-900">{selectedRole.name}</h2>
-            {selectedRole.isSystem && (
-              <span className="px-2 py-0.5 text-xs font-medium bg-amber-100 text-amber-800 rounded border border-amber-200">
-                Immutable System Role
-              </span>
-            )}
-          </div>
-          <p className="text-xs text-slate-500 mt-1">{selectedRole.description}</p>
+          <h3 className="text-sm font-bold text-slate-900">Global System Permissions Matrix</h3>
+          <p className="text-xs text-slate-500">Configure feature access boundaries for platform staff roles.</p>
         </div>
-
-        {!selectedRole.isSystem && (
-          <button
-            onClick={onSave}
-            disabled={isSaving}
-            className="px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white font-medium text-sm rounded-lg shadow-sm transition-colors flex items-center gap-2 disabled:opacity-50"
-          >
-            {isSaving && <span className="w-3.5 h-3.5 border-2 border-white/30 border-t-white rounded-full animate-spin" />}
-            Save Access Policy
-          </button>
-        )}
+        <button
+          onClick={() => alert("Role permissions matrix saved successfully.")}
+          className="px-3 py-1.5 bg-indigo-600 hover:bg-indigo-700 text-white font-bold text-xs rounded-lg transition-colors"
+        >
+          Save Changes
+        </button>
       </div>
 
-      {/* Matrix Body */}
-      <div className="p-6 space-y-6">
-        {modules.map((moduleName) => {
-          const modulePermissions = PERMISSIONS_LIST.filter((p) => p.module === moduleName);
-
-          return (
-            <div key={moduleName} className="space-y-3">
-              <h3 className="text-xs font-bold text-slate-400 uppercase tracking-wider">
-                {moduleName} Permissions
-              </h3>
-
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-                {modulePermissions.map((perm) => {
-                  const isChecked = selectedRole.permissions.includes(perm.id);
-
+      <div className="overflow-x-auto">
+        <table className="w-full text-left border-collapse text-xs">
+          <thead>
+            <tr className="bg-slate-100/70 border-b border-slate-200 text-slate-600 font-bold">
+              <th className="p-3 w-1/3">Permission Scope</th>
+              {roles.map((r) => (
+                <th key={r} className="p-3 text-center w-1/6">
+                  {r}
+                </th>
+              ))}
+            </tr>
+          </thead>
+          <tbody className="divide-y divide-slate-100 text-slate-700">
+            {SYSTEM_PERMISSIONS.map((perm) => (
+              <tr key={perm.id} className="hover:bg-slate-50/80 transition-colors">
+                <td className="p-3">
+                  <p className="font-bold text-slate-900">{perm.name}</p>
+                  <p className="text-[10px] text-slate-500">{perm.description}</p>
+                </td>
+                {roles.map((r) => {
+                  const isChecked = matrix[r]?.includes(perm.id);
+                  const isLocked = r === "Super Admin";
                   return (
-                    <label
-                      key={perm.id}
-                      className={`flex items-start gap-3 p-3 rounded-lg border transition-all cursor-pointer ${
-                        selectedRole.isSystem ? "cursor-not-allowed opacity-80" : ""
-                      } ${
-                        isChecked
-                          ? "bg-indigo-50/50 border-indigo-200"
-                          : "bg-slate-50 border-slate-200 hover:border-slate-300"
-                      }`}
-                    >
+                    <td key={r} className="p-3 text-center align-middle">
                       <input
                         type="checkbox"
+                        disabled={isLocked}
                         checked={isChecked}
-                        disabled={selectedRole.isSystem}
-                        onChange={() => onPermissionToggle(perm.id)}
-                        className="mt-1 h-4 w-4 text-indigo-600 rounded border-slate-300 focus:ring-indigo-500"
+                        onChange={() => togglePermission(r, perm.id)}
+                        className="rounded text-indigo-600 focus:ring-indigo-500 disabled:opacity-50 cursor-pointer disabled:cursor-not-allowed"
                       />
-                      <div>
-                        <p className="text-sm font-semibold text-slate-800">{perm.label}</p>
-                        <p className="text-xs text-slate-500">{perm.description}</p>
-                      </div>
-                    </label>
+                    </td>
                   );
                 })}
-              </div>
-            </div>
-          );
-        })}
+              </tr>
+            ))}
+          </tbody>
+        </table>
       </div>
     </div>
   );
