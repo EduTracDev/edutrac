@@ -37,6 +37,8 @@ export default function SuperAdminDashboard() {
               <option>Last 6 Months</option>
               <option>This Year</option>
               <option>All Time</option>
+              <option>All Datate</option>
+              <option>All Time</option>
             </select>
           </div>
           
