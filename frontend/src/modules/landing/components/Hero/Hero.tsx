@@ -32,13 +32,7 @@ export default function Hero({
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center mt-6 lg:mt-12">
           {/* Left Side: Content */}
           <div className="space-y-6 lg:space-y-8 max-w-2xl text-center lg:text-left">
-            {/* <div className="inline-block px-4 py-1.5 bg-[#923CF9]/10 border border-[#923CF9]/20 rounded-full">
-              <span className="text-[#923CF9] text-xs font-bold uppercase tracking-widest">
-                Our Story
-              </span>
-            </div> */}
-
-            <h1 className="text-4xl text-slate-900 md:text-6xl font-extrabold leading-[1.1]">
+            <h1 className="text-2xl text-slate-900 md:text-3xl font-extrabold leading-[1.1]">
               {title}
             </h1>
 
