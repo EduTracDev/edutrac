@@ -1,8 +1,7 @@
-export interface AuthReduxState {
-  refreshToken?: { _time_stamp: string };
-  accessToken?: { _time_stamp: string };
-}
+import { AuthState } from "./slices/authSlice";
+import { OnboardingState } from "./slices/onboardingSlice";
 
 export type CombinedReducerType = {
-  auth: AuthReduxState;
+  auth: AuthState;
+  onboarding: OnboardingState;
 };

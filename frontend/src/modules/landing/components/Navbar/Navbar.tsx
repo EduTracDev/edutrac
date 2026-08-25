@@ -9,7 +9,6 @@ import { Menu, X } from "lucide-react";
 import { LandingRoutes } from "@/routes/landing.routes";
 import { AuthRoutes } from "@/routes/auth.routes";
 import logo from "@/modules/shared/assets/images/logo.png";
-import { OnboardingRoutes } from "@/routes/onboardingRoutes";
 
 export default function Navbar({
   buttonText,
@@ -29,7 +28,7 @@ export default function Navbar({
   ];
 
   return (
-    <nav className="fixed top-0 z-50 w-full bg-white/80 backdrop-blur-md py-4 shadow-sm border-b border-gray-100">
+    <nav className="font-source-sans fixed top-0 z-50 w-full bg-white/80 backdrop-blur-md py-4 shadow-sm border-b border-gray-100">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between">
           {/* Logo */}
@@ -54,7 +53,7 @@ export default function Navbar({
                 <Link
                   key={link.name}
                   href={link.href}
-                  className={`relative text-[16px] font-medium transition-colors duration-200 py-1 ${
+                  className={`relative text-[16px] font-bold transition-colors duration-200 py-1 ${
                     isActive
                       ? "text-[#923CF9]"
                       : "text-gray-600 hover:text-[#923CF9]"
@@ -88,7 +87,7 @@ export default function Navbar({
               Login
             </Link>
             <Link
-              href={OnboardingRoutes.plan}
+              href={buttonLink}
               className="px-6 py-2.5 bg-brand text-white rounded-lg font-semibold transition-all hover:bg-[#7b2dd1] active:scale-95 shadow-md shadow-purple-200"
             >
               {buttonText}
@@ -140,7 +139,7 @@ export default function Navbar({
               Login
             </Link>
             <Link
-              href={OnboardingRoutes.plan}
+              href={buttonLink}
               className="block w-full text-center bg-[#923CF9] text-white py-3 rounded-xl font-bold shadow-lg"
             >
               {buttonText}

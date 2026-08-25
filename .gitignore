@@ -13,6 +13,7 @@ yarn-debug.log*
 yarn-error.log*
 
 # Environment variables
+*.env
 /.env
 .env.local
 .env.production
@@ -74,3 +75,6 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+#prod specs
+/backend/prod-specs

@@ -11,4 +11,5 @@ export enum AuthRoutes {
   verifyEmail = "/auth/verify-email",
   resendEmailVerification = "/auth/resend-email-verification",
   createNewPassword = "/auth/create-new-password",
+  otpVerification = "/auth/otp-verification",
 }

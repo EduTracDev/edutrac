@@ -1,9 +1,15 @@
-const root = "/super-admin";
-
 export enum SuperAdminRoutes {
   root = "/super-admin",
   dashboard = `${root}/dashboard`,
   schools = `${root}/schools`,
+  schoolDetails = `${root}/schools/:id`,
+  users = `${root}/users`,
+  roles = `${root}/roles`,
+  announcements = `${root}/announcements`,
+  subscriptions = `${root}/subscriptions`,
+  payments = `${root}/payments`,
+  reports = `${root}/reports`,
+  support = `${root}/support`,
+  auditLogs = `${root}/audit-logs`,
   settings = `${root}/settings`,
-  profile = `${root}/profile`,
 }

@@ -5,17 +5,20 @@ import Link from "next/link";
 import Image from "next/image";
 import { AuthRoutes } from "@/routes/auth.routes";
 import backgroundImage from "@/modules/shared/assets/images/Background.png";
+import { LandingRoutes } from "@/routes/landing.routes";
 
 interface FreeTrialProps {
   title?: string;
   description?: string;
   buttonText?: string;
+  buttonLink?: string;
 }
 
 export default function FreeTrial({
   title,
   description,
   buttonText,
+  buttonLink = LandingRoutes.plan ?? "/plan",
 }: FreeTrialProps) {
   return (
     <section
@@ -48,7 +51,7 @@ export default function FreeTrial({
 
         <div className="flex justify-center">
           <Link
-            href={AuthRoutes.register}
+            href={buttonLink}
             className="bg-[#FFC107] text-gray-900 px-10 py-3.5 rounded-full font-bold text-lg 
                        transition-all duration-300 hover:bg-[#e6ae06] hover:scale-105 
                        focus:ring-4 focus:ring-yellow-400 outline-none active:scale-95 shadow-xl"

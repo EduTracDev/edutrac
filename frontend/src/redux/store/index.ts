@@ -9,8 +9,13 @@ export const store = configureStore({
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
       serializableCheck: {
-        ignoredActions: ["persist/PERSIST", "persist/REHYDRATE"],
-        ignoredPaths: ["auth"],
+        ignoredActions: [
+          "persist/PERSIST",
+          "persist/REHYDRATE",
+          "onboarding/submit/pending",
+          "onboarding/submit/fulfilled",
+        ],
+        ignoredPaths: ["auth", "onboarding"],
       },
     }),
 });

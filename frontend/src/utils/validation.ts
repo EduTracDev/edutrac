@@ -3,14 +3,15 @@ import * as yup from "yup";
 // REUSABLE BASE
 const emailSchema = yup
   .string()
-  .email("Invalid email")
-  .required("Email is required");
+  .email("Invalid email address")
+  .required("Email address is required");
 
 const phoneSchema = yup
   .string()
   .matches(/^[0-9+]+$/, "Invalid phone number")
   .required("Required");
 
+// Strict password schema (for operations requiring complex passwords)
 const passwordSchema = yup
   .string()
   .required("Password is required")
@@ -20,8 +21,14 @@ const passwordSchema = yup
   .matches(/[0-9]/, "Password must contain at least one number")
   .matches(
     /[@$!%*#?&]/,
-    "Password must contain at least one special character (@$!%*#?&)",
+    "Password must contain at least one special character (@$!%*#?&)"
   );
+
+// Base password rule for auth registration (min 8 characters per API spec)
+const basePasswordSchema = yup
+  .string()
+  .required("Password is required")
+  .min(8, "Password must be at least 8 characters");
 
 //  AUTH & PUBLIC SCHEMAS
 export const loginSchema = yup
@@ -32,15 +39,13 @@ export const loginSchema = yup
   .required();
 
 export const registerSchema = yup.object().shape({
-  schoolName: yup.string().required("School name is required"),
-  adminName: yup.string().required("Full name is required"),
+  schoolName: yup.string().required("Institution name is required"),
   email: emailSchema,
-  password: passwordSchema,
+  password: basePasswordSchema,
   confirmPassword: yup
     .string()
     .oneOf([yup.ref("password")], "Passwords do not match")
     .required("Please confirm your password"),
-  plan: yup.string().oneOf(["basic", "pro", "enterprise"]).required(),
 });
 
 export const profileSchema = yup.object().shape({
@@ -62,13 +67,14 @@ export const contactSchema = yup.object().shape({
   email: emailSchema,
   phoneNumber: phoneSchema,
   schoolName: yup.string().required("School name is required"),
+  subject: yup.string().required("Subject is required"),
   message: yup
     .string()
     .min(10, "Please provide more detail")
     .required("Required"),
 });
 
-//PEOPLE MANAGEMENT (TEACHER & STUDENTS & PARENTS)
+// PEOPLE MANAGEMENT (TEACHER & STUDENTS & PARENTS)
 // single student
 export const studentBaseSchema = yup.object().shape({
   firstName: yup.string().required("First name is required"),
@@ -83,10 +89,9 @@ export const studentBaseSchema = yup.object().shape({
     .required("DOB is required"),
   classId: yup.string().required("Class assignment is required"),
   studentId: yup.string().optional(),
-  // 🗑️ parentEmail and parentPhoneNumber removed.
-  // These are handled via the link to a Parent object.
 });
-//bulk student
+
+// bulk student
 export const bulkStudentSchema = yup.object().shape({
   students: yup
     .array()
@@ -98,7 +103,7 @@ export const bulkStudentSchema = yup.object().shape({
 export const teacherBaseSchema = yup.object({
   name: yup.string().required("Full name is required"),
   email: yup.string().email("Invalid email").required("Email is required"),
-  subject: yup.string().required("Subject department is required"), // Defined as its own field
+  subject: yup.string().required("Subject department is required"),
   role: yup
     .string()
     .oneOf([
@@ -118,6 +123,7 @@ export const bulkTeacherSchema = yup.object().shape({
     .of(teacherBaseSchema)
     .min(1, "The list cannot be empty"),
 });
+
 export const VALID_TEACHER_ROLES = [
   "Subject Teacher",
   "Class Teacher",
@@ -156,7 +162,7 @@ export const studentParentLinkSchema = yup.object({
 });
 
 // SCHOOL OPERATIONS (CLASSES, EXPENSES, ANNOUNCEMENTS)
-//  -- announcement ---
+// -- announcement ---
 export const announcementSchema = yup.object().shape({
   title: yup
     .string()
@@ -168,13 +174,14 @@ export const announcementSchema = yup.object().shape({
     .min(10, "Min 10 characters")
     .max(500, "Max 500 characters"),
 });
+
 // --- class ---
 export const classSchema = yup.object().shape({
   className: yup.string().required("Class name is required"),
   category: yup.string().required("Please select a category"),
 });
 
-//--- expenses ---
+// --- expenses ---
 export const expenseSchema = yup.object().shape({
   amount: yup
     .number()
@@ -202,6 +209,7 @@ export const assignmentSchema = yup.object({
   allowLateSubmission: yup.boolean().default(false),
 });
 
+// TYPE INFERENCES
 export type ContactFormData = yup.InferType<typeof contactSchema>;
 export type RegisterFormData = yup.InferType<typeof registerSchema>;
 export type LoginFormData = yup.InferType<typeof loginSchema>;

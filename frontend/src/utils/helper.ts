@@ -122,6 +122,24 @@ export function getToken() {
 }
 
 /**
+ * Set the access token cookie.
+ */
+export function setToken(token: string) {
+  if (typeof document === "undefined") return;
+  const domain =
+    APP_BASE_DOMAIN && !APP_BASE_DOMAIN.includes("localhost")
+      ? `; domain=.${APP_BASE_DOMAIN}`
+      : "";
+  const maxAge = 60 * 60 * 24 * 7; // 7 days
+  const isSecure =
+    typeof window !== "undefined" && process.env.NODE_ENV === "production";
+  
+  document.cookie = `accessToken=${encodeURIComponent(
+    token
+  )}; path=/; max-age=${maxAge}; SameSite=Lax${domain}${isSecure ? "; Secure" : ""}`;
+}
+
+/**
  * Read the school object from the "school" cookie (set after login).
  * Cookie value is JSON: { id, subdomain }.
  * Used by the API client to send the "school" header on every request.

@@ -14,7 +14,6 @@ import { getSchoolFromCookie, getToken } from "./helper";
 // const apiUrl = process.env.NEXT_PUBLIC_API_URL;
 // const apiUrl = "https://fcysngv2up.us-east-1.awsapprunner.com/"
 const apiUrl = process.env.NEXT_PUBLIC_API_URL;
-
 /**
  * Supported HTTP methods for the API client
  */

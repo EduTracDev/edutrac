@@ -1,28 +1,24 @@
 import Link from "next/link";
 import { Metadata } from "next";
 import { Box } from "@mui/material";
-import { AuthRoutes } from "@/routes/auth.routes";
+import { LandingRoutes } from "@/routes/landing.routes";
 import Navbar from "@/modules/landing/components/Navbar/Navbar";
 import AboutSection from "@/modules/landing/components/About/About";
 import FreeTrial from "@/modules/landing/components/FreeTrial/FreeTrial";
+import Testimonial from "@/modules/landing/components/Testimonial/Testimonial";
+import VideoSection from "@/modules/landing/components/Video/VideoSection";
 import Footer from "@/modules/landing/components/Footer/Footer";
-import about1 from "@/modules/shared/assets/images/about-1.png";
-import about2 from "@/modules/shared/assets/images/about-2.png";
-import about3 from "@/modules/shared/assets/images/about-3.png";
-import MissionVision from "@/modules/landing/components/MissionVision/MissionVision";
+import about1 from "@/modules/shared/assets/images/about1.png";
+import dashboardMockup from "@/modules/shared/assets/images/DASHBOARD.png";
+import videoThumbnail from "@/modules/shared/assets/images/video-poster.png";
 import CoreValue from "@/modules/landing/components/CoreValue/CoreValue";
-import ImpactStats from "@/modules/landing/components/ImpactStats/ImpactStats";
 import TeamSection from "@/modules/landing/components/Team/Team";
-import team1 from "@/modules/shared/assets/images/eniola.jpeg";
-import team2 from "@/modules/shared/assets/images/eniola.jpeg";
-import team3 from "@/modules/shared/assets/images/eniola.jpeg";
-import partner1 from "@/modules/shared/assets/images/cresttech.png";
-import partner2 from "@/modules/shared/assets/images/cresttech.png";
-import partner3 from "@/modules/shared/assets/images/cresttech.png";
-import TrustBar from "@/modules/landing/components/TrustBar/TrustBar";
+import team1 from "@/modules/shared/assets/images/eniola.png";
+
 import BackToTop from "@/app/BackToTop";
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://edutrac.com"),
   title: "About Us | EduTrac – Modernizing Education Management",
   description:
     "Discover the story behind EduTrac. We are committed to empowering educators with data-driven tools and human-centered technology to transform school administration.",
@@ -35,23 +31,54 @@ export const metadata: Metadata = {
 export default function AboutPage() {
   const content = {
     about: {
-      badge: "OUR STORY",
-      title: "Gateway To Personal And Professional Growth",
-      description: [
-        "EduTrac was born from a vision to revolutionize education through technology. Founded by a team of educators and tech enthusiasts, we recognized the need for a comprehensive platform that could streamline school operations and enhance the learning experience for students and teachers alike.",
-        "Our Journey began with a simple idea: to create a tool that empowers schools to achieve their full potential. Today, EduTrac stands as a testament to that vision, serving countless institutions and shaping the future of education.",
-      ],
-      images: {
-        teacher: about1,
-        building: about2,
-        students: about3,
+      // Section 1: Hero Block
+      hero: {
+        badge: "OUR STORY",
+        title: "Revolutionizing Education Management",
+        description: [
+          "EduTrac was born from a vision to revolutionize education through technology. Founded by a team of educators and tech enthusiasts, we recognized the need for a comprehensive platform that could streamline school operations and enhance the learning experience for students and teachers alike. Our Journey began with a simple idea: to create a tool that empowers schools to achieve their full potential. Today, EduTrac stands as a testament to that vision, serving countless institutions and shaping the future of education.",
+        ],
+        buttonText: "Watch Our Story",
+        buttonLink: "#",
+        dashboardImage: dashboardMockup,
       },
-    },
-    missionVision: {
-      mission:
-        "We rise to serve, solve, and shine — for people, for growth, for good.",
-      vision:
-        "To become Africa’s most trusted learning companion — empowering every learner, educator, and Learning Management System to thrive through accessible, data-driven, and human-centered education solutions.",
+      // Section 2: Personal Growth Block
+      growth: {
+        badge: "OUR STORY",
+        title: "Gateway To Personal And Professional Growth",
+        description: [
+          "EduTrac was born from a vision to revolutionize education through technology. Founded by a team of educators and tech enthusiasts, we recognized the need for a comprehensive platform that could streamline school operations and enhance the learning experience for students and teachers alike. Our journey began with a simple idea: to create a tool that empowers schools to achieve their full potential. Today, EduTrac stands as a testament to that vision, serving countless institutions and shaping the future of education.",
+        ],
+        buttonText: "Load More",
+        buttonLink: "#",
+        images: {
+          students: about1,
+        },
+      },
+      // Section 3: Video Feature Block
+      storyVideo: {
+        badge: "TESTIMONIAL",
+        title: "Watch Our Story",
+        description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+        thumbnail: videoThumbnail, 
+        videoUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ"
+      },
+      // Section 3: Vision and Mission Block
+      vision: {
+        badge: "VISION AND MISSION",
+        title: "Defining Our Purpose And Direction",
+        physicalSchools: {
+          title: "PHYSICAL SCHOOLS",
+          description: "Suspendisse ultrice gravida dictum fusce placerat ultricies integer quis auctor elit sed vulputate mi sit.",
+        },
+        onlineSchools: {
+          title: "ONLINE SCHOOLS",
+          description: "Suspendisse ultrice gravida dictum fusce placerat ultricies integer quis auctor elit sed vulputate mi sit.",
+        },
+        mainDescription: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris..",
+        buttonText: "Load More",
+        buttonLink: "#",
+      }
     },
     coreValues: {
       badge: "Core Values",
@@ -98,68 +125,74 @@ export default function AboutPage() {
         { value: "24/7", label: "Expert Support" },
       ],
     },
-    partners: {
-      title: "Trusted by Leading Institutions",
-      logos: [
-        { name: "CrestTech Hub", image: partner1 },
-        { name: "Partner Two", image: partner2 },
-        { name: "Partner Three", image: partner3 },
-      ],
-    },
+    testimonials: [
+      {
+        quote:
+          "Lorem ipsum dolor sit amet, elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Orci nulla pellentesque dignissim enim. Amet consectetur adipiscing",
+        author: "Kathy Sullivan",
+        role: "Proprietor at ordian it",
+      },
+      {
+        quote:
+          "Lorem ipsum dolor sit amet, elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Orci nulla pellentesque dignissim enim. Amet consectetur adipiscing",
+        author: "Elsie Stroud",
+        role: "Proprietor at Edwards",
+      },
+      {
+        quote:
+          "Lorem ipsum dolor sit amet, elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Orci nulla pellentesque dignissim enim. Amet consectetur adipiscing",
+        author: "Kathy Sullivan",
+        role: "Proprietor at ordian it",
+      },
+      {
+        quote:
+          "Lorem ipsum dolor sit amet, elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Orci nulla pellentesque dignissim enim. Amet consectetur adipiscing",
+        author: "Kathy Sullivan",
+        role: "Proprietor at oranun it",
+      },
+      {
+        quote:
+          "Lorem ipsum dolor sit amet, elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Orci nulla pellentesque dignissim enim. Amet consectetur adipiscing",
+        author: "Kathy Sullivan",
+        role: "Proprietor at ian it",
+      },
+      {
+        quote:
+          "Lorem ipsum dolor sit amet, elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Orci nulla pellentesque dignissim enim. Amet consectetur adipiscing",
+        author: "Kathy Sullivan",
+        role: "Proprietor at ord it",
+      },
+    ],
     team: {
-      badge: "The Team",
+      badge: "TEAM",
       title: "Meet the Team",
+      description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
       members: [
-        {
-          name: "Member One",
-          role: "Founder & CEO",
-          image: team1,
-          socials: {
-            facebook: "#",
-            instagram: "#",
-            linkedin: "#",
-            twitter: "#",
-          },
-        },
-        {
-          name: "Member Two",
-          role: "Head of Product",
-          image: team2,
-          socials: {
-            facebook: "#",
-            instagram: "#",
-            linkedin: "https://www.linkedin.com/in/fatimah-adebimpe-441b10145/",
-            twitter: "#",
-          },
-        },
-        {
-          name: "Member Three",
-          role: "Lead Developer",
-          image: team3,
-          socials: {
-            facebook: "#",
-            instagram: "#",
-            linkedin: "#",
-            twitter: "#",
-          },
-        },
+        { name: "Dr. Amelia Harper", role: "CEO", image: team1 },
+        { name: "Mr. Ethan Carter", role: "Head of Product", image: team1 },
+        { name: "Ms. Olivia Bennett", role: "Lead Educator", image: team1 },
+        { name: "Dr. Amelia Harper", role: "CEO", image: team1 },
+        { name: "Mr. Ethan Carter", role: "Head of Product", image: team1 },
       ],
     },
     freeTrial: {
-      title: "Ready to Simplify Your Learning Management?",
+      title: "Ready to Simplify Your School Management?",
       description:
-        "Join thousands of Learning Platforms already benefiting from EduTrac's powerful features.",
+        "Join thousands of Schools already benefiting from EduTrac's powerful features.",
       buttonText: "Start Free Trial",
     },
   };
   return (
     <Box>
-      <Navbar buttonText="Get Started" buttonLink={AuthRoutes.register} />
-      <AboutSection {...content.about} />
-      <ImpactStats {...content.impact} />
-      <TrustBar {...content.partners} />
-      <MissionVision {...content.missionVision} />
+      <Navbar buttonText="Get Started" buttonLink={LandingRoutes.plan ?? "/plan"} />
+      <AboutSection
+        hero={content.about.hero}
+        growth={content.about.growth}
+        vision={content.about.vision}
+      />
       <CoreValue {...content.coreValues} />
+      <VideoSection {...content.about.storyVideo} />
+      <Testimonial items={content.testimonials} />
       <TeamSection {...content.team} />
       <FreeTrial {...content.freeTrial} />
       <Footer />

@@ -16,11 +16,11 @@ interface CoreValuesProps {
 
 export default function CoreValues({ badge, title, values }: CoreValuesProps) {
   return (
-    <section className="py-20 px-6">
+    <section className="py-10 px-6">
       <div className="max-w-7xl mx-auto bg-[#923CF9] rounded-[48px] p-12 md:p-20 text-center">
         <div className="mb-16 space-y-6">
-          <div className="inline-block px-8 py-2 border border-white/40 rounded-full">
-            <span className="text-white text-sm font-semibold uppercase tracking-widest">
+          <div className="bg-[#923CF6] inline-block px-8 py-2 border border-white/40 rounded-full">
+            <span className="text-white text-sm font-semibold tracking-widest">
               {badge}
             </span>
           </div>

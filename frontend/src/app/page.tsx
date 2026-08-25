@@ -1,22 +1,16 @@
 import { Metadata } from "next";
 import { Box } from "@mui/material";
-import { AuthRoutes } from "@/routes/auth.routes";
+import { LandingRoutes } from "@/routes/landing.routes";
 import Navbar from "@/modules/landing/components/Navbar/Navbar";
-import AboutSection from "@/modules/landing/components/About/About";
 import Hero from "@/modules/landing/components/Hero/Hero";
-import ImpactStats from "@/modules/landing/components/ImpactStats/ImpactStats";
 import Pricing from "@/modules/landing/components/Pricing/Pricing";
 import Testimonial from "@/modules/landing/components/Testimonial/Testimonial";
+import JoinUSUs from "@/modules/landing/components/Join/JoinUs";
 import FreeTrial from "@/modules/landing/components/FreeTrial/FreeTrial";
 import Footer from "@/modules/landing/components/Footer/Footer";
 import BackToTop from "./BackToTop";
 import FAQ from "@/modules/landing/components/Faq/Faq";
-import Role from "@/modules/landing/components/Role/Role";
-import about1 from "@/modules/shared/assets/images/about-1.png";
-import about2 from "@/modules/shared/assets/images/about-2.png";
-import about3 from "@/modules/shared/assets/images/about-3.png";
 import FeatureHub from "@/modules/landing/components/Feature/FeatureHub";
-import { OnboardingRoutes } from "@/routes/onboardingRoutes";
 
 export const metadata: Metadata = {
   title:
@@ -35,7 +29,7 @@ export const metadata: Metadata = {
     title: "EduTrac – Transform How You Manage Your Learning Management",
     description:
       "Experience the power of data-driven education management. Join 1,200+ schools modernizing their operations with EduTrac.",
-    url: "https://edutrac-seven.vercel.app/", // Replace with your actual domain
+    url: "https://edutrac-seven.vercel.app/",
     siteName: "EduTrac",
     images: [
       {
@@ -60,77 +54,78 @@ export const metadata: Metadata = {
 export default function HomePage() {
   const content = {
     hero: {
-      title: "Revolutionizing Learning Management Systems",
+      badgeText: "ONE PLATFORM. EVERY MODE OF LEARNING.",
+      title: "Achieving Your Dreams Through Education",
       description:
-        "EduTrac was born from a vision to revolutionize education through technology.We understand the challenges schools face in managing operations, engaging students, and empowering educators. Our mission is to provide a comprehensive, user-friendly platform that streamlines school management, enhances communication, and fosters a collaborative learning environment. With EduTrac, we aim to transform the educational experience for administrators, teachers, students, and parents alike.",
+        "Unify student records, classes, communication, and reporting in one smart, easy-to-use platform—for teachers, students, parents, and admins.",
       buttonText: "Get Started",
-      buttonLink: OnboardingRoutes.plan,
+      buttonLink: LandingRoutes.plan ?? "/plan",
     },
-    featureHub: {
-      badge: "Core Features",
-      mainTitle: "Everything you need to run your school",
-      features: [
+    chooseUs: {
+      badge: "WHY CHOOSE US",
+      title: "Creating A Community Of Life Long Learners.",
+      highlightWord: "Learners",
+      description:
+        "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris..",
+      imageSrc: "/community-learners.png", // Place your collaborative student group image in public assets folder
+      cards: [
         {
-          title: "Automated Fee Management",
+          title: "Streamlined Operations",
           description:
-            "Eliminate the headache of manual reconciliation. Track payments, generate receipts, and send automated reminders to parents instantly.",
-          image: "/dashboard-fees.png",
-          benefits: [
-            "Instant payment notifications",
-            "Direct bank integration",
-            "Debt tracking",
-          ],
-          isReversed: false,
+            "Centralized platform for all school management tasks, reducing complexity and improving efficiency.",
         },
         {
-          title: "Smart Attendance & SMS",
+          title: "Time-Saving Tools",
           description:
-            "Keep parents in the loop. Our system logs student attendance and sends an automatic SMS to guardians the moment a child is marked absent.",
-          image: "/dashboard-attendance.png",
-          benefits: [
-            "Real-time daily logs",
-            "One-click SMS alerts",
-            "Monthly summary reports",
-          ],
-          isReversed: true,
+            "Automated processes and intuitive interfaces save time for administrators, teachers, and students.",
         },
         {
-          title: "Effortless Result Computation",
+          title: "Enhanced Security",
           description:
-            "Say goodbye to calculator errors. Teachers input scores, and EduTrac automatically generates professional report cards in seconds.",
-          image: "/dashboard-results.png",
-          benefits: [
-            "Automated GPA calculation",
-            "Customizable templates",
-            "Bulk result printing",
-          ],
-          isReversed: false,
+            "Robust security measures protect sensitive data and ensure a safe learning environment.",
+        },
+        {
+          title: "Improved Collaboration",
+          description:
+            "Facilitates seamless communication and collaboration between all stakeholders.",
         },
       ],
     },
-    impact: {
-      title: "Our Impact in Numbers",
-      stats: [
-        { value: "50k+", label: "Active Learners" },
-        { value: "1.2k+", label: "Institutions" },
-        { value: "95%", label: "Satisfaction Rate" },
-        { value: "24/7", label: "Expert Support" },
-      ],
+    navigation: {
+      buttonText: "Sign Up",
+      buttonLink: LandingRoutes.plan ?? "/plan",
     },
-    about: {
-      badge: "OUR STORY",
-      title: "Gateway To Personal And Professional Growth",
-      description: [
-        "EduTrac was born from a vision to revolutionize education through technology. Founded by a team of educators and tech enthusiasts, we recognized the need for a comprehensive platform that could streamline school operations and enhance the learning experience for students and teachers alike.",
-        "Our Journey began with a simple idea: to create a tool that empowers schools to achieve their full potential. Today, EduTrac stands as a testament to that vision, serving countless institutions and shaping the future of education.",
-      ],
-      buttonText: "Learn More",
-      buttonLink: "/about",
-      images: {
-        teacher: about1,
-        building: about2,
-        students: about3,
+    joinUs: {
+      topBanner: {
+        title: "Small. Tailor EduTrac to Your Needs.",
+        joinLink: LandingRoutes.plan ?? "/plan",
+        videoLink: "#",
       },
+      whyChooseUs: {
+        badgeText: "WHY CHOOSE US",
+        title: "Creating A Community Of Life Long Learners.",
+        description:
+          "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris..",
+        imageSrc: "/images/community-learners.jpg", // Replace with your actual project image asset path
+        pillars: [
+          {
+            title: "Streamlined Operations",
+            description: "Centralized platform for all school management tasks, reducing complexity and improving efficiency."
+          },
+          {
+            title: "Time-Saving Tools",
+            description: "Automated processes and intuitive interfaces save time for administrators, teachers, and students."
+          },
+          {
+            title: "Enhanced Security",
+            description: "Robust security measures protect sensitive data and ensure a safe learning environment."
+          },
+          {
+            title: "Improved Collaboration",
+            description: "Facilitates seamless communication and collaboration between all stakeholders."
+          }
+        ]
+      }
     },
     role: [
       {
@@ -144,6 +139,7 @@ export default function HomePage() {
         title: "TEACHER",
         description:
           "Create and manage courses, engage students, and track progress.",
+        isActive: true,
       },
       {
         id: "student",
@@ -158,16 +154,12 @@ export default function HomePage() {
           "Monitor your child's academic performance and stay connected with teachers.",
       },
     ],
-    navigation: {
-      buttonText: "Sign Up",
-      buttonLink: OnboardingRoutes.plan,
-    },
-
     freeTrial: {
       title: "Ready to Simplify Your Learning Management?",
       description:
         "Join thousands of Learning Platforms already benefiting from EduTrac's powerful features.",
       buttonText: "Start Free Trial",
+      buttonLink: LandingRoutes.plan ?? "/plan",
     },
     faq: [
       {
@@ -224,52 +216,6 @@ export default function HomePage() {
         role: "Proprietor at ord it",
       },
     ],
-    pricing: [
-      {
-        id: "basic",
-        name: "Basic",
-        description: "Have a go and test your superpowers",
-        price: "0",
-        features: [
-          "2 Users",
-          "2 Files",
-          "Public Share & Comments",
-          "Chat Support",
-          "New income apps",
-        ],
-      },
-      {
-        id: "pro",
-        name: "Pro",
-        description:
-          "For Growing Schools: Simplify Fee Management, Track Student Progress, and Communicate Efficiently with Parents.",
-        price: "8,000",
-        isPopular: true,
-        saveAmount: "Save ₦5,000 a year",
-        features: [
-          "Unlimited students",
-          "School fees management",
-          "Attendance management",
-          "Dashboard",
-          "Student progress report",
-          "Communication",
-          "Price reduces as students increase",
-        ],
-      },
-      {
-        id: "ultra",
-        name: "Ultra",
-        description: "Unveil new superpowers and join the Design League",
-        price: "16,000",
-        features: [
-          "All the features of pro plan",
-          "Account success Manager",
-          "Single Sign-On (SSO)",
-          "Co-conception program",
-          "Collaboration-Soon",
-        ],
-      },
-    ],
   };
 
   return (
@@ -278,13 +224,11 @@ export default function HomePage() {
         buttonText={content.navigation.buttonText}
         buttonLink={content.navigation.buttonLink}
       />
-      <Hero {...content.hero} />
-      <FeatureHub {...content.featureHub} />
-      <ImpactStats {...content.impact} />
-      <AboutSection {...content.about} />
-      <Role items={content.role} />
+      <Hero {...content.hero} roles={content.role} />
+      <FeatureHub />
+      <JoinUSUs {...content.joinUs} />
       <Testimonial items={content.testimonials} />
-      <Pricing items={content.pricing} />
+      <Pricing />
       <FAQ items={content.faq} />
       <FreeTrial {...content.freeTrial} />
       <Footer />

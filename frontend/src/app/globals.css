@@ -1,5 +1,6 @@
 @import "tailwindcss";
 
+
 /* ==========================================================================
    Edutrac – Global CSS
    Fonts: Inter, Source Sans Pro, Open Sans (loaded in layout.tsx)
@@ -52,11 +53,15 @@
 
   /* Pressed state for secondary / darker black */
   --color-pressed-black: #262626;
+  
+  /* Add these two slots for the onboarding theme editor engine */
+  --color-dynamic-brand: #923cf9;
+  --color-dynamic-brand-hover: #7e2ed4;
 }
 
 @theme inline {
   --font-sans:
-    var(--font-inter), var(--font-source-sans), var(--font-open-sans),
+    var(--font-inter), var(--font-source-sans), var(--font-poppins), var(--open-sans), var(--font-epilogue),
     ui-sans-serif, system-ui, sans-serif;
 
   /* Brand */
@@ -94,6 +99,9 @@
   --color-yellow-200: #dfb400;
   --color-green-100: #84ebb4;
   --color-green-200: #1fc16b;
+
+  --color-dynamicBrand: var(--color-dynamic-brand);
+  --color-dynamicBrandHover: var(--color-dynamic-brand-hover);
 }
 
 @media (prefers-color-scheme: dark) {
