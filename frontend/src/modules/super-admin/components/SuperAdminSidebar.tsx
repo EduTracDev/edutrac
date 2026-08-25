@@ -112,13 +112,13 @@ export default function SuperAdminSidebar({
       >
         {/* Logo section */}
         <div className="flex items-center gap-3 p-6">
-          <Image
+          {/* <Image
             src="/school-logo.png"
             alt="EduTrac logo"
             width={42}
             height={42}
             className="rounded-lg"
-          />
+          /> */}
 
           <div>
             <p className="font-semibold text-sm">EduTrac Platform</p>
@@ -129,7 +129,10 @@ export default function SuperAdminSidebar({
         </div>
 
         {/* Navigation */}
-        <nav className="p-4 space-y-2 overflow-y-auto max-h-[calc(100vh-100px)]" aria-label="Sidebar">
+        <nav
+          className="p-4 space-y-2 overflow-y-auto max-h-[calc(100vh-100px)]"
+          aria-label="Sidebar"
+        >
           {links.map((link) => {
             const Icon = link.icon;
 
