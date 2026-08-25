@@ -1,7 +1,17 @@
 "use client";
 
 import React, { useState } from "react";
-import { SaaSPlan } from "../types/subscription.types";
+
+type SaaSPlan = {
+  name: string;
+  isPopular: boolean;
+  priceMonthly: number;
+  priceAnnual: number;
+  maxStudents: number;
+  maxTeachers: number;
+  maxStorageGB: number;
+  features: string[];
+};
 
 interface PlanCardProps {
   plan: SaaSPlan;

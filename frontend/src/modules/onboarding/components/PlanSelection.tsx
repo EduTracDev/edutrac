@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 
 import React, { useEffect, useState } from "react";
@@ -48,9 +49,9 @@ export const PlanSelection = ({
           setPlans(response.data);
           // Set default selected plan (e.g. Pro or the second item)
           if (response.data.length > 0) {
-            const defaultPlan = response.data.find(
-              (p) => p.name.toLowerCase() === "pro"
-            ) || response.data[0];
+            const defaultPlan =
+              response.data.find((p) => p.name.toLowerCase() === "pro") ||
+              response.data[0];
             setSelectedPlanId(defaultPlan.id);
           }
         } else {
@@ -61,7 +62,7 @@ export const PlanSelection = ({
         setError(
           err?.response?.data?.message ||
             err?.message ||
-            "Unable to load pricing plans."
+            "Unable to load pricing plans.",
         );
       } finally {
         setLoading(false);
@@ -115,7 +116,9 @@ export const PlanSelection = ({
     return (
       <div className="flex flex-col items-center justify-center py-20">
         <Loader2 className="w-10 h-10 text-[#923CF9] animate-spin mb-4" />
-        <p className="text-slate-500 text-sm font-medium">Loading pricing plans...</p>
+        <p className="text-slate-500 text-sm font-medium">
+          Loading pricing plans...
+        </p>
       </div>
     );
   }

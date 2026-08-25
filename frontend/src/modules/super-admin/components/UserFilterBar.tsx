@@ -1,7 +1,6 @@
 "use client";
 
 import React from "react";
-import { UserRole, UserStatus } from "../types/userForm.types";
 
 interface UserFilterBarProps {
   searchQuery: string;
@@ -28,14 +27,17 @@ export function UserFilterBar({
   schools,
   onResetFilters,
 }: UserFilterBarProps) {
-  const hasActiveFilters = searchQuery || selectedRole || selectedSchool || selectedStatus;
+  const hasActiveFilters =
+    searchQuery || selectedRole || selectedSchool || selectedStatus;
 
   return (
     <div className="bg-white p-4 rounded-xl border border-slate-200 shadow-sm space-y-3">
       <div className="grid grid-cols-1 md:grid-cols-4 gap-3">
         {/* Search Query */}
         <div className="relative col-span-1 md:col-span-1">
-          <span className="absolute inset-y-0 left-0 flex items-center pl-3 text-slate-400 text-xs">🔍</span>
+          <span className="absolute inset-y-0 left-0 flex items-center pl-3 text-slate-400 text-xs">
+            🔍
+          </span>
           <input
             type="text"
             value={searchQuery}
