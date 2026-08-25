@@ -1,7 +1,11 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import { UserFormData, UserFormErrors, UserRole, validateUserForm } from "../types/userForm.types";
+import {
+  UserFormData,
+  UserFormErrors,
+  validateUserForm,
+} from "../types/userForm.types";
 import { FormField } from "./FormField";
 
 interface UserFormModalProps {
@@ -26,7 +30,13 @@ const DEFAULT_USER_DATA: UserFormData = {
   parentGuardianEmail: "",
 };
 
-export function UserFormModal({ isOpen, onClose, onSubmit, initialData, schools }: UserFormModalProps) {
+export function UserFormModal({
+  isOpen,
+  onClose,
+  onSubmit,
+  initialData,
+  schools,
+}: UserFormModalProps) {
   const [formData, setFormData] = useState<UserFormData>(DEFAULT_USER_DATA);
   const [errors, setErrors] = useState<UserFormErrors>({});
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -43,7 +53,11 @@ export function UserFormModal({ isOpen, onClose, onSubmit, initialData, schools 
 
   if (!isOpen) return null;
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
+  const handleChange = (
+    e: React.ChangeEvent<
+      HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement
+    >,
+  ) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
 
@@ -79,19 +93,29 @@ export function UserFormModal({ isOpen, onClose, onSubmit, initialData, schools 
         <div className="px-6 py-4 border-b border-slate-200 flex justify-between items-center bg-slate-50">
           <div>
             <h2 className="text-lg font-bold text-slate-900">
-              {isEditMode ? `Edit User: ${initialData?.firstName} ${initialData?.lastName}` : "Create New User Account"}
+              {isEditMode
+                ? `Edit User: ${initialData?.firstName} ${initialData?.lastName}`
+                : "Create New User Account"}
             </h2>
             <p className="text-xs text-slate-500">
-              {isEditMode ? "Modify account profile, assigned school, or status." : "Provision a new user account across any EduTrac school."}
+              {isEditMode
+                ? "Modify account profile, assigned school, or status."
+                : "Provision a new user account across any EduTrac school."}
             </p>
           </div>
-          <button onClick={onClose} className="text-slate-400 hover:text-slate-600 p-1 rounded-lg transition-colors">
+          <button
+            onClick={onClose}
+            className="text-slate-400 hover:text-slate-600 p-1 rounded-lg transition-colors"
+          >
             ✕
           </button>
         </div>
 
         {/* Form Body */}
-        <form onSubmit={handleSubmit} className="p-6 overflow-y-auto space-y-5 flex-1">
+        <form
+          onSubmit={handleSubmit}
+          className="p-6 overflow-y-auto space-y-5 flex-1"
+        >
           {/* Core Profile */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <FormField
@@ -176,9 +200,12 @@ export function UserFormModal({ isOpen, onClose, onSubmit, initialData, schools 
           </div>
 
           {/* Role-Specific Conditional Fields */}
-          {(formData.role === "Teacher" || formData.role === "School Admin") && (
+          {(formData.role === "Teacher" ||
+            formData.role === "School Admin") && (
             <div className="p-4 bg-slate-50 rounded-lg border border-slate-200 space-y-3">
-              <p className="text-xs font-bold text-slate-700 uppercase tracking-wider">Staff Details</p>
+              <p className="text-xs font-bold text-slate-700 uppercase tracking-wider">
+                Staff Details
+              </p>
               <FormField
                 label="Employee ID Number"
                 name="employeeId"
@@ -193,7 +220,9 @@ export function UserFormModal({ isOpen, onClose, onSubmit, initialData, schools 
 
           {formData.role === "Student" && (
             <div className="p-4 bg-slate-50 rounded-lg border border-slate-200 space-y-3">
-              <p className="text-xs font-bold text-slate-700 uppercase tracking-wider">Student Details</p>
+              <p className="text-xs font-bold text-slate-700 uppercase tracking-wider">
+                Student Details
+              </p>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
                 <FormField
                   label="Student ID Number"
@@ -253,7 +282,9 @@ export function UserFormModal({ isOpen, onClose, onSubmit, initialData, schools 
               disabled={isSubmitting}
               className="px-5 py-2 text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 rounded-lg transition-colors flex items-center gap-2 shadow-sm disabled:opacity-50"
             >
-              {isSubmitting && <span className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />}
+              {isSubmitting && (
+                <span className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+              )}
               {isEditMode ? "Update User Account" : "Create User Account"}
             </button>
           </div>

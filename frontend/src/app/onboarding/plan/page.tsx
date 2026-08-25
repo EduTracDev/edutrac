@@ -7,7 +7,7 @@ import { OnboardingRoutes } from "@/routes/onboardingRoutes";
 export default function PlanSelectionPage() {
   const router = useRouter();
 
-  const handleSelect = (planId: string) => {
+  const handleSelect = (planId: number) => {
     console.log("Selected plan:", planId);
     router.push(OnboardingRoutes.schoolInfo);
   };

@@ -1,7 +1,17 @@
 "use client";
 
 import React from "react";
-import { SchoolSubscription } from "../types/subscription.types";
+
+interface SchoolSubscription {
+  id: string;
+  schoolName: string;
+  planName: string;
+  billingCycle: string;
+  studentCount: number;
+  maxStudents: number;
+  currentPeriodEnd: string;
+  status: string;
+}
 
 interface SubscriptionsTableProps {
   subscriptions: SchoolSubscription[];
