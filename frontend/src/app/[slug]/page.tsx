@@ -24,8 +24,14 @@ export default function SchoolLandingPage({ params }: PageProps) {
 
   useEffect(() => {
     const primary = profile?.themeColor || "#923CF9";
-    document.documentElement.style.setProperty("--color-dynamic-brand", primary);
-    document.documentElement.style.setProperty("--color-dynamic-brand-hover", primary + "CC");
+    document.documentElement.style.setProperty(
+      "--color-dynamic-brand",
+      primary,
+    );
+    document.documentElement.style.setProperty(
+      "--color-dynamic-brand-hover",
+      primary + "CC",
+    );
   }, [profile?.themeColor]);
 
   const fallbackName = slug
@@ -40,8 +46,10 @@ export default function SchoolLandingPage({ params }: PageProps) {
   const yourVision = profile?.yourVision || DEFAULT_VISION;
   const yourMission = profile?.yourMission || DEFAULT_MISSION;
 
-  const segmentImage = (key: "admin" | "teacher" | "parent" | "student", fallback: string) =>
-    profile?.segmentImages?.[key] || fallback;
+  const segmentImage = (
+    key: "admin" | "teacher" | "parent" | "student",
+    fallback: string,
+  ) => profile?.segmentImages?.[key] || fallback;
 
   const heroImageUrl = profile?.heroImageUrl || "./employees.png";
 
@@ -56,7 +64,11 @@ export default function SchoolLandingPage({ params }: PageProps) {
 
   return (
     <div className="min-h-screen text-slate-900 --font-source-sans selection:bg-purple-200">
-      <SchoolNav slug={slug} schoolName={schoolName} logoUrl={profile?.logoUrl ?? null} />
+      <SchoolNav
+        slug={slug}
+        schoolName={schoolName}
+        logoUrl={profile?.logoUrl ?? null}
+      />
       <section className="relative overflow-hidden pt-8 pb-16 px-6 bg-gradient-to-b from-purple-50/30 via-[#F8FAFC] to-white">
         <div className="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
           <div className="text-center lg:text-left space-y-6">
@@ -78,20 +90,34 @@ export default function SchoolLandingPage({ params }: PageProps) {
       {/* 3. Why Educators Choose EduTrac */}
       <section id="features" className="pt-8 pb-12 px-6 bg-[#F6F7F8]">
         <div className="text-center max-w-3xl mx-auto mb-7 space-y-2">
-          <h2 className="text-3xl sm:text-4xl font-black text-slate-900">Why Choose {schoolName}</h2>
+          <h2 className="text-3xl sm:text-4xl font-black text-slate-900">
+            Why Choose {schoolName}
+          </h2>
         </div>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-12 max-w-6xl mx-auto">
           <div className="p-8 bg-white border border-slate-100 rounded-[12px] shadow-sm hover:shadow-xl transition-all">
-            <h3 className="text-xl font-black text-slate-900 mb-3">Our History</h3>
-            <p className="text-sm text-slate-500 font-medium leading-relaxed">{yourHistory}</p>
+            <h3 className="text-xl font-black text-slate-900 mb-3">
+              Our History
+            </h3>
+            <p className="text-sm text-slate-500 font-medium leading-relaxed">
+              {yourHistory}
+            </p>
           </div>
           <div className="p-8 bg-white border border-slate-100 rounded-[12px] shadow-sm hover:shadow-xl transition-all">
-            <h3 className="text-xl font-black text-slate-900 mb-3">Our Vision</h3>
-            <p className="text-sm text-slate-500 font-medium leading-relaxed">{yourVision}</p>
+            <h3 className="text-xl font-black text-slate-900 mb-3">
+              Our Vision
+            </h3>
+            <p className="text-sm text-slate-500 font-medium leading-relaxed">
+              {yourVision}
+            </p>
           </div>
           <div className="p-8 bg-white border border-slate-100 rounded-[12px] shadow-sm hover:shadow-xl transition-all">
-            <h3 className="text-xl font-black text-slate-900 mb-3">Our Mission</h3>
-            <p className="text-sm text-slate-500 font-medium leading-relaxed">{yourMission}</p>
+            <h3 className="text-xl font-black text-slate-900 mb-3">
+              Our Mission
+            </h3>
+            <p className="text-sm text-slate-500 font-medium leading-relaxed">
+              {yourMission}
+            </p>
           </div>
         </div>
       </section>
@@ -99,9 +125,10 @@ export default function SchoolLandingPage({ params }: PageProps) {
       {/* 4. Target Personas Segments */}
       <section id="portals" className="pt-10 pb-14 px-6 bg-[#F6F7F8]">
         <div className="max-w-6xl mx-auto space-y-12">
-
           <div className="text-center max-w-2xl mx-auto space-y-4">
-            <h2 className="text-3xl sm:text-4xl font-black text-slate-900">Our School Gallery</h2>
+            <h2 className="text-3xl sm:text-4xl font-black text-slate-900">
+              Our School Gallery
+            </h2>
           </div>
 
           <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
@@ -126,7 +153,6 @@ export default function SchoolLandingPage({ params }: PageProps) {
               className="w-full aspect-square object-cover rounded-2xl border border-slate-100 shadow-sm"
             />
           </div>
-
         </div>
       </section>
 
@@ -140,27 +166,28 @@ export default function SchoolLandingPage({ params }: PageProps) {
       {/* 6. Support Invitation Section */}
       <section className="pt-15 pb-15 px-6 text-center space-y-4 max-w-4xl mx-auto">
         <div className="flex justify-center -space-x-3 overflow-hidden">
-          {[
-            "./avatar1.png",
-            "./avatar2.png",
-            "./avatar3.png"
-          ].map((url, index) => (
-            <div
-              key={index}
-              className="relative inline-block h-12 w-12 rounded-full overflow-hidden bg-slate-100"
-            >
-              <img
-                src={url}
-                alt={`Support team member ${index + 1}`}
-                className="w-full h-full object-cover"
-              />
-            </div>
-          ))}
+          {["./avatar1.png", "./avatar2.png", "./avatar3.png"].map(
+            (url, index) => (
+              <div
+                key={index}
+                className="relative inline-block h-12 w-12 rounded-full overflow-hidden bg-slate-100"
+              >
+                <img
+                  src={url}
+                  alt={`Support team member ${index + 1}`}
+                  className="w-full h-full object-cover"
+                />
+              </div>
+            ),
+          )}
         </div>
 
-        <h3 className="text-2xl font-black text-[var(--color-dynamic-brand)]">Still have questions?</h3>
+        <h3 className="text-2xl font-black text-[var(--color-dynamic-brand)]">
+          Still have questions?
+        </h3>
         <p className="text-sm text-slate-500 font-medium max-w-4xl mx-auto">
-          Can't find the answer you're looking for? Please chat to our friendly team.
+          Can't find the answer you're looking for? Please chat to our friendly
+          team.
         </p>
 
         <div className="pt-2">
@@ -171,19 +198,24 @@ export default function SchoolLandingPage({ params }: PageProps) {
               rel="noopener noreferrer"
               className="inline-flex items-center gap-3 bg-[var(--color-dynamic-brand)] hover:bg-[var(--color-dynamic-brand-hover)] text-white font-black text-xs tracking-widest pl-8 rounded-full shadow-lg shadow-purple-100 transition-all hover:scale-[1.02]"
             >
-              Contact Us  <span className="p-4 bg-white rounded-full text-[var(--color-dynamic-brand)]"><ArrowRight size={14} /></span>
+              Contact Us{" "}
+              <span className="p-4 bg-white rounded-full text-[var(--color-dynamic-brand)]">
+                <ArrowRight size={14} />
+              </span>
             </a>
           ) : (
             <button
               disabled
               className="inline-flex items-center gap-3 bg-[var(--color-dynamic-brand)] hover:bg-[var(--color-dynamic-brand-hover)] text-white font-black text-xs tracking-widest pl-8 rounded-full shadow-lg shadow-purple-100 transition-all hover:scale-[1.02]"
             >
-              Contact Us <span className="p-4 bg-white rounded-full text-[var(--color-dynamic-brand)]"><ArrowRight size={14} /></span>
+              Contact Us{" "}
+              <span className="p-4 bg-white rounded-full text-[var(--color-dynamic-brand)]">
+                <ArrowRight size={14} />
+              </span>
             </button>
           )}
         </div>
       </section>
-
 
       {/* 8. Integrated Newsletter Container Area */}
       <section className="p-8 bg-[#F8F6F9]">
@@ -191,9 +223,14 @@ export default function SchoolLandingPage({ params }: PageProps) {
           <div className="absolute top-0 left-0 w-32 h-32 bg-white/5 rounded-full -translate-x-12 -translate-y-12 border border-white/10" />
           <div className="absolute bottom-0 right-0 w-40 h-40 bg-white/5 rounded-full translate-x-12 translate-y-12 border border-white/10" />
 
-          <h3 className="text-2xl sm:text-3xl font-black tracking-tight relative z-10">Subscribe to our newsletter</h3>
+          <h3 className="text-2xl sm:text-3xl font-black tracking-tight relative z-10">
+            Subscribe to our newsletter
+          </h3>
 
-          <form onSubmit={(e) => e.preventDefault()} className="max-w-3xl mx-auto flex flex-col md:flex-row gap-4 relative z-10">
+          <form
+            onSubmit={(e) => e.preventDefault()}
+            className="max-w-3xl mx-auto flex flex-col md:flex-row gap-4 relative z-10"
+          >
             <input
               type="text"
               placeholder="First name"
@@ -208,13 +245,21 @@ export default function SchoolLandingPage({ params }: PageProps) {
               onChange={(e) => setEmail(e.target.value)}
               className="flex-1 px-5 py-4 border border-white rounded-2xl text-white placeholder-white font-medium focus:outline-none focus:border-white transition-all text-sm"
             />
-            <button type="submit" className="px-8 py-4 bg-slate-950 hover:bg-slate-900 text-white text-sm font-bold rounded-2xl transition-all shadow-md shrink-0">
+            <button
+              type="submit"
+              className="px-8 py-4 bg-slate-950 hover:bg-slate-900 text-white text-sm font-bold rounded-2xl transition-all shadow-md shrink-0"
+            >
               Subscribe Now
             </button>
           </form>
         </div>
       </section>
-      <SchoolFooter address={profile?.address ?? null} footerTitle={profile?.footerTitle ?? null} schoolName={schoolName} logoUrl={profile?.logoUrl ?? null} />
+      <SchoolFooter
+        address={profile?.address ?? null}
+        footerTitle={profile?.footerTitle ?? null}
+        schoolName={schoolName}
+        logoUrl={profile?.logoUrl ?? null}
+      />
     </div>
   );
 }
