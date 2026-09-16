@@ -291,26 +291,33 @@ export default function Page() {
             <h2 className="text-sm font-bold uppercase tracking-wider text-slate-400">
               School Management
             </h2>
-            <div className="mt-4 flex flex-col gap-3">
+            <div className="mt-4">
               <QuickActionCard
-                title="Add Teacher"
+                title="Add to your school"
+                description="Choose what you want to create"
                 icon={UserPlus}
-                onClick={() => setActiveModal("teacher")}
-              />
-              <QuickActionCard
-                title="Add Student"
-                icon={UserPlus}
-                onClick={() => setActiveModal("student")}
-              />
-              <QuickActionCard
-                title="Add Parent"
-                icon={UserPlus}
-                onClick={() => setActiveModal("parent")}
-              />
-              <QuickActionCard
-                title="Create Class"
-                icon={PlusSquare}
-                onClick={() => setActiveModal("class")}
+                menuItems={[
+                  {
+                    title: "Add Teacher",
+                    icon: UserPlus,
+                    onClick: () => setActiveModal("teacher"),
+                  },
+                  {
+                    title: "Add Student",
+                    icon: GraduationCap,
+                    onClick: () => setActiveModal("student"),
+                  },
+                  {
+                    title: "Add Parent",
+                    icon: Users,
+                    onClick: () => setActiveModal("parent"),
+                  },
+                  {
+                    title: "Create Class",
+                    icon: PlusSquare,
+                    onClick: () => setActiveModal("class"),
+                  },
+                ]}
               />
             </div>
           </div>
