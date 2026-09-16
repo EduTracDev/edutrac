@@ -7,12 +7,18 @@ const ROLE_PERMISSIONS_MAP: Record<GlobalRole, string[]> = {
   "Super Admin": ["p1", "p2", "p3", "p4", "p5", "p6"],
   "Support Engineer": ["p1", "p5"],
   "Billing Manager": ["p3", "p4"],
-  "Auditor": ["p5"],
+  Auditor: ["p5"],
 };
 
-export function PermissionsMatrix() {
-  const [matrix, setMatrix] = useState<Record<GlobalRole, string[]>>(ROLE_PERMISSIONS_MAP);
-  const roles: GlobalRole[] = ["Super Admin", "Support Engineer", "Billing Manager", "Auditor"];
+export default function PermissionsMatrix() {
+  const [matrix, setMatrix] =
+    useState<Record<GlobalRole, string[]>>(ROLE_PERMISSIONS_MAP);
+  const roles: GlobalRole[] = [
+    "Super Admin",
+    "Support Engineer",
+    "Billing Manager",
+    "Auditor",
+  ];
 
   const togglePermission = (role: GlobalRole, permId: string) => {
     if (role === "Super Admin") return; // Super admin permissions remain locked
@@ -29,8 +35,12 @@ export function PermissionsMatrix() {
     <div className="bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden">
       <div className="p-4 bg-slate-50 border-b border-slate-200 flex justify-between items-center">
         <div>
-          <h3 className="text-sm font-bold text-slate-900">Global System Permissions Matrix</h3>
-          <p className="text-xs text-slate-500">Configure feature access boundaries for platform staff roles.</p>
+          <h3 className="text-sm font-bold text-slate-900">
+            Global System Permissions Matrix
+          </h3>
+          <p className="text-xs text-slate-500">
+            Configure feature access boundaries for platform staff roles.
+          </p>
         </div>
         <button
           onClick={() => alert("Role permissions matrix saved successfully.")}
@@ -54,10 +64,15 @@ export function PermissionsMatrix() {
           </thead>
           <tbody className="divide-y divide-slate-100 text-slate-700">
             {SYSTEM_PERMISSIONS.map((perm) => (
-              <tr key={perm.id} className="hover:bg-slate-50/80 transition-colors">
+              <tr
+                key={perm.id}
+                className="hover:bg-slate-50/80 transition-colors"
+              >
                 <td className="p-3">
                   <p className="font-bold text-slate-900">{perm.name}</p>
-                  <p className="text-[10px] text-slate-500">{perm.description}</p>
+                  <p className="text-[10px] text-slate-500">
+                    {perm.description}
+                  </p>
                 </td>
                 {roles.map((r) => {
                   const isChecked = matrix[r]?.includes(perm.id);

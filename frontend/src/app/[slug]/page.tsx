@@ -186,7 +186,7 @@ export default function SchoolLandingPage({ params }: PageProps) {
           Still have questions?
         </h3>
         <p className="text-sm text-slate-500 font-medium max-w-4xl mx-auto">
-          Can't find the answer you're looking for? Please chat to our friendly
+          Can&apos;t find the answer you&apos;re looking for? Please chat to our friendly
           team.
         </p>
 

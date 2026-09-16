@@ -15,19 +15,14 @@ export default function Page() {
   const maxRevenue = Math.max(...MOCK_CHART_DATA.map((d) => d.revenue));
 
   return (
-    <SuperAdminLayout>
-      {" "}
-      <div className="space-y-6">
-        {/* Header */}
-        <div>
-          <h1 className="text-2xl font-bold text-slate-900">
-            Platform Overview
-          </h1>
-          <p className="text-sm text-slate-500">
-            Real-time metrics, revenue growth, and system health across all
-            EduTrac tenants.
-          </p>
-        </div>
+    <div className="space-y-6">
+      {/* Header */}
+      <div>
+        <h1 className="text-2xl font-bold text-slate-900">Platform Overview</h1>
+        <p className="text-sm text-slate-500">
+          Real-time metrics, revenue growth, and system health across all EduTrac tenants.
+        </p>
+      </div>
 
         {/* KPI Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">

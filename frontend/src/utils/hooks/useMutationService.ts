@@ -7,7 +7,8 @@ import { useRouter } from "next/navigation";
 import { useSelector } from "react-redux";
 import client, { ApiMethods } from "../client";
 import { useAppDispatch } from "@/redux/store/hooks";
-import { CombinedReducerType, AuthReduxState } from "@/redux/store/types";
+import { CombinedReducerType } from "@/redux/store/types";
+import { AuthState } from "@/redux/store/slices/authSlice";
 import { showToast } from "@/modules/shared/component/Toast";
 
 type MutationSuccessHandler<Resp, Req> = (
@@ -121,15 +122,22 @@ export function useMutationService<Req extends object, Resp = unknown>(
   const dispatch = useAppDispatch();
 
   const { refreshToken, accessToken } =
-    useSelector<CombinedReducerType, AuthReduxState>((state) => state.auth) || {};
+    useSelector<CombinedReducerType, AuthState>((state) => state.auth) || {};
 
   return useMutation<Resp, unknown, Req>({
     ...rest,
-    mutationKey: [...keys, props.service, refreshToken?._time_stamp, accessToken?._time_stamp],
+    mutationKey: [
+      ...keys,
+      props.service,
+      refreshToken?._time_stamp,
+      accessToken?._time_stamp,
+    ],
     mutationFn: async (data) => {
       // Resolve service dynamically if it's a function
       const resolvedService =
-        typeof props.service === "function" ? props.service(data) : props.service;
+        typeof props.service === "function"
+          ? props.service(data)
+          : props.service;
 
       return client.request<Req, Resp>({
         ...resolvedService,
@@ -145,13 +153,17 @@ export function useMutationService<Req extends object, Resp = unknown>(
       }
 
       if (invalidateKeys?.length) {
-        invalidateKeys.forEach((key) => queryClient.invalidateQueries({ queryKey: [key] }));
+        invalidateKeys.forEach((key) =>
+          queryClient.invalidateQueries({ queryKey: [key] }),
+        );
       }
 
       if (!options.disableToast) {
         const title = successTitle || "Success";
         const description =
-          successMessage || (response as { message?: string })?.message || "Operation completed.";
+          successMessage ||
+          (response as { message?: string })?.message ||
+          "Operation completed.";
 
         if (successMessage || successTitle || (response as any)?.message) {
           showToast({
@@ -188,7 +200,9 @@ export function useMutationService<Req extends object, Resp = unknown>(
         }
       } else {
         errorMessage =
-          apiError?.response?.data?.message || apiError?.message || "Something went wrong.";
+          apiError?.response?.data?.message ||
+          apiError?.message ||
+          "Something went wrong.";
       }
 
       if (onError) {
