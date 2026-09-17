@@ -12,12 +12,22 @@ import {
   FinancialRecord,
   PaymentEntry,
 } from "../types/dashboard";
-export const schoolData = {
+type PlanName = "Trial plan" | "Pro plan";
+
+export const schoolData: {
+  name: string;
+  id: string;
+  date: string;
+  plan: PlanName;
+  expiresOn: string;
+} = {
   name: "Lincoln High School",
   id: "LHS-2025",
   date: "March 11, 2026",
-  plan: "Premium plan",
+  plan: "Trial plan",
+  expiresOn: "September 30, 2026",
 };
+
 export const revenueData = [
   { month: "Jan", revenue: 4500000, debt: 1200000 },
   { month: "Feb", revenue: 5200000, debt: 800000 },

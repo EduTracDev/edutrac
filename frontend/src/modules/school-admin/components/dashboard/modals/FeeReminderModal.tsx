@@ -9,7 +9,6 @@ interface FeeReminderModalProps {
 
 export const FeeReminderModal = ({
   debtorsCount,
-  totalAmount,
   onClose,
   onConfirm,
 }: FeeReminderModalProps) => {
@@ -22,9 +21,8 @@ export const FeeReminderModal = ({
               Send Reminders?
             </h3>
             <p className="text-sm text-slate-500">
-              You are about to send personalized SMS/Email alerts to{" "}
-              <b>{debtorsCount} parents</b> owing a total of{" "}
-              <b>{formatCurrency(totalAmount)}</b>.
+              You are about to send notification/email alerts to{" "}
+              <b>{debtorsCount} parents/guardians</b>
             </p>
           </div>
 
@@ -33,10 +31,9 @@ export const FeeReminderModal = ({
               Message Preview
             </p>
             <p className="text-sm text-slate-700 leading-relaxed italic">
-              &quot;Dear Parent, this is a friendly reminder from{" "}
-              <b>Lincoln High</b> regarding the outstanding fees of{" "}
-              <b>₦120,000</b> for <b>{"{Student Name}"}</b>. Kindly ignore if
-              already paid.&quot;
+              &quot;Dear Parent/Guardian, this is a friendly reminder from{" "}
+              <b>Lincoln High</b> regarding the outstanding fees of your ward.
+              Kindly ignore if already paid.&quot;
             </p>
           </div>
 

@@ -140,6 +140,7 @@ export default function Page() {
         schoolId={schoolData.id}
         registeredDate={schoolData.date}
         planName={schoolData.plan}
+        expiresOn={schoolData.expiresOn}
       />
       <div className="space-y-8">
         <SmartActions onAction={handleSmartAction} />
@@ -256,72 +257,6 @@ export default function Page() {
             </ChartCard>
           </AnalyticsGrid>
         </div>
-        <aside className="flex flex-col md:flex-row gap-6">
-          <div className="hidden lg:flex justify-between">
-            <div>
-              <h2 className="text-sm font-bold uppercase tracking-wider text-slate-400">
-                Daily Operations
-              </h2>
-              <div className="mt-4 flex flex-row gap-3">
-                <QuickActionCard
-                  title="Post Announcement"
-                  icon={Megaphone}
-                  onClick={() => setActiveModal("announcement")}
-                />
-                <QuickActionCard
-                  title="Expenses"
-                  icon={Wallet}
-                  onClick={() => setActiveModal("expenses")}
-                />
-                {/* <QuickActionCard
-                  title="Approve Results"
-                  icon={CheckCircle2}
-                  onClick={() => {
-                    toast.loading("Loading result portal...");
-                    router.push("/school-admin/results/approve");
-                  }}
-                /> */}
-              </div>
-              <div className="mt-8">
-                <RecentActivity activities={recentActivities} />
-              </div>
-            </div>
-          </div>
-          <div className="w-full">
-            <h2 className="text-sm font-bold uppercase tracking-wider text-slate-400">
-              School Management
-            </h2>
-            <div className="mt-4">
-              <QuickActionCard
-                title="Add to your school"
-                description="Choose what you want to create"
-                icon={UserPlus}
-                menuItems={[
-                  {
-                    title: "Add Teacher",
-                    icon: UserPlus,
-                    onClick: () => setActiveModal("teacher"),
-                  },
-                  {
-                    title: "Add Student",
-                    icon: GraduationCap,
-                    onClick: () => setActiveModal("student"),
-                  },
-                  {
-                    title: "Add Parent",
-                    icon: Users,
-                    onClick: () => setActiveModal("parent"),
-                  },
-                  {
-                    title: "Create Class",
-                    icon: PlusSquare,
-                    onClick: () => setActiveModal("class"),
-                  },
-                ]}
-              />
-            </div>
-          </div>
-        </aside>
         {/* </div> */}
 
         {/* MODAL REGISTRY */}

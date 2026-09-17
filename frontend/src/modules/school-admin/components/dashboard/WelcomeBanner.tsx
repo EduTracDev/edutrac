@@ -1,18 +1,21 @@
 import React, { useMemo } from "react";
 import { Activity, ShieldCheck, Zap } from "lucide-react";
 
+type PlanName = "Trial plan" | "Pro plan";
 interface WelcomeBannerProps {
   schoolName: string;
   schoolId: string;
   registeredDate: string;
-  planName: string;
+  planName: PlanName;
+  expiresOn?: string;
 }
 
 export default function WelcomeBanner({
   schoolName = "Lincoln High",
   schoolId = "LHS-2025",
   registeredDate = "March 11, 2026",
-  planName = "Premium plan",
+  planName = "Trial plan",
+  expiresOn = "September 30, 2026",
 }: WelcomeBannerProps) {
   const greeting = useMemo(() => {
     const hour = new Date().getHours();
@@ -20,6 +23,8 @@ export default function WelcomeBanner({
     if (hour < 16) return "Good afternoon";
     return "Good evening";
   }, []);
+
+  const isTrialPlan = planName === "Trial plan";
 
   return (
     <section
@@ -43,7 +48,7 @@ export default function WelcomeBanner({
             </div>
             <h1
               id="welcome-heading"
-              className="text-4xl md:text-6xl font-black tracking-tight leading-[1.1]"
+              className="text-2xl md:text-4xl font-black tracking-tight leading-[1.1]"
             >
               {greeting},{" "}
               <span className="text-white/80 font-medium">Admin</span>
@@ -65,7 +70,7 @@ export default function WelcomeBanner({
               </div>
               <div className="flex flex-col">
                 <span className="text-[10px] uppercase font-bold text-white/50 tracking-wider">
-                  Joined System
+                  Joined
                 </span>
                 <span className="text-sm font-semibold">{registeredDate}</span>
               </div>
@@ -80,6 +85,20 @@ export default function WelcomeBanner({
                   Status
                 </span>
                 <span className="text-sm font-semibold">{planName}</span>
+                <span className="text-[10px] text-white/70">
+                  Expires on {expiresOn}
+                </span>
+                {isTrialPlan && (
+                  <div className="mt-2">
+                    {" "}
+                    <button
+                      type="button"
+                      className="px-4 py-2 rounded-xl bg-[#923CF9] text-white text-sm font-semibold hover:bg-[#8232e5] transition-colors"
+                    >
+                      Upgrade to Pro Plan
+                    </button>
+                  </div>
+                )}
               </div>
             </div>
           </div>
@@ -94,7 +113,7 @@ export default function WelcomeBanner({
           <span className="block text-sm font-medium text-white/80 uppercase tracking-wider mb-1">
             School ID
           </span>
-          <span className="text-3xl md:text-4xl font-black tracking-tighter">
+          <span className="text-xl md:text-2xl font-black tracking-tighter">
             #{schoolId}
           </span>
         </div>

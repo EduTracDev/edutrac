@@ -11,7 +11,7 @@ export const SmartActions = ({ onAction }: SmartActionProps) => {
       id: "fee-reminder",
       label: "Send Fee Reminders",
       icon: Bell,
-      desc: "Notify 42 debtors",
+      desc: "Notify 42 Parents/Guardians",
       color: "hover:bg-purple-50 text-purple-600 border-purple-100",
       iconBg: "bg-purple-100",
     },
@@ -25,7 +25,7 @@ export const SmartActions = ({ onAction }: SmartActionProps) => {
     },
     {
       id: "bulk-sms",
-      label: "Broadcast SMS",
+      label: "Broadcast",
       icon: Send,
       desc: "Emergency/Updates",
       color: "hover:bg-emerald-50 text-emerald-600 border-emerald-100",
