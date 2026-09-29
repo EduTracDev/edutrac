@@ -1,9 +1,10 @@
 "use client";
 
 import { use, useState } from "react";
-import { useRouter } from "next/navigation";
+import { notFound } from "next/navigation";
 import { Mail, Lock, ChevronDown } from "lucide-react";
 import { useSchoolProfile } from "@/modules/shared/lib/useSchoolProfile";
+import { useLogin } from "@/modules/auth/hooks/useLogin";
 
 interface PageProps {
   params: Promise<{ slug: string }>;
@@ -13,24 +14,31 @@ type PortalRole = "admin" | "teacher" | "parent";
 
 export default function PortalLoginPage({ params }: PageProps) {
   const { slug } = use(params);
-  const router = useRouter();
-  const profile = useSchoolProfile(slug);
+  const { profile, isLoading } = useSchoolProfile(slug);
+  const { login, isSubmitting, error } = useLogin();
 
   const [role, setRole] = useState<PortalRole>("admin");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [isSubmitting, setIsSubmitting] = useState(false);
-
-  const schoolName = profile?.name || slug;
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setIsSubmitting(true);
-    try {
-    } finally {
-      setIsSubmitting(false);
-    }
+    await login({ email, password }, slug, role);
   };
+
+  if (isLoading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-slate-50">
+        <div className="w-10 h-10 border-4 border-[var(--color-dynamic-brand)] border-t-transparent rounded-full animate-spin" />
+      </div>
+    );
+  }
+
+  if (!profile) {
+    notFound();
+  }
+
+  const schoolName = profile?.name || slug;
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-slate-50 px-6 py-16">
@@ -39,6 +47,12 @@ export default function PortalLoginPage({ params }: PageProps) {
           <h1 className="text-2xl font-black text-slate-900">{schoolName} Portal</h1>
           <p className="text-sm text-slate-500 font-medium">Sign in to continue</p>
         </div>
+
+        {error && (
+          <div className="p-3.5 bg-red-50 border border-red-200 text-red-600 rounded-xl text-xs font-medium">
+            {error}
+          </div>
+        )}
 
         <form onSubmit={handleSubmit} className="space-y-5">
           {/* Role Selector */}

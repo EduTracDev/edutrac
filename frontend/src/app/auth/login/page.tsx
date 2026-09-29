@@ -2,23 +2,21 @@
 import { useState, Suspense } from "react";
 import Link from "next/link";
 import { AuthRoutes } from "@/routes/auth.routes";
-import { useSearchParams, useRouter } from "next/navigation";
+import { useSearchParams } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { LoginFormData, loginSchema } from "@/utils/validation";
 import Image from "next/image";
 import { Eye, EyeOff } from "lucide-react";
-import client from "@/utils/client";
-import { authServices, LoginRequest, LoginResponse } from "@/services/auth.service";
+import { useLogin } from "@/modules/auth/hooks/useLogin";
 
 function LoginContent() {
-  const router = useRouter();
   const searchParams = useSearchParams();
   const role = searchParams.get("role") || "parent";
   const school = searchParams.get("school") || "EduTrac";
 
   const [showPassword, setShowPassword] = useState(false);
-  const [apiError, setApiError] = useState<string | null>(null);
+  const { login, isSubmitting: isLoggingIn, error: apiError } = useLogin();
 
   const {
     register,
@@ -35,41 +33,7 @@ function LoginContent() {
     .replace(/[^\w\-]+/g, "");
 
   const onSubmit = async (data: LoginFormData) => {
-    setApiError(null);
-
-    try {
-
-      const requestPath = `${authServices.login.path}?domain=${encodeURIComponent(domainSlug)}`;
-
-      const response = await client.request<LoginRequest, LoginResponse>({
-        path: requestPath,
-        method: authServices.login.method,
-        data: {
-          email: data.email,
-          password: data.password,
-        },
-      });
-
-      const token = response?.access_token || response?.accessToken;
-
-      if (token) {
-        document.cookie = `accessToken=${encodeURIComponent(token)}; path=/; SameSite=Lax`;
-        if (response.refreshToken) {
-          localStorage.setItem("refreshToken", response.refreshToken);
-        }
-
-        // Redirect based on role or to home dashboard
-        router.push(`/dashboard?role=${role}&school=${encodeURIComponent(school)}`);
-      } else {
-        setApiError(response?.message || "Invalid email or password.");
-      }
-    } catch (error: any) {
-      const errorMessage =
-        error?.response?.data?.message ||
-        error?.message ||
-        "An error occurred during sign in. Please try again.";
-      setApiError(errorMessage);
-    }
+    await login({ email: data.email, password: data.password }, domainSlug, role);
   };
 
   const handleGoogleAuth = () => {
@@ -172,13 +136,13 @@ function LoginContent() {
             {/* Main Action Submit Button */}
             <button
               type="submit"
-              disabled={isSubmitting}
-              className={`w-full py-3.5 cursor-pointer font-bold rounded-xl text-sm transition-colors mt-2 disabled:opacity-60 disabled:cursor-not-allowed ${isSubmitting
+              disabled={isSubmitting || isLoggingIn}
+              className={`w-full py-3.5 cursor-pointer font-bold rounded-xl text-sm transition-colors mt-2 disabled:opacity-60 disabled:cursor-not-allowed ${isSubmitting || isLoggingIn
                 ? "bg-[#E2E4E9] text-[#1E1E2F]"
                 : "bg-[#923CF9] text-white hover:bg-[#7e2ed4]"
                 }`}
             >
-              {isSubmitting ? "Processing..." : "Continue"}
+              {isSubmitting || isLoggingIn ? "Processing..." : "Continue"}
             </button>
           </form>
 

@@ -1,6 +1,7 @@
 "use client";
 
 import { use, useState, useEffect } from "react";
+import { notFound } from "next/navigation";
 import { ArrowRight } from "lucide-react";
 import { SchoolFooter } from "@/modules/landing/components/SchoolFooter";
 import { SchoolNav } from "@/modules/landing/components/SchoolNav";
@@ -20,7 +21,7 @@ export default function SchoolLandingPage({ params }: PageProps) {
   const { slug } = use(params);
   const [email, setEmail] = useState("");
   const [firstName, setFirstName] = useState("");
-  const profile = useSchoolProfile(slug);
+  const { profile, isLoading } = useSchoolProfile(slug);
 
   useEffect(() => {
     const primary = profile?.themeColor || "#923CF9";
@@ -33,6 +34,18 @@ export default function SchoolLandingPage({ params }: PageProps) {
       primary + "CC",
     );
   }, [profile?.themeColor]);
+
+  if (isLoading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-slate-50">
+        <div className="w-10 h-10 border-4 border-[#923CF9] border-t-transparent rounded-full animate-spin" />
+      </div>
+    );
+  }
+
+  if (!profile) {
+    notFound();
+  }
 
   const fallbackName = slug
     .split("-")

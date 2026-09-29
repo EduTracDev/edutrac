@@ -14,7 +14,7 @@ import { authServices } from "@/services/auth.service";
 import { AuthRoutes } from "@/routes/auth.routes";
 import { sessionEventEmitter } from "../eventEmitters";
 import { appendQueryParams } from "../helpers";
-import { clearAuthCookies, redirectToAuthRoute } from "../helper";
+import { clearAuthCookies, redirectToAuthRoute, setToken } from "../helper";
 
 
 const useAuthSession = () => {
@@ -70,20 +70,30 @@ const useAuthSession = () => {
         refreshToken: refreshToken.token,
       });
 
+      if (!refreshTokenResponse?.accessToken) {
+        throw new Error("Refresh response missing accessToken");
+      }
+
+      // Must happen on every refresh: the API client's Authorization
+      // interceptor reads the token from this cookie, not from Redux or
+      // localStorage. Skipping this left the client sending the stale token
+      // after every "successful" refresh.
+      setToken(refreshTokenResponse.accessToken);
+
       dispatch(
         setAccessToken({
-          token: refreshTokenResponse?.accessToken,
+          token: refreshTokenResponse.accessToken,
           _time_stamp: new Date().toISOString(),
         })
       );
-      dispatch(
-        setRefreshToken({
-          token: refreshTokenResponse?.refreshToken,
-          _time_stamp: new Date().toISOString(),
-        })
-      );
-      localStorage.setItem("accessToken", refreshTokenResponse?.accessToken);
-      localStorage.setItem("refreshToken", refreshTokenResponse?.refreshToken);
+      if (refreshTokenResponse?.refreshToken) {
+        dispatch(
+          setRefreshToken({
+            token: refreshTokenResponse.refreshToken,
+            _time_stamp: new Date().toISOString(),
+          })
+        );
+      }
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
     } catch (exp) {
       // Don't redirect when user is on login page (e.g. wrong password / invalid credentials)

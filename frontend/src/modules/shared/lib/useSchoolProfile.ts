@@ -7,15 +7,24 @@ import {
   SchoolBrandProfile,
 } from "./schoolProfileStore";
 
-export function useSchoolProfile(slug: string): SchoolBrandProfile | null {
+export interface UseSchoolProfileResult {
+  profile: SchoolBrandProfile | null;
+  /** True until the first lookup (client-only, backed by localStorage) has run. */
+  isLoading: boolean;
+}
+
+export function useSchoolProfile(slug: string): UseSchoolProfileResult {
   const [profile, setProfile] = useState<SchoolBrandProfile | null>(null);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
+    setIsLoading(true);
     setProfile(getSchoolProfile(slug));
+    setIsLoading(false);
     return subscribeToSchoolProfile(slug, () => {
       setProfile(getSchoolProfile(slug));
     });
   }, [slug]);
 
-  return profile;
+  return { profile, isLoading };
 }
