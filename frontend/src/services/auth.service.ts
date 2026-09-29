@@ -16,6 +16,8 @@ export interface LoginResponse {
   accessToken?: string;
   access_token?: string;
   refreshToken?: string;
+  /** Tenant info, if the backend includes it on login. Verify field names against the real API contract. */
+  school?: { id: number; subDomain: string };
 }
 
 export interface RegisterRequest {
