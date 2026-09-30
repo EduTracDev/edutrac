@@ -9,7 +9,6 @@ import {
   UserMinus,
   Trash2,
   Edit3,
-  Send,
 } from "lucide-react";
 
 import { Teacher } from "@/modules/types/dashboard";
@@ -29,35 +28,7 @@ export const TeacherMobileCard = ({
   const isActive = teacher.employmentStatus === "Active";
   const [imageError, setImageError] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
-
-  const [isResending, setIsResending] = useState(false);
-
-  const handleResendInvite = async (id: string) => {
-    setIsResending(true);
-
-    const promise = new Promise((resolve, reject) => {
-      setTimeout(async () => {
-        try {
-          resolve({ name: teacher.name });
-        } catch (err) {
-          reject(err);
-        }
-      }, 1500);
-    });
-
-    toast.promise(promise, {
-      loading: "Sending new invite...",
-      success: "Invite sent successfully!",
-      error: "Failed to send invite.",
-    });
-
-    try {
-      await promise;
-    } finally {
-      setIsResending(false);
-      setMenuOpen(false);
-    }
-  };
+  const subjects = teacher.subjects ?? [];
 
   const initials = teacher.name
     .split(" ")
@@ -100,7 +71,9 @@ export const TeacherMobileCard = ({
           <p className="text-[10px] text-slate-400 font-black uppercase tracking-widest">
             Subject
           </p>
-          <p className="text-xs font-bold text-slate-700">{teacher.subject}</p>
+          <p className="text-xs font-bold text-slate-700">
+            {subjects.join(", ")}
+          </p>
         </div>
         <div className="text-right">
           <p className="text-[10px] text-slate-400 font-black uppercase tracking-widest">
@@ -113,22 +86,6 @@ export const TeacherMobileCard = ({
       {/* BOTTOM ROW: Statuses and Actions */}
       <div className="mt-4 flex items-center justify-between">
         <div className="flex items-center gap-2">
-          {/* Account Status */}
-          <div className="flex items-center gap-1.5 bg-slate-50 px-2 py-1 rounded-lg">
-            <div
-              className={`h-1.5 w-1.5 rounded-full ${
-                teacher.accountStatus === "Joined"
-                  ? "bg-emerald-400"
-                  : teacher.accountStatus === "Pending"
-                    ? "bg-amber-400 animate-pulse"
-                    : "bg-slate-300"
-              }`}
-            />
-            <span className="text-[9px] font-black text-slate-500 uppercase tracking-tighter">
-              {teacher.accountStatus}
-            </span>
-          </div>
-
           {/* Employment Status */}
           <div
             className={`flex items-center gap-1.5 px-2 py-1 rounded-lg border text-[9px] font-black uppercase tracking-wider
@@ -157,7 +114,7 @@ export const TeacherMobileCard = ({
           {menuOpen && (
             <div
               onClick={(e) => e.stopPropagation()}
-              className="absolute right-0 bottom-full mb-2 z-[100] w-48 bg-white rounded-2xl border border-slate-100 shadow-xl py-2 animate-in fade-in slide-in-from-bottom-2 duration-200"
+              className="absolute right-0 bottom-full mb-2 z-100 w-48 bg-white rounded-2xl border border-slate-100 shadow-xl py-2 animate-in fade-in slide-in-from-bottom-2 duration-200"
             >
               <button
                 onClick={(e) => {
@@ -169,24 +126,6 @@ export const TeacherMobileCard = ({
               >
                 <Edit3 size={14} /> Edit Information
               </button>
-
-              {/* ✅ MOVE INSIDE: Resend button as a menu option */}
-              {teacher.accountStatus !== "Joined" && (
-                <button
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    handleResendInvite(teacher.id);
-                  }}
-                  disabled={isResending}
-                  className="w-full text-left px-4 py-2.5 text-xs font-bold text-[#923CF9] hover:bg-[#923CF9]/5 flex items-center gap-2 disabled:opacity-50"
-                >
-                  <Send
-                    size={14}
-                    className={isResending ? "animate-pulse" : ""}
-                  />
-                  {isResending ? "Sending..." : "Resend Invitation"}
-                </button>
-              )}
 
               <button className="w-full text-left px-4 py-2.5 text-xs font-bold text-amber-600 hover:bg-amber-50 flex items-center gap-2">
                 <UserMinus size={14} /> Suspend Access

@@ -44,6 +44,23 @@ export const ParentTable = ({
     studentName: string;
   }>({ isOpen: false, parentId: "", studentId: "", studentName: "" });
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [resendingParentId, setResendingParentId] = useState<string | null>(
+    null,
+  );
+
+  const handleResendInvite = async (parentId: string) => {
+    setResendingParentId(parentId);
+
+    try {
+      await new Promise((resolve) => setTimeout(resolve, 800));
+
+      toast.success("Invitation resent successfully");
+    } catch {
+      toast.error("Failed to resend invitation");
+    } finally {
+      setResendingParentId(null);
+    }
+  };
 
   const selectedParent = useMemo(
     () => parents.find((p) => p.id === selectedParentId) || null,
@@ -129,7 +146,7 @@ export const ParentTable = ({
   if (parents.length === 0) {
     return (
       <EmptyState
-        title="No Parents found" // Fixed the "Teachers" typo
+        title="No Parents found"
         description="Try adjusting your filters or search terms."
         onReset={onReset}
         actionLabel="Add New Parent"
@@ -162,10 +179,10 @@ export const ParentTable = ({
               <th className="px-6 py-4 text-xs font-bold text-slate-400 uppercase">
                 Wards
               </th>
-              <th className="px-6 py-4 text-xs font-bold text-slate-400 uppercase">
-                Status
+              <th className="px-6 py-4 text-xs font-bold text-slate-400 uppercase text-wrap">
+                Account Status
               </th>
-              <th className="px-6 py-4"></th>
+
               <th className="px-6 py-4"></th>
             </tr>
           </thead>
@@ -178,6 +195,8 @@ export const ParentTable = ({
                 onEdit={() => openModal("parent", parent)}
                 onViewProfile={() => handleViewProfile(parent.id)}
                 onLinkStudent={() => handleOpenLinkModal(parent)} // Pass the trigger
+                onResendInvite={handleResendInvite}
+                isResending={resendingParentId === parent.id}
               />
             ))}
           </tbody>

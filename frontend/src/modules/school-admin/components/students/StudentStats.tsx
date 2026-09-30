@@ -90,22 +90,6 @@ export const StudentStats = () => {
         icon={LayoutGrid}
         color="text-[#923CF9]"
         bgColor="bg-[#923CF9]/10"
-        description={
-          <div className="pt-2 border-t border-slate-50">
-            <p className="text-[9px] font-bold text-slate-400 uppercase mb-1">
-              Top Enrollments
-            </p>
-            {sortedClasses.map(([name, count]) => (
-              <div
-                key={name}
-                className="flex justify-between text-[10px] font-bold text-slate-800"
-              >
-                <span>{name}</span>
-                <span className="">{count}</span>
-              </div>
-            ))}
-          </div>
-        }
       />
     </div>
   );

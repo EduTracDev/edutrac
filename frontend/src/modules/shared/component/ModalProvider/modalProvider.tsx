@@ -53,12 +53,16 @@ import React, {
 } from "react";
 import { Teacher, Student, Parent } from "@/modules/types/dashboard";
 
+type InviteModalData = {
+  role?: "Parent" | "Teacher";
+};
 // 1. Define the possible data shapes for modals
 type ModalData =
   | Teacher
   | Student
   | Parent
-  | { title: string; message: string; onConfirm: () => void } // For confirm-action
+  | InviteModalData
+  | { title: string; message: string; onConfirm: () => void }
   | null;
 
 type ModalType =
@@ -66,6 +70,7 @@ type ModalType =
   | "student"
   | "parent"
   | "class"
+  | "invite"
   | "confirm-action"
   | null;
 

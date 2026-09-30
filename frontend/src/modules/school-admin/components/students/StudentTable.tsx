@@ -121,9 +121,7 @@ export const StudentTable = ({
                 <th className="px-6 py-4 text-xs font-bold text-slate-400 uppercase tracking-wider">
                   Parent Info
                 </th>
-                <th className="px-6 py-4 text-xs font-bold text-slate-400 uppercase tracking-wider">
-                  Enrollment
-                </th>
+
                 <th className="px-6 py-4 text-xs font-bold text-slate-400 uppercase tracking-wider whitespace-nowrap">
                   Portal Status
                 </th>

@@ -66,26 +66,6 @@ export const StudentTableRow = ({
     }
   };
 
-  const handleResendInvite = async (id: string) => {
-    setIsResending(true);
-    const promise = new Promise((resolve) =>
-      setTimeout(() => resolve(true), 1500),
-    );
-
-    toast.promise(promise, {
-      loading: "Resending portal access...",
-      success: "Invite sent to parent!",
-      error: "Failed to send.",
-    });
-
-    try {
-      await promise;
-    } finally {
-      setIsResending(false);
-      setMenuOpen(false);
-    }
-  };
-
   const initials =
     `${student.firstName[0]}${student.lastName[0]}`.toUpperCase();
 
@@ -181,18 +161,6 @@ export const StudentTableRow = ({
         </div>
       </td>
 
-      {/* Portal Status */}
-      <td className="px-6 py-4">
-        <div className="flex items-center gap-1.5">
-          <div
-            className={`h-1.5 w-1.5 rounded-full ${student.accountStatus === "Joined" ? "bg-emerald-400" : "bg-amber-400 animate-pulse"}`}
-          />
-          <span className="text-[10px] font-black text-slate-400 uppercase tracking-tighter">
-            {student.accountStatus}
-          </span>
-        </div>
-      </td>
-
       {/* Actions */}
       <td className="relative px-6 py-4 text-right">
         <button
@@ -218,7 +186,7 @@ export const StudentTableRow = ({
               <Edit3 size={14} /> Edit Information
             </button>
 
-            {student.accountStatus !== "Joined" && (
+            {/* {student.accountStatus !== "Joined" && (
               <button
                 onClick={(e) => {
                   e.stopPropagation();
@@ -233,7 +201,7 @@ export const StudentTableRow = ({
                 />
                 {isResending ? "Sending..." : "Resend Invite"}
               </button>
-            )}
+            )} */}
 
             <div className="my-1 border-t border-slate-50" />
 

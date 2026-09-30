@@ -11,6 +11,7 @@ export type ActiveModal =
   | "fee-reminder-preview"
   | "schedule-pta"
   | "bulk-sms"
+  | "invite"
   | null;
 
 export interface ActivityItem {
@@ -111,7 +112,7 @@ export interface Teacher {
   role: TeacherRole;
   assignedClass: string;
   avatarUrl?: string;
-  subject: string;
+  subjects: string[];
   gender: "Male" | "Female";
   employmentStatus: EmploymentStatus;
   accountStatus: AccountStatus;
@@ -132,6 +133,7 @@ export interface Student {
   lastName: string;
   email: string;
   class?: string;
+  subjects: string[];
   gender: "Male" | "Female" | "Other";
   avatarUrl?: string;
   enrollmentStatus: EnrollmentStatus;
@@ -279,6 +281,26 @@ export interface Ward {
   avatar?: string;
   gender: "male" | "female";
   activeWard?: boolean;
+}
+
+// Invite
+export type InvitationRole = "Parent" | "Teacher";
+
+export type InvitationStatus = "Pending" | "Accepted" | "Expired" | "Cancelled";
+
+export interface Invitation {
+  id: string;
+  fullName: string;
+  email: string;
+  role: InvitationRole;
+  status: InvitationStatus;
+  invitedAt: string;
+  expiresAt: string;
+  resendCount: number;
+}
+export interface InvitationFilters {
+  role: "All" | InvitationRole;
+  status: "All" | InvitationStatus;
 }
 
 export interface School {

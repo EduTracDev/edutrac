@@ -16,7 +16,7 @@ export default function AdminLayout({
         sidebarOpen={sidebarOpen}
         setSidebarOpen={setSidebarOpen}
       />
-      <div className="flex flex-col flex-1">
+      <div className="flex flex-col flex-1 min-w-0">
         <TeacherTopbar setSidebarOpen={setSidebarOpen} />
         <main
           className="flex-1 p-6 md:p-10"

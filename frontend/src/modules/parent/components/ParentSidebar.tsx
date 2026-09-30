@@ -89,8 +89,8 @@ export default function ParentSidebar({ sidebarOpen, setSidebarOpen }: Props) {
 
       <aside
         className={`
-        bg-white w-64 fixed md:relative z-40
-        h-full transform transition-all duration-300
+        bg-white w-64 fixed md:sticky h-screen top-0 shrink-0 z-40
+         transform transition-all duration-300
 
         ${sidebarOpen ? "translate-x-0" : "-translate-x-full"}
 
@@ -109,7 +109,10 @@ export default function ParentSidebar({ sidebarOpen, setSidebarOpen }: Props) {
 
         {/* Navigation */}
 
-        <nav className="p-4 space-y-2" aria-label="Sidebar">
+        <nav
+          className="p-4 space-y-2 overflow-y-auto h-[calc(100vh-100px)]"
+          aria-label="Sidebar"
+        >
           {links.map((link) => {
             const Icon = link.icon;
 

@@ -34,36 +34,7 @@ export const ParentMobileCard = ({
   const [imageError, setImageError] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
 
-  const [isResending, setIsResending] = useState(false);
-
   const children = allStudents.filter((s) => parent.studentIds.includes(s.id));
-
-  const handleResendInvite = async (id: string) => {
-    setIsResending(true);
-
-    const promise = new Promise((resolve, reject) => {
-      setTimeout(async () => {
-        try {
-          resolve({ name: parent.fullName });
-        } catch (err) {
-          reject(err);
-        }
-      }, 1500);
-    });
-
-    toast.promise(promise, {
-      loading: "Sending new invite...",
-      success: "Invite sent successfully!",
-      error: "Failed to send invite.",
-    });
-
-    try {
-      await promise;
-    } finally {
-      setIsResending(false);
-      setMenuOpen(false);
-    }
-  };
 
   const initials = parent.fullName
     .split(" ")
@@ -137,22 +108,6 @@ export const ParentMobileCard = ({
       {/* BOTTOM ROW: Statuses and Actions */}
       <div className="mt-4 flex items-center justify-between">
         <div className="flex items-center gap-2">
-          {/* Account Status */}
-          <div className="flex items-center gap-1.5 bg-slate-50 px-2 py-1 rounded-lg">
-            <div
-              className={`h-1.5 w-1.5 rounded-full ${
-                parent.accountStatus === "Joined"
-                  ? "bg-emerald-400"
-                  : parent.accountStatus === "Pending"
-                    ? "bg-amber-400 animate-pulse"
-                    : "bg-slate-300"
-              }`}
-            />
-            <span className="text-[9px] font-black text-slate-500 uppercase tracking-tighter">
-              {parent.accountStatus}
-            </span>
-          </div>
-
           {/* Employment Status */}
           <div
             className={`flex items-center gap-1.5 px-2 py-1 rounded-lg border text-[9px] font-black uppercase tracking-wider
@@ -204,24 +159,6 @@ export const ParentMobileCard = ({
               >
                 <Edit3 size={14} /> Edit Information
               </button>
-
-              {/* ✅ MOVE INSIDE: Resend button as a menu option */}
-              {parent.accountStatus !== "Joined" && (
-                <button
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    handleResendInvite(parent.id);
-                  }}
-                  disabled={isResending}
-                  className="w-full text-left px-4 py-2.5 text-xs font-bold text-[#923CF9] hover:bg-[#923CF9]/5 flex items-center gap-2 disabled:opacity-50"
-                >
-                  <Send
-                    size={14}
-                    className={isResending ? "animate-pulse" : ""}
-                  />
-                  {isResending ? "Sending..." : "Resend Invitation"}
-                </button>
-              )}
 
               <button className="w-full text-left px-4 py-2.5 text-xs font-bold text-amber-600 hover:bg-amber-50 flex items-center gap-2">
                 <UserMinus size={14} /> Suspend Access

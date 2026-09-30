@@ -33,7 +33,6 @@ export const StudentMobileCard = ({
 }: Props) => {
   const [imageError, setImageError] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
-  const [isResending, setIsResending] = useState(false);
 
   const getStatusStyles = (status: EnrollmentStatus) => {
     switch (status) {
@@ -60,26 +59,6 @@ export const StudentMobileCard = ({
         return <XCircle size={10} />;
       default:
         return <UserMinus size={10} />;
-    }
-  };
-
-  const handleResendInvite = async (id: string) => {
-    setIsResending(true);
-    const promise = new Promise((resolve) =>
-      setTimeout(() => resolve(true), 1500),
-    );
-
-    toast.promise(promise, {
-      loading: "Sending invite...",
-      success: "Invite sent to parent!",
-      error: "Failed to send.",
-    });
-
-    try {
-      await promise;
-    } finally {
-      setIsResending(false);
-      setMenuOpen(false);
     }
   };
 
@@ -150,20 +129,10 @@ export const StudentMobileCard = ({
         <div className="flex items-center gap-2">
           {/* Enrollment Status */}
           <div
-            className={`flex items-center gap-1.5 px-2 py-1 rounded-lg border text-[9px] font-black uppercase tracking-wider ${getStatusStyles(student.enrollmentStatus)}`}
+            className={`flex items-center gap-1.5 px-2 py-1 rounded-[8px] border text-[9px] font-black uppercase tracking-wider ${getStatusStyles(student.enrollmentStatus)}`}
           >
             {getStatusIcon(student.enrollmentStatus)}
             {student.enrollmentStatus}
-          </div>
-
-          {/* Portal Status */}
-          <div className="flex items-center gap-1.5 bg-slate-50 px-2 py-1 rounded-lg border border-slate-100">
-            <div
-              className={`h-1.5 w-1.5 rounded-full ${student.accountStatus === "Joined" ? "bg-emerald-400" : "bg-amber-400 animate-pulse"}`}
-            />
-            <span className="text-[9px] font-black text-slate-500 uppercase tracking-tighter">
-              {student.accountStatus}
-            </span>
           </div>
         </div>
 
@@ -193,23 +162,6 @@ export const StudentMobileCard = ({
               >
                 <Edit3 size={14} /> Edit Information
               </button>
-
-              {student.accountStatus !== "Joined" && (
-                <button
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    handleResendInvite(student.studentId);
-                  }}
-                  disabled={isResending}
-                  className="w-full text-left px-4 py-2.5 text-xs font-bold text-[#923CF9] hover:bg-[#923CF9]/5 flex items-center gap-2"
-                >
-                  <Send
-                    size={14}
-                    className={isResending ? "animate-pulse" : ""}
-                  />
-                  {isResending ? "Sending..." : "Resend Invite"}
-                </button>
-              )}
 
               <div className="my-1 border-t border-slate-50" />
 

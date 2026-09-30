@@ -4,6 +4,7 @@ export enum SchoolAdminRoutes {
   teachers = `${root}/teachers`,
   students = `${root}/students`,
   parents = `${root}/parents`,
+  invite = `${root}/invite`,
   classes = `${root}/classes`,
   settings = `${root}/settings`,
   profile = `${root}/profile`,

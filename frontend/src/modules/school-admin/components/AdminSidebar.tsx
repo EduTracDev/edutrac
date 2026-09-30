@@ -11,6 +11,7 @@ import {
   Megaphone,
   Settings,
   FileText,
+  UserPlus,
 } from "lucide-react";
 import { SchoolAdminRoutes } from "@/routes/schoolAdmin.routes";
 import { usePathname } from "next/navigation";
@@ -34,6 +35,11 @@ export default function AdminSidebar({ sidebarOpen, setSidebarOpen }: Props) {
     { name: "Parents", href: SchoolAdminRoutes.parents, icon: Users },
     { name: "Students", href: SchoolAdminRoutes.students, icon: Users },
     { name: "Classes", href: SchoolAdminRoutes.classes, icon: BookOpen },
+    {
+      name: "Invite",
+      href: SchoolAdminRoutes.invite,
+      icon: UserPlus,
+    },
     {
       name: "Results",
       href: SchoolAdminRoutes.results,
@@ -72,18 +78,23 @@ export default function AdminSidebar({ sidebarOpen, setSidebarOpen }: Props) {
 
       <aside
         className={`
-        bg-white w-64 fixed md:relative z-40
-        h-full transform transition-all duration-300
+    bg-white w-64
+    fixed md:sticky
+    top-0
+    left-0
+    z-40
+    h-screen
+    shrink-0
+    transform transition-all duration-300
 
-        ${sidebarOpen ? "translate-x-0" : "-translate-x-full"}
+    ${sidebarOpen ? "translate-x-0" : "-translate-x-full"}
 
-        md:translate-x-0
-        `}
+    md:translate-x-0
+  `}
         role="navigation"
         aria-label="School admin navigation"
       >
-        {/* Logo section */}
-
+        {/* Logo */}
         <div className="flex items-center gap-3 p-6">
           <Image
             src="/school-logo.png"
@@ -99,8 +110,10 @@ export default function AdminSidebar({ sidebarOpen, setSidebarOpen }: Props) {
         </div>
 
         {/* Navigation */}
-
-        <nav className="p-4 space-y-2" aria-label="Sidebar">
+        <nav
+          className="p-4 space-y-2 overflow-y-auto h-[calc(100vh-100px)]"
+          aria-label="Sidebar"
+        >
           {links.map((link) => {
             const Icon = link.icon;
 
@@ -112,35 +125,31 @@ export default function AdminSidebar({ sidebarOpen, setSidebarOpen }: Props) {
                 key={link.name}
                 href={link.href}
                 className={`
-                flex items-center gap-3 px-4 py-3
-                rounded-xl text-sm font-medium
+            flex items-center gap-3 px-4 py-3
+            rounded-xl text-sm font-medium
+            transition-all duration-200
+            focus:outline-none
+            focus:ring-2
+            focus:ring-brand
 
-                transition-all duration-200
-
-                focus:outline-none
-                focus:ring-2
-                focus:ring-brand
-
-                ${
-                  isActive
-                    ? "bg-brand text-white shadow-md"
-                    : `
-                      text-gray-600
-                      hover:bg-[#f4ebff]
-                      hover:text-brand
-                    `
-                }
-                `}
+            ${
+              isActive
+                ? "bg-brand text-white shadow-md"
+                : `
+                  text-gray-600
+                  hover:bg-[#f4ebff]
+                  hover:text-brand
+                `
+            }
+          `}
               >
                 <Icon
                   size={18}
-                  className={`
-                  ${
+                  className={
                     isActive
                       ? "text-white"
                       : "text-gray-500 group-hover:text-brand"
                   }
-                  `}
                 />
 
                 {link.name}

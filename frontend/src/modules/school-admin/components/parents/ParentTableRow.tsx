@@ -18,6 +18,8 @@ interface Props {
   onLinkStudent: (parentId: string) => void;
   onViewProfile: (id: string) => void;
   onEdit: () => void;
+  onResendInvite: (parentId: string) => void;
+  isResending?: boolean;
 }
 
 export const ParentTableRow = ({
@@ -26,40 +28,14 @@ export const ParentTableRow = ({
   onLinkStudent,
   onViewProfile,
   onEdit,
+  onResendInvite,
+  isResending = false,
 }: Props) => {
   const isActive = parent.employmentStatus === "Active";
   const [imageError, setImageError] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
 
-  const [isResending, setIsResending] = useState(false);
   const children = allStudents.filter((s) => parent.studentIds.includes(s.id));
-
-  const handleResendInvite = async (id: string) => {
-    setIsResending(true);
-
-    const promise = new Promise((resolve, reject) => {
-      setTimeout(async () => {
-        try {
-          resolve({ name: parent.fullName });
-        } catch (err) {
-          reject(err);
-        }
-      }, 1500);
-    });
-
-    toast.promise(promise, {
-      loading: "Sending new invite...",
-      success: "Invite sent successfully!",
-      error: "Failed to send invite.",
-    });
-
-    try {
-      await promise;
-    } finally {
-      setIsResending(false);
-      setMenuOpen(false);
-    }
-  };
 
   const initials = parent.fullName
     .split(" ")
@@ -131,22 +107,6 @@ export const ParentTableRow = ({
           </span>
         </div>
       </td>
-      <td className="px-6 py-4">
-        <div className="flex items-center gap-1.5 px-1">
-          <div
-            className={`h-1.5 w-1.5 rounded-full ${
-              parent.accountStatus === "Joined"
-                ? "bg-emerald-400"
-                : parent.accountStatus === "Pending"
-                  ? "bg-amber-400 animate-pulse"
-                  : "bg-slate-300"
-            }`}
-          />
-          <span className="text-[10px] font-black text-slate-400 uppercase tracking-tighter">
-            {parent.accountStatus}
-          </span>
-        </div>
-      </td>
 
       <td className="px-6 py-4">
         <div
@@ -204,7 +164,7 @@ export const ParentTableRow = ({
               <button
                 onClick={(e) => {
                   e.stopPropagation();
-                  handleResendInvite(parent.id);
+                  onResendInvite(parent.id);
                 }}
                 disabled={isResending}
                 className="w-full text-left px-4 py-2.5 text-xs font-bold text-[#923CF9] hover:bg-[#923CF9]/5 flex items-center gap-2 disabled:opacity-50"

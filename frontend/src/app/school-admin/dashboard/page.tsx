@@ -171,14 +171,14 @@ export default function Page() {
           </div>
         </div>
         {/* Expense + Insights + Health */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <ExpenseSummaryCard
             total={2400000}
             budget={2500000}
             month="March"
             href="/school-admin/fee-management"
           />
-          <InsightCard />
+          {/* <InsightCard /> */}
           <SchoolHealthCard
             finance={65}
             attendance={92}

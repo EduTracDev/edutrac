@@ -81,7 +81,7 @@ export default function Page() {
             Teacher Directory
           </h1>
           <p className="text-slate-500 text-sm">
-            Manage your academic staff and department assignments.
+            Manage your academic staff and department.
           </p>
         </div>
         <TeacherStats />

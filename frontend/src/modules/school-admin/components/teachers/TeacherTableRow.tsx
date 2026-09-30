@@ -6,7 +6,6 @@ import {
   UserMinus,
   Trash2,
   Edit3,
-  Send,
 } from "lucide-react";
 import { toast } from "react-hot-toast";
 import { Teacher } from "@/modules/types/dashboard";
@@ -22,35 +21,7 @@ export const TeacherTableRow = ({ teacher, onViewProfile, onEdit }: Props) => {
   const isActive = teacher.employmentStatus === "Active";
   const [imageError, setImageError] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
-
-  const [isResending, setIsResending] = useState(false);
-
-  const handleResendInvite = async (id: string) => {
-    setIsResending(true);
-
-    const promise = new Promise((resolve, reject) => {
-      setTimeout(async () => {
-        try {
-          resolve({ name: teacher.name });
-        } catch (err) {
-          reject(err);
-        }
-      }, 1500);
-    });
-
-    toast.promise(promise, {
-      loading: "Sending new invite...",
-      success: "Invite sent successfully!",
-      error: "Failed to send invite.",
-    });
-
-    try {
-      await promise;
-    } finally {
-      setIsResending(false);
-      setMenuOpen(false);
-    }
-  };
+  const subjects = teacher.subjects ?? [];
 
   const initials = teacher.name
     .split(" ")
@@ -93,7 +64,7 @@ export const TeacherTableRow = ({ teacher, onViewProfile, onEdit }: Props) => {
 
       <td className="px-6 py-4">
         <p className="text-sm font-semibold text-slate-600">
-          {teacher.subject}
+          {subjects.join(", ")}
         </p>
       </td>
 
@@ -101,23 +72,6 @@ export const TeacherTableRow = ({ teacher, onViewProfile, onEdit }: Props) => {
         <p className="text-[11px] text-[#923CF9] font-black uppercase tracking-tight">
           {teacher.role}
         </p>
-      </td>
-
-      <td className="px-6 py-4">
-        <div className="flex items-center gap-1.5 px-1">
-          <div
-            className={`h-1.5 w-1.5 rounded-full ${
-              teacher.accountStatus === "Joined"
-                ? "bg-emerald-400"
-                : teacher.accountStatus === "Pending"
-                  ? "bg-amber-400 animate-pulse"
-                  : "bg-slate-300"
-            }`}
-          />
-          <span className="text-[10px] font-black text-slate-400 uppercase tracking-tighter">
-            {teacher.accountStatus}
-          </span>
-        </div>
       </td>
 
       <td className="px-6 py-4">
@@ -158,24 +112,6 @@ export const TeacherTableRow = ({ teacher, onViewProfile, onEdit }: Props) => {
             >
               <Edit3 size={14} /> Edit Information
             </button>
-
-            {/* 🚀 Resend Invite (Placed inside the menu) */}
-            {teacher.accountStatus !== "Joined" && (
-              <button
-                onClick={(e) => {
-                  e.stopPropagation();
-                  handleResendInvite(teacher.id);
-                }}
-                disabled={isResending}
-                className="w-full text-left px-4 py-2.5 text-xs font-bold text-[#923CF9] hover:bg-[#923CF9]/5 flex items-center gap-2 disabled:opacity-50"
-              >
-                <Send
-                  size={14}
-                  className={isResending ? "animate-pulse" : ""}
-                />
-                {isResending ? "Sending..." : "Resend Invitation"}
-              </button>
-            )}
 
             <button className="w-full text-left px-4 py-2.5 text-xs font-bold text-amber-600 hover:bg-amber-50 flex items-center gap-2">
               <UserMinus size={14} /> Suspend Access

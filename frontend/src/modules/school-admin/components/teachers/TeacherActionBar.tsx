@@ -30,7 +30,7 @@ export const TeacherActionBar = ({
     activeFilters.account !== "All" || activeFilters.employment !== "All";
 
   return (
-    <div className="flex flex-col md:flex-row items-center justify-between gap-4 bg-white p-4 rounded-[24px] border border-slate-100 shadow-sm">
+    <div className="flex flex-col md:flex-row items-center justify-between gap-4 bg-white p-4 rounded-3xl border border-slate-100 shadow-sm">
       {/* 1. Search Input */}
       <div className="relative w-full md:w-96 group">
         <Search

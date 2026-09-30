@@ -63,9 +63,6 @@ export const TeacherTable = ({
                 Role
               </th>
               <th className="px-6 py-4 text-xs font-bold text-slate-400 uppercase">
-                Account Status
-              </th>
-              <th className="px-6 py-4 text-xs font-bold text-slate-400 uppercase text-center">
                 Employment Status
               </th>
               <th className="px-6 py-4"></th>

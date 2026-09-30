@@ -31,7 +31,7 @@ export const TeacherStats = () => {
     total > 0 ? Math.round((femaleTeachers / total) * 100) : 0;
 
   return (
-    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
+    <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
       <StatCard
         title="Total Instructors"
         value={totalInstructors}
@@ -77,13 +77,13 @@ export const TeacherStats = () => {
         color="text-amber-600"
         bgColor="bg-amber-50"
       />
-      <StatCard
+      {/* <StatCard
         title="Departments"
         value={uniqueDepartments}
         icon={GraduationCap}
         color="text-[#923CF9]"
         bgColor="bg-[#923CF9]/10"
-      />
+      /> */}
     </div>
   );
 };

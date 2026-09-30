@@ -40,6 +40,8 @@ export const TeacherProfileSlideover = ({
     window.print();
   };
 
+  const subjects = teacher.subjects ?? [];
+  const subjectCount = subjects.length;
   return (
     <>
       {/* Backdrop - Hidden on Print */}
@@ -104,10 +106,14 @@ export const TeacherProfileSlideover = ({
             <div className="grid grid-cols-2 gap-4">
               <div className="p-4 bg-slate-50 rounded-2xl border border-slate-100">
                 <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest">
-                  Department
+                  Subject
                 </p>
                 <p className="text-sm font-bold text-slate-700 mt-1">
-                  {teacher.subject}
+                  {subjectCount} {subjectCount === 1 ? "Subject" : "Subjects"}
+                </p>
+
+                <p className="text-[11px] text-slate-400 font-medium mt-1 truncate">
+                  {subjects.length > 0 ? subjects.join(", ") : "Not assigned"}
                 </p>
               </div>
               <div className="p-4 bg-slate-50 rounded-2xl border border-slate-100">
@@ -153,7 +159,7 @@ export const TeacherProfileSlideover = ({
             className="w-full py-4 bg-[#923CF9] text-white rounded-2xl text-sm font-black shadow-lg shadow-[#923CF9]/20 hover:-translate-y-0.5 active:scale-95 transition-all flex items-center justify-center gap-2"
           >
             <Printer size={18} />
-            Print Staff ID Card
+            Print Teacher Info
           </button>
         </div>
       </div>
